@@ -5,3 +5,14 @@
 		echo $lookups_item->PK_LOOKUP;
 	endforeach;
 ?>
+
+2. handle auth from url
+<?php
+	if(!$this->input->post()){
+		redirect('url');
+	}
+?>
+
+3. encrypt decrypt
+$this->encrypt->encode() // Performs the data encryption and returns it as a string
+$this->encrypt->decode() // Decrypts an encoded string.

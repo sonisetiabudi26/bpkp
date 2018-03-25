@@ -8,12 +8,14 @@ class Home extends CI_Controller {
         parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('sertifikasi/lookup');
+		$this->load->library('encrypt');
     }
 	
 	public function index()
 	{
 		$data['title_page'] = 'BPKP Web Application';
 		$data['content_page'] = 'auditor/homepage.php';
+		
 		$data['lookups'] = $this->lookup->_get_all();
 		$this->load->view('sertifikasi/homepage', $data);
 	}
