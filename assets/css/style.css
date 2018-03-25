@@ -1,18 +1,168 @@
-.margin-20{
-	margin-top:20px;
-	border:1px solid #ccc;
-}
-body{
-	bckground:#eee;
-}
-#footer{
-	text-align:left;
+#head-line {
+	background-color: #eee;
+	color: #555;
 }
 
-#result{
-	display:none;
+#head-line h2 {
+	color: #333;
 }
 
+#head-line b {
+	color: #333;
+}
+
+.content {
+	margin-bottom: 100px;
+}
+
+#col-left {
+	margin-top: 20px;
+}
+
+#col-right {
+	margin-top: 20px;
+}
+
+.menu {
+	margin-top: 10px;
+}
+
+.menu a {
+	text-decoration: none;
+	color: #fff;
+}
+
+#col-right-2 {
+	border-radius: 2px;
+	border: 1px solid #eee;
+	color: #555;
+	text-align: left;
+	min-height: 400px;
+	margin-right: 5px;
+}
+
+#headline-right {
+	color: #555;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	text-shadow: 1px 1px 1px #eee;
+}
+
+.margin-5 {
+	margin-top: 5px;
+}
+
+.margin-10 {
+	margin-top: 10px;
+}
+
+.margin-20 {
+	margin-top: 20px;
+}
+
+.margin-30 {
+	margin-top: 30px;
+}
+
+label {
+	color: #555;
+	width: 100%;
+	text-align: left;
+}
+
+.btn-file {
+	margin-left: 0px;
+}
+
+.logo {
+	margin-left: 15px;
+}
+
+.logo-small {
+	margin: 5px;
+	margin-left: 15px;
+	height: 20px;
+}
+
+tbody {
+	color: #777;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#loading {
+	margin: 0px auto;
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	z-index: 999999;
+	background: rgba(255, 255, 255, 0.9);
+	display: none;
+}
+
+#loading img {
+	margin: 0px auto;
+}
+
+.gradient-gray {
+	color: #999;
+	text-shadow: 0px 1px 0px #999;
+	background: rgba(226, 226, 226, 1);
+	background: -moz-linear-gradient(left, rgba(226, 226, 226, 1) 0%,
+		rgba(219, 219, 219, 1) 28%, rgba(254, 254, 254, 1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(226, 226, 226,
+		1)), color-stop(28%, rgba(219, 219, 219, 1)),
+		color-stop(100%, rgba(254, 254, 254, 1)));
+	background: -webkit-linear-gradient(left, rgba(226, 226, 226, 1) 0%,
+		rgba(219, 219, 219, 1) 28%, rgba(254, 254, 254, 1) 100%);
+	background: -o-linear-gradient(left, rgba(226, 226, 226, 1) 0%,
+		rgba(219, 219, 219, 1) 28%, rgba(254, 254, 254, 1) 100%);
+	background: -ms-linear-gradient(left, rgba(226, 226, 226, 1) 0%,
+		rgba(219, 219, 219, 1) 28%, rgba(254, 254, 254, 1) 100%);
+	background: linear-gradient(to right, rgba(226, 226, 226, 1) 0%,
+		rgba(219, 219, 219, 1) 28%, rgba(254, 254, 254, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2',
+		endColorstr='#fefefe', GradientType=1);
+}
+
+table a {
+	color: #999;
+}
+
+.font-putih{
+	color:#e6efc0;
+}
+
+.font-hitam{
+	color:#14171a
+}
+
+.font-kuning {
+	color: #ec971f;
+}
+
+.font-hijau {
+	color: #20B2AA;
+}
+
+.font-merah {
+	color: #c9302c;
+}
+
+.font-biru {
+	color: #1c94e0;
+}
+.par-center{
+	float: none;
+    margin: 0 auto;
+}
+
+
+/* THIS IS FOR LOADING CONTENT */
 .loading-content {
   position: fixed;
   z-index: 999;

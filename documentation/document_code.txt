@@ -1,0 +1,7 @@
+1. sample loop table
+<?php
+	foreach ($lookups as $lookups_item):
+		##column case sensitive
+		echo $lookups_item->PK_LOOKUP;
+	endforeach;
+?>
