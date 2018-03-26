@@ -6,19 +6,21 @@ html, body {
 }
 
 .navbar-default {
-  font-size: 1.15em;
-  font-weight: 400;
-  background-color: #1c94e0;
-  border: 0px;
-  border-radius: 0px;
+	font-size: 1.15em;
+	font-weight: 400;
+	background: #3a7bd5;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	border: 0px;
+	border-radius: 0px;
 }
 
 .navbar-default .navbar-nav>.active>a{
 	background-color: #ffffff;
-	color:#1c94e0;
+	color:#3a6073;
 }
 .navbar-default .navbar-nav>.active>a:hover{
-	background-color: #1c94e0;
+	background-color: transparent;
 	color:#fff;
 }
 

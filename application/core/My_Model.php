@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
-//This is the menu_page Model for CodeIgniter CRUD using Ajax Application.
+
 class My_Model extends CI_Model
 {
 	protected $_table;

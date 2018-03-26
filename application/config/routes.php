@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | ['default_controller'] and ['sso'] is a folder example, you can add new permalink. please add new folder for new permalink in controller
 */
 $route['default_controller'] = 'home';
-$route['sso'] = 'sso/home';
 $route['sertifikasi'] = 'sertifikasi/home';
+$route['login'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

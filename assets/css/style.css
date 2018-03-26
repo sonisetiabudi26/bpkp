@@ -92,6 +92,9 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+	background: #3a7bd5;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 #loading {
@@ -158,7 +161,7 @@ table a {
 }
 .par-center{
 	float: none;
-    margin: 0 auto;
+    margin: 0px auto;
 }
 
 
@@ -281,4 +284,25 @@ table a {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.body-1{
+	background: #3a7bd5;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	display: flex;
+	align-items: center;
+	justify-content: center 
+}
+
+.body-2{
+	background: #ECE9E6;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.img-logo-login{
+	height:120px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
