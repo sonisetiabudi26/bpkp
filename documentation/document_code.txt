@@ -16,3 +16,5 @@
 3. encrypt decrypt
 $this->encrypt->encode() // Performs the data encryption and returns it as a string
 $this->encrypt->decode() // Decrypts an encoded string.
+
+CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==
