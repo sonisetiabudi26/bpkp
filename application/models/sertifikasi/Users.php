@@ -5,7 +5,7 @@ class Users extends My_Model
 {
 	public $_table = 'users';
 	public $primary_key = 'PK_USER';
-	
+
 	// Read data using username and password
 	public function _check_login($data) {
 		$condition = "USER_NAME =" . "'" . $data['username'] . "' AND " . "USER_PASSWORD =" . "'" . $data['password'] . "'";
