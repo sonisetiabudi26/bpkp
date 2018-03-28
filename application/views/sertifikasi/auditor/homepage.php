@@ -9,12 +9,12 @@
         </tr>
       </thead>
       <tbody>
-				<?php foreach ($lookups as $lookups_item):
+				<?php //foreach ($lookups as $lookups_item):
 				?>
 					<tr>
-				        <td><?php echo $lookups_item->PK_LOOKUP;?></td>
-				        <td><?php echo $lookups_item->CODE;?></td>
+				        <td><?php //echo $lookups_item->PK_LOOKUP;?></td>
+				        <td><?php //echo $lookups_item->CODE;?></td>
 					</tr>
-				<?php endforeach; ?>
+				<?php //endforeach; ?>
        </tbody>
     </table>
