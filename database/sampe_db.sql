@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2018 at 06:48 AM
+-- Generation Time: Mar 29, 2018 at 08:31 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -93,7 +93,10 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (2, 'admin', 'admin', 'sertifikasi/admin', 'admin', '2018-03-29', '', 2),
 (3, 'monitoring', 'monitoring', 'sertifikasi/monitoring', 'admin', '2018-03-29', '', 4),
 (4, 'pusbin', 'pusbin', 'sertifikasi/pusbin', 'admin', '2018-03-29', '', 5),
-(5, 'unit_apip', 'unit_apip', 'sertifikasi/unit_apip', 'admin', '2018-03-29', '', 6);
+(5, 'unit_apip', 'unit_apip', 'sertifikasi/unit_apip', 'admin', '2018-03-29', '', 6),
+(6, 'Home', 'auditor', 'auditor/homepage.php', 'admin', '2018-03-29', 'home', 3),
+(7, 'Riwayat Ujian', 'auditor', 'auditor/riwayat_ujian.php', 'admin', '2018-03-29', 'book', 3),
+(8, 'Ujian Sertifikasi', 'auditor', 'auditor/ujian_sertifikasi.php', 'admin', '2018-03-29', 'pencil', 3);
 
 -- --------------------------------------------------------
 

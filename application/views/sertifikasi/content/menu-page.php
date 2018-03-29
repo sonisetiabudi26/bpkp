@@ -24,10 +24,14 @@
       <div class="menu_section">
         <h3 style="color:#ADABAB !important">General</h3>
         <ul class="nav side-menu">
-            <li><a><i class="fa fa-home"></i>Home</a>
-              <li><a><i class="fa fa-home"></i>Ujian Sertifikasi</a>
-            <li><a><i class="fa fa-home"></i>Riwayat Ujian</a>
-          </li>
+			<?php
+				foreach ($menu_page as $menupages):
+					##column case sensitive
+				?>
+				<li><a><i class="fa fa-<?php echo $menupages->MENU_ICON;?>"></i><?php echo $menupages->MENU_NAME;?></a>
+			<?php
+				endforeach;
+			?>
           <!-- <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
               <li><a href="form.html">General Form</a></li>
