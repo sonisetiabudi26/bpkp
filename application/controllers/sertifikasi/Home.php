@@ -13,13 +13,18 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$data['title_page'] = 'BPKP Web Application';
-		$fk_lookup_menu = $this->session->flashdata('fk_lookup_menu');
-		$menu_url	= $this->menupage->_get_menu_information($fk_lookup_menu);
-		if (!empty($menu_url)) {
-			$data['content_page'] =$menu_url->menu_url;
+		if(!empty($this->session->flashdata('logged_in'))){
+			$data['title_page'] = 'BPKP Web Application';
+			$fk_lookup_menu = $this->session->flashdata('fk_lookup_menu');
+			$menu_url	= $this->menupage->_get_menu_information($fk_lookup_menu);
+			if (!empty($menu_url)) {
+				$data['content_page'] =$menu_url->menu_url;
+			}
+			$data['lookups'] = $this->lookup->_get_all();
+			$this->load->view('sertifikasi/homepage', $data);
 		}
-		$data['lookups'] = $this->lookup->_get_all();
-		$this->load->view('sertifikasi/homepage', $data);
+		else{
+			redirect('/');
+		}
 	}
 }
