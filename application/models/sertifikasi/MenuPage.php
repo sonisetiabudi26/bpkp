@@ -21,5 +21,14 @@ class MenuPage extends My_Model
 			return false;
 		}
 	}
+	
+	public function _get_access_menu_page($lookup_menu) {
+		$condition = "fk_lookup_menu =" . "'" . $lookup_menu . "' and menu_name <> menu_main";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 }
