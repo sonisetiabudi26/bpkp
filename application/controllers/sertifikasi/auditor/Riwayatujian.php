@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Riwayatujian extends CI_Controller {
 
 	public function __construct(){
         parent::__construct();
@@ -17,7 +17,7 @@ class Home extends CI_Controller {
 		/** check session */
 		if(isset($fk_lookup_menu) && isset($username)){
 			$data['title_page'] = 'BPKP Web Application';
-			$data['content_page']='auditor/homepage.php';
+			$data['content_page']='auditor/riwayatujian.php';
 			$data['username']=$username;
 			$menupage=$this->menupage->_get_access_menu_page($fk_lookup_menu);
 			if(!empty($menupage)){

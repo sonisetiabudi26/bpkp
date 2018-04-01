@@ -28,7 +28,7 @@
 				foreach ($menu_page as $menupages):
 					##column case sensitive
 				?>
-				<li><a><i class="fa fa-<?php echo $menupages->MENU_ICON;?>"></i><?php echo $menupages->MENU_NAME;?></a>
+				<li><a href="<?php echo base_url($menupages->MENU_URL)?>"><i class="fa fa-<?php echo $menupages->MENU_ICON;?>"></i><?php echo $menupages->MENU_NAME;?></a>
 			<?php
 				endforeach;
 			?>

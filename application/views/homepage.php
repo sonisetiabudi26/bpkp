@@ -56,7 +56,7 @@
 		</div>
 	</div>
 		<footer class="footer">
-        <p class="text-muted" style="color:#ddd !important">Copyright @2017</p>
+        <p class="text-muted" style="margin-left:10px;color:#ddd !important">© 2018 BPKP. All rights reserved</p>
     </footer>
 <!-- INCLUDE JS -->
 <script src="<?php echo base_url('assets/js/jquery-2.1.4.js')?>"></script>
