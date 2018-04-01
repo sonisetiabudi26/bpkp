@@ -19,13 +19,7 @@ class Home extends CI_Controller {
 			$data['title_page'] = 'BPKP Web Application';
 			$data['content_page']='auditor/homepage.php';
 			$data['username']=$username;
-			$menupage=$this->menupage->_get_access_menu_page($fk_lookup_menu);
-			if(!empty($menupage)){
-				$data['menu_page'] = $menupage;
-				$this->load->view('sertifikasi/homepage', $data);
-			}else{
-				redirect('/');
-			}
+			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');
 		}
