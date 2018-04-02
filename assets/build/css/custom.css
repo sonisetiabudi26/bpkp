@@ -165,7 +165,7 @@ html , body{
     visibility: hidden
 }
 .nav-sm .container.body .right_col {
-    padding: 90px 20px;
+    padding: 10px 20px;
     margin-left: 70px;
     z-index: 2
 }
@@ -361,7 +361,7 @@ body .container.body .right_col {
 	background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .nav-md .container.body .right_col {
-    padding: 90px 20px 0 ;
+    padding: 10px 20px 0 ;
     margin-left: 230px
 }
 .nav_title {
@@ -503,8 +503,14 @@ body .container.body .right_col {
 .top_nav .nav .open>a:hover {
     background: #D9DEE4
 }
+.title_left>h3{
+  color:#f7f7f7;
+}
+.pull-right{
+  color:#f7f7f7;
+}
 body {
-    color: #f7f7f7;
+    color: #222;
 		background: #3a7bd5;  /* fallback for old browsers */
 		background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
 		background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -1195,6 +1201,7 @@ legend {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px
 }
+
 table.tile h3,
 table.tile h4,
 table.tile span {
@@ -4176,10 +4183,13 @@ h2{
 }
 .image_photo{
 	border-radius: 50%;
-	height: 200px;
+	min-height: 200px;
 	margin:0px auto;
 	width:50%;
-	border:0.7px solid #ADABAB;
+
+}
+.image_photo>img{
+  margin: 0px auto;
 }
 .tabbed_notifications .close {
     padding: 5px;
