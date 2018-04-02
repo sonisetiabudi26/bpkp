@@ -22,20 +22,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css')?>" rel="stylesheet"/>
 	<!-- Custom Theme Style -->
 	<link href="<?php echo base_url('assets/build/css/custom.css')?>" rel="stylesheet">
-<<<<<<< HEAD
-	
-=======
 	<link href="<?php echo base_url('assets/vendors/datatables.net-bs/css/dataTables.bootstrap.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')?>" rel="stylesheet">
-	<!-- <meta charset="utf-8">
-	<title><?php //echo $title_page;?></title>
-	<link href="<?php //echo base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" />
-	<link href="<?php //echo base_url('assets/css/font-awesome.css')?>" rel="stylesheet" /> -->
-	<!-- <link href="<?php //echo base_url('assets/css/style.css')?>" rel="stylesheet"> -->
->>>>>>> remotes/origin/dev-bpkp-v1
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -62,11 +53,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- jQuery custom content scroller -->
 <script src="<?php echo base_url('assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')?>"></script>
 <!-- Custom Theme Scripts -->
-<<<<<<< HEAD
 <script src="<?php echo base_url('assets/build/js/custom.min.js')?>"></script>
 <!-- add function ajax process -->
 <script src="<?php //echo base_url('assets/js/function.process.js')?>"></script>
-=======
 <script src="<?php echo base_url('assets/build/js/custom.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/echarts/dist/echarts.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net/js/jquery.dataTables.min.js')?>"></script>
@@ -82,6 +71,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')?>"></script>
 <!-- <script src="<?php //echo base_url('assets/js/function.process.js')?>"></script> -->
->>>>>>> remotes/origin/dev-bpkp-v1
 </body>
 </html>
