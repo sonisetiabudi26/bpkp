@@ -17,7 +17,7 @@ class Home extends CI_Controller {
 		$username = $this->session->userdata('logged_in');
 		if(isset($fk_lookup_menu) && isset($username)){
 			$data['title_page'] = 'BPKP Web Application';
-			$data['content_page']='auditor/homepage.php';
+			$data['content_page']='pusbin/homepage.php';
 			$data['username']=$username;
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
