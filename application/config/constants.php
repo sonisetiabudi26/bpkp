@@ -83,3 +83,10 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+//add constant global
+define('ERROR_LOGIN_PAGE_MENU_NOT_FOUND','Halaman yang dituju tidak ada akses menu, silahkan hubungi administrator');
+define('ERROR_LOGIN_PAGE_PASS','Password yang anda masukan salah');
+define('ERROR_LOGIN_PAGE_USERNAME','Username yang anda masukan salah');
+define('ERROR_LOGIN_PAGE_MENUROLE','Halaman yang dituju tidak ada akses menu, silahkan hubungi administrator');
+define('ERROR_LOGIN_PAGE_REFRESH_PROCESS','Anda tidak mempunyai session untuk refresh halaman');

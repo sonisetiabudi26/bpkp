@@ -3,14 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-	protected $ERROR_LOGIN_PAGE_PASS = 'Invalid password, please check your password';
-	
-	protected $ERROR_LOGIN_PAGE_USERNAME = 'Invalid username, please check your username';
-	
-	protected $ERROR_LOGIN_PAGE_MENUROLE = 'You role can not access menu page';
-	
-	protected $ERROR_LOGIN_PAGE_REFRESH_PROCESS = 'You can not refresh process';
-
 	public function __construct(){
         parent::__construct();
 		$this->load->helper('form');
@@ -24,7 +16,7 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		if(!$this->input->post()){
-			$this->redirectLogin($this->ERROR_LOGIN_PAGE_REFRESH_PROCESS);
+			redirectLogin(ERROR_LOGIN_PAGE_REFRESH_PROCESS);
 		}else{
 			$this->process();
 		}
@@ -49,10 +41,10 @@ class Login extends CI_Controller {
 				//redirect('sertifikasi/home');
 				$this->direct_page($fk_lookup_menu);
 			}else{
-				$this->redirectLogin($this->ERROR_LOGIN_PAGE_PASS);
+				redirectLogin(ERROR_LOGIN_PAGE_PASS);
 			}
 		}else{
-			$this->redirectLogin($this->ERROR_LOGIN_PAGE_USERNAME);
+			redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
 		}
 	}
 	
@@ -62,15 +54,8 @@ class Login extends CI_Controller {
 			$menu_page =strtolower($menu_url->menu_main);
 			redirect("sertifikasi/".$menu_page);
 		}else{
-			$this->redirectLogin($this->ERROR_LOGIN_PAGE_MENUROLE);
+			redirectLogin(ERROR_LOGIN_PAGE_MENUROLE);
 		}
-	}
-	
-	private function redirectLogin($messages){
-		$data = array(
-					'messages' => $messages
-				);
-		$this->load->view('homepage', $data);
 	}
 
 	public function logout(){
