@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 29, 2018 at 08:31 AM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 7.0.13
+-- Host: localhost
+-- Generation Time: Apr 02, 2018 at 02:00 AM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lookup`
+-- Table structure for table `LOOKUP`
 --
 
-CREATE TABLE `lookup` (
+CREATE TABLE `LOOKUP` (
   `PK_LOOKUP` int(11) NOT NULL,
   `IS_ACTIVE` int(11) DEFAULT NULL,
   `CODE` varchar(255) DEFAULT NULL,
@@ -37,10 +37,10 @@ CREATE TABLE `lookup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `lookup`
+-- Dumping data for table `LOOKUP`
 --
 
-INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`, `NAME`, `ORDER_NO`) VALUES
+INSERT INTO `LOOKUP` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`, `NAME`, `ORDER_NO`) VALUES
 (2, 1, 'ADMIN', 'ADMIN', 'USER_ROLE', 'ADMIN', 1),
 (3, 1, 'AUDITOR', 'AUDITOR', 'USER_ROLE', 'AUDITOR', 1),
 (4, 1, 'PETUGAS_MONITOR', 'PETUGAS_MONITOR', 'USER_ROLE', 'PETUGAS_MONITOR', 1),
@@ -50,10 +50,10 @@ INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lookup_group`
+-- Table structure for table `LOOKUP_GROUP`
 --
 
-CREATE TABLE `lookup_group` (
+CREATE TABLE `LOOKUP_GROUP` (
   `LOOKUP_GROUP` varchar(255) DEFAULT NULL,
   `GROUP_DESCR` varchar(255) DEFAULT NULL,
   `IS_UPDATABLE` int(11) DEFAULT NULL,
@@ -61,19 +61,19 @@ CREATE TABLE `lookup_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `lookup_group`
+-- Dumping data for table `LOOKUP_GROUP`
 --
 
-INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_VIEWABLE`) VALUES
+INSERT INTO `LOOKUP_GROUP` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_VIEWABLE`) VALUES
 ('USER_ROLE', 'USER_ROLE', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu_page`
+-- Table structure for table `MENU_PAGE`
 --
 
-CREATE TABLE `menu_page` (
+CREATE TABLE `MENU_PAGE` (
   `PK_MENU_PAGE` int(11) NOT NULL,
   `MENU_NAME` varchar(100) NOT NULL,
   `MENU_MAIN` varchar(100) NOT NULL,
@@ -85,18 +85,55 @@ CREATE TABLE `menu_page` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `menu_page`
+-- Dumping data for table `MENU_PAGE`
 --
 
-INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `MENU_CREATED_BY`, `MENU_CREATED_DATE`, `MENU_ICON`, `FK_LOOKUP_MENU`) VALUES
+INSERT INTO `MENU_PAGE` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `MENU_CREATED_BY`, `MENU_CREATED_DATE`, `MENU_ICON`, `FK_LOOKUP_MENU`) VALUES
 (1, 'auditor', 'auditor', 'sertifikasi/auditor', 'admin', '2018-03-29', '', 3),
 (2, 'admin', 'admin', 'sertifikasi/admin', 'admin', '2018-03-29', '', 2),
 (3, 'monitoring', 'monitoring', 'sertifikasi/monitoring', 'admin', '2018-03-29', '', 4),
 (4, 'pusbin', 'pusbin', 'sertifikasi/pusbin', 'admin', '2018-03-29', '', 5),
 (5, 'unit_apip', 'unit_apip', 'sertifikasi/unit_apip', 'admin', '2018-03-29', '', 6),
-(6, 'Home', 'auditor', 'auditor/homepage.php', 'admin', '2018-03-29', 'home', 3),
-(7, 'Riwayat Ujian', 'auditor', 'auditor/riwayat_ujian.php', 'admin', '2018-03-29', 'book', 3),
-(8, 'Ujian Sertifikasi', 'auditor', 'auditor/ujian_sertifikasi.php', 'admin', '2018-03-29', 'pencil', 3);
+(6, 'Home', 'auditor', 'auditor/home', 'admin', '2018-03-29', 'home', 3),
+(7, 'Riwayat Ujian', 'auditor', 'auditor/RiwayatUjian', 'admin', '2018-03-29', 'book', 3),
+(8, 'Ujian Sertifikasi', 'auditor', 'auditor/UjianSertifikasi', 'admin', '2018-03-29', 'pencil', 3),
+(9, 'unit_apip', 'unit_apip', 'sertifikasi/unit_apip', 'admin', '2018-03-29', '', 6),
+(10, 'Home', 'unit_apip', 'unit_apip/home', 'admin', '2018-03-29', 'home', 6),
+(11, 'Registrasi', 'unit_apip', 'unit_apip/Registrasi', 'admin', '2018-03-29', 'registered', 6),
+(13, 'Komponen Nilai', 'unit_apip', 'unit_apip/KomponenNilai', 'admin', '2018-03-29', '', 6),
+(14, 'Hasil Ujian', 'unit_apip', 'unit_apip/HasilUjian', 'admin', '2018-03-29', '', 6),
+(15, 'Fasilitas Pengangkatan', 'unit_apip', 'unit_apip/FasilitasPengangkatan', 'admin', '2018-03-29', '', 6),
+(16, 'Home', 'pusbin', 'pusbin/home', 'admin', '2018-03-29', '', 5),
+(17, 'Fasilitas Pengangkatan', 'pusbin', 'pusbin/FasilitasPengangkatan', 'admin', '2018-03-29', '', 5),
+(18, 'Bank Soal', 'pusbin', 'pusbin/BankSoal', 'admin', '2018-03-29', '', 5),
+(19, 'Verifikasi Nilai WI/PPK', 'pusbin', 'pusbin/Verifikasi', 'admin', '2018-03-29', '', 5),
+(20, 'Hasil Ujian', 'pusbin', 'pusbin/HasilUjian', 'admin', '2018-03-29', '', 5),
+(21, 'Nilai WI', 'monitoring', 'monitoring/Nilai', 'admin', '2018-03-29', '', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `MENU_PAGE_DETAIL`
+--
+
+CREATE TABLE `MENU_PAGE_DETAIL` (
+  `PK_MENU_DETAIL` int(11) NOT NULL,
+  `MENU_NAME` varchar(50) NOT NULL,
+  `MENU_URL` varchar(100) NOT NULL,
+  `DETAIL_CREATED_BY` varchar(50) NOT NULL,
+  `DETAIL_CREATED_DATE` date NOT NULL,
+  `MENU_ICON` varchar(100) NOT NULL,
+  `FK_MENU_PAGE` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `MENU_PAGE_DETAIL`
+--
+
+INSERT INTO `MENU_PAGE_DETAIL` (`PK_MENU_DETAIL`, `MENU_NAME`, `MENU_URL`, `DETAIL_CREATED_BY`, `DETAIL_CREATED_DATE`, `MENU_ICON`, `FK_MENU_PAGE`) VALUES
+(1, 'Dashboard', 'dashboard.php', 'admin', '2018-03-26', '', 1),
+(2, 'Ujian', 'ujian.php', 'admin', '2018-03-26', '', 1),
+(3, 'Riwayat Ujian', 'riwayat_ujian.php', 'admin', '2018-03-26', '', 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +144,7 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 CREATE TABLE `users` (
   `PK_USER` int(11) NOT NULL,
   `USER_NAME` varchar(50) NOT NULL,
-  `USER_PASSWORD` varchar(250) NOT NULL,
+  `USER_PASSWORD` varchar(100) NOT NULL,
   `FK_LOOKUP_ROLE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -127,23 +164,24 @@ INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) 
 --
 
 --
--- Indexes for table `lookup`
+-- Indexes for table `LOOKUP`
 --
-ALTER TABLE `lookup`
+ALTER TABLE `LOOKUP`
   ADD PRIMARY KEY (`PK_LOOKUP`);
 
 --
--- Indexes for table `lookup_group`
+-- Indexes for table `MENU_PAGE`
 --
-ALTER TABLE `lookup_group`
-  ADD UNIQUE KEY `LOOKUP_GROUP` (`LOOKUP_GROUP`);
-
---
--- Indexes for table `menu_page`
---
-ALTER TABLE `menu_page`
+ALTER TABLE `MENU_PAGE`
   ADD PRIMARY KEY (`PK_MENU_PAGE`),
   ADD KEY `FK_LOOKUP_MENU` (`FK_LOOKUP_MENU`);
+
+--
+-- Indexes for table `MENU_PAGE_DETAIL`
+--
+ALTER TABLE `MENU_PAGE_DETAIL`
+  ADD PRIMARY KEY (`PK_MENU_DETAIL`),
+  ADD KEY `FK_MENU_PAGE` (`FK_MENU_PAGE`) USING BTREE;
 
 --
 -- Indexes for table `users`
@@ -153,20 +191,35 @@ ALTER TABLE `users`
   ADD KEY `FK_LOOKUP_ROLE` (`FK_LOOKUP_ROLE`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `MENU_PAGE_DETAIL`
+--
+ALTER TABLE `MENU_PAGE_DETAIL`
+  MODIFY `PK_MENU_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `menu_page`
+-- Constraints for table `MENU_PAGE`
 --
-ALTER TABLE `menu_page`
-  ADD CONSTRAINT `menu_page_ibfk_1` FOREIGN KEY (`FK_LOOKUP_MENU`) REFERENCES `lookup` (`PK_LOOKUP`);
+ALTER TABLE `MENU_PAGE`
+  ADD CONSTRAINT `menu_page_ibfk_1` FOREIGN KEY (`FK_LOOKUP_MENU`) REFERENCES `LOOKUP` (`PK_LOOKUP`);
+
+--
+-- Constraints for table `MENU_PAGE_DETAIL`
+--
+ALTER TABLE `MENU_PAGE_DETAIL`
+  ADD CONSTRAINT `menu_page_relat` FOREIGN KEY (`FK_MENU_PAGE`) REFERENCES `MENU_PAGE` (`PK_MENU_PAGE`);
 
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`FK_LOOKUP_ROLE`) REFERENCES `lookup` (`PK_LOOKUP`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`FK_LOOKUP_ROLE`) REFERENCES `LOOKUP` (`PK_LOOKUP`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
