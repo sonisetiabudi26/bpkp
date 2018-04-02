@@ -44,3 +44,24 @@ $('#admin-modal').on('show.bs.modal', function(e) {
 $('body').on('hidden.bs.modal', '.modal', function () {
   $(this).removeData('bs.modal');
 });
+
+$('#menuToContent').click(function(e){
+	alert("hai");
+	var pageurl = $(this).attr('href');
+	$.ajax({
+		data: {
+			title : $(this).data('title')
+		},
+		url:$(this).attr('href'),
+		type:'GET',
+		success:function(data){
+			$('div#content-web').html(data);
+			$('div#content-web').load(url);
+		}
+	})
+	if(pageurl!=window.location){
+		window.history.pushState({path:pageurl},'',pageurl);
+	}
+	e.preventDefault();
+	return false;
+});

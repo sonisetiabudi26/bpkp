@@ -18,11 +18,9 @@ class Home extends CI_Controller {
 
       if(isset($fk_lookup_menu) && isset($username)){
         $data['title_page'] = 'BPKP Web Application';
-        $data['content_page']='admin/homepage.php';
+        $data['content_page']='widyaiswara/nilai_wi.php';
         $data['username']=$username;
-				$data['menu_page']="Home";
-				$data['menu_page']="riwayat_ujian";
-        $this->load->view('sertifikasi/homepage', $data);
+		getMenuAccessPage($data, $fk_lookup_menu);
       }else{
         redirect('/');
       }

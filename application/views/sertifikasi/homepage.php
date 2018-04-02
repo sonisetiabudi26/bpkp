@@ -27,11 +27,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')?>" rel="stylesheet">
-	<!-- <meta charset="utf-8">
-	<title><?php //echo $title_page;?></title>
-	<link href="<?php //echo base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" />
-	<link href="<?php //echo base_url('assets/css/font-awesome.css')?>" rel="stylesheet" /> -->
-	<!-- <link href="<?php //echo base_url('assets/css/style.css')?>" rel="stylesheet"> -->
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -46,11 +41,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 	</div>
 </div>
-
-
-
-
-
 <!-- INCLUDE JS -->
 <!-- jQuery -->
 <script src="<?php echo base_url('assets/vendors/jquery/dist/jquery.min.js')?>"></script>
@@ -62,8 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/nprogress/nprogress.js')?>"></script>
 <!-- jQuery custom content scroller -->
 <script src="<?php echo base_url('assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')?>"></script>
-
 <!-- Custom Theme Scripts -->
+<script src="<?php echo base_url('assets/build/js/custom.min.js')?>"></script>
+<!-- add function ajax process -->
+<script src="<?php //echo base_url('assets/js/function.process.js')?>"></script>
 <script src="<?php echo base_url('assets/build/js/custom.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/echarts/dist/echarts.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net/js/jquery.dataTables.min.js')?>"></script>
