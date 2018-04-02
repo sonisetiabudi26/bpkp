@@ -70,6 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')?>"></script>
+<script src="<?php echo base_url('assets/build/js/custom.js')?>"></script>
 <!-- <script src="<?php //echo base_url('assets/js/function.process.js')?>"></script> -->
 </body>
 </html>
