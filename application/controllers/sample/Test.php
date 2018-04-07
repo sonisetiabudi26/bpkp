@@ -10,7 +10,7 @@ class Test extends My_Controller {
     }
 
     public function get_token_datacenter_post(){
-        $json = $this->generateAuthToken(URITOKEN, "USER_API_DC");
+        $json = $this->generateAuthToken(URITOKEN, USER_API_DC);
         return $this->response($json);
     }
 }

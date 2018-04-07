@@ -1,3 +1,12 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2018 at 10:15 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.1.15
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -38,7 +47,11 @@ INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`,
 (3, 1, 'AUDITOR', 'AUDITOR', 'USER_ROLE', 'AUDITOR', 1),
 (4, 1, 'WIDYASWARA', 'WIDYASWARA', 'USER_ROLE', 'WIDYASWARA', 1),
 (5, 1, 'PUSBIN', 'PUSBIN', 'USER_ROLE', 'PUSBIN', 1),
-(6, 1, 'UNIT_APIP', 'UNIT_APIP', 'USER_ROLE', 'UNIT_APIP', 1);
+(6, 1, 'UNIT_APIP', 'UNIT_APIP', 'USER_ROLE', 'UNIT_APIP', 1),
+(7, 1, 'URITOKEN', 'https://ayocoba.in/dca-api/api/viewtoken', 'URL_API', 'URITOKEN', 1),
+(8, 1, 'USER_API_DC', 'dummy|dummy123', 'USER_ACCESS_API', 'nama|kata_sandi', 1),
+(9, 1, 'USER_API_IN', 'BPKP|$2y$10$ANoVQFnXgwHi.GuA7oCbl.Pub9F0AyWpt0LodR2kKKWEkD07RnGTG', 'USER_ACCESS_API', 'USER_API_IN', 2),
+(10, 1, 'SECRET_KEY_IN', 'c1pt4493uNgM4Hd14r73', 'SECRET_KEY', 'SECRET_KEY_IN', 1);
 
 -- --------------------------------------------------------
 
@@ -58,7 +71,11 @@ CREATE TABLE `lookup_group` (
 --
 
 INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_VIEWABLE`) VALUES
-('USER_ROLE', 'USER_ROLE', 1, 1);
+('USER_ROLE', 'USER_ROLE', 1, 1),
+('URL_API', 'URL_API', 1, 1),
+('SECRET_KEY', 'SECRET_KEY', 1, 1),
+('USER_ACCESS_API', 'USER_ACCESS_API', 1, 1),
+('SECRET_KEY', 'SECRET_KEY', 1, 1);
 
 -- --------------------------------------------------------
 
