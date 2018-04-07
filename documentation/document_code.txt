@@ -1,20 +1,50 @@
 1. sample loop table
-<?php
-	foreach ($lookups as $lookups_item):
-		##column case sensitive
-		echo $lookups_item->PK_LOOKUP;
-	endforeach;
-?>
+	<?php
+		foreach ($lookups as $lookups_item):
+			##column case sensitive
+			echo $lookups_item->PK_LOOKUP;
+		endforeach;
+	?>
 
 2. handle auth from url
-<?php
-	if(!$this->input->post()){
-		redirect('url');
-	}
-?>
+	<?php
+		if(!$this->input->post()){
+			redirect('url');
+		}
+	?>
 
 3. encrypt decrypt
-$this->encrypt->encode() // Performs the data encryption and returns it as a string
-$this->encrypt->decode() // Decrypts an encoded string.
+	$this->encrypt->encode() // Performs the data encryption and returns it as a string
+	$this->encrypt->decode() // Decrypts an encoded string.
 
-CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==
+4. JWT Server Format : 
+	
+	GET TOKEN AUTH :
+	POST 	:
+	URL		: http://localhost/bpkp/share/rest/auth
+	BODY	: 	
+			{
+				"username":"BPKP",
+				"password":"BPKPSERTIFIKASI123"
+			}
+	HEADERS	:
+			Content-Type : application/json
+	
+	SAMPLE GET DATA FROM BPKP :
+	GET		:
+	URL		: http://localhost/bpkp/share/api/lookup/2
+	HEADERS	:
+			Authorization : {get_token_from_point_top}
+			Content-Type : application/json
+	
+5. Get data(this app is client) process token from other/external server url, directory sample use format :
+	controllers - sample - Test.php
+
+6. Constant Variable
+	Declare constanta in constant.php if create variable and using for more than one process.
+	
+7. Function / Method
+	Declare function / method in function_native_helper.php if create function/method and using for more than one process.
+	
+8. RESTFULL
+	If create process for get data with web service or rest, please create class with extend MY_Controller.

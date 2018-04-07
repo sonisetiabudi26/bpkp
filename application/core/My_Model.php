@@ -25,7 +25,8 @@ class My_Model extends CI_Model
  
 	public function _get_by_id($primary_val)
 	{
-		return $this->get_by($this->primary_key, $primary_val);
+	    $query = $this->db->get_where($this->_table, array($this->primary_key => $primary_val));
+	    return $query->row();
 	}
  
 	public function _add($data)

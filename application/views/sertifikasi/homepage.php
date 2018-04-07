@@ -27,12 +27,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')?>" rel="stylesheet">
+	<link href="<?php echo base_url('assets/css/develop.style.css')?>" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="<?php echo base_url('assets/vendors/jquery/dist/jquery.min.js')?>"></script>
 </head>
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
 	<?php
-		//$this->load->view('sertifikasi/content/loading-page.php');
+		$this->load->view('sertifikasi/content/loading-page.php');
 		$this->load->view('sertifikasi/content/menu-page.php');
 		$this->load->view('sertifikasi/content/header-page.php');
 		$this->load->view('sertifikasi/content/content-page.php');
@@ -42,8 +45,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 </div>
 <!-- INCLUDE JS -->
-<!-- jQuery -->
-<script src="<?php echo base_url('assets/vendors/jquery/dist/jquery.min.js')?>"></script>
 <!-- Bootstrap -->
 <script src="<?php echo base_url('assets/vendors/bootstrap/dist/js/bootstrap.min.js')?>"></script>
 <!-- FastClick -->
@@ -54,9 +55,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')?>"></script>
 <!-- Custom Theme Scripts -->
 <script src="<?php echo base_url('assets/build/js/custom.min.js')?>"></script>
-<!-- add function ajax process -->
-<script src="<?php //echo base_url('assets/js/function.process.js')?>"></script>
-<script src="<?php echo base_url('assets/build/js/custom.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/echarts/dist/echarts.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net/js/jquery.dataTables.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')?>"></script>
@@ -70,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')?>"></script>
-<script src="<?php echo base_url('assets/build/js/custom.js')?>"></script>
-<!-- <script src="<?php //echo base_url('assets/js/function.process.js')?>"></script> -->
+<!-- add function ajax process -->
+<script src="<?php echo base_url('assets/js/function.process.js');?>"></script>
 </body>
 </html>
