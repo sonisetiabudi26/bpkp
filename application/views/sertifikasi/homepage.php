@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="container body">
 		<div class="main_container">
 	<?php
-		//$this->load->view('sertifikasi/content/loading-page.php');
+		$this->load->view('sertifikasi/content/loading-page.php');
 		$this->load->view('sertifikasi/content/menu-page.php');
 		$this->load->view('sertifikasi/content/header-page.php');
 		$this->load->view('sertifikasi/content/content-page.php');

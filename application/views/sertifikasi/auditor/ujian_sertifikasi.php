@@ -10,11 +10,11 @@
             <p style="color:#eee;">Step 1</p>
         </div>
         <div class="stepwizard-step">
-            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+            <a href="#step-2" type="button" class="btn btn-default btn-circle disabled" >2</a>
             <p style="color:#eee;">Step 2</p>
         </div>
         <div class="stepwizard-step">
-            <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+            <a href="#step-3" type="button" class="btn btn-default btn-circle disabled" >3</a>
             <p style="color:#eee;">Step 3</p>
         </div>
     </div>
@@ -28,11 +28,14 @@
 				<div class="clearfix">&nbsp;</div>
                 <form>
 			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-left top_search">
-				<div class="input-group">
-					<input type="text" id="kodeUjian" name="kodeUjian" class="form-control" placeholder="Masukan Kode Ujian">
-					<span class="input-group-btn">
-						<button id="next" class="btn btn-primary nextBtn" type="button">Lanjutkan</button>
-					</span>
+			<div class="form-group" style="color:#fff;">
+				<label class="control-label space-15" ><span> NIP</span></label>
+					<div class="input-group">
+						<input maxlength="100" type="text" required="required" type="text" id="nip" name="nip" class="form-control" placeholder="Masukan NIP">
+						<span class="input-group-btn">
+							<button id="next" class="btn btn-primary nextBtn" type="button">Lanjutkan</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -47,11 +50,14 @@
 				<div class="clearfix">&nbsp;</div>
 		<form>
 			<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-left top_search">
-				<div class="input-group">
-					<input type="text" id="kodeUjian" name="kodeUjian" class="form-control" placeholder="Masukan NIP">
-					<span class="input-group-btn">
-						<button id="next-2" class="btn btn-primary nextBtn" type="button">Lanjutkan</button>
-					</span>
+				<div class="form-group" style="color:#fff;">
+					<label class="control-label space-5"> Kode Ujian</label>
+					<div class="input-group">
+						<input type="text" maxlength="100" type="text" required="required" id="kodeUjian" name="kodeUjian" class="form-control" placeholder="Masukan Kode Ujian">
+						<span class="input-group-btn">
+							<button id="next-2" class="btn btn-primary nextBtn" type="button">Lanjutkan</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</form>

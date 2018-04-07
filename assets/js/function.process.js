@@ -1,4 +1,5 @@
 $( document ).ready(function( $ ) {
+$('.loading-content').show();
     var navListItems = $('div.setup-panel div a'),
             allWells = $('.setup-content'),
             allNextBtn = $('.nextBtn');
@@ -35,10 +36,11 @@ $( document ).ready(function( $ ) {
         }
 
         if (isValid)
-            nextStepWizard.removeAttr('disabled').trigger('click');
+            nextStepWizard.removeClass('disabled').trigger('click');
     });
 
     $('div.setup-panel div a.btn-primary').trigger('click');
+	$('.loading-content').hide();
 });
 
 $('#formReg').submit(function(e) {
