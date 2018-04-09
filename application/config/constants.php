@@ -90,3 +90,13 @@ define('ERROR_LOGIN_PAGE_PASS','Password yang anda masukan salah');
 define('ERROR_LOGIN_PAGE_USERNAME','Username yang anda masukan salah');
 define('ERROR_LOGIN_PAGE_MENUROLE','Halaman yang dituju tidak ada akses menu, silahkan hubungi administrator');
 define('ERROR_LOGIN_PAGE_REFRESH_PROCESS','Anda tidak mempunyai session untuk refresh halaman');
+//ADD LOOKUP GROUP CONSTANT
+define('URL_API','URL_API');
+define('USER_ACCESS_API','USER_ACCESS_API');
+define('SECRET_KEY','SECRET_KEY');
+// ADD CONSTANT CODE DEFINITION SECRET KEY LOOKUP
+define('SECRET_KEY_IN','SECRET_KEY_IN');
+//ADD CONSTANT CODE URI REST CONSUME
+define('URITOKEN','URITOKEN');
+// ADD CONSTANT CODE USER API
+define('USER_API_DC','USER_API_DC');

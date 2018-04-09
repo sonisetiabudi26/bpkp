@@ -25,3 +25,15 @@ if ( ! function_exists('getMenuAccessPage')){
 		}
 	}
 }
+
+if ( ! function_exists('generateSecretKey')){
+    function generateSecretKey($lookup_group, $lookup_code){
+        $ci =& get_instance();
+        return $ci->lookup->_get_lookup_from_lookupgroup_and_code($lookup_group, $lookup_code)->DESCR;
+    }
+}
+if ( ! function_exists('explode_lookup_access')){
+    function explode_lookup_access($field, $number){
+        return explode("|", $field, $number);
+    }
+}
