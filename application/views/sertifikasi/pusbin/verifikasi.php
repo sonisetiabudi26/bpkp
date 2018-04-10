@@ -15,6 +15,7 @@
             <table  class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 							<thead>
 							<tr>
+								<td>Nama</td>
 								<td>Nilai KSP yang di Input unit APIP</td>
 								<td>Nilai WI yang di Input Widyaiswara</td>
 								<td>Nilai Ujian Online</td>
@@ -22,6 +23,7 @@
 							</thead>
 							<tbody>
                   <tr>
+										<td>Johnson</td>
                     <td>90</td>
                     <td>87</td>
                     <td>93</td>
