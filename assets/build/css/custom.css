@@ -510,7 +510,7 @@ body .container.body .right_col {
   color:#f7f7f7;
 }
 body {
-    color: #222;
+    
 		background: #3a7bd5;  /* fallback for old browsers */
 		background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */
 		background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -672,7 +672,7 @@ h3,
     margin-bottom: 10px
 }
 a {
-    color: #5A738E;
+    color: #fff;
     text-decoration: none
 }
 a,
@@ -1087,14 +1087,16 @@ h2 {
 .accordion .panel:hover {
     background: #F2F5F7
 }
+
 .x_panel {
     position: relative;
     width: 100%;
     margin-bottom: 10px;
     padding: 10px 17px;
     display: inline-block;
-    background: #fff;
-    border: 1px solid #E6E9ED;
+    background-color: rgba(0, 0, 0, 0.2);
+    /*border: 1px solid #E6E9ED;*/
+    color:#f3f3f3;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
@@ -1102,9 +1104,11 @@ h2 {
     transition: all .2s ease
 }
 .x_title {
-    border-bottom: 2px solid #E6E9ED;
+    border-bottom: 0.7px solid #E6E9ED;
     padding: 1px 5px 6px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    color:#f3f3f3;
+
 }
 .x_title .filter {
     width: 40%;
@@ -1114,6 +1118,7 @@ h2 {
     margin: 5px 0 6px;
     float: left;
     display: block;
+    color:#f3f3f3;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap
@@ -4304,7 +4309,7 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 /** form style */
 .form-style {
   margin: auto;
-  background: transparent;  
+  background: transparent;
   font-family: 'Open Sans', sans-serif;
    border-radius: 5px;
   max-width:900px;
@@ -4334,7 +4339,7 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
   padding: 22px 25px;
   border-radius: 5px 5px 0px 0px;
   margin: auto;
-  text-shadow: none; 
+  text-shadow: none;
   text-align:left
 }
 
@@ -4350,7 +4355,7 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 }
 
 h1 {
-  text-align:center; 
+  text-align:center;
   color: #fff;
   text-shadow: 1px 1px 0px #FFF;
   margin:50px 0px 0px 0px
@@ -4376,7 +4381,7 @@ h1 {
   border: 1px solid #EEE;
   margin: 0;
   width: 75%;
-  height: 130px; 
+  height: 130px;
   float: left;
   padding: 0px 15px;
 }
@@ -4419,7 +4424,7 @@ h1 {
 }
 
 .form-style .leftcontact {
-  width:49.5%; 
+  width:49.5%;
   float:left;
   border-right: 1px dotted #CCC;
   box-sizing: border-box;
