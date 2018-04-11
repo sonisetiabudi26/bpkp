@@ -9,7 +9,6 @@ class Home extends CI_Controller {
         $this->load->library('session');
     		$this->load->helper('url');
     		$this->load->model('sertifikasi/menupage','menupage');
-				$this->load->model('sertifikasi/pusbin','pusbin');
     }
 
     public function index()
@@ -18,12 +17,11 @@ class Home extends CI_Controller {
 		$username = $this->session->userdata('logged_in');
 		if(isset($fk_lookup_menu) && isset($username)){
 			$data['title_page'] = 'BPKP Web Application';
-			$data['content_page']='pusbin/homepage.php';
+			$data['content_page']='bpkp/homepage.php';
 			$data['username']=$username;
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');
 		}
     }
-	
 }
