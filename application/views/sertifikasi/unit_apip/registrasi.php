@@ -22,16 +22,28 @@
                 <input class="form-control" type="text" placeholder="Masukan NIP Calon Peserta"><br>
                 <button class="btn btn-primary btn-block">Cari</button>
               </div>
-              <div class="row">
-                <br>
-                  <select class="form-control">
-                    <option>Lokasi Ujian</option>
-                  </select>
+              <div class="input-group">
+                   <input type="text" class="form-control" placeholder="JAKARTA">
+                   <span class="input-group-btn">
+                        <button class="btn btn-success" style="width:200px;float:right;" data-toggle="modal" data-target="#modal-content">Pindah Lokasi</button>
+                   </span>
+              </div>
+                <div
+              <br>
+                   <input type="date" - type="date" class="form-control" placeholder="Tanggal Ujian">
+               <br>
+                   <input type="text" class="form-control" placeholder="Nomor Surat Pendaftaran/Persetujuan">     
               <br>
                    <input type="text" class="form-control" placeholder="Nilai KSP">
                    <br>
                 <div class="input-group">
-                   <input type="text" class="form-control" placeholder="Surat Persetujuan">
+                   <input type="text" class="form-control" placeholder="Upload Dokumen Nilai KSP">
+                   <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Browse</button>
+                   </span>
+                </div>
+                <div class="input-group">
+                   <input type="text" class="form-control" placeholder="Upload Foto Berlatar Belakang Merah">
                    <span class="input-group-btn">
                         <button class="btn btn-default" type="button">Browse</button>
                    </span>
@@ -61,15 +73,26 @@
   							<tr>
   								<td>Nama</td>
   								<td>Mata Pelajaran</td>
+                  <td>Nomor Surat</td>
+                  <td>Tanggal Ujian</td>
   							</tr>
   							</thead>
   							<tbody>
                   <tr>
                       <td>Nino</td>
                       <td>Kode Etik dan standart audit</td>
+                      <td>126/PM/12/02/18</td>
+                      <td>12-11-2018</td>
+                  
                   </tr>
   							</tbody>
   							</table>
+                <div 
+                class="input-group">
+                   <input type="text" class="form-control" placeholder="Upload Surat Persetujuan">
+                   <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Browse</button>
+                   </span>
 						</div>
             <div class="row">
               <button class="btn btn-primary btn-block">Lanjut</button>
