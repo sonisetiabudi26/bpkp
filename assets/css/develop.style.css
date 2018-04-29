@@ -187,3 +187,39 @@
 .space-30 {
 	margin-left: 30px;
 }
+
+.padding-5{
+	padding:5px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.content_response{
+	display:none;
+	border-radius:2px;
+	box-shadow:0px 0px 1px 1px #999;
+	padding:5px;
+}
+.content_response span{
+	padding:5px;
+	font-size:14px;
+	color:#eee;
+}
