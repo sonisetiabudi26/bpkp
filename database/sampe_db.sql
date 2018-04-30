@@ -434,6 +434,33 @@ ALTER TABLE `menu_page_detail`
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`FK_LOOKUP_ROLE`) REFERENCES `lookup` (`PK_LOOKUP`);
 
+  -- --------------------------------------------------------
+  --
+-- Table structure for table `mata_ajar`
+--
+
+CREATE TABLE `mata_ajar` (
+  `PK_MATA_AJAR` int(11) NOT NULL,
+  `NAMA_MATA_AJAR` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `soal_ujian`
+--
+
+CREATE TABLE `soal_ujian` (
+  `PK_SOAL_UJIAN` int(11) NOT NULL,
+  `FK_MATA_AJAR` int(11) NOT NULL,
+  `PARENT_SOAL` int(11) NOT NULL,
+  `PERTANYAAN` varchar(1000) NOT NULL,
+  `JAWABAN` varchar(10) NOT NULL,
+  `PILIHAN_1` varchar(255) NOT NULL,
+  `PILIHAN_2` varchar(255) NOT NULL,
+  `PILIHAN_3` varchar(255) NOT NULL,
+  `PILIHAN_4` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
