@@ -1,0 +1,2 @@
+* * * * * /usr/bin/php C:\xampp\htdocs\bpkp\application\init
+0 0 * * * /usr/bin/php C:\xampp\htdocs\bpkp\application\cli_script.php
