@@ -17,10 +17,15 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="image_photo"><img src="<?php echo base_url('assets/img/content/user.png') ?>" class="img-circle profile_img"></div>
-						<div class="clearfix"></div><br/>
-						<label id="compose" class="btn btn-sm btn-success btn-block" >3234239424</label>
-						<label id="compose" class="btn btn-sm btn-success btn-block" >TK.2</label>
-						<label id="compose" class="btn btn-sm btn-success btn-block" >LAIN-LAIN</label>
+						<div class="clearfix"></div>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >NAMA</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >NIP</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >Tempat Tanggal Lahir</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >Pendidikan</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >Unit Kerja</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >Jabatan</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >Golongan</label>
+						<label id="compose" class="btn btn-sm btn-success btn-block" >Pangkat</label>
 					</div>
 
 				</div>
