@@ -22,4 +22,13 @@ class Lookup extends My_Model
 	    $query = $this->db->get();
 	    return $query->row();
 	}
+	
+	public function _get_lookup_bank_soal() {
+	    $condition = "lookup_group = 'USER_ROLE' and code = 'BANK_SOAL'";
+	    $this->db->select('*');
+	    $this->db->from($this->_table);
+	    $this->db->where($condition);
+	    $query = $this->db->get();
+	    return $query->result();
+	}
 }
