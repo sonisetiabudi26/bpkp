@@ -34,4 +34,17 @@ class Users extends My_Model
 			return false;
 		}
 	}
+	
+	public function _get_user_bank_soal() {
+		$condition = "fk_lookup_role = 1";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 1) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 }
