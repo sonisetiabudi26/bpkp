@@ -37,8 +37,10 @@ class My_Model extends CI_Model
  
 	public function _update($where, $data)
 	{
+		$this->db->trans_start();
 		$this->db->update($this->_table, $data, $where);
-		return $this->db->affected_rows();
+		$this->db->trans_complete();
+		return $this->db->trans_status();
 	}
  
 	public function _delete_by_id($id)

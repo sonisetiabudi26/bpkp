@@ -1,3 +1,25 @@
+<div class="modal fade" id="confirm-next" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Konfirmasi Masuk Ujian</h4>
+                </div>
+            
+                <div class="modal-body">
+                    <p>Anda akan diarahkan ke ujian online.</p>
+                    <p>Apakah Anda Sudah Siap Untuk Ujian ini?</p>
+                    <p class="debug-url"></p>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="clearfix"></div>
 <h1>Ujian Sertifikasi</h1>
    <div class="info"><p> Auditor <i class="fa fa-pencil"></i></p></div>
@@ -71,13 +93,35 @@
 				<div><p style="color:#999;"> Pilih Ujian <i class="fa fa-pencil"></i></p></div>
 				<div class="clearfix">&nbsp;</div>
                 <div class="row">
-					<div class="col-lg-6"><button class="col-lg-12 btn-primary" style="border-radius:3px;padding:5px;">Ujian 1</button></div>
-					<div class="col-lg-6"><button class="col-lg-12 btn-primary" style="border-radius:3px;padding:5px;">Ujian 2</button></div>
-					<div class="col-lg-6"><button class="col-lg-12 btn-primary" style="border-radius:3px;padding:5px;">Ujian 3</button></div>
-					<div class="col-lg-6"><button class="col-lg-12 btn-primary" style="border-radius:3px;padding:5px;">Ujian 4</button></div>
+					<div class="col-lg-6">
+						<button data-url="/ujian_online.php?id=23" data-toggle="modal" data-target="#confirm-next" class="col-lg-12 col-md-6 col-xs-12 btn-primary btn-box">
+							<h2>Ujian 1</h2>
+						</button>
+					</div>
+					<div class="col-lg-6">
+						<button data-url="/ujian_online.php?id=23" data-toggle="modal" data-target="#confirm-next" class="col-lg-12 col-md-6 col-xs-12 btn-primary btn-box">
+							<h2>Ujian 2</h2>
+						</button>
+					</div>
+					<div class="col-lg-6">
+						<button data-url="/ujian_online.php?id=23" data-toggle="modal" data-target="#confirm-next" class="col-lg-12 col-md-6 col-xs-12 btn-primary btn-box">
+							<h2>Ujian 3</h2>
+						</button>
+					</div>
+					<div class="col-lg-6">
+						<button data-url="/ujian_online.php?id=23" data-toggle="modal" data-target="#confirm-next" class="col-lg-12 col-md-6 col-xs-12 btn-primary btn-box">
+							<h2>Ujian 4</h2>
+						</button>
+					</div>
 				</div>
             </div>
         </div>
     </div>
 </form>
 </div>
+<script>
+	$('#confirm-next').on('show.bs.modal', function(e) {
+		$(this).find('.btn-ok').attr('url', $(e.relatedTarget).data('url'));
+		$('.debug-url').html('Masuk Ujian URL: <strong>' + $(this).find('.btn-ok').attr('url') + '</strong>');
+	});
+</script>
