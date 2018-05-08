@@ -8,7 +8,7 @@
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="myModalLabel">
-					<b>View All Data Registrasi</b>
+					<b>BPKP Sertifikasi</b>
 				</h4>
 			</div>
 			<div class="modal-body" style="min-height:300px;overflow-y:auto;"><img
