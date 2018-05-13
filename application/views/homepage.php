@@ -8,7 +8,7 @@
 	<link href="<?php echo base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" />
 	<link href="<?php echo base_url('assets/css/font-awesome.css')?>" rel="stylesheet" />
 	<link href="<?php echo base_url('assets/css/style.css')?>" rel="stylesheet" />
-	
+
 </head>
 <body class="body-1">
 	<div class="outer">
@@ -42,6 +42,15 @@
 											<i class="glyphicon glyphicon-lock form-control-feedback"></i>
 									    <input type="password" name="password" class="form-control" placeholder="Password" required/>
 										</div>
+									</div>
+										<div class="row">
+											<select name='role' class="form-control">
+											 <option value="1">Pusbin</option>
+											 <option value="2">Unit APIP</option>
+											 <option value="3">Auditor</option>
+											 <option value="4">Bank Soal</option>
+											 <option value="5">Widyaiswara</option>
+											</select>
 									</div>
 									<div class="row">
 										<br><a href="#" class="forgot">Forgot Password?</a>
