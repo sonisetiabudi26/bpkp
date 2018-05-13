@@ -53,8 +53,8 @@ class Login extends CI_Controller{
 	 $url="http://ayocoba.in/dca-api/api/login";
 	 $username = $this->input->post('username');
 	 $password = $this->input->post('password');
-	 $role = $this->input->post('role');
-  if($role==1 || $role==2){
+	 $role_menu = $this->input->post('role');
+  if($role_menu==1 || $role_menu==2){
 			 $jsonData = array(
 		     'nip' => $username,
 		     'password' => $password
@@ -66,12 +66,12 @@ class Login extends CI_Controller{
 				if($jsonDataEncoded->message=='login_success'){
 				$role=$jsonDataEncoded->data[0]->RoleCode;
 
-				 if($role=='AdminUnitKerja'){
+				 if($role=='AdminUnitKerja' && $role_menu==2){
 					$fk_lookup_menupage='6';
 					$this->session->set_userdata('logged_in', $jsonDataEncoded->data[0]->Auditor_NamaLengkap);
 					$this->session->set_userdata('fk_lookup_menu',$fk_lookup_menupage);
 				 	$this->direct_page($fk_lookup_menupage);
-				}else if($role=='Eselon1'){
+				}else if($role=='Eselon1' && $role_menu==1){
 					$fk_lookup_menupage='5';
 					$this->session->set_userdata('logged_in', $jsonDataEncoded->data[0]->Auditor_NamaLengkap);
 					$this->session->set_userdata('fk_lookup_menu',$fk_lookup_menupage);
