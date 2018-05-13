@@ -22,7 +22,7 @@ class BabMataPelajaran extends CI_Controller {
 				print json_encode(array("status"=>"error", "data"=>"error"));
 			}
 		}else{
-			print json_encode(array("status"=>"mata ajar or bab mata harus diisi", "data"=>"mata ajar or bab mata harus diisi"));
+			print json_encode(array("status"=>"mata ajar / bab mata harus diisi", "data"=>"mata ajar / bab mata harus diisi"));
 		}
     }
 	

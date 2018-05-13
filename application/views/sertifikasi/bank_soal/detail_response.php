@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/update_soal"; ?>" method="POST" id="editSoalForm" >
+<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/update_soal"; ?>" method="POST" id="editSoalForm" >
 <table  class="table">
 	<thead>
 		<tr>
@@ -101,40 +101,3 @@
 </table>
 </form>
 </div>
-<script>
-$('#editSoalForm').submit(function(e) {
-	e.preventDefault();
-	var data = new FormData(document.getElementById("editSoalForm"));
-	$.ajax({
-		data : data,
-		type : $(this).attr('method'),
-		url : $(this).attr('action'),
-        async: false,
-		processData: false,
-		contentType: false,
-		cache:false,
-        timeout: 600000,
-		dataType: "json",
-		success : function(response) {
-			if(response.status=='success'){
-				$("#response-text").html("<h4 class='text-success'>Process save : "+response.status+"</h4>");
-			}else{
-				$("#response-text").html("<h4 class='text-danger'>Process save : "+response.status+"</h4>");
-			}
-			
-			$("#response-text").fadeTo(2000, 500).slideUp(500, function(){
-				$("#response-text").slideUp(500);
-			});
-			
-			console.log("success : ", "success");
-			$("#btn-save-detail").prop("disabled", true);
-		},
-		error: function (e) {
-			$("#response-text").html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
-			console.log("ERROR : ", e);
-			$("#btn-save-detail").prop("disabled", false);
-		}
-	});
-	return false;
-});
-</script>
