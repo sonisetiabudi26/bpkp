@@ -142,4 +142,24 @@ class AdminBankSoal extends CI_Controller {
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
 	}
+	
+	public function vw_add_soal(){
+		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/add_soal', $data);
+	}
+	
+	public function vw_import_soal(){
+		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/import_soal', $data);
+	}
+	
+	public function vw_add_ujian(){
+		$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/add_ujian', $data);
+	}
+	
+	public function vw_review_soal(){
+		$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/review_soal', $data);
+	}
 }

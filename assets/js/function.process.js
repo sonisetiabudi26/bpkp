@@ -86,10 +86,6 @@ $('#admin-modal').on('show.bs.modal', function(e) {
 	});
 });
 
-$('body').on('hidden.bs.modal', '.modal', function () {
-  $(this).removeData('bs.modal');
-});
-
 $('#menuToContent').click(function(e){
 	alert("hai");
 	var pageurl = $(this).attr('href');
@@ -257,10 +253,6 @@ function getModal(btnId){
 			}
 		});
 	});
-
-	$('body').on('hidden.bs.modal', '.modal', function () {
-		$(this).removeData('bs.modal');
-	});
 }
 
 /** format parsing : this button action */
@@ -282,8 +274,10 @@ function getModalWithParam(btnId){
 			}
 		});
 	});
-
-	$('body').on('hidden.bs.modal', '.modal', function () {
-		$(this).removeData('bs.modal');
-	});
 }
+
+$(document).ready(function() {
+	$('body').on('hidden.bs.modal', '.modal', function () {
+		location.reload();
+	});
+});

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2018 at 08:54 PM
+-- Generation Time: May 13, 2018 at 08:30 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.1.15
 
@@ -61,9 +61,27 @@ CREATE TABLE `bab_mata_ajar` (
 --
 
 INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_AJAR`) VALUES
-(1, 1, 'History Audit'),
-(2, 1, 'Audit Umum'),
-(3, 1, 'Describe Filosophi');
+(9, 5, 'Dasar Auditor');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_mata_ajar`
+--
+
+CREATE TABLE `group_mata_ajar` (
+  `PK_GROUP_MATA_AJAR` int(11) NOT NULL,
+  `NAMA_GROUP_MATA_AJAR` varchar(255) NOT NULL,
+  `FK_LOOKUP_DIKLAT` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `group_mata_ajar`
+--
+
+INSERT INTO `group_mata_ajar` (`PK_GROUP_MATA_AJAR`, `NAMA_GROUP_MATA_AJAR`, `FK_LOOKUP_DIKLAT`) VALUES
+(1, 'Auditor Utama', 16),
+(2, 'Auditor Ahli', 17);
 
 -- --------------------------------------------------------
 
@@ -102,17 +120,23 @@ CREATE TABLE `lookup` (
 --
 
 INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`, `NAME`, `ORDER_NO`) VALUES
-(1, 1, 'BANK_SOAL', 'BANK_SOAL', 'USER_ROLE', 'BANK_SOAL', 1),
+(1, 1, 'BANK_SOAL', 'BANK_SOAL', 'USER_ROLE', 'BANK_SOAL', 3),
 (2, 1, 'ADMIN', 'ADMIN', 'USER_ROLE', 'ADMIN', 1),
-(3, 1, 'AUDITOR', 'AUDITOR', 'USER_ROLE', 'AUDITOR', 1),
-(4, 1, 'WIDYASWARA', 'WIDYASWARA', 'USER_ROLE', 'WIDYASWARA', 1),
-(5, 1, 'PUSBIN', 'PUSBIN', 'USER_ROLE', 'PUSBIN', 1),
-(6, 1, 'UNIT_APIP', 'UNIT_APIP', 'USER_ROLE', 'UNIT_APIP', 1),
+(3, 1, 'AUDITOR', 'AUDITOR', 'USER_ROLE', 'AUDITOR', 2),
+(4, 1, 'WIDYASWARA', 'WIDYASWARA', 'USER_ROLE', 'WIDYASWARA', 6),
+(5, 1, 'PUSBIN', 'PUSBIN', 'USER_ROLE', 'PUSBIN', 4),
+(6, 1, 'UNIT_APIP', 'UNIT_APIP', 'USER_ROLE', 'UNIT_APIP', 5),
 (7, 1, 'URITOKEN', 'https://ayocoba.in/dca-api/api/viewtoken', 'URL_API', 'URITOKEN', 1),
 (8, 1, 'USER_API_DC', 'dummy|dummy123', 'USER_ACCESS_API', 'nama|kata_sandi', 1),
 (9, 1, 'USER_API_IN', 'BPKP|$2y$10$ANoVQFnXgwHi.GuA7oCbl.Pub9F0AyWpt0LodR2kKKWEkD07RnGTG', 'USER_ACCESS_API', 'USER_API_IN', 2),
 (10, 1, 'SECRET_KEY_IN', 'c1pt4493uNgM4Hd14r73', 'SECRET_KEY', 'SECRET_KEY_IN', 1),
-(11, 1, 'BPKP', 'BPKP', 'USER_ROLE', 'BPKP', 1);
+(11, 1, 'BPKP', 'BPKP', 'USER_ROLE', 'BPKP', 7),
+(12, 1, 'RV0', 'BELUM DIREVIEW', 'SOAL_STATUS', 'REVIEW0', 1),
+(13, 1, 'RV1', 'REVIEW TAHAP 1', 'SOAL_STATUS', 'REVIEW1', 2),
+(14, 1, 'RV2', 'REVIEW TAHAP 2', 'SOAL_STATUS', 'REVIEW2', 3),
+(15, 1, 'RV3', 'REVIEW TAHAP 3', 'SOAL_STATUS', 'REVIEW3', 4),
+(16, 1, 'DKPJ', 'Diklat Perjenjangan', 'DIKLAT_SERTIFIKASI', 'DKPJ', 1),
+(17, 1, 'DKPB', 'Diklat Pembentukan', 'DIKLAT_SERTIFIKASI', 'DKPB', 2);
 
 -- --------------------------------------------------------
 
@@ -136,7 +160,9 @@ INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_V
 ('URL_API', 'URL_API', 1, 1),
 ('SECRET_KEY', 'SECRET_KEY', 1, 1),
 ('USER_ACCESS_API', 'USER_ACCESS_API', 1, 1),
-('SECRET_KEY', 'SECRET_KEY', 1, 1);
+('SECRET_KEY', 'SECRET_KEY', 1, 1),
+('SOAL_STATUS', 'SOAL_STATUS', 1, 1),
+('DIKLAT_SERTIFIKASI', 'DIKLAT_SERTIFIKASI', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -147,18 +173,15 @@ INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_V
 CREATE TABLE `mata_ajar` (
   `PK_MATA_AJAR` int(11) NOT NULL,
   `NAMA_MATA_AJAR` varchar(255) NOT NULL,
-  `STATUS` int(11) NOT NULL
+  `FK_GROUP_MATA_AJAR` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mata_ajar`
 --
 
-INSERT INTO `mata_ajar` (`PK_MATA_AJAR`, `NAMA_MATA_AJAR`, `STATUS`) VALUES
-(1, 'Filosofi Audit', 0),
-(2, 'Management Strategy Audit Intern', 0),
-(3, 'Program Jaminan Kualitas', 0),
-(4, 'Kebijakan Pengawasan', 0);
+INSERT INTO `mata_ajar` (`PK_MATA_AJAR`, `NAMA_MATA_AJAR`, `FK_GROUP_MATA_AJAR`) VALUES
+(5, 'Filosofi Audit', 1);
 
 -- --------------------------------------------------------
 
@@ -206,7 +229,8 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (25, 'Registrasi Unit Apip', 'bpkp', 'bpkp/registrasi', 'admin', '2018-03-29', 'registered', 11),
 (26, 'bank_soal', 'bank_soal', 'sertifikasi/bank_soal', 'admin', '2018-05-07', '', 1),
 (27, 'Home', 'bank_soal', 'bank_soal/home', 'admmin', '2018-05-07', 'home', 1),
-(28, 'Bank Soal', 'bank_soal', 'bank_soal/AdminBankSoal', 'admin', '2018-05-07', 'key', 1);
+(28, 'Bank Soal', 'bank_soal', 'bank_soal/AdminBankSoal', 'admin', '2018-05-07', 'key', 1),
+(29, 'Management Bank Soal', 'bank_soal', 'bank_soal/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1);
 
 -- --------------------------------------------------------
 
@@ -343,8 +367,8 @@ CREATE TABLE `soal_ujian` (
 --
 
 INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`) VALUES
-(15, 1, 0, 'Siapa Nama Presiden Indonesia pertama ?', '1', 'H. Ir. Soekarno', 'soeharto hata', 'megawati soekarno', 'amien rais'),
-(16, 1, 0, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991');
+(114, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais'),
+(115, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991');
 
 -- --------------------------------------------------------
 
@@ -419,7 +443,15 @@ CREATE TABLE `wilayah` (
 -- Indexes for table `bab_mata_ajar`
 --
 ALTER TABLE `bab_mata_ajar`
-  ADD PRIMARY KEY (`PK_BAB_MATA_AJAR`);
+  ADD PRIMARY KEY (`PK_BAB_MATA_AJAR`),
+  ADD KEY `CN_BAB_MATA_AJAR` (`FK_MATA_AJAR`);
+
+--
+-- Indexes for table `group_mata_ajar`
+--
+ALTER TABLE `group_mata_ajar`
+  ADD PRIMARY KEY (`PK_GROUP_MATA_AJAR`),
+  ADD KEY `CN_GROUP_MATA_AJAR_LOOKUP` (`FK_LOOKUP_DIKLAT`);
 
 --
 -- Indexes for table `lookup`
@@ -431,7 +463,8 @@ ALTER TABLE `lookup`
 -- Indexes for table `mata_ajar`
 --
 ALTER TABLE `mata_ajar`
-  ADD PRIMARY KEY (`PK_MATA_AJAR`);
+  ADD PRIMARY KEY (`PK_MATA_AJAR`),
+  ADD KEY `CN_MATA_AJAR_GROUP_MATA_AJAR` (`FK_GROUP_MATA_AJAR`);
 
 --
 -- Indexes for table `menu_page`
@@ -469,7 +502,8 @@ ALTER TABLE `pusbin`
 -- Indexes for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  ADD PRIMARY KEY (`PK_SOAL_UJIAN`);
+  ADD PRIMARY KEY (`PK_SOAL_UJIAN`),
+  ADD KEY `CN_SOAL_BAB_MATA_AJAR` (`FK_BAB_MATA_AJAR`);
 
 --
 -- Indexes for table `users`
@@ -492,13 +526,19 @@ ALTER TABLE `wilayah`
 -- AUTO_INCREMENT for table `bab_mata_ajar`
 --
 ALTER TABLE `bab_mata_ajar`
-  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `group_mata_ajar`
+--
+ALTER TABLE `group_mata_ajar`
+  MODIFY `PK_GROUP_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `mata_ajar`
 --
 ALTER TABLE `mata_ajar`
-  MODIFY `PK_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `PK_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `menu_page_detail`
@@ -522,7 +562,7 @@ ALTER TABLE `provinsi`
 -- AUTO_INCREMENT for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `wilayah`
@@ -535,6 +575,24 @@ ALTER TABLE `wilayah`
 --
 
 --
+-- Constraints for table `bab_mata_ajar`
+--
+ALTER TABLE `bab_mata_ajar`
+  ADD CONSTRAINT `CN_BAB_MATA_AJAR` FOREIGN KEY (`FK_MATA_AJAR`) REFERENCES `mata_ajar` (`PK_MATA_AJAR`);
+
+--
+-- Constraints for table `group_mata_ajar`
+--
+ALTER TABLE `group_mata_ajar`
+  ADD CONSTRAINT `CN_GROUP_MATA_AJAR_LOOKUP` FOREIGN KEY (`FK_LOOKUP_DIKLAT`) REFERENCES `lookup` (`PK_LOOKUP`);
+
+--
+-- Constraints for table `mata_ajar`
+--
+ALTER TABLE `mata_ajar`
+  ADD CONSTRAINT `CN_MATA_AJAR_GROUP_MATA_AJAR` FOREIGN KEY (`FK_GROUP_MATA_AJAR`) REFERENCES `group_mata_ajar` (`PK_GROUP_MATA_AJAR`);
+
+--
 -- Constraints for table `menu_page`
 --
 ALTER TABLE `menu_page`
@@ -545,6 +603,12 @@ ALTER TABLE `menu_page`
 --
 ALTER TABLE `menu_page_detail`
   ADD CONSTRAINT `menu_page_relat` FOREIGN KEY (`FK_MENU_PAGE`) REFERENCES `menu_page` (`PK_MENU_PAGE`);
+
+--
+-- Constraints for table `soal_ujian`
+--
+ALTER TABLE `soal_ujian`
+  ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`);
 
 --
 -- Constraints for table `users`

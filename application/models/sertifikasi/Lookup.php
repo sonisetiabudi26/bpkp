@@ -31,4 +31,13 @@ class Lookup extends My_Model
 	    $query = $this->db->get();
 	    return $query->result();
 	}
+	
+	public function _get_lookup_from_lookupgroup($lookup_group) {
+	    $condition = "lookup_group = '" . $lookup_group . "'";
+	    $this->db->select('*');
+	    $this->db->from($this->_table);
+	    $this->db->where($condition);
+	    $query = $this->db->get();
+	    return $query->result();
+	}
 }
