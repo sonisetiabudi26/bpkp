@@ -13,6 +13,7 @@ class ManagementBankSoal extends CI_Controller {
 		$this->load->model('sertifikasi/mataajar','mataajar');
 		$this->load->model('sertifikasi/users','users');
 		$this->load->model('sertifikasi/lookup','lookup');
+		$this->load->model('sertifikasi/babmataajar','babmataajar');
     }
 
     public function index(){
@@ -41,5 +42,11 @@ class ManagementBankSoal extends CI_Controller {
 	public function vw_add_bab_mata_ajar(){
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/add_bab_mata_ajar', $data);
+	}
+	
+	public function vw_review_ujian(){
+		$data['mata_ajar'] = $this->babmataajar->_detail_bab_mata_ajar();
+		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
+		$this->load->view('sertifikasi/bank_soal/content/review_ujian', $data);
 	}
 }

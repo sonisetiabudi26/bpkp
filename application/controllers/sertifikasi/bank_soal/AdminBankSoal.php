@@ -11,6 +11,7 @@ class AdminBankSoal extends CI_Controller {
 		$this->load->model('sertifikasi/menupage','menupage');
     	$this->load->model('sertifikasi/soalujian','soalujian');
 		$this->load->model('sertifikasi/mataajar','mataajar');
+		$this->load->model('sertifikasi/babmataajar','babmataajar');
 		$this->load->model('sertifikasi/users','users');
     }
 
@@ -91,7 +92,7 @@ class AdminBankSoal extends CI_Controller {
 	public function listsoal(){
 		$data['soal'] = $this->soalujian->_get_soal_ujian_from_mata_ajar($this->input->post('fk_bab_mata_ajar'));
 		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
-		$this->load->view('sertifikasi/bank_soal/response_table', $data);
+		$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
     }
 	
     public function detail(){
@@ -153,13 +154,8 @@ class AdminBankSoal extends CI_Controller {
 		$this->load->view('sertifikasi/bank_soal/content/import_soal', $data);
 	}
 	
-	public function vw_add_ujian(){
-		$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
-		$this->load->view('sertifikasi/bank_soal/content/add_ujian', $data);
-	}
-	
 	public function vw_review_soal(){
-		$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
+		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/review_soal', $data);
 	}
 }
