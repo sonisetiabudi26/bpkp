@@ -45,11 +45,13 @@
 									</div>
 										<div class="row">
 											<select name='role' class="form-control">
-											 <option value="1">Pusbin</option>
-											 <option value="2">Unit APIP</option>
+											 <option value="1">Bank Soal</option>
+											 <option value="2">Admin</option>
 											 <option value="3">Auditor</option>
-											 <option value="4">Bank Soal</option>
-											 <option value="5">Widyaiswara</option>
+											 <option value="4">Widyaiswara</option>
+											 <option value="5">Pusbin</option>
+											  <option value="6">Unit Apip</option>
+												<option value="11">BPKP</option>
 											</select>
 									</div>
 									<div class="row">

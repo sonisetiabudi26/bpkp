@@ -41,7 +41,12 @@ class Login extends CI_Controller{
 				$this->session->set_userdata('fk_lookup_menu',$result[0]->FK_LOOKUP_ROLE);
 				$fk_lookup_menu=$result[0]->FK_LOOKUP_ROLE;
 				//redirect('sertifikasi/home');
-				$this->direct_page($fk_lookup_menu);
+				 $role_menu = $this->input->post('role');
+				if($role_menu==$fk_lookup_menu){
+					$this->direct_page($fk_lookup_menu);
+			}else{
+				redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
+			}
 			}else{
 				redirectLogin(ERROR_LOGIN_PAGE_PASS);
 			}
