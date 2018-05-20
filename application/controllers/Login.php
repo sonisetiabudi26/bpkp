@@ -60,7 +60,7 @@ class Login extends CI_Controller{
 	 $username = $this->input->post('username');
 	 $password = $this->input->post('password');
 	// $role_menu = $this->input->post('role');
-  //if($role_menu==6 || $role_menu==5 || $role_menu==3 || $role_menu==11){
+  if($role_menu==2 ){
 			 $jsonData = array(
 		     'nip' => $username,
 		     'password' => $password
@@ -94,9 +94,9 @@ class Login extends CI_Controller{
 			 }else{
 				 redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
 			 }
-	 // }else{
-		//  	$this->process($username,$password);
-	 // }
+	 }else{
+		 	$this->process($username,$password);
+	 }
  }
 	//private function
 	private function direct_page($param){

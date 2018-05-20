@@ -46,17 +46,13 @@ ob_start("ob_gzhandler");
 									    <input type="password" name="password" class="form-control" placeholder="Password" required/>
 										</div>
 									</div>
-										<!-- <div class="row">
+										<div class="row">
 											<select name='role' class="form-control">
 											 <option value="1">Bank Soal</option>
-											 <option value="2">Admin</option>
-											 <option value="3">Auditor</option>
-											 <option value="4">Widyaiswara</option>
-											 <option value="5">Pusbin</option>
-											  <option value="6">Unit Apip</option>
-												<option value="11">BPKP</option>
+											 <option value="2">Non Bank soal</option>
+
 											</select>
-									</div> -->
+									</div>
 									<div class="row">
 										<br><a href="#" class="forgot">Forgot Password?</a>
 									</div><br/>
