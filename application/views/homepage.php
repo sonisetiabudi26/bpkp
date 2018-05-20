@@ -1,3 +1,6 @@
+<?php
+ob_start("ob_gzhandler");
+ ?>
 <!DOCTYPE>
 <html>
 <head>
@@ -43,7 +46,7 @@
 									    <input type="password" name="password" class="form-control" placeholder="Password" required/>
 										</div>
 									</div>
-										<div class="row">
+										<!-- <div class="row">
 											<select name='role' class="form-control">
 											 <option value="1">Bank Soal</option>
 											 <option value="2">Admin</option>
@@ -53,7 +56,7 @@
 											  <option value="6">Unit Apip</option>
 												<option value="11">BPKP</option>
 											</select>
-									</div>
+									</div> -->
 									<div class="row">
 										<br><a href="#" class="forgot">Forgot Password?</a>
 									</div><br/>

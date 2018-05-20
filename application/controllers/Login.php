@@ -10,6 +10,7 @@ class Login extends CI_Controller{
 		$this->load->library('session');
 		$this->load->library('encrypt');
 		$this->load->model('sertifikasi/users','users');
+		$this->load->model('sertifikasi/lookup','lookup');
 		$this->load->model('sertifikasi/menupage','menupage');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('Curl');
@@ -55,11 +56,11 @@ class Login extends CI_Controller{
 		}
 	}
  public function processLogin(){
-	 $url="http://ayocoba.in/dca-api/api/login";
+	 $url="http://163.53.185.91:8083/sibijak/dca/api/api/login";
 	 $username = $this->input->post('username');
 	 $password = $this->input->post('password');
-	 $role_menu = $this->input->post('role');
-  if($role_menu==1 || $role_menu==2){
+	// $role_menu = $this->input->post('role');
+  //if($role_menu==6 || $role_menu==5 || $role_menu==3 || $role_menu==11){
 			 $jsonData = array(
 		     'nip' => $username,
 		     'password' => $password
@@ -69,27 +70,33 @@ class Login extends CI_Controller{
 
 				$jsonDataEncoded = json_decode($result);
 				if($jsonDataEncoded->message=='login_success'){
-				$role=$jsonDataEncoded->data[0]->RoleCode;
+					$url="http://163.53.185.91:8083/sibijak/dca/api/api/pengguna?nip=".$username;
+					$check=file_get_contents($url);
+					$jsonResult=json_decode($check);
+					if($jsonResult->message=='get_data_success'){
+						 $role=$jsonResult->data[0]->RoleGroup_ID;
+						 $result = $this->lookup->_get_user_bridge_api($role);
+						// var_dump($result);
+						 $this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
+						 $this->session->set_userdata('fk_lookup_menu',$result[0]->PK_LOOKUP);
+						 $this->direct_page($result[0]->PK_LOOKUP);
+				 // if($role=='Unit Kerja' && $role_menu==6){
+					//$fk_lookup_menupage='6';
 
-				 if($role=='AdminUnitKerja' && $role_menu==2){
-					$fk_lookup_menupage='6';
-					$this->session->set_userdata('logged_in', $jsonDataEncoded->data[0]->Auditor_NamaLengkap);
-					$this->session->set_userdata('fk_lookup_menu',$fk_lookup_menupage);
-				 	$this->direct_page($fk_lookup_menupage);
-				}else if($role=='Eselon1' && $role_menu==1){
-					$fk_lookup_menupage='5';
-					$this->session->set_userdata('logged_in', $jsonDataEncoded->data[0]->Auditor_NamaLengkap);
-					$this->session->set_userdata('fk_lookup_menu',$fk_lookup_menupage);
-				 	$this->direct_page($fk_lookup_menupage);
+				// }else if($role=='Eselon1' && $role_menu==5){
+				// 	$fk_lookup_menupage='5';
+				// 	$this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
+				// 	$this->session->set_userdata('fk_lookup_menu',$fk_lookup_menupage);
+				//  	$this->direct_page($fk_lookup_menupage);
 				}else{
 				 	redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
 				 }
 			 }else{
 				 redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
 			 }
-	 }else{
-		 	$this->process($username,$password);
-	 }
+	 // }else{
+		//  	$this->process($username,$password);
+	 // }
  }
 	//private function
 	private function direct_page($param){
