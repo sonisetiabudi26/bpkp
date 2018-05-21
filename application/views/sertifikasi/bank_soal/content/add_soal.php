@@ -14,7 +14,7 @@
 					<label for="select-mata-ajar">Mata Ajar :</label>
 					<select data-show-obj="bab" data-show-key="PK_BAB_MATA_AJAR" data-show-value="NAMA_BAB_MATA_AJAR" onChange="getAnotherSelectOption(this, 'select-list-bab-popup', 'content-list-bab-popup')" 
 					data-href="<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/listbab"; ?>" name="fk_mata_ajar" id="select-mata-ajar-popup" class="form-control input-sm">
-						<option>Pilih Mata Ajar</option>
+						<option value="0">Pilihan</option>
 						<?php
 							foreach ($mata_ajar as $mataajars):
 						?>
@@ -31,9 +31,19 @@
 			<td>
 				<div class="form-group" id="content-list-bab-popup" style="display:none;">
 					<label for="select-list-bab-popup">List BAB :</label>
-					<select name="fk_bab_mata_ajar" id="select-list-bab-popup" class="form-control input-sm">
-						<option value="0">Pilih BAB</option>
+					<select data-show-obj="soalkasus" data-show-key="PK_SOAL_KASUS" data-show-value="KODE_KASUS" onChange="getAnotherSelectOption(this, 'select-list-kasus', 'content-list-bab-popup')" 
+					data-href="<?php echo base_url('sertifikasi')."/bank_soal/SoalUjianKasus/listsoalkasus"; ?>" name="fk_bab_mata_ajar" id="select-list-bab-popup" class="form-control input-sm">
+						<option value="0">Pilihan</option>
 					</select>
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="img_soal" class="text-primary">Image Soal :</label>
+					<input type="file" class="form-control" name="img_soal" id="img_soal" disabled />
 				</div>
 			</td>
 		</tr>
@@ -94,12 +104,15 @@
 		
 		<tr>
 			<td>
-				<div class="form-group text-default">
-					<label for="parent_soal" class="text-primary">Parent Soal :</label>
-					<input type="text" class="form-control" name="parent_soal" id="parent_soal" disabled />
+				<div class="form-group" id="content-list-bab-popup" >
+					<label for="parent_soal">Parent Soal Kasus :</label>
+					<select class="form-control" name="parent_soal" id="select-list-kasus" disabled>
+						<option value="0">Pilihan</option>
+					</select>
 				</div>
 			</td>
 		</tr>
+		
 		<tr>
 			<td>
 				<input id="btn-save-detail" type="submit" value="Save Soal" class="btn btn-primary" disabled />
@@ -112,10 +125,14 @@
 <script>	
 	$('#select-list-bab-popup').change(function(){
 		var fk_bab_mata_ajar = $(this).val();
-		if(fk_bab_mata_ajar==='Pilih BAB'){
+		if(fk_bab_mata_ajar==='Pilihan'){
 			$("input").prop("disabled", true);
+			$("textarea").prop("disabled", true);
+			$("#select-list-kasus").prop("disabled", true);
 		}else{
 			$('input').removeAttr('disabled');
+			$('textarea').removeAttr('disabled');
+			$("#select-list-kasus").removeAttr('disabled');
 		}
 	});
 </script>

@@ -13,6 +13,7 @@ class AdminBankSoal extends CI_Controller {
 		$this->load->model('sertifikasi/mataajar','mataajar');
 		$this->load->model('sertifikasi/babmataajar','babmataajar');
 		$this->load->model('sertifikasi/users','users');
+		$this->load->model('sertifikasi/soalkasus','soalkasus');
     }
 
     public function index(){
@@ -95,11 +96,6 @@ class AdminBankSoal extends CI_Controller {
 		$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
     }
 	
-    public function detail(){
-	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));
-		$this->load->view('sertifikasi/bank_soal/detail_response', $data);
-    }
-	
 	public function add_soal(){
 		$data['mata_ajar']	= $this->mataajar->_get_all();
 		$this->load->view('sertifikasi/bank_soal/add_response', $data);
@@ -123,27 +119,6 @@ class AdminBankSoal extends CI_Controller {
 		}
     }
 	
-	public function update_soal(){
-		$data = array(
-			'PERTANYAAN' => $this->input->post('pertanyaan'),
-			'PILIHAN_1' => $this->input->post('pilihan1'),
-			'PILIHAN_2' => $this->input->post('pilihan2'),
-			'PILIHAN_3' => $this->input->post('pilihan3'),
-			'PILIHAN_4' => $this->input->post('pilihan4'),
-			'JAWABAN' => $this->input->post('jawaban'),
-			'PARENT_SOAL' => $this->input->post('parent_soal')
-		);
-		$where = array(
-			'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
-		);
-		
-		if($this->soalujian->_update($where, $data)){
-			print json_encode(array("status"=>"success", "data"=>"success"));
-		}else{
-			print json_encode(array("status"=>"error", "data"=>"error"));
-		}
-	}
-	
 	public function vw_add_soal(){
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/add_soal', $data);
@@ -156,6 +131,25 @@ class AdminBankSoal extends CI_Controller {
 	
 	public function vw_review_soal(){
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
 		$this->load->view('sertifikasi/bank_soal/content/review_soal', $data);
 	}
+	
+	public function vw_add_soal_kasus(){
+		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/add_soal_kasus', $data);
+	}
+	
+	public function insert_soal_kasus(){
+		$data = array(
+			'KODE_KASUS' => $this->input->post('kode_kasus'),
+			'SOAL_KASUS' => $this->input->post('soal_kasus'),
+			'FK_BAB_MATA_AJAR' => $this->input->post('fk_bab_mata_ajar')
+		);
+		if($this->soalkasus->_add($data)){
+			print json_encode(array("status"=>"success", "data"=>"success"));
+		}else{
+			print json_encode(array("status"=>"error", "data"=>"error"));
+		}
+    }
 }

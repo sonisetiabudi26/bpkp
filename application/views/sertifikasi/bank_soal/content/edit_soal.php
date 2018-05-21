@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/update_soal"; ?>" method="POST" id="editSoalForm" >
+<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/update_soal"; ?>" method="POST" id="editSoalForm" >
 <table  class="table">
 	<thead>
 		<tr>
@@ -8,10 +8,9 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php
-		foreach ($soal as $soals):
-	?>
-		
+		<?php
+			foreach ($soal as $soals):
+		?>
 		<tr>
 			<td>
 				<h2 class="text-primary"><b><?php echo $soals->NAMA_MATA_AJAR; ?></b>

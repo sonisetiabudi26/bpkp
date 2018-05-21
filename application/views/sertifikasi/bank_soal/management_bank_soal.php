@@ -5,31 +5,65 @@
 	</div>
 <br><br>
 <div class="container">
-	<div style="text-align:center" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<button onclick="getModal(this)" id="btn-add-group-mata-ajar" data-href="<?php echo base_url('sertifikasi')."/bank_soal/ManagementBankSoal/vw_add_group_mata_ajar"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle">
-			<span class="badge">ADD <i class="fa fa-pencil"></i></span>
-			<br><h4>Group Mata Ajar</h4>
-		</button>
-	</div>
+        <button onclick="getModal(this)" id="btn-add-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_add_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary"></i> Add Soal</button>
+        <button class="btn btn-success" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+        <br />
+        <br />
+        <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Pertanyaan</th>
+                    <th>Pilihan 1</th>
+                    <th>Pilihan 2</th>
+                    <th>Pilihan 3</th>
+                    <th>Pilihan 4</th>
+					<th>Jawaban</th>
+					<th>Soal Kasus</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody style="color:#333;">
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Pertanyaan</th>
+                <th>Pilihan 1</th>
+                <th>Pilihan 2</th>
+                <th>Pilihan 3</th>
+                <th>Pilihan 4</th>
+				<th>Jawaban</th>
+				<th>Soal Kasus</th>
+				<th>Action</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+ 
+ 
+<script type="text/javascript">
+	var save_method;
+	var table;
+	
+	$(document).ready(function() {
+		table = $('#table').DataTable({ 
+			"processing": true,
+			"serverSide": true,
+			"order": [],
+			"ajax": {
+				"url": "<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/datatable_list_soal"; ?>",
+				"type": "POST"
+			},
+			"columnDefs": [
+			{ 
+				"targets": [ -1 ],
+				"orderable": false
+			},
+			],
+		});
+	});
 
-	<div style="text-align:center" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-		<button onclick="getModal(this)" id="btn-add-mata-ajar" data-href="<?php echo base_url('sertifikasi')."/bank_soal/ManagementBankSoal/vw_add_mata_ajar"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle">
-			<span class="badge">ADD <i class="fa fa-pencil"></i></span>
-			<br><h4>Mata Ajar</h4>
-		</button>
-	</div>
-	
-	<div style="text-align:center" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-		<button onclick="getModal(this)" id="btn-add-bab-mata-ajar" data-href="<?php echo base_url('sertifikasi')."/bank_soal/ManagementBankSoal/vw_add_bab_mata_ajar"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle">
-			<span class="badge">ADD <i class="fa fa-pencil"></i></span>
-			<br><h4>Bab Mata Ajar</h4>
-		</button>
-	</div>
-	
-	<div style="text-align:center" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<button onclick="getModal(this)" id="btn-add-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/ManagementBankSoal/vw_review_ujian"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle">
-			<span class="badge">REVIEW <i class="fa fa-pencil"></i></span>
-			<br><h4>Ujian</h4>
-		</button>
-	</div>
-</div>
+	function reload_table()
+	{
+		table.ajax.reload(null,false);
+	}
+</script>

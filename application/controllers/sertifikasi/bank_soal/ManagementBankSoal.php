@@ -49,4 +49,78 @@ class ManagementBankSoal extends CI_Controller {
 		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
 		$this->load->view('sertifikasi/bank_soal/content/review_ujian', $data);
 	}
+	
+	public function datatable_list_soal()
+    {
+		$list = $this->soalujian->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $soal) {
+            $no++;
+            $row = array();
+            $row[] = $soal->PERTANYAAN;
+            $row[] = $soal->PILIHAN_1;
+            $row[] = $soal->PILIHAN_2;
+            $row[] = $soal->PILIHAN_3;
+            $row[] = $soal->PILIHAN_4;
+			$row[] = $soal->JAWABAN;
+			$row[] = $soal->PARENT_SOAL;
+			
+            $row[] = '<div style="text-align:center;"><a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-primary" onclick="getModalWithParam(this)" id="btn-edit-soal"
+			data-href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_soal".'" data-toggle="modal" data-target="#modal-content" 
+			><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+			<a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-danger" onclick="getModalWithParam(this)" id="btn-edit-soal"
+			data-href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_hapus_soal".'" data-toggle="modal" data-target="#modal-content" 
+			><i class="glyphicon glyphicon-trash"></i> Hapus</a></div>';
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+					"draw" => $_POST['draw'],
+					"recordsTotal" => $this->soalujian->count_all(),
+					"recordsFiltered" => $this->soalujian->count_filtered(),
+					"data" => $data,
+                );
+        echo json_encode($output);
+    }
+	
+    public function vw_edit_soal(){
+	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));
+		$this->load->view('sertifikasi/bank_soal/content/edit_soal', $data);
+    }
+	
+    public function vw_hapus_soal(){
+	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));
+		$this->load->view('sertifikasi/bank_soal/content/hapus_soal', $data);
+    }
+	
+	public function update_soal(){
+		$data = array(
+			'PERTANYAAN' => $this->input->post('pertanyaan'),
+			'PILIHAN_1' => $this->input->post('pilihan1'),
+			'PILIHAN_2' => $this->input->post('pilihan2'),
+			'PILIHAN_3' => $this->input->post('pilihan3'),
+			'PILIHAN_4' => $this->input->post('pilihan4'),
+			'JAWABAN' => $this->input->post('jawaban'),
+			'PARENT_SOAL' => $this->input->post('parent_soal')
+		);
+		$where = array(
+			'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
+		);
+		
+		if($this->soalujian->_update($where, $data)){
+			print json_encode(array("status"=>"success", "data"=>"success"));
+		}else{
+			print json_encode(array("status"=>"error", "data"=>"error"));
+		}
+	}
+	
+	public function hapus_soal(){
+		if($this->soalujian->_delete_by_id($this->input->post('pk_soal_ujian'))){
+			print json_encode(array("status"=>"success", "data"=>"success"));
+		}else{
+			print json_encode(array("status"=>"error", "data"=>"error"));
+		}
+	}
 }
