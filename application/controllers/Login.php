@@ -59,7 +59,7 @@ class Login extends CI_Controller{
 	 $url="http://163.53.185.91:8083/sibijak/dca/api/api/login";
 	 $username = $this->input->post('username');
 	 $password = $this->input->post('password');
-	// $role_menu = $this->input->post('role');
+	 $role_menu = $this->input->post('role');
   if($role_menu==2 ){
 			 $jsonData = array(
 		     'nip' => $username,
