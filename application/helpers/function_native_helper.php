@@ -31,15 +31,39 @@ if ( ! function_exists('getDataCurl')){
 	 function getDataCurl($jsonData,$url){
 		$ci =& get_instance();
 		//Encode the array into JSON.
-		$jsonDataEncoded = json_encode($jsonData);
+		//$jsonDataEncoded = json_encode($jsonData);
 		// Start session (also wipes existing/previous sessions)
-		$ci->curl->create($url);
-		// Option
-		$ci->curl->option(CURLOPT_HTTPHEADER, array('Content-type: application/json; Charset=UTF-8'));
-		// Post - If you do not use post, it will just run a GET request
-		$ci->curl->post($jsonDataEncoded);
+		// $ci->curl->create($url);
+		// // Option
+		// $ci->curl->option(CURLOPT_HTTPHEADER, array('Content-type: application/json; Charset=UTF-8'));
+		// // Post - If you do not use post, it will just run a GET request
+		// $ci->curl->post($jsonDataEncoded);
 		// Execute - returns responce
-		return $result = $ci->curl->execute();
+
+		$postdata = http_build_query($jsonData);
+
+		$opts = array('http' =>
+		    array(
+		        'method'  => 'POST',
+		        'header'  => 'Content-type: application/x-www-form-urlencoded',
+		        'content' => $postdata
+		    )
+		);
+
+		$context  = stream_context_create($opts);
+
+	  return	$result = file_get_contents($url, false, $context);
+
+
+		// $ch = curl_init($url);
+		// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		// curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		//     'Content-Type: application/json',
+		//     'Content-Length: ' . strlen($jsonDataEncoded))
+		// );
+		//return $result =curl_exec($ch);
 	}
 }
 
