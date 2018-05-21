@@ -1,3 +1,6 @@
+<?php
+ob_start("ob_gzhandler");
+ ?>
 <!DOCTYPE>
 <html>
 <head>
@@ -45,11 +48,9 @@
 									</div>
 										<div class="row">
 											<select name='role' class="form-control">
-											 <option value="1">Pusbin</option>
-											 <option value="2">Unit APIP</option>
-											 <option value="3">Auditor</option>
-											 <option value="4">Bank Soal</option>
-											 <option value="5">Widyaiswara</option>
+											 <option value="1">Bank Soal</option>
+											 <option value="2">Non Bank soal</option>
+
 											</select>
 									</div>
 									<div class="row">
