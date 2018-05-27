@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="col-lg-6" style="padding-top:10px;">
-  <button class="btn btn-success" style="width:200px;float:right;" onclick="add_perwakilan()">Add</button>
+  <button class="btn btn-primary" style="width:200px;float:right;" onclick="add_perwakilan()">Add</button>
 </div>
 </div><br/>
 <div class="clearfix"></div>

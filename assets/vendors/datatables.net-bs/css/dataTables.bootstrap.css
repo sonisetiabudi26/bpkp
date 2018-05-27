@@ -4,7 +4,7 @@ table.dataTable {
   margin-bottom: 6px !important;
   max-width: none !important;
   border-collapse: separate !important;
-  color:#f3f3f3 !important;
+  color:#333 !important;
 }
 table.dataTable td,
 table.dataTable th {
@@ -112,7 +112,7 @@ table.dataTable thead .sorting_desc:after {
 }
 table.dataTable thead .sorting_asc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:after {
-  color: #f3f3f3;
+  color: #333;
 }
 
 div.dataTables_scrollHead table.dataTable {
