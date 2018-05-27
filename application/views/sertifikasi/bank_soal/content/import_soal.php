@@ -1,5 +1,5 @@
 <div class="row">
-									<form onsubmit="uploadFile(this, 'label-file')" action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/upload_soal"; ?>" method="POST" enctype="multipart/form-data" id="fileUploadForm">
+									<form onsubmit="uploadFile(this, 'label-file')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/upload_soal"; ?>" method="POST" enctype="multipart/form-data" id="fileUploadForm">
 										<button class="btn btn-primary btn-block btn-file"><i class="fa fa-file"></i> 
 										Import Soal <input name="soalfile" id="soalfile" type="file"></button>
 										<div class="content_response content_file">

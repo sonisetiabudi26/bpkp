@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/insert_soal"; ?>" method="POST" id="addSoalForm" >
+<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/insert_soal"; ?>" method="POST" id="addSoalForm" >
 <table  class="table">
 	<thead>
 		<tr>
@@ -89,6 +89,42 @@
 				<div class="form-group text-default">
 					<label for="pilihan4" class="text-primary">Pilihan 4 :</label>
 					<input type="text" class="form-control" name="pilihan4" id="pilihan4" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 5 :</label>
+					<input type="text" class="form-control" name="pilihan5" id="pilihan5" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 6 :</label>
+					<input type="text" class="form-control" name="pilihan6" id="pilihan6" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 7 :</label>
+					<input type="text" class="form-control" name="pilihan7" id="pilihan7" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 8 :</label>
+					<input type="text" class="form-control" name="pilihan8" id="pilihan8" disabled />
 				</div>
 			</td>
 		</tr>

@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/update_soal"; ?>" method="POST" id="editSoalForm" >
+<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/update_soal"; ?>" method="POST" id="editSoalForm" >
 <table  class="table">
 	<thead>
 		<tr>

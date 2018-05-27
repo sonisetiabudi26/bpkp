@@ -40,19 +40,13 @@ class ManagementBankSoal extends CI_Controller {
 	}
 	
 	public function vw_add_bab_mata_ajar(){
-		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+		$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/add_bab_mata_ajar', $data);
 	}
 	
-	public function vw_review_ujian(){
-		$data['mata_ajar'] = $this->babmataajar->_detail_bab_mata_ajar();
-		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
-		$this->load->view('sertifikasi/bank_soal/content/review_ujian', $data);
-	}
-	
-	public function datatable_list_soal()
+	public function datatable_list_soal($fk_bab_mata_ajar=null)
     {
-		$list = $this->soalujian->get_datatables();
+		$list = $this->soalujian->get_datatables($fk_bab_mata_ajar);
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $soal) {
@@ -78,8 +72,8 @@ class ManagementBankSoal extends CI_Controller {
  
         $output = array(
 					"draw" => $_POST['draw'],
-					"recordsTotal" => $this->soalujian->count_all(),
-					"recordsFiltered" => $this->soalujian->count_filtered(),
+					"recordsTotal" => $this->soalujian->count_all($fk_bab_mata_ajar),
+					"recordsFiltered" => $this->soalujian->count_filtered($fk_bab_mata_ajar),
 					"data" => $data,
                 );
         echo json_encode($output);
@@ -95,32 +89,14 @@ class ManagementBankSoal extends CI_Controller {
 		$this->load->view('sertifikasi/bank_soal/content/hapus_soal', $data);
     }
 	
-	public function update_soal(){
-		$data = array(
-			'PERTANYAAN' => $this->input->post('pertanyaan'),
-			'PILIHAN_1' => $this->input->post('pilihan1'),
-			'PILIHAN_2' => $this->input->post('pilihan2'),
-			'PILIHAN_3' => $this->input->post('pilihan3'),
-			'PILIHAN_4' => $this->input->post('pilihan4'),
-			'JAWABAN' => $this->input->post('jawaban'),
-			'PARENT_SOAL' => $this->input->post('parent_soal')
-		);
-		$where = array(
-			'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
-		);
-		
-		if($this->soalujian->_update($where, $data)){
-			print json_encode(array("status"=>"success", "data"=>"success"));
-		}else{
-			print json_encode(array("status"=>"error", "data"=>"error"));
-		}
+	public function vw_distribusi_soal(){
+		$data['mata_ajar'] = $this->babmataajar->_detail_bab_mata_ajar();
+		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
+		$this->load->view('sertifikasi/bank_soal/content/distribusi_soal', $data);
 	}
 	
-	public function hapus_soal(){
-		if($this->soalujian->_delete_by_id($this->input->post('pk_soal_ujian'))){
-			print json_encode(array("status"=>"success", "data"=>"success"));
-		}else{
-			print json_encode(array("status"=>"error", "data"=>"error"));
-		}
+	public function vw_search_datatable(){
+		$data['mata_ajar'] = $this->babmataajar->_detail_bab_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/search_datatable', $data);
 	}
 }

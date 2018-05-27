@@ -25,4 +25,9 @@ class MataPelajaran extends CI_Controller {
 			print json_encode(array("status"=>"group mata ajar or bab mata harus diisi", "data"=>" group mata ajar or bab mata harus diisi"));
 		}
     }
+	
+	public function list_mata_ajar(){
+		$data['mata_ajar'] = $this->mataajar->_get_from_fk_group_mata_ajar($this->input->get('fk_group_mata_ajar'));
+		echo json_encode($data); 
+    }
 }
