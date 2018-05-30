@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<title>BPKP System</title>
 
+	<link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/normalize.min.css')?>" rel="stylesheet">
 	<!-- Bootstrap -->
 	<link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
 	<!-- Font Awesome -->
@@ -44,6 +45,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 	</div>
 </div>
+<!-- add function ajax process -->
+<script src="<?php echo base_url('assets/js/function.process.js');?>"></script>
 <!-- INCLUDE JS -->
 <!-- Bootstrap -->
 <script src="<?php echo base_url('assets/vendors/bootstrap/dist/js/bootstrap.min.js')?>"></script>
@@ -68,7 +71,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')?>"></script>
-<!-- add function ajax process -->
-<script src="<?php echo base_url('assets/js/function.process.js');?>"></script>
+
 </body>
 </html>

@@ -18,7 +18,7 @@ class SoalUjian extends My_Model
 		$this->db->insert_batch($this->_table, $data);
 	}
 	
-	public function _get_soal_ujian_from_mata_ajar($fk_bab_mata_ajar) {
+	public function _get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar) {
 	    $condition = "fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
 	    $this->db->select('*');
 	    $this->db->from($this->_table);
@@ -136,6 +136,19 @@ class SoalUjian extends My_Model
 	    $this->db->where($condition);
 		$this->db->order_by('rand()');
 		$this->db->limit($jumlah_tampil);
+	    $query = $this->db->get();
+	    return $query->result();
+	}
+	
+	public function _get_ready_soal_ujian($fk_bab_mata_ajar) {
+	    $condition = "soal_ujian.fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
+	    $this->db->select('*');
+	    $this->db->from($this->_table);
+		$this->db->join('bab_mata_ajar', 'soal_ujian.fk_bab_mata_ajar = bab_mata_ajar.pk_bab_mata_ajar');
+		$this->db->join('mata_ajar', 'bab_mata_ajar.fk_mata_ajar = mata_ajar.pk_mata_ajar');
+		$this->db->join('soal_kasus', 'soal_ujian.parent_soal = soal_kasus.pk_soal_kasus', 'left');
+		$this->db->where($condition);
+		$this->db->order_by('parent_soal, rand()');
 	    $query = $this->db->get();
 	    return $query->result();
 	}

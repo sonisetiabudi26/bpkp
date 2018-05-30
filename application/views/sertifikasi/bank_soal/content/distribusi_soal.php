@@ -16,7 +16,7 @@
 		<?php
 			foreach ($mata_ajar as $mataajars):
 		?>
-		<option value="<?php echo $mataajars->PK_MATA_AJAR;?>"><?php echo $mataajars->NAMA_MATA_AJAR;?></option>
+		<option value="<?php echo $mataajars->PK_MATA_AJAR;?>"><?php echo $mataajars->NAMA_MATA_AJAR;?>(<?php echo $mataajars->DESCR;?>)</option>
 		<?php
 			endforeach;
 		?>

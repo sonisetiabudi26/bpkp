@@ -90,13 +90,13 @@ class ManagementBankSoal extends CI_Controller {
     }
 	
 	public function vw_distribusi_soal(){
-		$data['mata_ajar'] = $this->babmataajar->_detail_bab_mata_ajar();
+		$data['mata_ajar'] = $this->mataajar->_detail_mata_ajar();
 		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
 		$this->load->view('sertifikasi/bank_soal/content/distribusi_soal', $data);
 	}
 	
 	public function vw_search_datatable(){
-		$data['mata_ajar'] = $this->babmataajar->_detail_bab_mata_ajar();
+		$data['mata_ajar'] = $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/search_datatable', $data);
 	}
 }

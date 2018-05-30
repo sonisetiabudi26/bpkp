@@ -1,7 +1,7 @@
 <div class="clearfix"></div>
-<h1>Management Bank Soal</h1>
+<h1 class="text-primary">Management Bank Soal</h1>
 	<div class="info">
-		<p> Ujian Sertifikasi <i class="fa fa-book"></i></p>
+		<p style="color:#777;"> Ujian Sertifikasi <i class="fa fa-book"></i></p>
 	</div>
 <br><br>
 <div class="container">

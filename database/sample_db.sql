@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.7.9
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: May 21, 2018 at 10:11 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.1.15
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -72,23 +63,18 @@ INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_
 CREATE TABLE `bridge_lookup` (
   `id_bridge_lookup` int(11) NOT NULL,
   `PK_LOOKUP` int(11) NOT NULL,
-  `ROLEGROUPID` int(11) NOT NULL,
-  `ROLE_CODE` varchar(100) NOT NULL
+  `ROLEGROUPID` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bridge_lookup`
 --
 
-INSERT INTO `bridge_lookup` (`id_bridge_lookup`, `PK_LOOKUP`, `ROLEGROUPID`, `ROLE_CODE`) VALUES
-(1, 3, 4, 'Auditor'),
-(2, 6, 15, 'AdminUnitKerja'),
-(3, 5, 1, 'Eselon1'),
-(4, 4, 1, 'Sekretariat'),
-(5, 4, 1, 'Penilai'),
-(6, 4, 1, 'KetuaPenilai'),
-(7, 11, 14, 'BPKP'),
-(8, 5, 3, 'PejabatPengusul');
+INSERT INTO `bridge_lookup` (`id_bridge_lookup`, `PK_LOOKUP`, `ROLEGROUPID`) VALUES
+(1, 3, 'Level 4'),
+(2, 6, 'Level 3'),
+(3, 5, 'Level 1'),
+(7, 11, 'Level 2');
 
 -- --------------------------------------------------------
 
@@ -127,6 +113,41 @@ CREATE TABLE `jabatan` (
   `JABATAN_TGL_SURAT_KEPUTUSAN` date DEFAULT NULL,
   `JABATAN_TGL_MULAI_TUGAS` date DEFAULT NULL,
   `JABATAN_SK` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jadwal_ujian`
+--
+
+CREATE TABLE `jadwal_ujian` (
+  `PK_JADWAL_UJIAN` int(11) NOT NULL,
+  `CATEGORY` varchar(150) NOT NULL,
+  `START_DATE` date NOT NULL,
+  `END_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jadwal_ujian`
+--
+
+INSERT INTO `jadwal_ujian` (`PK_JADWAL_UJIAN`, `CATEGORY`, `START_DATE`, `END_DATE`) VALUES
+(1, 'Gelombang 1', '2018-05-31', '2018-06-01'),
+(2, 'Gelombang 2', '2018-06-05', '2018-06-21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list_persetujuan`
+--
+
+CREATE TABLE `list_persetujuan` (
+  `PK_PERSETUJUAN` int(11) NOT NULL,
+  `GROUP_REGIS` varchar(100) NOT NULL,
+  `DOC_PERSETUJUAN` text NOT NULL,
+  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -193,6 +214,21 @@ INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_V
 ('SECRET_KEY', 'SECRET_KEY', 1, 1),
 ('SOAL_STATUS', 'SOAL_STATUS', 1, 1),
 ('DIKLAT_SERTIFIKASI', 'DIKLAT_SERTIFIKASI', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lookup_registrasi`
+--
+
+CREATE TABLE `lookup_registrasi` (
+  `PK_LOOKUP_REGIS` int(11) NOT NULL,
+  `PK_REGIS_UJIAN` int(11) NOT NULL,
+  `PK_MATA_AJAR` int(11) NOT NULL,
+  `DOC_PERSETUJUAN` text NOT NULL,
+  `CREATED_AT` varchar(150) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -347,8 +383,40 @@ CREATE TABLE `provinsi` (
 --
 
 INSERT INTO `provinsi` (`PK_PROVINSI`, `NAMA`) VALUES
-(1, 'DKI JAKARTA'),
-(2, 'JAWA BARAT');
+(11, 'ACEH'),
+(12, 'SUMATERA UTARA'),
+(13, 'SUMATERA BARAT'),
+(14, 'RIAU'),
+(15, 'JAMBI'),
+(16, 'SUMATERA SELATAN'),
+(17, 'BENGKULU'),
+(18, 'LAMPUNG'),
+(19, 'KEPULAUAN BANGKA BELITUNG'),
+(21, 'KEPULAUAN RIAU'),
+(31, 'DKI JAKARTA'),
+(32, 'JAWA BARAT'),
+(33, 'JAWA TENGAH'),
+(34, 'DI YOGYAKARTA'),
+(35, 'JAWA TIMUR'),
+(36, 'BANTEN'),
+(51, 'BALI'),
+(52, 'NUSA TENGGARA BARAT'),
+(53, 'NUSA TENGGARA TIMUR'),
+(61, 'KALIMANTAN BARAT'),
+(62, 'KALIMANTAN TENGAH'),
+(63, 'KALIMANTAN SELATAN'),
+(64, 'KALIMANTAN TIMUR'),
+(65, 'KALIMANTAN UTARA'),
+(71, 'SULAWESI UTARA'),
+(72, 'SULAWESI TENGAH'),
+(73, 'SULAWESI SELATAN'),
+(74, 'SULAWESI TENGGARA'),
+(75, 'GORONTALO'),
+(76, 'SULAWESI BARAT'),
+(81, 'MALUKU'),
+(82, 'MALUKU UTARA'),
+(91, 'PAPUA BARAT'),
+(94, 'PAPUA');
 
 -- --------------------------------------------------------
 
@@ -362,6 +430,35 @@ CREATE TABLE `pusbin` (
   `NAMA` varchar(255) DEFAULT NULL,
   `FK_LOOKUP_ADMIN_PUSBIN` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registrasi_ujian`
+--
+
+CREATE TABLE `registrasi_ujian` (
+  `PK_REGIS_UJIAN` int(11) NOT NULL,
+  `GROUP_REGIS` varchar(50) NOT NULL,
+  `NIP` varchar(150) NOT NULL,
+  `LOKASI_UJIAN` varchar(150) NOT NULL,
+  `PK_JADWAL_UJIAN` int(11) NOT NULL,
+  `NO_SURAT_UJIAN` varchar(150) NOT NULL,
+  `NILAI_KSP` varchar(150) NOT NULL,
+  `DOC_NILAI_KSP` text NOT NULL,
+  `DOC_FOTO` text NOT NULL,
+  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_DATE` date NOT NULL,
+  `PROVINSI` varchar(100) NOT NULL,
+  `flag` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `registrasi_ujian`
+--
+
+INSERT INTO `registrasi_ujian` (`PK_REGIS_UJIAN`, `GROUP_REGIS`, `NIP`, `LOKASI_UJIAN`, `PK_JADWAL_UJIAN`, `NO_SURAT_UJIAN`, `NILAI_KSP`, `DOC_NILAI_KSP`, `DOC_FOTO`, `CREATED_AT`, `CREATED_DATE`, `PROVINSI`, `flag`) VALUES
+(7, '', '195808271981121001', '', 1, '211212121', '12121212121', 'doc_registrasi/doc_registrasi/195808271981121001_20180530/cv.pdf', 'doc_registrasi/doc_registrasi/195808271981121001_20180530/images.png', 'Test Admin', '2018-05-30', 'unknown', 1);
 
 -- --------------------------------------------------------
 
@@ -404,22 +501,32 @@ INSERT INTO `soal_kasus` (`PK_SOAL_KASUS`, `SOAL_KASUS`, `FK_BAB_MATA_AJAR`, `KO
 CREATE TABLE `soal_ujian` (
   `PK_SOAL_UJIAN` int(11) NOT NULL,
   `FK_BAB_MATA_AJAR` int(11) NOT NULL,
-  `PARENT_SOAL` int(11) NOT NULL,
+  `PARENT_SOAL` int(11) DEFAULT NULL,
   `PERTANYAAN` varchar(1000) NOT NULL,
   `JAWABAN` varchar(10) NOT NULL,
   `PILIHAN_1` varchar(255) NOT NULL,
   `PILIHAN_2` varchar(255) NOT NULL,
   `PILIHAN_3` varchar(255) NOT NULL,
-  `PILIHAN_4` varchar(255) NOT NULL
+  `PILIHAN_4` varchar(255) NOT NULL,
+  `PILIHAN_5` varchar(255) NOT NULL,
+  `PILIHAN_6` varchar(255) NOT NULL,
+  `PILIHAN_7` varchar(255) NOT NULL,
+  `PILIHAN_8` varchar(255) NOT NULL,
+  `TAMPIL_UJIAN` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `soal_ujian`
 --
 
-INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`) VALUES
-(117, 9, 2, 'dari soal kasus diatas siapa nama presiden indonesia ke 1?', '1', 'ir soekarno', 'gusdur', 'megawati', 'soeharto'),
-(119, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'depok');
+INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
+(117, 9, 2, 'Siapa nama presiden indonesia ke 1?', '1', 'ir soekarno', 'gusdur', 'megawati', 'soeharto', '', '', '', '', 1),
+(119, 9, 2, 'Ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'depok', '', '', '', '', 1),
+(121, 9, 2, 'Ibukota Jawa Barat', '2', 'kuningan', 'bandung', 'surabaya', 'semarang', '', '', '', '', 1),
+(130, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', '', '', '', '', 0),
+(131, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', '', '', '', '', 1),
+(132, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(133, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1);
 
 -- --------------------------------------------------------
 
@@ -511,10 +618,28 @@ ALTER TABLE `group_mata_ajar`
   ADD KEY `CN_GROUP_MATA_AJAR_LOOKUP` (`FK_LOOKUP_DIKLAT`);
 
 --
+-- Indexes for table `jadwal_ujian`
+--
+ALTER TABLE `jadwal_ujian`
+  ADD PRIMARY KEY (`PK_JADWAL_UJIAN`);
+
+--
+-- Indexes for table `list_persetujuan`
+--
+ALTER TABLE `list_persetujuan`
+  ADD PRIMARY KEY (`PK_PERSETUJUAN`);
+
+--
 -- Indexes for table `lookup`
 --
 ALTER TABLE `lookup`
   ADD PRIMARY KEY (`PK_LOOKUP`);
+
+--
+-- Indexes for table `lookup_registrasi`
+--
+ALTER TABLE `lookup_registrasi`
+  ADD PRIMARY KEY (`PK_LOOKUP_REGIS`);
 
 --
 -- Indexes for table `mata_ajar`
@@ -555,11 +680,14 @@ ALTER TABLE `provinsi`
 ALTER TABLE `pusbin`
   ADD PRIMARY KEY (`PK_PUSBIN`);
 
---
 -- Indexes for table `soal_kasus`
 --
 ALTER TABLE `soal_kasus`
   ADD PRIMARY KEY (`PK_SOAL_KASUS`);
+-- Indexes for table `registrasi_ujian`
+--
+ALTER TABLE `registrasi_ujian`
+  ADD PRIMARY KEY (`PK_REGIS_UJIAN`);
 
 --
 -- Indexes for table `soal_ujian`
@@ -596,14 +724,28 @@ ALTER TABLE `bab_mata_ajar`
 -- AUTO_INCREMENT for table `bridge_lookup`
 --
 ALTER TABLE `bridge_lookup`
-  MODIFY `id_bridge_lookup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `id_bridge_lookup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `group_mata_ajar`
 --
 ALTER TABLE `group_mata_ajar`
   MODIFY `PK_GROUP_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
+--
+-- AUTO_INCREMENT for table `jadwal_ujian`
+--
+ALTER TABLE `jadwal_ujian`
+  MODIFY `PK_JADWAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `list_persetujuan`
+--
+ALTER TABLE `list_persetujuan`
+  MODIFY `PK_PERSETUJUAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `lookup_registrasi`
+--
+ALTER TABLE `lookup_registrasi`
+  MODIFY `PK_LOOKUP_REGIS` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `mata_ajar`
 --
@@ -633,7 +775,11 @@ ALTER TABLE `provinsi`
 --
 ALTER TABLE `soal_kasus`
   MODIFY `PK_SOAL_KASUS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+--
+-- AUTO_INCREMENT for table `registrasi_ujian`
+--
+ALTER TABLE `registrasi_ujian`
+  MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `soal_ujian`
 --
@@ -685,8 +831,7 @@ ALTER TABLE `menu_page_detail`
 --
 ALTER TABLE `soal_ujian`
   ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`),
-  ADD CONSTRAINT `CN_SOAL_KASUS` FOREIGN KEY (`PARENT_SOAL`) REFERENCES `soal_kasus` (`PK_SOAL_KASUS`);
-
+  ADD CONSTRAINT `CN_SOAL_KASUS` FOREIGN KEY (`PARENT_SOAL`) REFERENCES `soal_kasus` (`PK_SOAL_KASUS`) ON UPDATE NO ACTION;
 --
 -- Constraints for table `users`
 --

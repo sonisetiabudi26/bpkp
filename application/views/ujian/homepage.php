@@ -32,7 +32,7 @@ ob_start("ob_gzhandler");
 							  </div>
 							</div>
 						<?php }?>
-							<form class="form" id=form action="<?php echo base_url('login'); ?>" method=POST style="margin:0px auto;border: 0.7px solid #999;">
+							<form class="form" id=form action="<?php echo base_url('ujian-sertifikasi-jfa/login'); ?>" method=POST style="margin:0px auto;border: 0.7px solid #999;">
 								<div class="col-lg-12">
 									<div class="row">
 										<div class="form-group has-feedback">
@@ -45,12 +45,6 @@ ob_start("ob_gzhandler");
 											<i class="glyphicon glyphicon-lock form-control-feedback"></i>
 									    <input type="password" name="password" class="form-control" placeholder="Password" required/>
 										</div>
-									</div>
-										<div class="row">
-											<select name='role' class="form-control">
-											 <option value="1">Bank Soal</option>
-											 <option value="2">Non Bank soal</option>
-											</select>
 									</div>
 									<div class="row">
 										<br><a href="#" class="forgot">Forgot Password?</a>
@@ -66,7 +60,7 @@ ob_start("ob_gzhandler");
 		</div>
 	</div>
 		<footer class="footer">
-        <p class="text-muted" style="margin-left:10px;color:#ddd !important">Â© 2018 BPKP. All rights reserved</p>
+        <p class="text-muted" style="margin-left:10px;color:#ddd !important">© 2018 BPKP. All rights reserved</p>
     </footer>
 <!-- INCLUDE JS -->
 <script src="<?php echo base_url('assets/js/jquery-2.1.4.js')?>"></script>
