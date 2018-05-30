@@ -155,7 +155,7 @@ class Soal extends CI_Controller {
 				$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
 			}
 		}else{
-			$data['soal'] = $this->soalujian->_get_soal_ujian_from_mata_ajar($fk_bab_mata_ajar);
+			$data['soal'] = $this->soalujian->_get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar);
 			$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
 		}
 	}

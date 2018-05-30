@@ -141,7 +141,7 @@ class SoalUjian extends My_Model
 	}
 	
 	public function _get_ready_soal_ujian($fk_bab_mata_ajar) {
-	    $condition = "soal_ujian.fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
+	    $condition = "soal_ujian.fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "' and soal_ujian.tampil_ujian='1'";
 	    $this->db->select('*');
 	    $this->db->from($this->_table);
 		$this->db->join('bab_mata_ajar', 'soal_ujian.fk_bab_mata_ajar = bab_mata_ajar.pk_bab_mata_ajar');
