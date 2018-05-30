@@ -16,6 +16,12 @@ class JadwalUjian extends My_Model
 		$query = $this->db->get();
 	   return $query->result();
 	}
+	public function loadJadwal(){
 
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 }

@@ -78,6 +78,8 @@ class Login extends CI_Controller{
 						 $role=$jsonResult->data[0]->RoleGroup;
 						 $result = $this->lookup->_get_user_bridge_api($role);
 						// var_dump($result);
+
+					   $this->session->set_userdata('nip', $username);
 						 $this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
 						 $this->session->set_userdata('fk_lookup_menu',$result[0]->PK_LOOKUP);
 						 $this->session->set_userdata('kodeunitkerja',$jsonResult->data[0]->KodeUnitKerja);
@@ -94,6 +96,7 @@ class Login extends CI_Controller{
 					$role=$jsonResult->data[0]->RoleGroup;
 					$result = $this->lookup->_get_user_bridge_api($role);
 				 // var_dump($result);
+				 $this->session->set_userdata('nip', $username);
 					$this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
 					$this->session->set_userdata('fk_lookup_menu',$result[0]->PK_LOOKUP);
 					$this->session->set_userdata('kodeunitkerja',$jsonResult->data[0]->KodeUnitKerja);
@@ -140,6 +143,10 @@ class Login extends CI_Controller{
 			'username' => ''
 		);
 		$this->session->unset_userdata('logged_in', $sess_array);
+		$this->session->unset_userdata('nip', $sess_array);
+		$this->session->unset_userdata('fk_lookup_menu', $sess_array);
+		$this->session->unset_userdata('kodeunitkerja', $sess_array);
+
 		//$data['messages'] = 'Successfully Logout';
 		redirect('/');
 	}

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class HasilUjian extends CI_Controller {
+class ManagementHasilUjian extends CI_Controller {
 
 	public function __construct(){
         // Load parent construct
@@ -18,7 +18,7 @@ class HasilUjian extends CI_Controller {
 
       if(isset($fk_lookup_menu) && isset($username)){
         $data['title_page'] = 'BPKP Web Application';
-        $data['content_page']='pusbin/hasil_ujian.php';
+        $data['content_page']='pusbin/ManagementHasilUjian.php';
         $data['username']=$username;
 				$data['menu_page']	= $this->menupage->_get_access_menu_page($fk_lookup_menu);
         $this->load->view('sertifikasi/homepage', $data);

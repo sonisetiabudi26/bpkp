@@ -95,7 +95,7 @@ class Registrasi extends CI_Controller {
 			 $date = date('Ymd');
 			 $datex=date('Y-m-d');
 			 $nip=$this->input->post('nip');
-			 $dataCheckPeserta=$this->regis->loadbyNIP($nip);
+			 $dataCheckPeserta=$this->regis->loadbyNIP($nip,'1');
 			 if(!$dataCheckPeserta){
 					 $folder='doc_registrasi/'.$nip.'_'.$date;
 					 $docksp='doc_ksp';
@@ -108,8 +108,8 @@ class Registrasi extends CI_Controller {
 					 // $this->session->set_userdata('group_regis', $group_regis);
 					 // $uploadpdf['result_upload_pdf']="success";
 					 if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
-						 $doc_ksp='doc_registrasi/'.$folder.'/'.$_FILES['doc_ksp']['name'];
-						 $doc_foto='doc_registrasi/'.$folder.'/'.$_FILES['doc_foto']['name'];
+						 $doc_ksp=$folder.'/'.$_FILES['doc_ksp']['name'];
+						 $doc_foto=$folder.'/'.$_FILES['doc_foto']['name'];
 						 $data = array(
 				 			'NIP' => $this->input->post('nip'),
 							'GROUP_REGIS' => '',
