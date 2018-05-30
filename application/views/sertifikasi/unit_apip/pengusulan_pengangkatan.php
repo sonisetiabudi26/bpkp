@@ -28,11 +28,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td>123456789</td>
                         <td>Sandi Sandoro</td>
                         <td>Sedang di Proses</td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                   </table>
 
@@ -50,8 +50,8 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="min-height:325px;">
 						<div class="row">
-              <label >Nama : Sandi Sandoro</label><br>
-              <label >NIP  : 123456789</label>
+              <!-- <label >Nama : Sandi Sandoro</label><br>
+              <label >NIP  : 123456789</label> -->
 
 						</div><br>
             <div class="row">

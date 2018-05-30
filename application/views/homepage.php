@@ -50,7 +50,6 @@ ob_start("ob_gzhandler");
 											<select name='role' class="form-control">
 											 <option value="1">Bank Soal</option>
 											 <option value="2">Non Bank soal</option>
-
 											</select>
 									</div>
 									<div class="row">
