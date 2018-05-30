@@ -520,3 +520,14 @@ if (!function_exists('log_message')) {
 		return $messages;
 	}
 }
+
+if ( ! function_exists('redirectLoginUjian')){
+	function redirectLoginUjian($messages){
+		/** get main CodeIgniter object */
+       $ci =& get_instance();
+		$data = array(
+				'messages' => $messages
+			);
+		$ci->load->view('ujian/homepage', $data);
+	}
+}

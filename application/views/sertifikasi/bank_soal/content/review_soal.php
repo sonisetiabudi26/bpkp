@@ -26,7 +26,33 @@
 			<option>Pilihan</option>
 		</select>
 	</div>
+	<div class="form-group text-default">
+		<label for="jumlah_soal" class="text-primary">User Bank Soal :</label>
+		<select name="pk_user" id="select-list-user" class="form-control input-sm" disabled>
+			<option>Pilihan</option>
+			<?php
+				foreach ($user_bank_soal as $user_bank_soals):
+			?>
+			<option value="<?php echo $user_bank_soals->PK_USER;?>"><?php echo $user_bank_soals->USER_NAME;?></option>
+			<?php
+				endforeach;
+			?>
+		</select>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<input id="btn-save-detail" type="submit" value="Verifikasi Soal" class="btn btn-primary" disabled />
+		</div>
+	</div>
+	<div class="row">
+		&nbsp;
+	</div>
 </form>
+<div class="row">
+		<div class="col-lg-12">
+			<label class="text-primary">List Soal</label>
+		</div>
+	</div>
 <div id="response_table">
 <table id="datatable-responsive" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
 	<thead style="color:#111;">
@@ -41,3 +67,15 @@
 	</thead>
 </table>
 </div>
+<script>	
+	$('#select-list-bab-soal').change(function(){
+		var fk_bab_mata_ajar = $(this).val();
+		if(fk_bab_mata_ajar==='Pilihan'){
+			$("input").prop("disabled", true);
+			$("#select-list-user").prop("disabled", true);
+		}else{
+			$('input').removeAttr('disabled');
+			$("#select-list-user").removeAttr('disabled');
+		}
+	});
+</script>

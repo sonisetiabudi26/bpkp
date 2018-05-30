@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/insert_soal"; ?>" method="POST" id="addSoalForm" >
+<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/insert_soal"; ?>" method="POST" id="addSoalForm" >
 <table  class="table">
 	<thead>
 		<tr>
@@ -14,7 +14,7 @@
 					<label for="select-mata-ajar">Mata Ajar :</label>
 					<select data-show-obj="bab" data-show-key="PK_BAB_MATA_AJAR" data-show-value="NAMA_BAB_MATA_AJAR" onChange="getAnotherSelectOption(this, 'select-list-bab-popup', 'content-list-bab-popup')" 
 					data-href="<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/listbab"; ?>" name="fk_mata_ajar" id="select-mata-ajar-popup" class="form-control input-sm">
-						<option>Pilih Mata Ajar</option>
+						<option value="0">Pilihan</option>
 						<?php
 							foreach ($mata_ajar as $mataajars):
 						?>
@@ -31,9 +31,19 @@
 			<td>
 				<div class="form-group" id="content-list-bab-popup" style="display:none;">
 					<label for="select-list-bab-popup">List BAB :</label>
-					<select name="fk_bab_mata_ajar" id="select-list-bab-popup" class="form-control input-sm">
-						<option value="0">Pilih BAB</option>
+					<select data-show-obj="soalkasus" data-show-key="PK_SOAL_KASUS" data-show-value="KODE_KASUS" onChange="getAnotherSelectOption(this, 'select-list-kasus', 'content-list-bab-popup')" 
+					data-href="<?php echo base_url('sertifikasi')."/bank_soal/SoalUjianKasus/listsoalkasus"; ?>" name="fk_bab_mata_ajar" id="select-list-bab-popup" class="form-control input-sm">
+						<option value="0">Pilihan</option>
 					</select>
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="img_soal" class="text-primary">Image Soal :</label>
+					<input type="file" class="form-control" name="img_soal" id="img_soal" disabled />
 				</div>
 			</td>
 		</tr>
@@ -86,6 +96,42 @@
 		<tr>
 			<td>
 				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 5 :</label>
+					<input type="text" class="form-control" name="pilihan5" id="pilihan5" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 6 :</label>
+					<input type="text" class="form-control" name="pilihan6" id="pilihan6" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 7 :</label>
+					<input type="text" class="form-control" name="pilihan7" id="pilihan7" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
+					<label for="pilihan4" class="text-primary">Pilihan 8 :</label>
+					<input type="text" class="form-control" name="pilihan8" id="pilihan8" disabled />
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<div class="form-group text-default">
 					<label for="jawaban" class="text-primary">Jawaban :</label>
 					<input type="text" class="form-control" name="jawaban" id="jawaban" disabled />
 				</div>
@@ -94,12 +140,15 @@
 		
 		<tr>
 			<td>
-				<div class="form-group text-default">
-					<label for="parent_soal" class="text-primary">Parent Soal :</label>
-					<input type="text" class="form-control" name="parent_soal" id="parent_soal" disabled />
+				<div class="form-group" id="content-list-bab-popup" >
+					<label for="parent_soal">Parent Soal Kasus :</label>
+					<select class="form-control" name="parent_soal" id="select-list-kasus" disabled>
+						<option value="0">Pilihan</option>
+					</select>
 				</div>
 			</td>
 		</tr>
+		
 		<tr>
 			<td>
 				<input id="btn-save-detail" type="submit" value="Save Soal" class="btn btn-primary" disabled />
@@ -112,10 +161,14 @@
 <script>	
 	$('#select-list-bab-popup').change(function(){
 		var fk_bab_mata_ajar = $(this).val();
-		if(fk_bab_mata_ajar==='Pilih BAB'){
+		if(fk_bab_mata_ajar==='Pilihan'){
 			$("input").prop("disabled", true);
+			$("textarea").prop("disabled", true);
+			$("#select-list-kasus").prop("disabled", true);
 		}else{
 			$('input').removeAttr('disabled');
+			$('textarea').removeAttr('disabled');
+			$("#select-list-kasus").removeAttr('disabled');
 		}
 	});
 </script>

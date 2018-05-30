@@ -20,4 +20,10 @@ class MataAjar extends My_Model
 		$query = $this->db->get();
 	    return $query->result();
 	}
+	
+	public function _get_from_fk_group_mata_ajar($fk_mata_group_ajar)
+	{
+	    $query = $this->db->get_where($this->_table, array('FK_GROUP_MATA_AJAR' => $fk_mata_group_ajar));
+	    return $query->result();
+	}
 }
