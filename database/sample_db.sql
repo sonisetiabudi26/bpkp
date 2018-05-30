@@ -101,7 +101,10 @@ CREATE TABLE `group_mata_ajar` (
 
 INSERT INTO `group_mata_ajar` (`PK_GROUP_MATA_AJAR`, `NAMA_GROUP_MATA_AJAR`, `FK_LOOKUP_DIKLAT`) VALUES
 (1, 'Auditor Utama', 16),
-(2, 'Auditor Ahli', 17);
+(2, 'Auditor Ahli', 17),
+(3, 'Auditor Madya', 16),
+(4, 'Auditor Muda', 16),
+(5, 'Auditor Terampil', 17);
 
 -- --------------------------------------------------------
 
@@ -479,6 +482,26 @@ CREATE TABLE `sertifikasi_jfa` (
   `PK_SERTIFIKASI` int(11) NOT NULL,
   `SERTIFIKASI_SERTIFIKAT` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `soal_kasus`
+--
+
+CREATE TABLE `soal_kasus` (
+  `PK_SOAL_KASUS` int(11) NOT NULL,
+  `SOAL_KASUS` varchar(1000) NOT NULL,
+  `FK_BAB_MATA_AJAR` int(11) NOT NULL,
+  `KODE_KASUS` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `soal_kasus`
+--
+
+INSERT INTO `soal_kasus` (`PK_SOAL_KASUS`, `SOAL_KASUS`, `FK_BAB_MATA_AJAR`, `KODE_KASUS`) VALUES
+(2, 'Negara Indonesia merdeka tanggal 17 agustus 1945, presiden pertama adalah ir soekarno', 9, 'soal-kasus-presiden'),
+(3, 'negara indonesia dijajah pertama kali oleh belanda, hampir 100 tahun indonesia dijajah oleh belanda.', 9, 'kode-kasus-penjajahan');
 
 -- --------------------------------------------------------
 
@@ -489,23 +512,32 @@ CREATE TABLE `sertifikasi_jfa` (
 CREATE TABLE `soal_ujian` (
   `PK_SOAL_UJIAN` int(11) NOT NULL,
   `FK_BAB_MATA_AJAR` int(11) NOT NULL,
-  `PARENT_SOAL` int(11) NOT NULL,
+  `PARENT_SOAL` int(11) DEFAULT NULL,
   `PERTANYAAN` varchar(1000) NOT NULL,
   `JAWABAN` varchar(10) NOT NULL,
   `PILIHAN_1` varchar(255) NOT NULL,
   `PILIHAN_2` varchar(255) NOT NULL,
   `PILIHAN_3` varchar(255) NOT NULL,
-  `PILIHAN_4` varchar(255) NOT NULL
+  `PILIHAN_4` varchar(255) NOT NULL,
+  `PILIHAN_5` varchar(255) NOT NULL,
+  `PILIHAN_6` varchar(255) NOT NULL,
+  `PILIHAN_7` varchar(255) NOT NULL,
+  `PILIHAN_8` varchar(255) NOT NULL,
+  `TAMPIL_UJIAN` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `soal_ujian`
 --
 
-INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`) VALUES
-(114, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais'),
-(115, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991');
-
+INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
+(117, 9, 2, 'Siapa nama presiden indonesia ke 1?', '1', 'ir soekarno', 'gusdur', 'megawati', 'soeharto', '', '', '', '', 1),
+(119, 9, 2, 'Ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'depok', '', '', '', '', 1),
+(121, 9, 2, 'Ibukota Jawa Barat', '2', 'kuningan', 'bandung', 'surabaya', 'semarang', '', '', '', '', 1),
+(130, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', '', '', '', '', 0),
+(131, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', '', '', '', '', 1),
+(132, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(133, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1);
 -- --------------------------------------------------------
 
 --
@@ -658,6 +690,10 @@ ALTER TABLE `provinsi`
 ALTER TABLE `pusbin`
   ADD PRIMARY KEY (`PK_PUSBIN`);
 
+  -- Indexes for table `soal_kasus`
+--
+ALTER TABLE `soal_kasus`
+  ADD PRIMARY KEY (`PK_SOAL_KASUS`);
 --
 -- Indexes for table `registrasi_ujian`
 --
@@ -669,7 +705,8 @@ ALTER TABLE `registrasi_ujian`
 --
 ALTER TABLE `soal_ujian`
   ADD PRIMARY KEY (`PK_SOAL_UJIAN`),
-  ADD KEY `CN_SOAL_BAB_MATA_AJAR` (`FK_BAB_MATA_AJAR`);
+  ADD KEY `CN_SOAL_BAB_MATA_AJAR` (`FK_BAB_MATA_AJAR`),
+  ADD KEY `CN_SOAL_KASUS` (`PARENT_SOAL`);
 
 --
 -- Indexes for table `users`
@@ -738,6 +775,12 @@ ALTER TABLE `perwakilan_bpkp`
 --
 ALTER TABLE `provinsi`
   MODIFY `PK_PROVINSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
+-- AUTO_INCREMENT for table `soal_kasus`
+--
+ALTER TABLE `soal_kasus`
+  MODIFY `PK_SOAL_KASUS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `registrasi_ujian`
 --
@@ -791,13 +834,15 @@ ALTER TABLE `menu_page_detail`
 -- Constraints for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`);
+  ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`),
 
+  ADD CONSTRAINT `CN_SOAL_KASUS` FOREIGN KEY (`PARENT_SOAL`) REFERENCES `soal_kasus` (`PK_SOAL_KASUS`) ON UPDATE NO ACTION;
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`FK_LOOKUP_ROLE`) REFERENCES `lookup` (`PK_LOOKUP`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

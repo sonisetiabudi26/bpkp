@@ -22,12 +22,12 @@
 	</div>				
 	<div class="form-group" id="content-list-bab-soal" style="display:none;">
 		<label for="select-list-bab-soal">List BAB :</label>
-		<select onChange="submitWithSelectOption(this, 'listSoalForm', 'response_table')" name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
+		<select data-href="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/check_soal"; ?>" onChange="submitWithSelectOption(this, 'listSoalForm', 'response_table')" name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
 			<option>Pilihan</option>
 		</select>
 	</div>
 	<div class="form-group text-default">
-		<label for="jumlah_soal" class="text-primary">User Bank Soal :</label>
+		<label for="select-list-user" class="text-primary">User Bank Soal :</label>
 		<select name="pk_user" id="select-list-user" class="form-control input-sm" disabled>
 			<option>Pilihan</option>
 			<?php
@@ -69,13 +69,36 @@
 </div>
 <script>	
 	$('#select-list-bab-soal').change(function(){
+		var urlVar = $(this).attr('data-href');
 		var fk_bab_mata_ajar = $(this).val();
 		if(fk_bab_mata_ajar==='Pilihan'){
+			fk_bab_mata_ajar=0;
 			$("input").prop("disabled", true);
-			$("#select-list-user").prop("disabled", true);
 		}else{
 			$('input').removeAttr('disabled');
-			$("#select-list-user").removeAttr('disabled');
+		}
+		check_soal(fk_bab_mata_ajar, urlVar);
+	});
+	
+	function check_soal(fk_bab_mata_ajar, urlVar){
+	var urlVar = urlVar;
+	var objParsingName = 'fk_bab_mata_ajar';
+	var objParsingVal = fk_bab_mata_ajar;
+	var jsonParam = JSON.parse('{"'+objParsingName+'":'+objParsingVal+'}');
+     $.ajax({
+		data:jsonParam,
+		url:urlVar,
+		type:'GET',
+		success : function(response) {
+			if(response>0){
+				$("#select-list-user").prop("disabled", false);
+			}else{
+				$("#select-list-user").prop("disabled", true)
+			}
+		},
+		error: function (e) {
+			alert(e);
 		}
 	});
+	}
 </script>
