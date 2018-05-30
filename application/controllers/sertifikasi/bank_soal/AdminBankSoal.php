@@ -30,7 +30,8 @@ class AdminBankSoal extends CI_Controller {
     }
 	
 	public function listsoal(){
-		$data['soal'] = $this->soalujian->_get_soal_ujian_from_mata_ajar($this->input->post('fk_bab_mata_ajar'));
+		$data['soal'] = $this->soalujian->_get_soal_ujian_from_bab_mata_ajar($this->input->post('fk_bab_mata_ajar'));
+		$data['jumlah_soal'] = $this->soalujian->count_all($this->input->post('fk_bab_mata_ajar'));
 		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
 		$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
     }
@@ -73,4 +74,8 @@ class AdminBankSoal extends CI_Controller {
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
     }
+	
+	public function check_soal(){
+		print json_encode( $this->soalujian->count_all($this->input->get('fk_bab_mata_ajar')));
+	}
 }
