@@ -1122,7 +1122,7 @@ h2 {
     margin: 5px 0 6px;
     float: left;
     display: block;
-    color:#f3f3f3;
+    color:#333;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap

@@ -136,7 +136,7 @@ function getAnotherSelectOption(sel, selectTargetId, eventDivContent){
 				_options +=('<option value="'+ value[optPk]+'">'+ value[optNama] +'</option>');
 				console.log(value);
 			});
-			
+
 			$('#' + selectTargetId).append(_options);
 			$('#' + eventDivContent).show();
 		}
@@ -185,7 +185,7 @@ function uploadFile(formTarget, responseContent){
 			}else{
 				$("#"+responseContent).html("<h4 class='text-danger'>Process upload : "+response.status+"</h4>");
 			}
-			
+
 			console.log("success : ", "success");
 			$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 		},
@@ -220,11 +220,11 @@ function procesForm(formTarget, responseContent){
 				}else{
 					$("#"+responseContent).html("<h4 class='text-danger'>Process save : "+response.status+"</h4>");
 				}
-			
+
 				$("#"+responseContent).fadeTo(2000, 500).slideUp(500, function(){
 					$("#"+responseContent).slideUp(500);
 				});
-			
+
 				console.log("success : ", "success");
 				$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 			},
@@ -237,6 +237,69 @@ function procesForm(formTarget, responseContent){
 	return false;
 	});
 }
+/** format parsing : this select, content id for show response */
+function procesFormandUpload(formTarget, responseContent){
+	$(document).on('submit', '#'+formTarget.id, function(e) {
+		e.preventDefault();
+    var data="";
+		data = new FormData(document.getElementById(formTarget.id));
+		$.ajax({
+			data : data,
+			type : $(this).attr('method'),
+			url : $(this).attr('action'),
+			async: false,
+      // headers: {
+      //   'Content-Type':'text/xml'
+      // },
+			processData: false,
+			contentType: false,
+			cache:false,
+			timeout: 600000,
+
+			success : function(response) {
+        $("#daftar_ujian")[0].reset();
+
+				 //if(response.status!='gagal'){
+          if($('input[name="checkpindah"]:checked').length > 0){
+            $("#pindahlokasi").toggle(this.checked);
+          }
+          $("#jadwal").val("");
+          $("#lokasi").val("");
+          document.getElementById("doc_ksp").value = "";
+          document.getElementById("doc_persetujuan").value = "";
+          document.getElementById("doc_foto").value = "";
+          document.getElementById("show_data").style.display = "none";
+          $("#" + formTarget.id).find("input[type=text],input[type=file]").val("");
+					$("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                      "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                    "</div>");
+				// }else{
+				// 	alert('Calon Peserta sudah terdaftar');
+				// }
+        loadData(0);
+				$("#"+responseContent).fadeTo(2000, 500).slideUp(500, function(){
+					$("#"+responseContent).slideUp(500);
+				});
+
+				console.log("success : ", "success");
+				$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
+			},
+      error: function (e) {
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-danger'>"+
+                                    "<strong>Failed!</strong>Proses Data Bermasalah, Silahkan Hubungi Administrator ."+
+                                  "</div>");
+        console.log("ERROR : ", e);
+        $("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
+      }
+
+      //return false;
+		});
+
+    //$('form[name="daftar_ujian"]').reset();
+	return false;
+	});
+}
+
 
 /** format parsing : this button action */
 function getModal(btnId){
