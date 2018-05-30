@@ -7,7 +7,7 @@
     <hr class="line">
     <!-- menu profile quick info -->
     <div class="profile clearfix">
-      <div class="profile_pic">
+      <div class="profile_pic" id="pic">
         <img src="<?php echo base_url('assets/img/content/user.png') ?>" alt="..." class="img-circle profile_img">
       </div>
       <div class="profile_info">

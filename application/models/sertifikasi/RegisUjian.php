@@ -25,8 +25,8 @@ class RegisUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
-	public function loadbyNIP($NIP){
-		$condition = "NIP =" . "'" . $NIP . "' and flag=1";
+	public function loadbyNIP($NIP,$flag){
+		$condition = "NIP =" . "'" . $NIP . "' and flag=" . "'" . $flag . "'";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.PK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
@@ -37,6 +37,21 @@ class RegisUjian extends My_Model
 		} else {
 			return false;
 		}
+
+	}
+	public function loadDatabyNIP($NIP){
+		$condition = "NIP =" . "'" . $NIP . "' and flag=2";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->join('jadwal_ujian', 'registrasi_ujian.PK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "no data";
+		}
+
 
 	}
 	public function updateData($group_regis){
