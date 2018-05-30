@@ -74,11 +74,13 @@ class Login extends CI_Controller{
 					$check=file_get_contents($url);
 					$jsonResult=json_decode($check);
 					if($jsonResult->message=='get_data_success'){
-						 $role=$jsonResult->data[0]->RoleGroup_ID;
+						if( $jsonResult->data[0]->RoleGroup!='Level 4' && $jsonResult->data[0]->isAdmin=="true"){
+						 $role=$jsonResult->data[0]->RoleGroup;
 						 $result = $this->lookup->_get_user_bridge_api($role);
 						// var_dump($result);
 						 $this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
 						 $this->session->set_userdata('fk_lookup_menu',$result[0]->PK_LOOKUP);
+						 $this->session->set_userdata('kodeunitkerja',$jsonResult->data[0]->KodeUnitKerja);
 						 $this->direct_page($result[0]->PK_LOOKUP);
 				 // if($role=='Unit Kerja' && $role_menu==6){
 					//$fk_lookup_menupage='6';
@@ -88,6 +90,17 @@ class Login extends CI_Controller{
 				// 	$this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
 				// 	$this->session->set_userdata('fk_lookup_menu',$fk_lookup_menupage);
 				//  	$this->direct_page($fk_lookup_menupage);
+			}else if($jsonResult->data[0]->RoleGroup=='Level 4' && $jsonResult->data[0]->isAuditor=="true"){
+					$role=$jsonResult->data[0]->RoleGroup;
+					$result = $this->lookup->_get_user_bridge_api($role);
+				 // var_dump($result);
+					$this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
+					$this->session->set_userdata('fk_lookup_menu',$result[0]->PK_LOOKUP);
+					$this->session->set_userdata('kodeunitkerja',$jsonResult->data[0]->KodeUnitKerja);
+					$this->direct_page($result[0]->PK_LOOKUP);
+				}else{
+					redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
+				}
 				}else{
 				 	redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
 				 }
