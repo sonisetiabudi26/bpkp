@@ -41,7 +41,7 @@
 			</div>
 			<div class="x_content">
 				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="min-height:325px;">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="min-height:480px;">
 						<div class="row">
 							<h3>TERDAFTAR TANGGAL 29-03-2018</h3>
 							<h3>Setelah di setujui dari unit apip</h3>
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+<!-- <div class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
@@ -77,4 +77,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
