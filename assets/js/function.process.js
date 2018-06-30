@@ -237,6 +237,46 @@ function procesForm(formTarget, responseContent){
 	return false;
 	});
 }
+
+/** format parsing : this select, content id for show response */
+function procesFormPengusul(formTarget, responseContent){
+	$(document).on('submit', '#'+formTarget.id, function(e) {
+		e.preventDefault();
+		var data = new FormData(document.getElementById(formTarget.id));
+		$.ajax({
+			data : data,
+			type : $(this).attr('method'),
+			url : $(this).attr('action'),
+			async: false,
+			processData: false,
+			contentType: false,
+			cache:false,
+			timeout: 600000,
+			dataType: "json",
+			success : function(response) {
+				if(response.status=='success'){
+					$("#"+responseContent).html("<h4 class='text-success'>Process save : "+response.status+"</h4>");
+				}else{
+					$("#"+responseContent).html("<h4 class='text-danger'>Process save : "+response.status+"</h4>");
+				}
+
+				$("#"+responseContent).fadeTo(2000, 500).slideUp(500, function(){
+					$("#"+responseContent).slideUp(500);
+				});
+
+				console.log("success : ", "success");
+				$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
+			},
+			error: function (e) {
+				$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
+				console.log("ERROR : ", e);
+				$("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
+			}
+		});
+	return false;
+	});
+}
+
 /** format parsing : this select, content id for show response */
 function procesFormandUpload(formTarget, responseContent){
 	$(document).on('submit', '#'+formTarget.id, function(e) {
@@ -398,7 +438,7 @@ $(document).ready(function () {
 
 					$stepsWrapper.append($steps);       // Place steps in the steps wrapper
 					$this.append($stepsWrapper);        // Place the steps wrapper that now contains all the steps in the original container
-					$this.append($buttons);             // Place Buttons right after the steps wrapper  
+					$this.append($buttons);             // Place Buttons right after the steps wrapper
 
 					///////////////////////// Shape Step elements
 
@@ -419,7 +459,7 @@ $(document).ready(function () {
 					var $progressButtonsTemplate = getProgressButtonsTemplate($steps, settings);
 					$this.prepend($progressButtonsTemplate);
 
-					/////////////////////////// Find the active step or set the first step active as default 
+					/////////////////////////// Find the active step or set the first step active as default
 
 					if (!$(".active").length) {
 						$steps.eq(activeStep - 1).addClass("active");
@@ -441,7 +481,7 @@ $(document).ready(function () {
 						} else if ((i + 1) > activeElementPosition) {
 							moveStepRight($step);
 						} else {
-							showStep($step); // Only one element should satisfy this condition   
+							showStep($step); // Only one element should satisfy this condition
 							highlightActiveElement($this);
 							markStepAsCompleted(i + 1, $this, settings);
 						}
@@ -479,7 +519,7 @@ $(document).ready(function () {
 						} else {
 							// ...slide right imediatelly otherwise.
 							slideRight($elementToSlide, settings, $this);
-						}						
+						}
 					});
 
 					$this.on("slideRightSuccess.aiiaWizard", function () {
@@ -501,7 +541,7 @@ $(document).ready(function () {
 							// ...slide left imediatelly otherwise.
 							slideLeft($elementToSlide, settings, $this);
 						}
-						
+
 					});
 
 					/////////////////////////// Testing Success Icon
@@ -552,7 +592,7 @@ $(document).ready(function () {
 				if (goToFirst == true)
 					previous(a, true);
 			});
-			
+
 		},
 		final: function () {
 			// TODO: implement
@@ -572,7 +612,7 @@ $(document).ready(function () {
 		}
 	};
 
-	////////////////////////////////////////// Private functions 
+	////////////////////////////////////////// Private functions
 
 	function resizeWizardStepsWrapper($this) {
 		var $wizardStepsWrapper = $this.find(".aiia-wizard-steps-wrapper");
@@ -599,7 +639,7 @@ $(document).ready(function () {
 
 				$(".aiia-wizard-step").removeClass("active");
 				$next.addClass("active");
-				 
+
 				var activeElementPosition = highlightActiveElement($plugin);
 				var stepsCount = $plugin.find(".aiia-wizard-step").length;
 
@@ -743,7 +783,7 @@ $(document).ready(function () {
 			var cls = "";
 			var pos = parseInt($step.data('position'), 10);
 			var $progressButton = "";
-			
+
 			if(pos==$number){
 				$progressButton = $("" +
 					"<li data-position='" + $step.attr('data-position') + "'><a href='#'><h4>" + $step.data('position') + "</h4></a></li><br>" +
@@ -754,7 +794,7 @@ $(document).ready(function () {
 					"<li data-position='" + $step.attr('data-position') + "'><a href='#'><h4>" + $step.data('position') + "</h4></a></li>" +
 				"");
 			}
-			
+
 
 			if ($step.hasClass("active") && settings.aiiaWizard.progressButtons.markActive) {
 				$progressButton.removeClass('default');
@@ -1003,7 +1043,7 @@ $(document).ready(function () {
 			buttons: {
 				previous: {
 					text: {
-						css: {							
+						css: {
 							//'float': 'right',
 							//'font-size': '14px',
 							//'margin-top': '2px',
@@ -1019,7 +1059,7 @@ $(document).ready(function () {
 				},
 				next: {
 					text: {
-						css: {							
+						css: {
 							//'float': 'left',
 							//'font-size': '14px',
 							//'margin-top': '2px',
