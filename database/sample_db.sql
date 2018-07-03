@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 30, 2018 at 11:00 PM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- Host: 127.0.0.1
+-- Generation Time: Jul 03, 2018 at 03:53 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.1.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -475,6 +477,30 @@ INSERT INTO `registrasi_ujian` (`PK_REGIS_UJIAN`, `GROUP_REGIS`, `NIP`, `LOKASI_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `review_soal`
+--
+
+CREATE TABLE `review_soal` (
+  `PK_REVIEW_SOAL` int(11) NOT NULL,
+  `FK_BAB_MATA_AJAR` int(11) NOT NULL,
+  `FK_LOOKUP_REVIEW_SOAL` int(11) NOT NULL,
+  `REVIEWER` varchar(255) NOT NULL,
+  `TANGGAL_REVIEW` date NOT NULL,
+  `FLAG` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `review_soal`
+--
+
+INSERT INTO `review_soal` (`PK_REVIEW_SOAL`, `FK_BAB_MATA_AJAR`, `FK_LOOKUP_REVIEW_SOAL`, `REVIEWER`, `TANGGAL_REVIEW`, `FLAG`) VALUES
+(24, 9, 13, 'review1', '2018-07-02', 1),
+(25, 9, 14, 'review2', '2018-07-02', 2),
+(26, 9, 15, 'subid', '2018-07-02', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sertifikasi_jfa`
 --
 
@@ -482,6 +508,7 @@ CREATE TABLE `sertifikasi_jfa` (
   `PK_SERTIFIKASI` int(11) NOT NULL,
   `SERTIFIKASI_SERTIFIKAT` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -533,11 +560,12 @@ CREATE TABLE `soal_ujian` (
 INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
 (117, 9, 2, 'Siapa nama presiden indonesia ke 1?', '1', 'ir soekarno', 'gusdur', 'megawati', 'soeharto', '', '', '', '', 1),
 (119, 9, 2, 'Ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'depok', '', '', '', '', 1),
-(121, 9, 2, 'Ibukota Jawa Barat', '2', 'kuningan', 'bandung', 'surabaya', 'semarang', '', '', '', '', 1),
-(130, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', '', '', '', '', 0),
+(121, 9, 2, 'Ibukota Jawa Barat', '2', 'kuningan', 'bandung', 'surabaya', 'semarang', '', '', '', '', 0),
+(130, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', '', '', '', '', 1),
 (131, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', '', '', '', '', 1),
 (132, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
 (133, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -690,15 +718,23 @@ ALTER TABLE `provinsi`
 ALTER TABLE `pusbin`
   ADD PRIMARY KEY (`PK_PUSBIN`);
 
-  -- Indexes for table `soal_kasus`
---
-ALTER TABLE `soal_kasus`
-  ADD PRIMARY KEY (`PK_SOAL_KASUS`);
 --
 -- Indexes for table `registrasi_ujian`
 --
 ALTER TABLE `registrasi_ujian`
   ADD PRIMARY KEY (`PK_REGIS_UJIAN`);
+
+--
+-- Indexes for table `review_soal`
+--
+ALTER TABLE `review_soal`
+  ADD PRIMARY KEY (`PK_REVIEW_SOAL`);
+
+--
+-- Indexes for table `soal_kasus`
+--
+ALTER TABLE `soal_kasus`
+  ADD PRIMARY KEY (`PK_SOAL_KASUS`);
 
 --
 -- Indexes for table `soal_ujian`
@@ -730,46 +766,55 @@ ALTER TABLE `wilayah`
 --
 ALTER TABLE `bab_mata_ajar`
   MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
 --
 ALTER TABLE `bridge_lookup`
   MODIFY `id_bridge_lookup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `group_mata_ajar`
 --
 ALTER TABLE `group_mata_ajar`
-  MODIFY `PK_GROUP_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PK_GROUP_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
   MODIFY `PK_JADWAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `list_persetujuan`
 --
 ALTER TABLE `list_persetujuan`
   MODIFY `PK_PERSETUJUAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `lookup_registrasi`
 --
 ALTER TABLE `lookup_registrasi`
   MODIFY `PK_LOOKUP_REGIS` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `mata_ajar`
 --
 ALTER TABLE `mata_ajar`
   MODIFY `PK_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `menu_page_detail`
 --
 ALTER TABLE `menu_page_detail`
   MODIFY `PK_MENU_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `perwakilan_bpkp`
 --
 ALTER TABLE `perwakilan_bpkp`
   MODIFY `PK_PERWAKILAN_BPKP` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `provinsi`
 --
@@ -777,25 +822,35 @@ ALTER TABLE `provinsi`
   MODIFY `PK_PROVINSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
--- AUTO_INCREMENT for table `soal_kasus`
---
-ALTER TABLE `soal_kasus`
-  MODIFY `PK_SOAL_KASUS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
 -- AUTO_INCREMENT for table `registrasi_ujian`
 --
 ALTER TABLE `registrasi_ujian`
   MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `review_soal`
+--
+ALTER TABLE `review_soal`
+  MODIFY `PK_REVIEW_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `soal_kasus`
+--
+ALTER TABLE `soal_kasus`
+  MODIFY `PK_SOAL_KASUS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+
 --
 -- AUTO_INCREMENT for table `wilayah`
 --
 ALTER TABLE `wilayah`
   MODIFY `PK_WILAYAH` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- Constraints for dumped tables
 --
@@ -835,8 +890,8 @@ ALTER TABLE `menu_page_detail`
 --
 ALTER TABLE `soal_ujian`
   ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`),
-
   ADD CONSTRAINT `CN_SOAL_KASUS` FOREIGN KEY (`PARENT_SOAL`) REFERENCES `soal_kasus` (`PK_SOAL_KASUS`) ON UPDATE NO ACTION;
+
 --
 -- Constraints for table `users`
 --
