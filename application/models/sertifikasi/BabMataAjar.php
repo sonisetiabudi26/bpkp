@@ -13,7 +13,13 @@ class BabMataAjar extends My_Model
 	
 	public function _get_bab_from_fk_mata_ajar($fk_mata_ajar)
 	{
-	    $query = $this->db->get_where($this->_table, array('FK_MATA_AJAR' => $fk_mata_ajar));
+		$this->db->select('*');
+	    $this->db->from($this->_table);
+		$this->db->join('mata_ajar', 'mata_ajar.pk_mata_ajar = bab_mata_ajar.FK_MATA_AJAR');
+		$this->db->join('group_mata_ajar', 'group_mata_ajar.pk_group_mata_ajar = mata_ajar.fk_group_mata_ajar');
+		$this->db->join('lookup', 'group_mata_ajar.fk_lookup_diklat = lookup.pk_lookup');
+	    $this->db->where('FK_MATA_AJAR', $fk_mata_ajar);
+		$query = $this->db->get();
 	    return $query->result();
 	}
 	

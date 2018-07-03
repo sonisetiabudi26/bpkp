@@ -1,3 +1,15 @@
+<?php
+	if(isset($messages)){?>
+		<div class="col-md-12">
+			<div class="container alert alert-success" style="text-align:center">
+				<strong><?php echo trim($messages);?></strong><button type="button" class="close" data-dismiss="alert">x</button>
+			</div>
+		</div>
+<?php }?>
+
+<div class="col-md-12">
+	<strong>Status Review : <?php echo $status_review;?></strong>
+</div>
 <table id="datatable-responsive" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
 	<thead style="color:#111;">
 		<tr>
@@ -42,4 +54,7 @@
 </table>			
 <script>
 	$('#datatable-responsive').DataTable();
+	$(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+	$(".alert-success").slideUp(500);
+});
 </script>

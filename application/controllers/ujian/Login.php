@@ -44,7 +44,7 @@ class Login extends CI_Controller{
 		$sess_array = array(
 			'username' => ''
 		);
-		$this->session->unset_userdata('logged_in', $sess_array);
+		$this->session->unset_userdata('logged_nip', $sess_array);
 		redirect('ujian-sertifikasi-jfa');
 	}
 }

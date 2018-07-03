@@ -9,8 +9,9 @@ class Home extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
 		$this->load->model('sertifikasi/menupage','menupage');
-    	$this->load->model('sertifikasi/soalujian','soalujian');
+    	$this->load->model('sertifikasi/babmataajar','babmataajar');
 		$this->load->model('sertifikasi/mataajar','mataajar');
+		$this->load->model('sertifikasi/reviewsoal','reviewsoal');
     }
 
     public function index(){
@@ -20,7 +21,8 @@ class Home extends CI_Controller {
 			$data['title_page'] = 'BPKP Web Application';
 			$data['content_page']='bank_soal/homepage.php';
 			$data['username']=$username;
-			$data['mata_ajar']	= $this->mataajar->_get_all();
+			$data['bank_soal']	= $this->babmataajar->_detail_bab_mata_ajar();
+			$data['review_soal']	= $this->reviewsoal->_get_all_review_ujian();
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');

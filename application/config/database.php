@@ -73,4 +73,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default'] = require '../config/db_config_jfa.php';
+$db['default'] = require 'config/db_config_jfa.php';
+//$db['default']['port'] = 8083;
