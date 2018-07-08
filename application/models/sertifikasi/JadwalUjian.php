@@ -23,5 +23,19 @@ class JadwalUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function delete_by_id($id)
+	 {
+			 $this->db->where('PK_JADWAL_UJIAN', $id);
+			 $this->db->delete($this->_table);
+	 }
+	 public function insert_multiple($data){
+		 $insert=$this->db->insert("jadwal_ujian", $data);
+ 		 if($insert){
+ 			 	return  'Data Inserted Successfully';
+ 		 }else{
+ 			 return 'Data Inserted Failed';
+ 		 }
+ 	}
+
 
 }

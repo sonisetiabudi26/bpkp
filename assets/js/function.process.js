@@ -198,6 +198,45 @@ function uploadFile(formTarget, responseContent){
 	return false;
 	});
 }
+function uploadFileNilai(formTarget, responseContent){
+	$(document).on('submit', '#'+formTarget.id, function(e) {
+		e.preventDefault();
+	var data = new FormData(document.getElementById(formTarget.id));
+	$.ajax({
+    data : data,
+    type : $(this).attr('method'),
+    url : $(this).attr('action'),
+    async: false,
+    // headers: {
+    //   'Content-Type':'text/xml'
+    // },
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    cache:false,
+    timeout: 600000,
+		success : function(response) {
+      $("#import_nilai")[0].reset();
+			if(response.status=='success'){
+
+				$("#"+responseContent).html("<h4 class='text-success'>Process upload : "+response.status+"</h4>");
+			}else{
+				$("#"+responseContent).html("<h4 class='text-danger'>Process upload : "+response.status+"</h4>");
+			}
+
+			console.log("success : ", "success");
+			$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
+
+		},
+		error: function (e) {
+			$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
+			console.log("ERROR : ", e);
+			$("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
+		}
+	});
+	return false;
+	});
+}
 
 /** format parsing : this select, content id for show response */
 function procesForm(formTarget, responseContent){
@@ -215,7 +254,9 @@ function procesForm(formTarget, responseContent){
 			timeout: 600000,
 			dataType: "json",
 			success : function(response) {
+        $('#'+formTarget.id)[0].reset();
 				if(response.status=='success'){
+
 					$("#"+responseContent).html("<h4 class='text-success'>Process save : "+response.status+"</h4>");
 				}else{
 					$("#"+responseContent).html("<h4 class='text-danger'>Process save : "+response.status+"</h4>");
@@ -226,7 +267,7 @@ function procesForm(formTarget, responseContent){
 				});
 
 				console.log("success : ", "success");
-				$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
+			//	$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 			},
 			error: function (e) {
 				$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
@@ -241,6 +282,7 @@ function procesForm(formTarget, responseContent){
 /** format parsing : this select, content id for show response */
 function procesFormPengusul(formTarget, responseContent){
 	$(document).on('submit', '#'+formTarget.id, function(e) {
+
 		e.preventDefault();
 		var data = new FormData(document.getElementById(formTarget.id));
 		$.ajax({
@@ -254,18 +296,18 @@ function procesFormPengusul(formTarget, responseContent){
 			timeout: 600000,
 			dataType: "json",
 			success : function(response) {
-				if(response.status=='success'){
-					$("#"+responseContent).html("<h4 class='text-success'>Process save : "+response.status+"</h4>");
-				}else{
-					$("#"+responseContent).html("<h4 class='text-danger'>Process save : "+response.status+"</h4>");
-				}
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
 
 				$("#"+responseContent).fadeTo(2000, 500).slideUp(500, function(){
 					$("#"+responseContent).slideUp(500);
 				});
-
+        refresh();
 				console.log("success : ", "success");
-				$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
+        $("#jadwal").val("");
+        $("#lokasi").val("");
+				// $("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 			},
 			error: function (e) {
 				$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");

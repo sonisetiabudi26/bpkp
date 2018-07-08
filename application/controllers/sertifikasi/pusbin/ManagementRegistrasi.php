@@ -28,6 +28,10 @@ class ManagementRegistrasi extends CI_Controller {
         redirect('/');
       }
     }
+		public function vw_add_jadwal(){
+		//	$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+			$this->load->view('sertifikasi/pusbin/content/add_jadwal');
+		}
 		public function loadData(){
 			 $dataAll=$this->regis->loadAll();
 			 foreach ($dataAll as $key) {
@@ -50,6 +54,53 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 		public function loadDataJadwal(){
 			$dataAll=$this->jadwal->loadJadwal();
-			echo json_encode($dataAll);
+			 $data = array();
+			 //$no = $_POST['start'];
+			 $a=1;
+			 foreach ($dataAll as $field) {
+					 $row = array();
+					 $row[] = $a;
+					 $row[] = $field->CATEGORY;
+					 $row[] = $field->START_DATE;
+					 $row[] = $field->END_DATE;
+					 $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                  <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+
+					 $data[] = $row;
+					 $a++;
+			 }
+
+			 $output = array(
+					 "draw" => 'dataJadwal',
+					 "recordsTotal" => $a,
+					 "recordsFiltered" => $a,
+					 "data" => $data,
+			 );
+			 //output dalam format JSON
+			 echo json_encode($output);
+			//echo json_encode($dataAll);
+		}
+		public function ajax_delete($id)
+    {
+        $this->jadwal->delete_by_id($id);
+        echo json_encode(array("status" => TRUE));
+    }
+
+		public function tambah(){
+		if(!empty($this->input->post('category'))){
+			$data = array(
+				'category' => $this->input->post('category'),
+				'start_date' => $this->input->post('start_date'),
+				'end_date' => $this->input->post('end_date')
+			);
+			$insert=$this->jadwal->insert_multiple($data);
+			if($insert=='Data Inserted Successfully'){
+				print json_encode(array("status"=>"success", "data"=>$insert));
+			}else{
+				print json_encode(array("status"=>"error", "data"=>$insert));
+			}
+		}else{
+			print json_encode(array("status"=>"category harus diisi", "data"=>"category harus diisi"));
+		}
 		}
 }

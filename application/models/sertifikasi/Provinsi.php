@@ -15,5 +15,10 @@ class Provinsi extends My_Model
 	   return $query->result();
 	}
 
-
+	public function _getAll(){
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$query = $this->db->get();
+	   return $query->result();
+	}
 }
