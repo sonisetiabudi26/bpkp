@@ -35,8 +35,6 @@
 <script>
 $(document).ready(function(){
 var kodeevent=$('#kodeevent').val();
-// var kelas=$('#kelas').val();
-// var id=kodeevent+'~'+kelas;
 var table;
 			table = $('#data_peserta').DataTable({
               "processing": false, //Feature control the processing indicator.

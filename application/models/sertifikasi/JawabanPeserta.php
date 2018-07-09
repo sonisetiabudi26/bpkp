@@ -16,11 +16,8 @@ public function getALl($kodeevent,$kelas){
   $this->db->from($this->_table);
   $this->db->where($condition);
   $query = $this->db->get();
-  if ($query->num_rows() > 0) {
-    return $query->result();
-  } else {
-    return false;
-  }
+	return $query->result();
+
 }
 
 }?>
