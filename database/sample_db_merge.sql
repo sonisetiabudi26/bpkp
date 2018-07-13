@@ -1,15 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 03, 2018 at 03:53 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.1.15
+-- Host: localhost
+-- Generation Time: Jul 08, 2018 at 11:02 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
+
+
 SET time_zone = "+00:00";
 
 
@@ -66,6 +66,30 @@ INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `batch`
+--
+
+CREATE TABLE `batch` (
+  `PK_BATCH` int(11) NOT NULL,
+  `FK_KODE_EVENT` varchar(150) NOT NULL,
+  `FK_PROVINSI` int(11) NOT NULL,
+  `KELAS` varchar(150) NOT NULL,
+  `FK_JADWAL` int(11) NOT NULL,
+  `REFF` varchar(150) NOT NULL,
+  `CREATED_AT` varchar(150) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `batch`
+--
+
+INSERT INTO `batch` (`PK_BATCH`, `FK_KODE_EVENT`, `FK_PROVINSI`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(1, '3', 13, 'T-258     ', 17, 'qwer', 'Pusbin Budianto', '2018-07-08');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bridge_lookup`
 --
 
@@ -84,6 +108,45 @@ INSERT INTO `bridge_lookup` (`id_bridge_lookup`, `PK_LOOKUP`, `ROLEGROUPID`) VAL
 (2, 6, 'Level 3'),
 (3, 5, 'Level 1'),
 (7, 11, 'Level 2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `document_pengusulan_pengangkatan`
+--
+
+CREATE TABLE `document_pengusulan_pengangkatan` (
+  `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL,
+  `STATUS_DOC` varchar(150) NOT NULL,
+  `CATEGORY_DOC` varchar(100) NOT NULL,
+  `DOC_PENGUSULAN_PENGANGKATAN` text NOT NULL,
+  `FK_PENGUSUL_PENGANGKATAN` int(11) NOT NULL,
+  `CREATED_AT` varchar(150) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event`
+--
+
+CREATE TABLE `event` (
+  `PK_EVENT` int(11) NOT NULL,
+  `KODE_EVENT` varchar(100) NOT NULL,
+  `NAMA_DIKLAT` varchar(150) NOT NULL,
+  `URAIAN` text NOT NULL,
+  `FK_PROVINSI` int(11) NOT NULL,
+  `CREATED_AT` varchar(150) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `NAMA_DIKLAT`, `URAIAN`, `FK_PROVINSI`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(3, '10119', 'Tester', 'tester', 13, 'Pusbin Budianto', '2018-07-08');
 
 -- --------------------------------------------------------
 
@@ -133,8 +196,8 @@ CREATE TABLE `jabatan` (
 CREATE TABLE `jadwal_ujian` (
   `PK_JADWAL_UJIAN` int(11) NOT NULL,
   `CATEGORY` varchar(150) NOT NULL,
-  `START_DATE` date NOT NULL,
-  `END_DATE` date NOT NULL
+  `START_DATE` varchar(100) NOT NULL,
+  `END_DATE` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -142,8 +205,91 @@ CREATE TABLE `jadwal_ujian` (
 --
 
 INSERT INTO `jadwal_ujian` (`PK_JADWAL_UJIAN`, `CATEGORY`, `START_DATE`, `END_DATE`) VALUES
-(1, 'Gelombang 1', '2018-05-31', '2018-06-01'),
-(2, 'Gelombang 2', '2018-06-05', '2018-06-21');
+(17, 'Gelombang 1', '07/25/2018', '07/28/2018'),
+(18, 'Gelombang 2', '07/17/2018', '07/28/2018');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jawaban_peserta`
+--
+
+CREATE TABLE `jawaban_peserta` (
+  `PK_JAWABAN_DETAIL` int(11) NOT NULL,
+  `FK_KODE_EVENT` varchar(100) NOT NULL,
+  `KODE_PESERTA` varchar(100) NOT NULL,
+  `KODE_SOAL` varchar(100) NOT NULL,
+  `KELAS` varchar(100) NOT NULL,
+  `NO_1` varchar(10) NOT NULL,
+  `NO_2` varchar(1) NOT NULL,
+  `NO_3` varchar(1) NOT NULL,
+  `NO_4` varchar(1) NOT NULL,
+  `NO_5` varchar(1) NOT NULL,
+  `NO_6` varchar(1) NOT NULL,
+  `NO_7` varchar(1) NOT NULL,
+  `NO_8` varchar(1) NOT NULL,
+  `NO_9` varchar(1) NOT NULL,
+  `NO_10` varchar(1) NOT NULL,
+  `NO_11` varchar(1) NOT NULL,
+  `NO_12` varchar(1) NOT NULL,
+  `NO_13` varchar(1) NOT NULL,
+  `NO_14` varchar(1) NOT NULL,
+  `NO_15` varchar(1) NOT NULL,
+  `NO_16` varchar(1) NOT NULL,
+  `NO_17` varchar(1) NOT NULL,
+  `NO_18` varchar(1) NOT NULL,
+  `NO_19` varchar(1) NOT NULL,
+  `NO_20` varchar(1) NOT NULL,
+  `NO_21` varchar(1) NOT NULL,
+  `NO_22` varchar(1) NOT NULL,
+  `NO_23` varchar(1) NOT NULL,
+  `NO_24` varchar(1) NOT NULL,
+  `NO_25` varchar(1) NOT NULL,
+  `NO_26` varchar(1) NOT NULL,
+  `NO_27` varchar(1) NOT NULL,
+  `NO_28` varchar(1) NOT NULL,
+  `NO_29` varchar(1) NOT NULL,
+  `NO_30` varchar(1) NOT NULL,
+  `NO_31` varchar(1) NOT NULL,
+  `NO_32` varchar(1) NOT NULL,
+  `NO_33` varchar(1) NOT NULL,
+  `NO_34` varchar(1) NOT NULL,
+  `NO_35` varchar(1) NOT NULL,
+  `NO_36` varchar(1) NOT NULL,
+  `NO_37` varchar(1) NOT NULL,
+  `NO_38` varchar(1) NOT NULL,
+  `NO_39` varchar(1) NOT NULL,
+  `NO_40` varchar(1) NOT NULL,
+  `NO_41` varchar(1) NOT NULL,
+  `NO_42` varchar(1) NOT NULL,
+  `NO_43` varchar(1) NOT NULL,
+  `NO_44` varchar(1) NOT NULL,
+  `NO_45` varchar(1) NOT NULL,
+  `NO_46` varchar(1) NOT NULL,
+  `NO_47` varchar(1) NOT NULL,
+  `NO_48` varchar(1) NOT NULL,
+  `NO_49` varchar(1) NOT NULL,
+  `NO_50` varchar(1) NOT NULL,
+  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jawaban_peserta`
+--
+
+INSERT INTO `jawaban_peserta` (`PK_JAWABAN_DETAIL`, `FK_KODE_EVENT`, `KODE_PESERTA`, `KODE_SOAL`, `KELAS`, `NO_1`, `NO_2`, `NO_3`, `NO_4`, `NO_5`, `NO_6`, `NO_7`, `NO_8`, `NO_9`, `NO_10`, `NO_11`, `NO_12`, `NO_13`, `NO_14`, `NO_15`, `NO_16`, `NO_17`, `NO_18`, `NO_19`, `NO_20`, `NO_21`, `NO_22`, `NO_23`, `NO_24`, `NO_25`, `NO_26`, `NO_27`, `NO_28`, `NO_29`, `NO_30`, `NO_31`, `NO_32`, `NO_33`, `NO_34`, `NO_35`, `NO_36`, `NO_37`, `NO_38`, `NO_39`, `NO_40`, `NO_41`, `NO_42`, `NO_43`, `NO_44`, `NO_45`, `NO_46`, `NO_47`, `NO_48`, `NO_49`, `NO_50`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(1, '10119', '100', '220501', 'T-258     ', 'D', 'B', 'B', 'D', 'B', 'C', 'A', 'D', 'A', 'C', 'A', 'C', 'B', 'B', 'B', 'B', 'D', 'A', 'C', 'D', 'C', 'C', 'B', 'A', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'A', 'D', 'C', 'A', 'C', 'D', 'A', 'D', 'A', 'D', 'A', 'D', 'C', 'D', 'C', 'A', 'A', 'B', 'D', 'Pusbin Budianto', '2018-07-08'),
+(2, '10119', '101', '220501', 'T-258     ', 'D', 'B', 'B', 'A', 'A', 'C', 'A', 'D', 'A', 'C', 'C', 'C', 'B', 'B', 'B', 'B', 'D', 'B', 'C', 'D', 'C', 'C', 'B', 'B', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'A', 'D', 'C', 'A', 'C', 'D', 'A', 'D', 'A', 'D', 'A', 'D', 'C', 'D', 'C', 'A', 'A', 'A', 'D', 'Pusbin Budianto', '2018-07-08'),
+(3, '10119', '102', '220501', 'T-258     ', 'D', 'B', 'B', 'A', 'A', 'C', 'A', 'D', 'A', 'C', 'C', 'C', 'B', 'B', 'B', 'B', 'D', 'B', 'C', 'D', 'C', 'C', 'B', 'A', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'A', 'D', 'C', 'A', 'C', 'D', 'A', 'D', 'A', 'D', 'A', 'D', 'C', 'D', 'C', 'A', 'A', 'B', 'D', 'Pusbin Budianto', '2018-07-08'),
+(4, '10119', '103', '230301', 'T-258     ', 'B', 'B', 'A', 'A', 'B', 'D', 'C', 'B', 'C', 'D', 'C', 'B', 'B', 'C', 'C', 'D', 'C', 'C', 'A', 'D', 'D', 'A', 'A', 'D', 'B', 'A', 'B', 'A', 'B', 'A', 'C', 'C', 'D', 'B', 'C', 'D', 'B', 'A', 'B', 'D', 'A', 'D', 'A', 'A', 'A', 'C', 'C', 'A', 'C', 'B', 'Pusbin Budianto', '2018-07-08'),
+(5, '10119', '104', '230301', 'T-258     ', 'B', 'C', 'A', 'B', 'B', 'D', 'C', 'B', 'C', 'C', 'C', 'B', 'B', 'C', 'C', 'D', 'D', 'C', 'C', 'A', 'D', 'A', 'A', 'B', 'B', 'B', 'C', 'B', 'D', 'A', 'C', 'C', 'D', 'C', 'B', 'D', 'C', 'A', 'D', 'A', 'B', 'D', 'A', 'A', 'A', 'C', 'C', 'B', 'C', 'B', 'Pusbin Budianto', '2018-07-08'),
+(6, '10119', '105', '230301', 'T-258     ', 'B', 'C', 'A', 'A', 'A', 'D', 'A', 'D', 'C', 'C', 'A', 'B', 'A', 'C', 'D', 'D', 'B', 'C', 'D', 'C', 'D', 'A', 'A', 'A', 'D', 'B', 'B', 'B', 'D', 'B', 'C', 'B', 'C', 'C', 'B', 'D', 'B', 'B', 'A', 'D', 'C', 'D', 'A', 'A', 'A', 'C', 'C', 'C', 'A', 'B', 'Pusbin Budianto', '2018-07-08'),
+(7, '10119', '106', '230301', 'T-258     ', 'B', 'C', 'D', 'A', 'B', 'B', 'A', 'B', 'C', 'D', 'A', 'B', 'B', 'C', 'A', 'D', 'B', 'C', 'D', 'B', 'A', 'A', 'A', 'B', 'B', 'C', 'D', 'A', 'D', 'C', 'C', 'A', 'D', 'C', 'B', 'D', 'C', 'B', 'A', 'A', 'A', 'D', 'D', 'B', 'B', 'C', 'C', 'B', 'C', 'B', 'Pusbin Budianto', '2018-07-08'),
+(8, '10119', '107', '230301', 'T-258     ', 'B', 'D', 'D', 'A', 'B', 'D', 'A', 'B', 'B', 'C', 'B', 'C', 'B', 'D', 'B', 'D', 'B', 'C', 'A', 'B', 'A', 'A', 'A', 'A', 'B', 'A', 'B', 'B', 'C', 'B', 'C', 'C', 'A', 'C', 'B', 'D', 'B', 'A', 'A', 'A', 'C', 'D', 'A', 'A', 'C', 'C', 'D', 'C', 'A', 'B', 'Pusbin Budianto', '2018-07-08'),
+(9, '10119', '108', '230301', 'T-258     ', 'B', 'C', 'D', 'A', 'B', 'D', 'C', 'D', 'C', 'C', 'C', 'B', 'A', 'D', 'A', 'D', 'D', 'C', 'D', 'A', 'A', 'A', 'A', 'A', 'D', 'A', 'B', 'B', 'D', 'A', 'C', 'C', 'B', 'C', 'B', 'B', 'B', 'A', 'D', 'D', 'A', 'D', 'A', 'A', 'C', 'C', 'C', 'A', 'C', 'B', 'Pusbin Budianto', '2018-07-08'),
+(10, '10119', '101', '230301', 'T-258     ', 'B', 'C', 'D', 'A', 'B', 'D', 'A', 'B', 'C', 'D', 'A', 'D', 'B', 'C', 'A', 'D', 'D', 'C', 'A', 'C', 'B', 'A', 'A', 'B', 'B', 'C', 'A', 'A', 'D', 'A', 'C', 'C', 'A', 'B', 'B', 'A', 'B', 'A', 'A', 'D', 'A', 'D', 'A', 'A', 'C', 'C', 'C', 'A', 'A', 'B', 'Pusbin Budianto', '2018-07-08'),
+(11, '10119', '110', '220501', 'T-258     ', 'D', 'B', 'B', 'D', 'C', 'C', 'A', 'D', 'A', 'C', 'C', 'C', 'B', 'B', 'B', 'B', 'D', 'B', 'C', 'D', 'C', 'C', 'B', 'A', 'A', 'B', 'C', 'A', 'B', 'C', 'A', 'A', 'D', 'C', 'A', 'C', 'D', 'A', 'D', 'A', 'D', 'A', 'D', 'C', 'D', 'C', 'A', 'A', 'B', 'D', 'Pusbin Budianto', '2018-07-08');
 
 -- --------------------------------------------------------
 
@@ -203,7 +349,17 @@ INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`,
 (14, 1, 'RV2', 'REVIEW TAHAP 2', 'SOAL_STATUS', 'REVIEW2', 3),
 (15, 1, 'RV3', 'REVIEW TAHAP 3', 'SOAL_STATUS', 'REVIEW3', 4),
 (16, 1, 'DKPJ', 'Diklat Perjenjangan', 'DIKLAT_SERTIFIKASI', 'DKPJ', 1),
-(17, 1, 'DKPB', 'Diklat Pembentukan', 'DIKLAT_SERTIFIKASI', 'DKPB', 2);
+(17, 1, 'DKPB', 'Diklat Pembentukan', 'DIKLAT_SERTIFIKASI', 'DKPB', 2),
+(18, 1, 'REVIEW1', 'REVIEW 1', 'USER_ROLE', 'REVIEW1', 8),
+(19, 1, 'REVIEW2', 'REVIEW 2', 'USER_ROLE', 'REVIEW2', 9),
+(20, 1, 'PEMBUAT_SOAL', 'PEMBUAT SOAL', 'USER_ROLE', 'PEMBUAT_SOAL', 10),
+(21, 1, 'SUBID', 'SUBID', 'USER_ROLE', 'SUBID', 11),
+(22, 1, 'KAPUS', 'KAPUS', 'USER_ROLE', 'KAPUS', 12),
+(23, 1, 'CREATED', 'SOAL TELAH DIBUAT', 'STATUS_PERMINTAAN', 'CREATED', 1),
+(24, 1, 'PENDING', 'SOAL SEDANG DIREVIEW', 'STATUS_PERMINTAAN', 'PENDING', 2),
+(25, 1, 'APPROVED', 'SOAL TELAH DISETUJUI', 'STATUS_PERMINTAAN', 'APPROVED', 3),
+(26, 1, 'REJECTED', 'SOAL TIDAK DISETUJUI', 'STATUS_PERMINTAAN', 'REJECTED', 4),
+(27, 1, 'UNCREATED', 'SOAL BELUM DIBUAT', 'STATUS_PERMINTAAN', 'UNCREATED', 5);
 
 -- --------------------------------------------------------
 
@@ -229,7 +385,8 @@ INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_V
 ('USER_ACCESS_API', 'USER_ACCESS_API', 1, 1),
 ('SECRET_KEY', 'SECRET_KEY', 1, 1),
 ('SOAL_STATUS', 'SOAL_STATUS', 1, 1),
-('DIKLAT_SERTIFIKASI', 'DIKLAT_SERTIFIKASI', 1, 1);
+('DIKLAT_SERTIFIKASI', 'DIKLAT_SERTIFIKASI', 1, 1),
+('STATUS_PERMINTAAN', 'STATUS_PERMINTAAN', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -301,16 +458,20 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (15, 'Pengusulan Pengangkatan', 'unit_apip', 'unit_apip/PengusulanPengangkatan', 'admin', '2018-03-29', '', 6),
 (16, 'Home', 'pusbin', 'pusbin/home', 'admin', '2018-03-29', '', 5),
 (17, 'Management Registrasi', 'pusbin', 'pusbin/ManagementRegistrasi', 'admin', '2018-03-29', '', 5),
-(19, 'Management Hasil Ujian', 'pusbin', 'pusbin/ManagementHasilUjian', 'admin', '2018-03-29', '', 5),
+
 (20, 'Management User', 'pusbin', 'pusbin/ManagementUser', 'admin', '2018-03-29', '', 5),
 (21, 'Nilai WI', 'widyaiswara', 'widyaiswara/Nilai', 'admin', '2018-03-29', '', 4),
 (22, 'home', 'bpkp', 'bpkp/home', 'admin', '2018-03-29', 'home', 11),
 (24, 'bpkp', 'bpkp', 'sertifikasi/bpkp', 'admin', '2018-03-29', '', 11),
 (25, 'Registrasi Unit Apip', 'bpkp', 'bpkp/registrasi', 'admin', '2018-03-29', 'registered', 11),
 (26, 'bank_soal', 'bank_soal', 'sertifikasi/bank_soal', 'admin', '2018-05-07', '', 1),
-(27, 'Home', 'bank_soal', 'bank_soal/home', 'admmin', '2018-05-07', 'home', 1),
-(28, 'Bank Soal', 'bank_soal', 'bank_soal/AdminBankSoal', 'admin', '2018-05-07', 'key', 1),
-(29, 'Management Bank Soal', 'bank_soal', 'bank_soal/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1);
+(27, 'Home', 'bank_soal', 'bank_soal/admin/home', 'admin', '2018-05-07', 'home', 1),
+(28, 'Bank Soal', 'bank_soal', 'bank_soal/admin/AdminBankSoal', 'admin', '2018-05-07', 'key', 1),
+(29, 'Management Bank Soal', 'bank_soal', 'bank_soal/admin/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1),
+(30, 'Perhitungan Nilai', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', '', 5),
+(31, 'Home', 'bank_soal', 'bank_soal/koreksi/home', 'admin', '2018-07-07', 'home', 18),
+(32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20);
+
 
 -- --------------------------------------------------------
 
@@ -366,6 +527,56 @@ CREATE TABLE `pendidikan_auditor` (
   `JURUSAN` varchar(50) DEFAULT NULL,
   `IJAZAH` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permintaan_soal`
+--
+
+CREATE TABLE `permintaan_soal` (
+  `PK_PERMINTAAN_SOAL` int(11) NOT NULL,
+  `FK_BAB_MATA_AJAR` int(11) NOT NULL,
+  `TIPE_SOAL` varchar(30) NOT NULL,
+  `PEMBUAT_SOAL` varchar(255) NOT NULL,
+  `REVIEW1` varchar(255) NOT NULL,
+  `REVIEW2` varchar(255) NOT NULL,
+  `TANGGAL_PERMINTAAN` date NOT NULL,
+  `JUMLAH_SOAL` int(11) NOT NULL,
+  `FK_LOOKUP_STATUS_PERMINTAAN` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `permintaan_soal`
+--
+
+INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `PEMBUAT_SOAL`, `REVIEW1`, `REVIEW2`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `FK_LOOKUP_STATUS_PERMINTAAN`) VALUES
+(12, 1, 'Pilihan Ganda', 'pembuat_soal', 'review1', 'review2', '2018-07-10', 69, 27);
+
+
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `pengusul_pengangkatan`
+--
+
+CREATE TABLE `pengusul_pengangkatan` (
+  `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL,
+  `NIP` int(50) NOT NULL,
+  `NAMA` varchar(150) NOT NULL,
+  `FK_STATUS_PENGUSUL_PENGANGKATAN` int(11) NOT NULL,
+  `FK_STATUS_DOC` int(11) NOT NULL,
+  `TOTAL_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL,
+  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengusul_pengangkatan`
+--
+
+INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `NAMA`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `TOTAL_DOC_PENGUSULAN_PENGANGKATAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(17, 2147483647, 'Natalina Br. Ginting ', 1, 1, 0, '196712252002122001', '2018-07-06');
 
 -- --------------------------------------------------------
 
@@ -448,6 +659,33 @@ CREATE TABLE `pusbin` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reff_simdiklat`
+--
+
+CREATE TABLE `reff_simdiklat` (
+  `id_kaldik` int(11) NOT NULL,
+  `NamaDiklat` varchar(150) NOT NULL,
+  `RlsTglMulai` date NOT NULL,
+  `RlsTglSelesai` date NOT NULL,
+  `NoUrutSTTPM` int(11) NOT NULL,
+  `TglSTTPM` date NOT NULL,
+  `KodeJenisDiklat` int(11) NOT NULL,
+  `NamaJenisDiklat` varchar(150) NOT NULL,
+  `NIP` int(11) NOT NULL,
+  `NamaGroupJabatan` varchar(150) NOT NULL,
+  `KodeGroupJabatan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reff_simdiklat`
+--
+
+INSERT INTO `reff_simdiklat` (`id_kaldik`, `NamaDiklat`, `RlsTglMulai`, `RlsTglSelesai`, `NoUrutSTTPM`, `TglSTTPM`, `KodeJenisDiklat`, `NamaJenisDiklat`, `NIP`, `NamaGroupJabatan`, `KodeGroupJabatan`) VALUES
+(1, 'Tester', '2018-07-08', '2018-07-08', 12, '2018-07-09', 1, 'testers', 211234, 'tester group', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `registrasi_ujian`
 --
 
@@ -501,6 +739,29 @@ INSERT INTO `review_soal` (`PK_REVIEW_SOAL`, `FK_BAB_MATA_AJAR`, `FK_LOOKUP_REVI
 -- --------------------------------------------------------
 
 --
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- Table structure for table `sertifikasi_jfa`
 --
 
@@ -558,13 +819,56 @@ CREATE TABLE `soal_ujian` (
 --
 
 INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
-(117, 9, 2, 'Siapa nama presiden indonesia ke 1?', '1', 'ir soekarno', 'gusdur', 'megawati', 'soeharto', '', '', '', '', 1),
-(119, 9, 2, 'Ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'depok', '', '', '', '', 1),
-(121, 9, 2, 'Ibukota Jawa Barat', '2', 'kuningan', 'bandung', 'surabaya', 'semarang', '', '', '', '', 0),
-(130, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', '', '', '', '', 1),
-(131, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', '', '', '', '', 1),
-(132, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
-(133, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1);
+(134, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(135, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(139, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(140, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(141, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(174, 9, NULL, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status_doc`
+--
+
+CREATE TABLE `status_doc` (
+  `PK_STATUS_DOC` int(11) NOT NULL,
+  `DESC_STATUS` varchar(200) NOT NULL,
+  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status_doc`
+--
+
+INSERT INTO `status_doc` (`PK_STATUS_DOC`, `DESC_STATUS`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(1, 'Document Belum Complete', 'admin', '2018-06-22'),
+(2, 'Document Complete', 'admin', '2018-06-22'),
+(3, 'Proccessing', 'admin', '2018-06-22'),
+(4, 'Reject', 'admin', '2018-06-22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status_pengusulan_pengangkatan`
+--
+
+CREATE TABLE `status_pengusulan_pengangkatan` (
+  `PK_STATUS_PENGUSUL_PENGANGKATAN` int(50) NOT NULL,
+  `DESC` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status_pengusulan_pengangkatan`
+--
+
+INSERT INTO `status_pengusulan_pengangkatan` (`PK_STATUS_PENGUSUL_PENGANGKATAN`, `DESC`) VALUES
+(1, 'Pengangkatan Pertama'),
+(2, 'Pengangkatan Perpindahan'),
+(3, 'Pengangkatan Penyesuaian (Inpassing)\r\n'),
+(4, 'Pengangkatan kembali');
 
 -- --------------------------------------------------------
 
@@ -603,10 +907,11 @@ INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) 
 (5, 'unit_apip', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 6),
 (6, 'bpkp', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 11),
 (7, 'admin_bank', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(8, 'review1', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(9, 'review2', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(10, 'subid', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(11, 'kapus', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1);
+(8, 'review1', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 18),
+(9, 'review2', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 19),
+(10, 'subid', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 21),
+(11, 'kapus', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 22),
+(12, 'pembuat_soal', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 20);
 
 -- --------------------------------------------------------
 
@@ -643,10 +948,28 @@ ALTER TABLE `bab_mata_ajar`
   ADD KEY `CN_BAB_MATA_AJAR` (`FK_MATA_AJAR`);
 
 --
+-- Indexes for table `batch`
+--
+ALTER TABLE `batch`
+  ADD PRIMARY KEY (`PK_BATCH`);
+
+--
 -- Indexes for table `bridge_lookup`
 --
 ALTER TABLE `bridge_lookup`
   ADD PRIMARY KEY (`id_bridge_lookup`);
+
+--
+-- Indexes for table `document_pengusulan_pengangkatan`
+--
+ALTER TABLE `document_pengusulan_pengangkatan`
+  ADD PRIMARY KEY (`PK_DOC_PENGUSULAN_PENGANGKATAN`);
+
+--
+-- Indexes for table `event`
+--
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`PK_EVENT`);
 
 --
 -- Indexes for table `group_mata_ajar`
@@ -660,6 +983,12 @@ ALTER TABLE `group_mata_ajar`
 --
 ALTER TABLE `jadwal_ujian`
   ADD PRIMARY KEY (`PK_JADWAL_UJIAN`);
+
+--
+-- Indexes for table `jawaban_peserta`
+--
+ALTER TABLE `jawaban_peserta`
+  ADD PRIMARY KEY (`PK_JAWABAN_DETAIL`);
 
 --
 -- Indexes for table `list_persetujuan`
@@ -699,6 +1028,18 @@ ALTER TABLE `menu_page`
 ALTER TABLE `menu_page_detail`
   ADD PRIMARY KEY (`PK_MENU_DETAIL`),
   ADD KEY `FK_MENU_PAGE` (`FK_MENU_PAGE`) USING BTREE;
+  
+--
+-- Indexes for table `permintaan_soal`
+--
+ALTER TABLE `permintaan_soal`
+  ADD PRIMARY KEY (`PK_PERMINTAAN_SOAL`);
+
+--
+-- Indexes for table `pengusul_pengangkatan`
+--
+ALTER TABLE `pengusul_pengangkatan`
+  ADD PRIMARY KEY (`PK_PENGUSUL_PENGANGKATAN`);
 
 --
 -- Indexes for table `perwakilan_bpkp`
@@ -738,11 +1079,24 @@ ALTER TABLE `soal_kasus`
 
 --
 -- Indexes for table `soal_ujian`
+
 --
 ALTER TABLE `soal_ujian`
   ADD PRIMARY KEY (`PK_SOAL_UJIAN`),
   ADD KEY `CN_SOAL_BAB_MATA_AJAR` (`FK_BAB_MATA_AJAR`),
   ADD KEY `CN_SOAL_KASUS` (`PARENT_SOAL`);
+  
+--
+-- Indexes for table `status_doc`
+--
+ALTER TABLE `status_doc`
+  ADD PRIMARY KEY (`PK_STATUS_DOC`);
+
+--
+-- Indexes for table `status_pengusulan_pengangkatan`
+--
+ALTER TABLE `status_pengusulan_pengangkatan`
+  ADD PRIMARY KEY (`PK_STATUS_PENGUSUL_PENGANGKATAN`);
 
 --
 -- Indexes for table `users`
@@ -768,11 +1122,26 @@ ALTER TABLE `bab_mata_ajar`
   MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `batch`
+--
+ALTER TABLE `batch`
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `bridge_lookup`
 --
 ALTER TABLE `bridge_lookup`
   MODIFY `id_bridge_lookup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
+--
+-- AUTO_INCREMENT for table `document_pengusulan_pengangkatan`
+--
+ALTER TABLE `document_pengusulan_pengangkatan`
+  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `event`
+--
+ALTER TABLE `event`
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `group_mata_ajar`
 --
@@ -785,6 +1154,11 @@ ALTER TABLE `group_mata_ajar`
 ALTER TABLE `jadwal_ujian`
   MODIFY `PK_JADWAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
+--
+-- AUTO_INCREMENT for table `jawaban_peserta`
+--
+ALTER TABLE `jawaban_peserta`
+  MODIFY `PK_JAWABAN_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `list_persetujuan`
 --
@@ -808,6 +1182,17 @@ ALTER TABLE `mata_ajar`
 --
 ALTER TABLE `menu_page_detail`
   MODIFY `PK_MENU_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `pengusul_pengangkatan`
+--
+ALTER TABLE `pengusul_pengangkatan`
+  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `permintaan_soal`
+--
+ALTER TABLE `permintaan_soal`
+  MODIFY `PK_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `perwakilan_bpkp`
@@ -827,12 +1212,12 @@ ALTER TABLE `provinsi`
 ALTER TABLE `registrasi_ujian`
   MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
---
--- AUTO_INCREMENT for table `review_soal`
---
-ALTER TABLE `review_soal`
-  MODIFY `PK_REVIEW_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
+
+
+
+
+  
 --
 -- AUTO_INCREMENT for table `soal_kasus`
 --
@@ -843,8 +1228,18 @@ ALTER TABLE `soal_kasus`
 -- AUTO_INCREMENT for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
+--
+-- AUTO_INCREMENT for table `status_doc`
+--
+ALTER TABLE `status_doc`
+  MODIFY `PK_STATUS_DOC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `status_pengusulan_pengangkatan`
+--
+ALTER TABLE `status_pengusulan_pengangkatan`
+  MODIFY `PK_STATUS_PENGUSUL_PENGANGKATAN` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `wilayah`
 --
@@ -897,7 +1292,7 @@ ALTER TABLE `soal_ujian`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`FK_LOOKUP_ROLE`) REFERENCES `lookup` (`PK_LOOKUP`);
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

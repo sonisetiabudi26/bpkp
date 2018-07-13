@@ -1,11 +1,13 @@
+<div class="col-md-12" id="response-text" ></div>
+<div class="col-md-12">
 <div class="row">
 	<div class="col-lg-12">
-		<h3>Riwayat Ujian</h3>
+		<h3>Review Soal Ujian</h3>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<form action="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/listsoal"; ?>" method="POST" id="listSoalForm" >
+<form onsubmit="procesFormUjian(this, 'response_table')" action="<?php echo base_url('sertifikasi')."/bank_soal/review/insert_review"; ?>" method="POST" id="listDistribusiUjianForm" >
 	<div class="form-group">
 		<label for="mata_ajar">Mata Ajar :</label>
 		<select data-show-obj="bab" data-show-key="PK_BAB_MATA_AJAR" data-show-value="NAMA_BAB_MATA_AJAR" onChange="getAnotherSelectOption(this, 'select-list-bab-soal', 'content-list-bab-soal')" data-href="<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/listbab"; ?>" 
@@ -14,7 +16,7 @@
 		<?php
 			foreach ($mata_ajar as $mataajars):
 		?>
-		<option value="<?php echo $mataajars->PK_MATA_AJAR;?>"><?php echo $mataajars->NAMA_MATA_AJAR;?></option>
+		<option value="<?php echo $mataajars->PK_MATA_AJAR;?>"><?php echo $mataajars->NAMA_MATA_AJAR;?>(<?php echo $mataajars->DESCR;?>)</option>
 		<?php
 			endforeach;
 		?>
@@ -22,18 +24,18 @@
 	</div>				
 	<div class="form-group" id="content-list-bab-soal" style="display:none;">
 		<label for="select-list-bab-soal">List BAB :</label>
-		<select data-href="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/check_soal"; ?>" onChange="submitWithSelectOption(this, 'listSoalForm', 'response_table')" name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
+		<select onChange="submitWithSelectOption(this, 'listDistribusiUjianForm', 'response_table')" name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
 			<option>Pilihan</option>
 		</select>
 	</div>
 	<div class="form-group text-default">
 		<label for="select-list-user" class="text-primary">User Bank Soal :</label>
-		<select name="pk_user" id="select-list-user" class="form-control input-sm" disabled>
+		<select name="reviewer" id="select-list-user" class="form-control input-sm" disabled>
 			<option>Pilihan</option>
 			<?php
 				foreach ($user_bank_soal as $user_bank_soals):
 			?>
-			<option value="<?php echo $user_bank_soals->PK_USER;?>"><?php echo $user_bank_soals->USER_NAME;?></option>
+			<option value="<?php echo $user_bank_soals->USER_NAME;?>"><?php echo $user_bank_soals->USER_NAME;?></option>
 			<?php
 				endforeach;
 			?>
@@ -41,7 +43,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			<input id="btn-save-detail" type="submit" value="Verifikasi Soal" class="btn btn-primary" disabled />
+			<input id="btn-save-ujian" type="submit" value="Kirim Review" class="btn btn-primary" disabled />
 		</div>
 	</div>
 	<div class="row">
@@ -50,8 +52,14 @@
 </form>
 <div class="row">
 		<div class="col-lg-12">
-			<label class="text-primary">List Soal</label>
+			<b><h4 class="text-primary" id="response-random">List Soal</h4></b>
+			<hr>
 		</div>
+		<div class="col-lg-12">
+			<button id="btn-save-ujian" class="btn btn-primary" disabled>Export to Excel</button>
+			<button id="btn-save-ujian" class="btn btn-primary" disabled >Export to PDF</button>
+		</div>
+		<br>
 	</div>
 <div id="response_table">
 <table id="datatable-responsive" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
@@ -69,36 +77,37 @@
 </div>
 <script>	
 	$('#select-list-bab-soal').change(function(){
-		var urlVar = $(this).attr('data-href');
 		var fk_bab_mata_ajar = $(this).val();
 		if(fk_bab_mata_ajar==='Pilihan'){
-			fk_bab_mata_ajar=0;
 			$("input").prop("disabled", true);
+			$("#select-list-user").prop("disabled", true);
 		}else{
 			$('input').removeAttr('disabled');
+			$("#select-list-user").removeAttr('disabled');
 		}
-		check_soal(fk_bab_mata_ajar, urlVar);
 	});
 	
-	function check_soal(fk_bab_mata_ajar, urlVar){
-	var urlVar = urlVar;
-	var objParsingName = 'fk_bab_mata_ajar';
-	var objParsingVal = fk_bab_mata_ajar;
-	var jsonParam = JSON.parse('{"'+objParsingName+'":'+objParsingVal+'}');
-     $.ajax({
-		data:jsonParam,
-		url:urlVar,
-		type:'GET',
-		success : function(response) {
-			if(response>0){
-				$("#select-list-user").prop("disabled", false);
-			}else{
-				$("#select-list-user").prop("disabled", true)
+	/** format parsing : this select, content id for show response */
+function procesFormUjian(formTarget, responseContent){
+	$(document).on('submit', '#'+formTarget.id, function(e) {
+		e.preventDefault();
+		var data = new FormData(document.getElementById(formTarget.id));
+		$.ajax({
+			data : data,
+			type : $(this).attr('method'),
+			url : $(this).attr('action'),
+			async: false,
+			processData: false,
+			contentType: false,
+			cache:false,
+			timeout: 600000,
+			success : function(response) {
+				$('#response-random').html('List Soal Ujian (Random)');
+				$('#' + responseContent).show();
+				$('#' + responseContent).html(response);
 			}
-		},
-		error: function (e) {
-			alert(e);
-		}
+		});
+	return false;
 	});
-	}
+}
 </script>
