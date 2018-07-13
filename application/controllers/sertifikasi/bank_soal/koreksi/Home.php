@@ -19,10 +19,9 @@ class Home extends CI_Controller {
 		$username = $this->session->userdata('logged_in');
 		if(isset($fk_lookup_menu) && isset($username)){
 			$data['title_page'] = 'BPKP Web Application';
-			$data['content_page']='bank_soal/admin/homepage.php';
+			$data['content_page']='bank_soal/koreksi/homepage.php';
 			$data['username']=$username;
-			$data['bank_soal']	= $this->babmataajar->_detail_bab_mata_ajar();
-			$data['review_soal']	= $this->reviewsoal->_get_all_review_ujian();
+			$data['mata_ajar'] = $this->mataajar->_detail_review_mata_ajar();
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');

@@ -45,9 +45,11 @@ class Login extends CI_Controller{
 				 $role_menu = $this->input->post('role');
 				if($role_menu==$fk_lookup_menu){
 					$this->direct_page($fk_lookup_menu);
-			}else{
-				redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
-			}
+				}else if($fk_lookup_menu==18 || $fk_lookup_menu==20){
+					$this->direct_page($fk_lookup_menu);
+				}else{
+					redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
+				}
 			}else{
 				redirectLogin(ERROR_LOGIN_PAGE_PASS);
 			}

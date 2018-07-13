@@ -33,4 +33,13 @@ class BabMataAjar extends My_Model
 		$query = $this->db->get();
 	    return $query->result();
 	}
+	
+	public function _review_bab_mata_ajar()
+	{
+	    $this->db->select('*');
+	    $this->db->from($this->_table);
+		$this->db->join('permintaan_soal', 'permintaan_soal.fk_bab_mata_ajar = bab_mata_ajar.pk_bab_mata_ajar');
+		$query = $this->db->get();
+	    return $query->result();
+	}
 }
