@@ -9,6 +9,8 @@ class ManagementUser extends CI_Controller {
         $this->load->library('session');
     		$this->load->helper('url');
     		$this->load->model('sertifikasi/menupage','menupage');
+				$this->load->model('sertifikasi/users','user');
+				$this->load->library('encrypt');
     }
 
     public function index()
@@ -26,4 +28,123 @@ class ManagementUser extends CI_Controller {
         redirect('/');
       }
     }
+		public function LoadDateUserBank(){
+      $dataAll=$this->user->_get_user_bank_soal_join('1');
+       $data = array();
+       //$no = $_POST['start'];
+       $a=1;
+
+         foreach ($dataAll as $field) {
+             $row = array();
+             $row[] = $a;
+             $row[] = $field->USER_NAME;
+             $row[] = $field->DESCR;
+             $row[] = $field->USER_PASSWORD;
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+
+             $data[] = $row;
+             $a++;
+         }
+
+
+       $output = array(
+           "draw" => 'dataEvent',
+           "recordsTotal" => $a,
+           "recordsFiltered" => $a,
+           "data" => $data,
+       );
+       //output dalam format JSON
+       echo json_encode($output);
+      //echo json_encode($dataAll);
+    }
+		public function LoadDateUserDiklat(){
+      $dataAll=$this->user->_get_user_bank_soal_join('17');
+       $data = array();
+       //$no = $_POST['start'];
+       $a=1;
+
+         foreach ($dataAll as $field) {
+             $row = array();
+             $row[] = $a;
+             $row[] = $field->USER_NAME;
+             $row[] = $field->DESCR;
+             $row[] = $field->USER_PASSWORD;
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+
+             $data[] = $row;
+             $a++;
+         }
+
+
+       $output = array(
+           "draw" => 'dataEvent',
+           "recordsTotal" => $a,
+           "recordsFiltered" => $a,
+           "data" => $data,
+       );
+       //output dalam format JSON
+       echo json_encode($output);
+      //echo json_encode($dataAll);
+    }
+		public function LoadDateUserWidya(){
+      $dataAll=$this->user->_get_user_bank_soal_join('4');
+       $data = array();
+       //$no = $_POST['start'];
+       $a=1;
+
+         foreach ($dataAll as $field) {
+             $row = array();
+             $row[] = $a;
+             $row[] = $field->USER_NAME;
+             $row[] = $field->DESCR;
+             $row[] = $field->USER_PASSWORD;
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+
+             $data[] = $row;
+             $a++;
+         }
+
+
+       $output = array(
+           "draw" => 'dataEvent',
+           "recordsTotal" => $a,
+           "recordsFiltered" => $a,
+           "data" => $data,
+       );
+       //output dalam format JSON
+       echo json_encode($output);
+      //echo json_encode($dataAll);
+    }
+		public function vw_add_user($param){
+			$data['param']	= $param;
+			$this->load->view('sertifikasi/pusbin/content/add_user',$data);
+		}
+		function add_user(){
+			$date = date('Ymd');
+			$datex=date('Y-m-d');
+			$username=$this->input->post('username');
+			$password=$this->encrypt->encode($this->input->post('password'));
+			$fk_lookup_role=$this->input->post('role');
+			// if($username!=''){
+						$data = array(
+						 'USER_NAME' => $username,
+						 'FK_LOOKUP_ROLE' => $fk_lookup_role,
+						 'USER_PASSWORD' => $password
+					 );
+					 $insert=$this->user->save($data);
+					 if($insert=='Data Inserted Successfully'){
+						 print json_encode(array("status"=>"success", "data"=>$insert));
+					 }else{
+						 print json_encode(array("status"=>"error", "data"=>$insert));
+					 }
+					// echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
+			// }else{
+			// 	echo json_encode(array("status"=>'gagal'));
+			// }
+		}
+		public function delete_user($id)
+		{
+				$this->user->delete_by_id($id);
+				echo json_encode(array("status" => TRUE));
+		}
 }

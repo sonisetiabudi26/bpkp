@@ -34,7 +34,7 @@ class Users extends My_Model
 			return false;
 		}
 	}
-	
+
 	public function _get_user_bank_soal() {
 		$condition = "fk_lookup_role = 1";
 		$this->db->select('*');
@@ -46,5 +46,27 @@ class Users extends My_Model
 		} else {
 			return false;
 		}
+	}
+	public function _get_user_bank_soal_join($role) {
+		$condition = "fk_lookup_role =" . "'" . $role . "'";
+		$this->db->select('users.*,lookup.DESCR');
+		$this->db->from($this->_table);
+		$this->db->join('lookup', 'users.FK_LOOKUP_ROLE = lookup.PK_LOOKUP');
+		$this->db->where($condition);
+		$query = $this->db->get();
+			return $query->result();
+
+	}
+	public function save($data) {
+		$insert=$this->db->insert($this->_table, $data);
+		 if($insert){
+			 	return  'Data Inserted Successfully';
+		 }else{
+			 return 'Data Inserted Failed';
+		 }
+	}
+	public function delete_by_id($id){
+		$this->db->where('PK_USER', $id);
+    $this->db->delete($this->_table);
 	}
 }

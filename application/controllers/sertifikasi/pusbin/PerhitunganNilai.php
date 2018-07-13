@@ -280,7 +280,7 @@ class PerhitunganNilai extends CI_Controller {
       $datex=date('Y-m-d');
   		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
   		$datasheet1 = [];
-      $datasheet2 = [];
+    
   		$numrow = 1;
       $a=0;
       $dataAll=$this->batch->get_batch_by_id($id_batch);
@@ -360,7 +360,7 @@ class PerhitunganNilai extends CI_Controller {
           }
 
     		}else{
-    			return array('datasheet' => $datasheet1, 'file' => '', 'response' => "error");
+    			return array('datasheet' => $datasheet1, 'file' => '', 'response' => $dataAll[0]->KELAS);
     		}
   	}
 }
