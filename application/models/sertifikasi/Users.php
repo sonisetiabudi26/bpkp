@@ -36,7 +36,7 @@ class Users extends My_Model
 	}
 	
 	public function _get_user_bank_soal() {
-		$condition = "fk_lookup_role = 1";
+		$condition = "fk_lookup_role in (18,19,20,21,22)";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->where($condition);

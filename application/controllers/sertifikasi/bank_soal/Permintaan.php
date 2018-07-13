@@ -1,44 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Soal extends CI_Controller {
+class Permintaan extends CI_Controller {
 
-	private $filename = "soal";
-	
 	public function __construct(){
         parent::__construct();
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
-    	$this->load->model('sertifikasi/soalujian','soalujian');
-		$this->load->model('sertifikasi/permintaansoal','permintaansoal');
+    	$this->load->model('sertifikasi/permintaansoal','permintaansoal');
     }
 	
-	public function insert_soal(){
-		if($this->input->post('parent_soal')==0){
-			$parent_soal=NULL;
-		}
+	public function insert_permintaan(){
 		$data = array(
-			'PERTANYAAN' => $this->input->post('pertanyaan'),
-			'PILIHAN_1' => $this->input->post('pilihan1'),
-			'PILIHAN_2' => $this->input->post('pilihan2'),
-			'PILIHAN_3' => $this->input->post('pilihan3'),
-			'PILIHAN_4' => $this->input->post('pilihan4'),
-			'PILIHAN_5' => $this->input->post('pilihan5'),
-			'PILIHAN_6' => $this->input->post('pilihan6'),
-			'PILIHAN_7' => $this->input->post('pilihan7'),
-			'PILIHAN_8' => $this->input->post('pilihan8'),
-			'JAWABAN' => $this->input->post('jawaban'),
-			'PARENT_SOAL' => $parent_soal,
-			'FK_BAB_MATA_AJAR' => $this->input->post('fk_bab_mata_ajar')
+			'FK_BAB_MATA_AJAR' => $this->input->post('fk_group_mata_ajar'),
+			'TIPE_SOAL' => $this->input->post('tipe_soal'),
+			'PEMBUAT_SOAL' => $this->input->post('pembuat'),
+			'REVIEW1' => $this->input->post('review1'),
+			'REVIEW2' => $this->input->post('review2'),
+			'TANGGAL_PERMINTAAN' => $this->input->post('tanggal_permintaan'),
+			'JUMLAH_SOAL' => $this->input->post('jumlah_soal'),
+			'FK_LOOKUP_STATUS_PERMINTAAN' => 27
 		);
-		if($this->soalujian->_add($data)){
-			$data = array(
-				'FK_LOOKUP_STATUS_PERMINTAAN' => 23
-			);
-			$where = array(
-				'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
-			);
-			$this->permintaansoal->_update();
+		if($this->permintaansoal->_add($data)){
 			print json_encode(array("status"=>"success", "data"=>"success"));
 		}else{
 			print json_encode(array("status"=>"error", "data"=>"error"));
@@ -46,9 +29,6 @@ class Soal extends CI_Controller {
     }
 	
 	public function update_soal(){
-		if($this->input->post('parent_soal')==0){
-			$parent_soal=NULL;
-		}
 		$data = array(
 			'PERTANYAAN' => $this->input->post('pertanyaan'),
 			'PILIHAN_1' => $this->input->post('pilihan1'),
@@ -60,7 +40,7 @@ class Soal extends CI_Controller {
 			'PILIHAN_7' => $this->input->post('pilihan7'),
 			'PILIHAN_8' => $this->input->post('pilihan8'),
 			'JAWABAN' => $this->input->post('jawaban'),
-			'PARENT_SOAL' => $parent_soal
+			'PARENT_SOAL' => $this->input->post('parent_soal')
 		);
 		$where = array(
 			'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
