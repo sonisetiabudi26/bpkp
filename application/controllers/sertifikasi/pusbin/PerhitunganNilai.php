@@ -149,9 +149,9 @@ class PerhitunganNilai extends CI_Controller {
        echo json_encode($output);
       //echo json_encode($dataAll);
     }
-    public function vw_upload_doc($id_batch){
-      $data['event']	= $id_batch;
-      $this->load->view('sertifikasi/pusbin/content/import_nilai',$data);
+    public function vw_upload_doc(){
+      // $data['event']	= $id_batch;
+      $this->load->view('sertifikasi/pusbin/content/import_nilai');
     }
     public function vw_view_nilai($param){
       // $parameter	= explode('~',$param);
@@ -198,20 +198,25 @@ class PerhitunganNilai extends CI_Controller {
       $dataAll=$this->batch->loadBatch();
        $data = array();
        //$no = $_POST['start'];
+
        $a=1;
 
          foreach ($dataAll as $field) {
              $row = array();
+						 $numrowpeserta=$this->jawaban->NumrowPeserta($field->KODE_EVENT,$field->KELAS);
+						 if($numrowpeserta=='no data'){
+							 $numrowpeserta=0;
+						 }
              $row[] = $a;
              $row[] = $field->KODE_EVENT;
              $row[] = $field->Nama;
              $row[] = $field->KELAS;
              $row[] = $field->CATEGORY.' ('.$field->START_DATE.' - '.$field->END_DATE.')';
              $row[] = $field->REFF;
-             $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
+						 $row[] = $numrowpeserta;
+             //$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
              $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
-             $row[] = '<a class="btn btn-sm btn-success" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" >View</a>
-             <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" >Import</a>
+             $row[] = '<a class="btn btn-sm btn-success" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View</a>
              <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
 
              $data[] = $row;
@@ -240,7 +245,7 @@ class PerhitunganNilai extends CI_Controller {
     //  $nilai = $this->input->post('file_nilai');
 
   		$upload = $this->do_upload('doc_nilai');
-      $id_batch = $this->input->post('id_batch');
+      //$id_batch = $this->input->post('id_batch');
   		if($upload['result_upload'] == "success"){
         $file=$upload['file'];
         $filename=$file['file_name'];
@@ -248,7 +253,7 @@ class PerhitunganNilai extends CI_Controller {
   			$excelreader = new PHPExcel_Reader_Excel2007();
   			$loadexcel = $excelreader->load('uploads/nilai/'.$filename);
   			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
-  			$data['sheet'] = $this->import($sheet,$id_batch);
+  			$data['sheet'] = $this->import($sheet);
   		}else{
   			$data['upload_error'] = $upload['error'];
   		}
@@ -275,19 +280,18 @@ class PerhitunganNilai extends CI_Controller {
       }
   	}
 
-  	public function import($sheet,$id_batch){
+  	public function import($sheet){
       $date = date('Ymd');
       $datex=date('Y-m-d');
   		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
   		$datasheet1 = [];
-    
   		$numrow = 1;
-      $a=0;
-      $dataAll=$this->batch->get_batch_by_id($id_batch);
+      $indexbatch=0;
+    //  $dataAll=$this->batch->get_batch_by_id($id_batch);
   		foreach($sheet as $row){
         if($numrow > 1 ){
-    			if($row['A']==$dataAll[0]->KODE_EVENT && $row['C']==$dataAll[0]->KELAS){
-            $a++;
+    			//if($row['A']==$dataAll[0]->KODE_EVENT){
+            $indexbatch=$indexbatch+1;
     				array_push($datasheet1, [
     				'FK_KODE_EVENT'=>$row['A'],
     				'KELAS'=>$row['C'],
@@ -347,12 +351,12 @@ class PerhitunganNilai extends CI_Controller {
             'NO_50' =>$row['BE'],
     				]);
 
-    			}
+    			//}
       }
       $numrow++;
   		}
   		/** Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model */
-      if($a>0){
+      if($numrow >1){
     		if($this->jawaban->insert_multiple($datasheet1)){
             return array('datasheet' => $datasheet1, 'file' => '', 'response' => "success");
           }else{
@@ -360,7 +364,7 @@ class PerhitunganNilai extends CI_Controller {
           }
 
     		}else{
-    			return array('datasheet' => $datasheet1, 'file' => '', 'response' => $dataAll[0]->KELAS);
+    			return array('datasheet' => $datasheet1, 'file' => '', 'response' => 'error');
     		}
   	}
 }

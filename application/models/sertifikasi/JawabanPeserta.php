@@ -19,5 +19,17 @@ public function getALl($kodeevent,$kelas){
 	return $query->result();
 
 }
+public function NumrowPeserta($kodeevent,$kelas){
+	$condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
+	$this->db->select('*');
+	$this->db->from($this->_table);
+	$this->db->where($condition);
+	$query = $this->db->get();
+	if ($query->num_rows() > 0) {
+		return $query->num_rows();
+	} else {
+		return "no data";
+	}
+}
 
 }?>

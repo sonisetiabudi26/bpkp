@@ -179,8 +179,8 @@ function loadDataUserWidya(){
 }
 function refresh(){
 	$('#dataUserWidyaiswara').DataTable().ajax.reload();
-	$('#dataUserPengeloladiklat').DataTable().ajax.reload();
-	$('#dataUserAll').DataTable().ajax.reload();
+	loadDataUserDiklat();
+	loadDataUserWidya();
 }
 function delete_user(id)
 {

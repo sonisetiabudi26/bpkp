@@ -18,7 +18,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_add_event"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;">Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_add_event"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -48,7 +48,10 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;">Add data</button>
+								<!-- <div class="form-group"> -->
+									<button class="btn btn-primary" id="btn-add-batch" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch"; ?>"   data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+									<button class="btn btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/"?>" data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-import"></i> Import Data</button>
+							<!-- </div><br/> -->
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -61,6 +64,7 @@
 													<td>Kelas</td>
 													<td>Jadwal</td>
 													<td>Reff</td>
+													<td>Jumlah Peserta</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -126,7 +130,8 @@ function loadDatabatch(){
 	                  {"data": "3",width:100},
 										{"data": "4",width:100},
 										{"data": "5",width:100},
-										{"data": "6",width:100}
+										{"data": "6",width:100},
+										{"data": "7",width:100}
 	              ],
 
 	          });

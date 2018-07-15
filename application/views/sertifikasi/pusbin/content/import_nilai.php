@@ -4,7 +4,7 @@
     <div class="form-group">
       <label id="label-file"></label>
       <div class="col-lg-4 col-md-4 col-xs-4">
-        <input style="display:none;" name='id_batch' value="<?php echo $event;?>"/>
+        <!-- <input style="display:none;" name='id_batch' value="<?php echo $event;?>"/> -->
         <span class="btn btn-primary btn-block btn-file" id="input_import"><i class="fa fa-file"></i>
           Upload Dokumen Nilai 	<input name="doc_nilai" id="doc_nilai" type="file">
         </span>
