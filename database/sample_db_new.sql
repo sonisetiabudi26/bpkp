@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 08, 2018 at 11:02 PM
+-- Generation Time: Jul 16, 2018 at 02:33 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -164,7 +164,10 @@ CREATE TABLE `group_mata_ajar` (
 
 INSERT INTO `group_mata_ajar` (`PK_GROUP_MATA_AJAR`, `NAMA_GROUP_MATA_AJAR`, `FK_LOOKUP_DIKLAT`) VALUES
 (1, 'Auditor Utama', 16),
-(2, 'Auditor Ahli', 17);
+(2, 'Auditor Ahli', 17),
+(3, 'Auditor Madya', 16),
+(4, 'Auditor Muda', 16),
+(5, 'Auditor Terampil', 17);
 
 -- --------------------------------------------------------
 
@@ -344,7 +347,17 @@ INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`,
 (14, 1, 'RV2', 'REVIEW TAHAP 2', 'SOAL_STATUS', 'REVIEW2', 3),
 (15, 1, 'RV3', 'REVIEW TAHAP 3', 'SOAL_STATUS', 'REVIEW3', 4),
 (16, 1, 'DKPJ', 'Diklat Perjenjangan', 'DIKLAT_SERTIFIKASI', 'DKPJ', 1),
-(17, 1, 'DKPB', 'Diklat Pembentukan', 'DIKLAT_SERTIFIKASI', 'DKPB', 2);
+(17, 1, 'DKPB', 'Diklat Pembentukan', 'DIKLAT_SERTIFIKASI', 'DKPB', 2),
+(18, 1, 'REVIEW1', 'REVIEW 1', 'USER_ROLE', 'REVIEW1', 8),
+(19, 1, 'REVIEW2', 'REVIEW 2', 'USER_ROLE', 'REVIEW2', 9),
+(20, 1, 'PEMBUAT_SOAL', 'PEMBUAT SOAL', 'USER_ROLE', 'PEMBUAT_SOAL', 10),
+(21, 1, 'SUBID', 'SUBID', 'USER_ROLE', 'SUBID', 11),
+(22, 1, 'KAPUS', 'KAPUS', 'USER_ROLE', 'KAPUS', 12),
+(23, 1, 'CREATED', 'SOAL TELAH DIBUAT', 'STATUS_PERMINTAAN', 'CREATED', 1),
+(24, 1, 'PENDING', 'SOAL SEDANG DIREVIEW', 'STATUS_PERMINTAAN', 'PENDING', 2),
+(25, 1, 'APPROVED', 'SOAL TELAH DISETUJUI', 'STATUS_PERMINTAAN', 'APPROVED', 3),
+(26, 1, 'REJECTED', 'SOAL TIDAK DISETUJUI', 'STATUS_PERMINTAAN', 'REJECTED', 4),
+(27, 1, 'UNCREATED', 'SOAL BELUM DIBUAT', 'STATUS_PERMINTAAN', 'UNCREATED', 5);
 
 -- --------------------------------------------------------
 
@@ -370,7 +383,8 @@ INSERT INTO `lookup_group` (`LOOKUP_GROUP`, `GROUP_DESCR`, `IS_UPDATABLE`, `IS_V
 ('USER_ACCESS_API', 'USER_ACCESS_API', 1, 1),
 ('SECRET_KEY', 'SECRET_KEY', 1, 1),
 ('SOAL_STATUS', 'SOAL_STATUS', 1, 1),
-('DIKLAT_SERTIFIKASI', 'DIKLAT_SERTIFIKASI', 1, 1);
+('DIKLAT_SERTIFIKASI', 'DIKLAT_SERTIFIKASI', 1, 1),
+('STATUS_PERMINTAAN', 'STATUS_PERMINTAAN', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -448,10 +462,12 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (24, 'bpkp', 'bpkp', 'sertifikasi/bpkp', 'admin', '2018-03-29', '', 11),
 (25, 'Registrasi Unit Apip', 'bpkp', 'bpkp/registrasi', 'admin', '2018-03-29', 'registered', 11),
 (26, 'bank_soal', 'bank_soal', 'sertifikasi/bank_soal', 'admin', '2018-05-07', '', 1),
-(27, 'Home', 'bank_soal', 'bank_soal/home', 'admmin', '2018-05-07', 'home', 1),
-(28, 'Bank Soal', 'bank_soal', 'bank_soal/AdminBankSoal', 'admin', '2018-05-07', 'key', 1),
-(29, 'Management Bank Soal', 'bank_soal', 'bank_soal/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1),
-(30, 'Perhitungan Nilai', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', '', 5);
+(27, 'Home', 'bank_soal', 'bank_soal/admin/home', 'admin', '2018-05-07', 'home', 1),
+(28, 'Bank Soal', 'bank_soal', 'bank_soal/admin/AdminBankSoal', 'admin', '2018-05-07', 'key', 1),
+(29, 'Management Bank Soal', 'bank_soal', 'bank_soal/admin/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1),
+(30, 'Perhitungan Nilai', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', '', 5),
+(31, 'Home', 'bank_soal', 'bank_soal/koreksi/home', 'admin', '2018-07-07', 'home', 18),
+(32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20);
 
 -- --------------------------------------------------------
 
@@ -531,6 +547,32 @@ CREATE TABLE `pengusul_pengangkatan` (
 
 INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `NAMA`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `TOTAL_DOC_PENGUSULAN_PENGANGKATAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
 (17, 2147483647, 'Natalina Br. Ginting ', 1, 1, 0, '196712252002122001', '2018-07-06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permintaan_soal`
+--
+
+CREATE TABLE `permintaan_soal` (
+  `PK_PERMINTAAN_SOAL` int(11) NOT NULL,
+  `FK_BAB_MATA_AJAR` int(11) NOT NULL,
+  `TIPE_SOAL` varchar(30) NOT NULL,
+  `PEMBUAT_SOAL` varchar(255) NOT NULL,
+  `REVIEW1` varchar(255) NOT NULL,
+  `REVIEW2` varchar(255) NOT NULL,
+  `TANGGAL_PERMINTAAN` date NOT NULL,
+  `JUMLAH_SOAL` int(11) NOT NULL,
+  `FK_LOOKUP_STATUS_PERMINTAAN` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `permintaan_soal`
+--
+
+INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `PEMBUAT_SOAL`, `REVIEW1`, `REVIEW2`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `FK_LOOKUP_STATUS_PERMINTAAN`) VALUES
+(12, 1, 'Pilihan Ganda', 'pembuat_soal', 'review1', 'review2', '2018-07-10', 69, 27),
+(13, 1, 'Pilihan Ganda', 'review1', 'review2', 'subid', '2018-07-25', 20, 27);
 
 -- --------------------------------------------------------
 
@@ -669,6 +711,30 @@ INSERT INTO `registrasi_ujian` (`PK_REGIS_UJIAN`, `GROUP_REGIS`, `NIP`, `LOKASI_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `review_soal`
+--
+
+CREATE TABLE `review_soal` (
+  `PK_REVIEW_SOAL` int(11) NOT NULL,
+  `FK_BAB_MATA_AJAR` int(11) NOT NULL,
+  `FK_LOOKUP_REVIEW_SOAL` int(11) NOT NULL,
+  `REVIEWER` varchar(255) NOT NULL,
+  `TANGGAL_REVIEW` date NOT NULL,
+  `FLAG` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `review_soal`
+--
+
+INSERT INTO `review_soal` (`PK_REVIEW_SOAL`, `FK_BAB_MATA_AJAR`, `FK_LOOKUP_REVIEW_SOAL`, `REVIEWER`, `TANGGAL_REVIEW`, `FLAG`) VALUES
+(24, 9, 13, 'review1', '2018-07-02', 1),
+(25, 9, 14, 'review2', '2018-07-02', 2),
+(26, 9, 15, 'subid', '2018-07-02', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sertifikasi_jfa`
 --
 
@@ -707,22 +773,31 @@ INSERT INTO `soal_kasus` (`PK_SOAL_KASUS`, `SOAL_KASUS`, `FK_BAB_MATA_AJAR`, `KO
 CREATE TABLE `soal_ujian` (
   `PK_SOAL_UJIAN` int(11) NOT NULL,
   `FK_BAB_MATA_AJAR` int(11) NOT NULL,
-  `PARENT_SOAL` int(11) NOT NULL,
+  `PARENT_SOAL` int(11) DEFAULT NULL,
   `PERTANYAAN` varchar(1000) NOT NULL,
   `JAWABAN` varchar(10) NOT NULL,
   `PILIHAN_1` varchar(255) NOT NULL,
   `PILIHAN_2` varchar(255) NOT NULL,
   `PILIHAN_3` varchar(255) NOT NULL,
-  `PILIHAN_4` varchar(255) NOT NULL
+  `PILIHAN_4` varchar(255) NOT NULL,
+  `PILIHAN_5` varchar(255) NOT NULL,
+  `PILIHAN_6` varchar(255) NOT NULL,
+  `PILIHAN_7` varchar(255) NOT NULL,
+  `PILIHAN_8` varchar(255) NOT NULL,
+  `TAMPIL_UJIAN` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `soal_ujian`
 --
 
-INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`) VALUES
-(114, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais'),
-(115, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991');
+INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
+(134, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(135, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(139, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(140, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(141, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(174, 9, NULL, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0);
 
 -- --------------------------------------------------------
 
@@ -805,10 +880,12 @@ INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) 
 (5, 'unit_apip', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 6),
 (6, 'bpkp', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 11),
 (7, 'admin_bank', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(8, 'review1', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(9, 'review2', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(10, 'subid', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(11, 'kapus', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1);
+(8, 'review1', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 18),
+(9, 'review2', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 19),
+(10, 'subid', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 21),
+(11, 'kapus', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 22),
+(12, 'pembuat_soal', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 20),
+(13, 'wi', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4);
 
 -- --------------------------------------------------------
 
@@ -933,6 +1010,12 @@ ALTER TABLE `pengusul_pengangkatan`
   ADD PRIMARY KEY (`PK_PENGUSUL_PENGANGKATAN`);
 
 --
+-- Indexes for table `permintaan_soal`
+--
+ALTER TABLE `permintaan_soal`
+  ADD PRIMARY KEY (`PK_PERMINTAAN_SOAL`);
+
+--
 -- Indexes for table `perwakilan_bpkp`
 --
 ALTER TABLE `perwakilan_bpkp`
@@ -957,11 +1040,24 @@ ALTER TABLE `registrasi_ujian`
   ADD PRIMARY KEY (`PK_REGIS_UJIAN`);
 
 --
+-- Indexes for table `review_soal`
+--
+ALTER TABLE `review_soal`
+  ADD PRIMARY KEY (`PK_REVIEW_SOAL`);
+
+--
+-- Indexes for table `soal_kasus`
+--
+ALTER TABLE `soal_kasus`
+  ADD PRIMARY KEY (`PK_SOAL_KASUS`);
+
+--
 -- Indexes for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
   ADD PRIMARY KEY (`PK_SOAL_UJIAN`),
-  ADD KEY `CN_SOAL_BAB_MATA_AJAR` (`FK_BAB_MATA_AJAR`);
+  ADD KEY `CN_SOAL_BAB_MATA_AJAR` (`FK_BAB_MATA_AJAR`),
+  ADD KEY `CN_SOAL_KASUS` (`PARENT_SOAL`);
 
 --
 -- Indexes for table `status_doc`
@@ -1021,7 +1117,7 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT for table `group_mata_ajar`
 --
 ALTER TABLE `group_mata_ajar`
-  MODIFY `PK_GROUP_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PK_GROUP_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
 --
@@ -1058,6 +1154,11 @@ ALTER TABLE `menu_page_detail`
 ALTER TABLE `pengusul_pengangkatan`
   MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
+-- AUTO_INCREMENT for table `permintaan_soal`
+--
+ALTER TABLE `permintaan_soal`
+  MODIFY `PK_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
 -- AUTO_INCREMENT for table `perwakilan_bpkp`
 --
 ALTER TABLE `perwakilan_bpkp`
@@ -1073,10 +1174,15 @@ ALTER TABLE `provinsi`
 ALTER TABLE `registrasi_ujian`
   MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT for table `soal_kasus`
+--
+ALTER TABLE `soal_kasus`
+  MODIFY `PK_SOAL_KASUS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 --
 -- AUTO_INCREMENT for table `status_doc`
 --
@@ -1087,6 +1193,11 @@ ALTER TABLE `status_doc`
 --
 ALTER TABLE `status_pengusulan_pengangkatan`
   MODIFY `PK_STATUS_PENGUSUL_PENGANGKATAN` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `PK_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `wilayah`
 --
@@ -1130,7 +1241,8 @@ ALTER TABLE `menu_page_detail`
 -- Constraints for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`);
+  ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`),
+  ADD CONSTRAINT `CN_SOAL_KASUS` FOREIGN KEY (`PARENT_SOAL`) REFERENCES `soal_kasus` (`PK_SOAL_KASUS`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `users`
