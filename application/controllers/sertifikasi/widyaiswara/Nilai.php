@@ -1,7 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Nilai extends CI_Controller {
+
+
+
+class Nilai extends CI_Controller{
 
 	public function __construct(){
         // Load parent construct
@@ -25,4 +28,5 @@ class Nilai extends CI_Controller {
         redirect('/');
       }
     }
+
 }
