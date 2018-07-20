@@ -114,10 +114,11 @@ var table;
 });
 
 function ModalNilai(obj1){
-
-	 $('#modalNilai').modal('show');
-	 $('#nip_m').val(obj1);
-
+		var data=obj1.split('~');
+		 $('#modalNilai').modal('show');
+		 $('#nilai1').val(data[4]);
+		 $('#nilai2').val(data[5]);
+		 $('#nip_m').val(obj1);
 }
 
 </script>

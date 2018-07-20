@@ -16,6 +16,15 @@ class Widyaiswara extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function update($id,$data) {
+		$this->db->where('PK_WIDYAISWARA_NILAI',$id);
+	  $insert=$this->db->update($this->_table, $data);
+		 if($insert){
+			 	return  'Data Updated Successfully';
+		 }else{
+			 return 'Data Updated Failed';
+		 }
+	}
 
   public function loadNilai($nip,$tgl,$mataajar,$instruktur){
     $condition = "NIP =" . "'" . $nip . "' and TGL_RELEASE_MATA_AJAR=" . "'" . $tgl . "' and MATA_AJAR=" . "'" . $mataajar . "' and NIP_INSTRUKTUR=" . "'" . $instruktur . "'";

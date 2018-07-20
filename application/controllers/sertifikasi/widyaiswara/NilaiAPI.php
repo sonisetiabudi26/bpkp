@@ -32,7 +32,9 @@ class NilaiAPI extends CI_Controller{
 					if($dataAll=='nodata'){
 						$nilai1='';
 						$nilai2='';
+						$id='';
 					}else{
+						$id=$dataAll[0]->PK_WIDYAISWARA_NILAI;
 						$nilai1=$dataAll[0]->NILAI_1;
 						$nilai2=$dataAll[0]->NILAI_2;
 
@@ -46,8 +48,17 @@ class NilaiAPI extends CI_Controller{
           $row[] = $nilai1;
 					$row[] = $nilai2;
           $row[] = $key->Nama_Instruktur;
-					$dataNIlai=$key->nip_baru_nospace.'~'.$key->NamaMataAjar.'~'.$key->RlsTglMataAjar.'~'.$key->Nama_Instruktur;
-          $row[] = '<td><button onclick="ModalNilai('."'".$dataNIlai."'".')" id="btn-upload-doc" class="btn btn-primary">Tambah Nilai</button></td>';
+					$dataNIlai=$key->nip_baru_nospace.'~'.$key->NamaMataAjar.'~'.$key->RlsTglMataAjar.'~'.$key->Nama_Instruktur.'~'.$nilai1.'~'.$nilai2.'~add';
+					if($id!=''){
+						$dataNIlaiEdit=$key->nip_baru_nospace.'~'.$key->NamaMataAjar.'~'.$key->RlsTglMataAjar.'~'.$key->Nama_Instruktur.'~'.$nilai1.'~'.$nilai2.'~edit~'.$dataAll[0]->PK_WIDYAISWARA_NILAI;
+						$row[] = '<td><button onclick="ModalNilai('."'".$dataNIlai."'".')" id="btn-upload-doc" class="btn btn-primary">Tambah Nilai</button><button onclick="ModalNilai('."'".$dataNIlaiEdit."'".')" id="btn-upload-doc" class="btn btn-success">Edit Nilai</button></td>';
+
+					}else{
+						$dataNIlaiEdit=$key->nip_baru_nospace.'~'.$key->NamaMataAjar.'~'.$key->RlsTglMataAjar.'~'.$key->Nama_Instruktur.'~'.$nilai1.'~'.$nilai2.'~add';
+						$row[] = '<td><button onclick="ModalNilai('."'".$dataNIlai."'".')" id="btn-upload-doc" class="btn btn-primary">Tambah Nilai</button></td>';
+
+					}
+          // $row[] = '<td><button onclick="ModalNilai('."'".$dataNIlai."'".')" id="btn-upload-doc" class="btn btn-primary">Tambah Nilai</button><button onclick="ModalNilai('."'".$dataNIlaiEdit."'".')" id="btn-upload-doc" class="btn btn-primary">Edit Nilai</button></td>';
 
           $data[] = $row;
           $a++;
@@ -120,11 +131,13 @@ class NilaiAPI extends CI_Controller{
              $mataajar=$dataALL[1];
              $tgl=$dataALL[2];
              $instruktur=$dataALL[3];
+						 $type=$dataALL[6];
              $nilai1=$this->input->post('nilai1');
              $nilai2=$this->input->post('nilai2');
 
       			 if($nip!=''&&$mataajar!=''&&$tgl!=''&&$instruktur!=''){
-      						 $data = array(
+							 if($type=='add'){
+									 $data = array(
       				 			'NIP' => $nip,
       							'MATA_AJAR' => $mataajar,
       				 			'TGL_RELEASE_MATA_AJAR' => $tgl,
@@ -145,9 +158,31 @@ class NilaiAPI extends CI_Controller{
 								}else{
 									echo json_encode(array("status"=>'gagal'));
 								}
+							}else{
+								$data = array(
+								 'NIP' => $nip,
+								 'MATA_AJAR' => $mataajar,
+								 'TGL_RELEASE_MATA_AJAR' => $tgl,
+								 'NIP_INSTRUKTUR' => $instruktur,
+								 'NILAI_1' => $nilai1,
+								 'NILAI_2' => $nilai2,
+								 'CREATED_AT' => $this->session->userdata('logged_in'),
+								 'CREATED_DATE' => $datex
+							 );
+							 $id=$dataALL[7];
+
+							 $insert=$this->nilaiwi->update($id,$data);
+							 if($insert=='Data Updated Successfully'){
+								 print json_encode(array("status"=>"success", "data"=>$insert));
+							 }else{
+								 print json_encode(array("status"=>"error", "data"=>$insert));
+							 }
+
+							}
       					 // echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
       			 }else{
       				 echo json_encode(array("status"=>'gagal'));
       			 }
+
     }
 }
