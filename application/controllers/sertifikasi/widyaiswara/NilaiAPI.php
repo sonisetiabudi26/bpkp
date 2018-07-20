@@ -16,9 +16,10 @@ class NilaiAPI extends CI_Controller{
 											 "password" => 's1bijak@pusbin');
 				$check=$this->postCURL($url_login,$data_login);
         $jsonResult=json_decode($check);
-
+				$nip = $this->session->userdata('nip');
 			  // $result_login=$check['token'];
-        $url_table="http://pusdiklatwas.bpkp.go.id:8099/simdiklatapi/api/cmd?tables=zdmw_sibijak_riwayat_jfa&limit=10";
+				$data_user="data[NIP_instruktur]=196006021982031001".$nip;
+        $url_table="http://pusdiklatwas.bpkp.go.id:8099/simdiklatapi/api/cmd?tables=zdmw_sibijak_peserta_mata_ajar&data[NIP_instruktur]=196006021982031001";
         $data_check_table = array(
                        "Authorization :".$jsonResult->token,
                       );
@@ -30,10 +31,12 @@ class NilaiAPI extends CI_Controller{
           $nilai=0;
           $row[] = $a+1;
           $row[] = $key->nip_baru_nospace;
-          $row[] = $key->NamaDiklat;
+					$row[] = $key->RlsTglMataAjar;
+          $row[] = $key->NamaMataAjar;
           $row[] = '';
-          $row[] = $key->Kelas;
-          $row[] = "<td><button onclick='getModal(this)' id='btn-upload-doc' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>Tambah Nilai</button></td>";
+					$row[] = '';
+          $row[] = $key->Nama_Instruktur;
+          $row[] = "<td><button onclick='ModalNilai()' id='btn-upload-doc' class='btn btn-primary'>Tambah Nilai</button></td>";
 
           $data[] = $row;
           $a++;
@@ -41,7 +44,7 @@ class NilaiAPI extends CI_Controller{
 
 
         $output = array(
-            "draw" => 'dataPeserta',
+            "draw" => 1,
             "recordsTotal" => $a,
             "recordsFiltered" => $a,
             "data" => $data,
