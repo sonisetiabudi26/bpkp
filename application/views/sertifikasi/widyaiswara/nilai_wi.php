@@ -37,13 +37,15 @@
 	<div class="modal fade" id="modalNilai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <form method="post" id="appmetric_form">
+			<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/widyaiswara/NilaiAPI/tambah"; ?>" method="POST" id="jadwalFrom" >
+
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">×</span></button>
         <h4 class="modal-title" id="myModalLabel">Tambah Nilai<h4>
       </div>
       <div class="modal-body">
         <div class="row">
+					<div class="col-md-12" id="response-text" ></div>
             <div class="col-lg-12">
 
              <div class="row">
@@ -51,7 +53,7 @@
                   <label class="control-label" for="title">Nilai 1</label>
                 </div>
                 <div class="col-lg-8">
-                  <input type="text" name="appname" id="appname" class="form-control" required="required" />
+                  <input type="text" name="nilai1" id="nilai1" class="form-control" required="required" />
                 </div>
             </div>
             <br/>
@@ -60,7 +62,7 @@
                   <label class="control-label" for="title">Nilai 2</label>
                 </div>
 								<div class="col-lg-8">
-                  <input type="text" name="appname" id="appname" class="form-control" required="required" />
+                  <input type="text" name="nilai2" id="nilai2" class="form-control" required="required" />
                 </div>
             </div>
 
@@ -69,7 +71,11 @@
         </div>
       </div>
       <div class="modal-footer">
-         <input type="submit" name="submit" id="action" value="Add" class="btn btn-info" />
+				<input type="text" name="nip_m" id="nip_m" class="form-control" style="display:none;" />
+				<input type="text" name="mataajar_m" id="mataajar_m" class="form-control" style="display:none;" />
+				<input type="text" name="tglrelease_m" id="tglrelease_m" class="form-control" style="display:none;" />
+				<input type="text" name="instruktur_m" id="instruktur_m" class="form-control" style="display:none;" />
+         <input type="submit"  name="submit" id="action" value="Add" class="btn btn-info" />
          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </form>
@@ -80,6 +86,7 @@
 </div>
 <script>
 $(document).ready(function(){
+
 var table;
 			table = $('#pesertaByWI').DataTable({
               "processing": false, //Feature control the processing indicator.
@@ -105,7 +112,12 @@ var table;
 
           });
 });
-function ModalNilai(){
+
+function ModalNilai(obj1){
+
 	 $('#modalNilai').modal('show');
+	 $('#nip_m').val(obj1);
+
 }
+
 </script>

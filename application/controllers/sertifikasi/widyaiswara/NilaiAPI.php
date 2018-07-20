@@ -7,6 +7,7 @@ class NilaiAPI extends CI_Controller{
 				parent::__construct();
 				$this->load->library('session');
 				$this->load->helper('url');
+				$this->load->model('sertifikasi/widyaiswara','nilaiwi');
 		}
 		public function LoadDataKelasDiklat(){
 
@@ -27,16 +28,26 @@ class NilaiAPI extends CI_Controller{
         $dataTable=json_decode($checkTable);
         $a=0;
         foreach ($dataTable->data as $key) {
-          $row = array();
+					$dataAll=$this->nilaiwi->loadNilai($key->nip_baru_nospace,$key->RlsTglMataAjar,$key->NamaMataAjar,$key->Nama_Instruktur);
+					if($dataAll=='nodata'){
+						$nilai1='';
+						$nilai2='';
+					}else{
+						$nilai1=$dataAll[0]->NILAI_1;
+						$nilai2=$dataAll[0]->NILAI_2;
+
+					}
+					$row = array();
           $nilai=0;
           $row[] = $a+1;
           $row[] = $key->nip_baru_nospace;
 					$row[] = $key->RlsTglMataAjar;
           $row[] = $key->NamaMataAjar;
-          $row[] = '';
-					$row[] = '';
+          $row[] = $nilai1;
+					$row[] = $nilai2;
           $row[] = $key->Nama_Instruktur;
-          $row[] = "<td><button onclick='ModalNilai()' id='btn-upload-doc' class='btn btn-primary'>Tambah Nilai</button></td>";
+					$dataNIlai=$key->nip_baru_nospace.'~'.$key->NamaMataAjar.'~'.$key->RlsTglMataAjar.'~'.$key->Nama_Instruktur;
+          $row[] = '<td><button onclick="ModalNilai('."'".$dataNIlai."'".')" id="btn-upload-doc" class="btn btn-primary">Tambah Nilai</button></td>';
 
           $data[] = $row;
           $a++;
@@ -97,5 +108,46 @@ class NilaiAPI extends CI_Controller{
         curl_close($ch);
 
         return $output;
+    }
+
+		public function tambah(){
+
+      			 $date = date('Ymd');
+      			 $datex=date('Y-m-d');
+
+						 $dataALL=explode('~',$this->input->post('nip_m'));
+						 $nip=$dataALL[0];
+             $mataajar=$dataALL[1];
+             $tgl=$dataALL[2];
+             $instruktur=$dataALL[3];
+             $nilai1=$this->input->post('nilai1');
+             $nilai2=$this->input->post('nilai2');
+
+      			 if($nip!=''&&$mataajar!=''&&$tgl!=''&&$instruktur!=''){
+      						 $data = array(
+      				 			'NIP' => $nip,
+      							'MATA_AJAR' => $mataajar,
+      				 			'TGL_RELEASE_MATA_AJAR' => $tgl,
+      				 			'NIP_INSTRUKTUR' => $instruktur,
+										'NILAI_1' => $nilai1,
+										'NILAI_2' => $nilai2,
+      				 			'CREATED_AT' => $this->session->userdata('logged_in'),
+      							'CREATED_DATE' => $datex
+      				 		);
+									$dataAll=$this->nilaiwi->loadNilai($nip,$tgl,$mataajar,$instruktur);
+									if($dataAll=='nodata'){
+      						$insert=$this->nilaiwi->save($data);
+      						if($insert=='Data Inserted Successfully'){
+      							print json_encode(array("status"=>"success", "data"=>$insert));
+      						}else{
+      							print json_encode(array("status"=>"error", "data"=>$insert));
+      						}
+								}else{
+									echo json_encode(array("status"=>'gagal'));
+								}
+      					 // echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
+      			 }else{
+      				 echo json_encode(array("status"=>'gagal'));
+      			 }
     }
 }
