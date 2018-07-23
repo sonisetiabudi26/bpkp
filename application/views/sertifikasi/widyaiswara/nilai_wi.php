@@ -12,6 +12,11 @@
 			<div class="x_content">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						<table id="pesertaByWI" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 							<thead>
 								<tr>
@@ -19,8 +24,8 @@
 									<td>NIP</td>
 									<td>Tanggal Release Mata Ajar</td>
 									<td>Mata Pelajaran</td>
-									<td>Nilai 1</td>
-									<td>Nilai 2</td>
+									<td>Nilai Simulasi</td>
+									<td>Nilai Aktivitas</td>
 									<td>Instruktur</td>
 									<td>Action</td>
 								</tr>
@@ -88,9 +93,11 @@
 $(document).ready(function(){
 
 var table;
+
 			table = $('#pesertaByWI').DataTable({
               "processing": false, //Feature control the processing indicator.
 							"destroy": true,
+							"pageLength" :10,
               "serverSide": true, //Feature control DataTables' server-side processing mode.
               "order": [], //Initial no order.
               // Load data for the table's content from an Ajax source

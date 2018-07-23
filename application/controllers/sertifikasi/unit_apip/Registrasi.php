@@ -17,7 +17,7 @@ class Registrasi extends CI_Controller {
 
     public function index()
     {
-			$datenow=date('Y-m-d');
+			$datenow=date('m/d/Y');
       $fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
       $username = $this->session->userdata('logged_in');
 

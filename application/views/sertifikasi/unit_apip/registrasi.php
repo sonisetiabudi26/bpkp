@@ -91,7 +91,7 @@
 												<div class="form-group">
 													<div class="col-lg-4">
 														<span class="btn btn-primary btn-block btn-file" id="input_lokasi"><i class="fa fa-file"></i>
-												 			Upload Persetujuan <input name="doc_loc" id="doc_loc" type="file">
+												 			Upload Surat Permohonan <input name="doc_loc" id="doc_loc" type="file">
 														</span>
 											 		</div>
 											 	<div class="col-lg-8">

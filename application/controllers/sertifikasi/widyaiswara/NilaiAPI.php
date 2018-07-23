@@ -10,7 +10,9 @@ class NilaiAPI extends CI_Controller{
 				$this->load->model('sertifikasi/widyaiswara','nilaiwi');
 		}
 		public function LoadDataKelasDiklat(){
-
+				$draw=intval($this->input->get('draw'));
+				$start=intval($this->input->get('start'));
+				$length=intval($this->input->get('length'));
 				$url_login="http://pusdiklatwas.bpkp.go.id:8099/reservasi/gettoken/login/login";
 				$data_login = array(
 											 "identity" => 'sibijak@bpkp.go.id',
@@ -66,7 +68,8 @@ class NilaiAPI extends CI_Controller{
 
 
         $output = array(
-            "draw" => 1,
+						"length" => $length,
+            "draw" => $draw,
             "recordsTotal" => $a,
             "recordsFiltered" => $a,
             "data" => $data,
