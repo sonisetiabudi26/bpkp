@@ -1,6 +1,6 @@
 <div class="page-title">
 	<div class="title_left">
-		<h3 style="text-align:left">Input Nilai WI</h3>
+		<h3 style="text-align:left">Input Nilai Widyaiswara</h3>
    <!-- <div  style="text-align:left;color:#eee;"><p> Form Input Nilai <i class="fa fa-pencil"></i></p></div> -->
 	</div>
 </div>
@@ -10,11 +10,49 @@
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_content">
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-						
+				<div class="panel panel-default">
+					<div class="panel-heading">Input nilai dasar widyaiswara
+					</div>
+						<div class="panel-body" id="pindahlokasi" >
+  
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+							<div class="row">
+							<div class="form-group">
+								<div class="col-lg-4">
+									<span class="" id="input_lokasi"><i class="fa fa-file"></i>
+										Nilai dasar simulasi
+									</span>
+								</div>
+							<div class="col-lg-8">
+								 <input type="text" class="form-control text-primary" name="nilai_1" id="text-loc" placeholder="Nilai Simulasi" />
+							 </div>
+						 </div>
+					 </div>
+					 <div class="row">
+						 <div class="form-group">
+							 <div class="col-lg-4">
+								 <span class="" id="input_lokasi"><i class="fa fa-file"></i>
+									 Nilai dasar Activity
+								 </span>
+							 </div>
+						 <div class="col-lg-8">
+								<input type="text" class="form-control text-primary" name="nilai_2" id="text-loc" placeholder="Nilai Activity" />
+							</div>
+						</div>
+					</div><br/>
+					<div class="row">
+						<div class="col-lg-12">
+					<button class="btn btn-primary" onclick="submitNilaiDasar();" style="float:right">Submit</button>
+				</div>
+				</div>
+						</div>
 					</div>
 				</div>
+			</div>
+
+
+				<hr>
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						<table id="pesertaByWI" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -119,7 +157,9 @@ var table;
 
           });
 });
+function submitNilaiDasar(){
 
+}
 function ModalNilai(obj1){
 		var data=obj1.split('~');
 		 $('#modalNilai').modal('show');

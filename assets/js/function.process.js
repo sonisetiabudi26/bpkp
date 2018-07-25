@@ -181,16 +181,22 @@ function uploadFile(formTarget, responseContent){
 		dataType: "json",
 		success : function(response) {
 			if(response.status=='success'){
-				$("#"+responseContent).html("<h4 class='text-success'>Process upload : "+response.status+"</h4>");
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
 			}else{
-				$("#"+responseContent).html("<h4 class='text-danger'>Process upload : "+response.status+"</h4>");
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
 			}
 
 			console.log("success : ", "success");
 			$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 		},
 		error: function (e) {
-			$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
+      $("#"+responseContent).html("<div style='width:100%' class='alert alert-danger'>"+
+                                  "<strong>Failed!</strong>Proses Data Bermasalah, Silahkan Hubungi Administrator ."+
+                                "</div>");
 			console.log("ERROR : ", e);
 			$("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
 		}
@@ -219,9 +225,13 @@ function uploadFileNilai(formTarget, responseContent){
       $("#import_nilai")[0].reset();
 			if(response.status=='success'){
 
-				$("#"+responseContent).html("<h4 class='text-success'>Process upload : "+response.status+"</h4>");
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
 			}else{
-				$("#"+responseContent).html("<h4 class='text-danger'>Process upload : "+response.status+"</h4>");
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
 			}
 
 			console.log("success : ", "success");
@@ -229,7 +239,9 @@ function uploadFileNilai(formTarget, responseContent){
 
 		},
 		error: function (e) {
-			$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
+      $("#"+responseContent).html("<div style='width:100%' class='alert alert-danger'>"+
+                                  "<strong>Failed!</strong>Proses Data Bermasalah, Silahkan Hubungi Administrator ."+
+                                "</div>");
 			console.log("ERROR : ", e);
 			$("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
 		}
@@ -257,9 +269,13 @@ function procesForm(formTarget, responseContent){
         $('#'+formTarget.id)[0].reset();
 				if(response.status=='success'){
 
-					$("#"+responseContent).html("<h4 class='text-success'>Process save : "+response.status+"</h4>");
+          $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                      "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                    "</div>");
 				}else{
-					$("#"+responseContent).html("<h4 class='text-danger'>Process save : "+response.status+"</h4>");
+          $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                      "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                    "</div>");
 				}
 
 				$("#"+responseContent).fadeTo(2000, 500).slideUp(500, function(){
@@ -270,7 +286,9 @@ function procesForm(formTarget, responseContent){
 			//	$("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 			},
 			error: function (e) {
-				$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-danger'>"+
+                                    "<strong>Failed!</strong>Proses Data Bermasalah, Silahkan Hubungi Administrator ."+
+                                  "</div>");
 				console.log("ERROR : ", e);
 				$("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
 			}
@@ -310,7 +328,9 @@ function procesFormPengusul(formTarget, responseContent){
 				// $("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
 			},
 			error: function (e) {
-				$("#"+responseContent).html("<h4 class='alert-danger space-10 padding-5'>Proses Data Bermasalah, Silahkan Hubungi Administrator</h4>");
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-danger'>"+
+                                    "<strong>Failed!</strong>Proses Data Bermasalah, Silahkan Hubungi Administrator ."+
+                                  "</div>");
 				console.log("ERROR : ", e);
 				$("#" + formTarget.id).find('[type=submit]').prop("disabled", false);
 			}

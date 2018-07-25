@@ -1,3 +1,4 @@
+<div>
 <div class="page-title">
 	<div class="title_left">
 		<h3>Perhitungan Nilai</h3>
@@ -10,8 +11,8 @@
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" onclick="loadDatabatch();" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Batch</a>
 		</li>
-		<!-- <li role="presentation" class=""><a href="#tab_content3" onclick="loadDatasoal();" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Nilai</a>
-		</li> -->
+		<li role="presentation" class=""><a href="#tab_content3" onclick="loadDatalist();" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">List Nilai</a>
+		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -50,7 +51,7 @@
 							<div class="x_panel">
 								<!-- <div class="form-group"> -->
 									<button class="btn btn-primary" id="btn-add-batch" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch"; ?>"   data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
-									<button class="btn btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/"?>" data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-import"></i> Import Data</button>
+									<!-- <button class="btn btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="<?php //echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/"?>" data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-import"></i> Import Data</button> -->
 							<!-- </div><br/> -->
 								<div class="x_content">
 									<div class="row">
@@ -79,10 +80,42 @@
 						</div>
 			</div>
 		</div>
+		<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="list-tab">
+			<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<!-- <div class="form-group"> -->
+									<!-- <button class="btn btn-primary" id="btn-add-batch" onclick="getModal(this)" data-href="<?php //echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch"; ?>"   data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button> -->
+									<!-- <button class="btn btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="<?php //echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/"?>" data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-import"></i> Import Data</button> -->
+							<!-- </div><br/> -->
+								<div class="x_content">
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+					            <table id="dataList" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+												<thead>
+												<tr>
+													<td>NO</td>
+													<td>Kode Event</td>
+													<td>Kode Unit</td>
+													<td>Jumlah Peserta</td>
+													<td>Action</td>
+												</tr>
+												</thead>
+												<tbody>
+												</tbody>
+												</table>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+		</div>
 
 	</div>
 </div>
-
+</div>
 <script>
 // loadDatajadwal();
 $(document).ready(function(){
@@ -109,7 +142,23 @@ var table;
 
           });
 });
-
+function calculate(kode_event,kelas){
+	var kode=kode_event+'~'+kelas;
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/calculate/')?>/"+kode,
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+					refresh();
+					alert('Kalkulasi Nilai Selesai');
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+					alert('Error deleting data');
+			}
+	});
+}
 function loadDatabatch(){
 	var table;
 				table = $('#dataBatchAll').DataTable({
@@ -132,6 +181,32 @@ function loadDatabatch(){
 										{"data": "5",width:100},
 										{"data": "6",width:100},
 										{"data": "7",width:100}
+	              ],
+
+	          });
+}
+function loadDatalist(){
+	//var kodeevent=$('#kodeevent').val();
+	var table;
+				table = $('#dataList').DataTable({
+	              "processing": false, //Feature control the processing indicator.
+								 "destroy": true,
+	              "serverSide": true, //Feature control DataTables' server-side processing mode.
+	              "order": [], //Initial no order.
+	              // Load data for the table's content from an Ajax source
+	              "ajax": {
+	                  "url": '<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/LoadDataUnit/')?>',
+	                  "type": "POST"
+	              },
+	              //Set column definition initialisation properties.
+	              "columns": [
+	                  {"data": "0",width:50},
+	                  {"data": "1",width:100},
+	                  {"data": "2",width:100},
+	                  {"data": "3",width:100},
+										{"data": "4",width:100},
+	                  // {"data": "5",width:100}
+
 	              ],
 
 	          });

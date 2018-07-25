@@ -17,7 +17,7 @@ class RegisUjian extends My_Model
 		 }
 	}
 	public function load($userAdmin){
-		$condition = "CREATED_AT =" . "'" . $userAdmin . "' and flag=1";
+		$condition = "CREATED_AT =" . "'" . $userAdmin . "' and flag=0";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.PK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');

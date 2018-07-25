@@ -13,6 +13,7 @@ class Registrasi extends CI_Controller {
 				$this->load->model('sertifikasi/jadwalujian','jadwal');
 				$this->load->model('sertifikasi/regisujian','regis');
 				$this->load->model('sertifikasi/persetujuan','setuju');
+				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
     }
 
     public function index()
@@ -27,7 +28,7 @@ class Registrasi extends CI_Controller {
         $data['username']=$username;
 				$data['menu_page']	= $this->menupage->_get_access_menu_page($fk_lookup_menu);
 				$data['provinsi']=$this->provinsi->_get_provinsi_information();
-				//$data['daftar_peserta']=$this->regis->load($username);
+				$data['diklat']= $this->groupmataajar->_get_all_group_mata_ajar();
 				$data['jadwal']=$this->jadwal->_get_jadwal_information($datenow);
         $this->load->view('sertifikasi/homepage', $data);
       }else{
@@ -113,6 +114,7 @@ class Registrasi extends CI_Controller {
 						 $data = array(
 				 			'NIP' => $this->input->post('nip'),
 							'GROUP_REGIS' => '',
+							'KODE_DIKLAT' => $this->input->post('diklat'),
 				 			'LOKASI_UJIAN' => $this->input->post('lokasi'),
 				 			'PK_JADWAL_UJIAN' => $this->input->post('jadwal'),
 				 			'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
@@ -122,7 +124,7 @@ class Registrasi extends CI_Controller {
 				 			'CREATED_AT' => $this->session->userdata('logged_in'),
 							'CREATED_DATE' => $datex,
 							'PROVINSI' => 'unknown',
-							'FLAG' => '1'
+							'FLAG' => '0'
 				 		);
 						$insert=$this->regis->save($data);
 						if($insert=='Data Inserted Successfully'){

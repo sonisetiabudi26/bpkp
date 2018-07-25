@@ -10,7 +10,7 @@
           <td>Kode Peserta</td>
           <td>Kode Soal</td>
           <td>Kelas</td>
-          <td>Nilai</td>
+          <!-- <td>Nilai</td> -->
         </tr>
         </thead>
         <tbody>
@@ -53,7 +53,7 @@ var table;
                   {"data": "2",width:100},
                   {"data": "3",width:100},
 									{"data": "4",width:100},
-                  {"data": "5",width:100}
+                  // {"data": "5",width:100}
 
               ],
 

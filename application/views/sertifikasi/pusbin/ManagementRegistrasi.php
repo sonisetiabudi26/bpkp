@@ -157,8 +157,8 @@ var table;
                   {"data": "1",width:100},
                   {"data": "2",width:100},
                   {"data": "3",width:100},
-									{"data": "2",width:100},
-									{"data": "4",width:100}
+									{"data": "4",width:100},
+									{"data": "5",width:100}
               ],
 
           });

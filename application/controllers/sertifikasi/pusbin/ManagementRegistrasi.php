@@ -53,16 +53,21 @@ class ManagementRegistrasi extends CI_Controller {
 			 // $data['provinsi']=$this->provinsi->_get_provinsi_information();
 		}
 		public function loadDataJadwal(){
+			//$date = date('Ymd');
+			$datex=date('m/d/Y');
 			$dataAll=$this->jadwal->loadJadwal();
 			 $data = array();
 			 //$no = $_POST['start'];
 			 $a=1;
 			 foreach ($dataAll as $field) {
+				 $status=($datex>$field->START_DATE?'Expired':'Available');
+
 					 $row = array();
 					 $row[] = $a;
 					 $row[] = $field->CATEGORY;
 					 $row[] = $field->START_DATE;
 					 $row[] = $field->END_DATE;
+					 $row[] = $status;
 					 $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
                   <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
 

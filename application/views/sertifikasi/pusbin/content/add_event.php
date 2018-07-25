@@ -5,7 +5,17 @@
     <div class="form-group">
       <div class="col-md-3">
       	<label for="category">Kode Diklat :</label>
-        	<input type="number" class="form-control text-primary" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" placeholder="Kode Diklat" />
+        	<!-- <input type="number" class="form-control text-primary" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" placeholder="Kode Diklat" /> -->
+          <select name="provinsi" class="form-control" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" >
+            <option value="">Pilihan</option>
+            <?php
+              foreach ($kodediklat as $key):
+            ?>
+              <option value="<?php echo $key->KODE_DIKLAT;?>"><?php echo $key->KODE_DIKLAT.'-'. $key->NAMA_GROUP_MATA_AJAR?></option>
+            <?php
+              endforeach;
+            ?>
+          </select>
         </div>
         <div class="col-md-3">
           <label for="category">Bulan :</label>

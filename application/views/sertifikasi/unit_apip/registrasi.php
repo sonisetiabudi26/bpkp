@@ -4,14 +4,12 @@
 	</div>
 </div>
 <div class="clearfix"></div>
-<div class="row" style="width:100%;">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<label id="response-text"></label>
-</div>
+	<div class="row" style="width:100%;">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label id="response-text"></label>
+	</div>
 </div>
 <div class="row">
-
-
 			<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
@@ -62,10 +60,10 @@
 													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Jabatan</div>
 													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="jabatan"></span></div>
 												</div>
-												<div class="row">
+												<!-- <div class="row">
 													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Jenjang Jabatan</div>
 													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="jenjangjabatan"></span></div>
-												</div>
+												</div> -->
 												</div>
 											</div>
 										</div>
@@ -103,6 +101,15 @@
 									</div>
 
 							</div>
+							<div class="row">
+
+								<select class="form-control" name="diklat" id="diklat" >
+									<option value="">--Kode diklat--</option>
+									<?php foreach($diklat as $row) { ?>
+										 <option value="<?php echo $row->KODE_DIKLAT;?>"><?php echo $row->KODE_DIKLAT.' - '.$row->NAMA_GROUP_MATA_AJAR ;?></option>
+								 <?php } ?>
+							 </select>
+							</div><br/>
               <div class="row">
 
 								<select class="form-control" name="jadwal" id="jadwal" >
@@ -254,7 +261,7 @@ function search(){
 					document.getElementById("pendidikan").innerHTML=': '+data.pendidikan;
 					document.getElementById("unit").innerHTML=': '+data.unit;
 					document.getElementById("jabatan").innerHTML=': '+data.jabatan;
-					document.getElementById("jenjangjabatan").innerHTML=': '+data.jenjangjabatan;
+					// document.getElementById("jenjangjabatan").innerHTML=': '+data.jenjangjabatan;
 					$( "#daftar_ujian_btn" ).prop( "disabled", false );
 					// $('#show_data').html(html);
 				}else{
@@ -264,7 +271,7 @@ function search(){
 					document.getElementById("pendidikan").innerHTML=':';
 					document.getElementById("unit").innerHTML=':';
 					document.getElementById("jabatan").innerHTML=':';
-					document.getElementById("jenjangjabatan").innerHTML=':';
+					// document.getElementById("jenjangjabatan").innerHTML=':';
 					document.getElementById("show_data").style.display = "none";
 					$( "#daftar_ujian_btn" ).prop( "disabled", true );
 					alert(data.msg);

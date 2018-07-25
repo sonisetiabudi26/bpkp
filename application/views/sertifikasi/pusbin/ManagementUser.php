@@ -12,6 +12,8 @@
 		</li>
 		<li role="presentation" class=""><a href="#tab_content3" role="tab" onclick="loadDataUserWidya();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Widyaiswara</a>
 		</li>
+		<li role="presentation" class=""><a href="#tab_content4" role="tab" onclick="loadDataUserfasilitasPengangkatan();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Fasilitasi Pengangkatan</a>
+		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -75,6 +77,36 @@
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+			<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/4"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+
+								<div class="x_content">
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+											<table id="dataUserWidyaiswara" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+												<thead>
+												<tr>
+													<td>NO</td>
+													<td>Username</td>
+													<td>Login As</td>
+													<td>Password</td>
+													<td>Action</td>
+												</tr>
+												</thead>
+												<tbody>
+												</tbody>
+												</table>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">

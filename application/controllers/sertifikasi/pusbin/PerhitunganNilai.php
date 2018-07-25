@@ -16,6 +16,7 @@ class PerhitunganNilai extends CI_Controller {
         $this->load->model('sertifikasi/batch','batch');
         $this->load->model('sertifikasi/jadwalujian','jadwal');
         $this->load->model('sertifikasi/jawabanpeserta','jawaban');
+				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
     }
 
     public function index()
@@ -35,6 +36,7 @@ class PerhitunganNilai extends CI_Controller {
     }
     public function vw_add_event(){
 			$data['provinsi']	= $this->provinsi->_getAll();
+			$data['kodediklat']	= $this->groupmataajar->_get_all_group_mata_ajar();
 			$this->load->view('sertifikasi/pusbin/content/add_event',$data);
 		}
     public function vv_add_batch(){
@@ -43,9 +45,9 @@ class PerhitunganNilai extends CI_Controller {
       $this->load->view('sertifikasi/pusbin/content/add_batch',$data);
     }
     public function CheckNodiklat($kodediklat){
-      $jsonResult	= $this->diklat->_checkDiklat($kodediklat);
+      $jsonResult	= $this->groupmataajar->_get_kodediklat_group_mata_ajar($kodediklat);
       	if($jsonResult!='no data'){
-            $data['diklat']	=$jsonResult[0]->NamaDiklat;
+            $data['diklat']	=$jsonResult[0]->NAMA_GROUP_MATA_AJAR;
             $output[] = $data;
         }else{
           $output = array(
@@ -59,14 +61,14 @@ class PerhitunganNilai extends CI_Controller {
 
       			 $date = date('Ymd');
       			 $datex=date('Y-m-d');
-      			 $nip=$this->input->post('kodediklat');
+      			 $kodediklat=$this->input->post('kodediklat');
              $bulan=$this->input->post('bulan');
              $tahun=$this->input->post('tahun');
              $kodeevent=$this->input->post('kodeevent');
              $namadiklat=$this->input->post('namadiklat');
              $provinsi=$this->input->post('provinsi');
              $uraian=$this->input->post('uraian');
-      			 if($nip!=''&&$bulan!=''&&$tahun!=''&&$kodeevent!=''&&$namadiklat!=''&&$provinsi!=''){
+      			 if($bulan!=''&&$tahun!=''&&$kodeevent!=''&&$namadiklat!=''&&$provinsi!=''){
       						 $data = array(
       				 			'KODE_EVENT' => $kodeevent,
       							'NAMA_DIKLAT' => $namadiklat,
@@ -83,7 +85,7 @@ class PerhitunganNilai extends CI_Controller {
       						}
       					 // echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
       			 }else{
-      				 echo json_encode(array("status"=>'gagal'));
+      				 echo json_encode(array("status"=>'gagal', "data"=>$data));
       			 }
     }
     public function tambahBatch(){
@@ -149,9 +151,9 @@ class PerhitunganNilai extends CI_Controller {
        echo json_encode($output);
       //echo json_encode($dataAll);
     }
-    public function vw_upload_doc(){
-      // $data['event']	= $id_batch;
-      $this->load->view('sertifikasi/pusbin/content/import_nilai');
+    public function vw_upload_doc($id_batch){
+      $data['event']	= $id_batch;
+      $this->load->view('sertifikasi/pusbin/content/import_nilai',$data);
     }
     public function vw_view_nilai($param){
       // $parameter	= explode('~',$param);
@@ -214,9 +216,10 @@ class PerhitunganNilai extends CI_Controller {
              $row[] = $field->CATEGORY.' ('.$field->START_DATE.' - '.$field->END_DATE.')';
              $row[] = $field->REFF;
 						 $row[] = $numrowpeserta;
-             //$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
-             $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
-             $row[] = '<a class="btn btn-sm btn-success" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View</a>
+             $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
+             //$url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
+             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->KODE_EVENT."'".','."'".$field->KELAS."'".')" id="btn-view" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
+						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
              <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
 
              $data[] = $row;
@@ -240,12 +243,104 @@ class PerhitunganNilai extends CI_Controller {
 
 				print json_encode(array("status"=>"success", "data"=>$delete));
     }
+		public function calculate($kode){
+			$parameter	= explode('~',$kode);
+			$kode_event=$parameter[0];
+			$kelas=$parameter[1];
+			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
 
+
+			$a=6;
+			$nomor1=1;
+
+			foreach ($dataAll as $key) {
+				$totalJawaban=0;
+				$data = array();
+				$data['nip']=$key->KODE_PESERTA;
+				$data['kode_soal']=$key->KODE_SOAL;
+				for ($i=1; $i< 51 ; $i++) {
+					$nomor='NO_'.$i;
+					$data[$nomor]=$key->$nomor;
+					$dataCalc=$this->jawaban->calculate($key->KODE_SOAL,$key->$nomor,$i);
+					$datanum=$this->jawaban->get_data_all_by_numrows($key->KODE_SOAL,$kelas);
+					$data['totalSoal']=$datanum;
+					$jawaban='JAWABAN_'.$i;
+					if($dataCalc=='benar'){
+						$totalJawaban++;
+					}
+
+					$data[$jawaban]=$dataCalc;
+					$nomor1++;
+				}
+				$data['totalJawaban']=$totalJawaban;
+				if($data['totalSoal']!=0){
+					$data['nilai']=ceil(($totalJawaban/$datanum)*100);
+				}else{
+					$data['nilai']=0;
+				}
+				$where=array(
+					'KODE_PESERTA'=>$data['nip'],
+					'KODE_SOAL'=>$data['kode_soal'],
+					'FK_KODE_EVENT'=>$kode_event
+				);
+				$data_update=array(
+					'Nilai'=>$data['nilai']
+				);
+
+
+				$dataall[]=$data;
+				$a++;
+				$update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
+				if($update){
+					$data_response='success';
+				}else{
+					$data_response='error';
+				}
+			}
+			$array = [
+						 'data' => $dataall, // Append a passengers key with the variable $passengers, this will most likely be an stdClass object or an arrays
+			 ];
+
+				  print json_encode(array("status"=>$data_response, "data"=>$array));
+		}
+		public function LoadDataUnit(){
+			$dataAll= $this->jawaban->getUnit();
+			$data = array();
+			//$no = $_POST['start'];
+			$a=0;
+
+				foreach ($dataAll as $field) {
+						$row = array();
+						$nilai=0;
+						$row[] = $a+1;
+						$row[] = $field->FK_KODE_EVENT;
+						$row[] = $field->KODE_UNIT;
+						$row[] ='';
+						//$row[] = $field->KODE_SOAL;
+						//$row[] = $field->KELAS;
+						$row[] = '<a class="btn btn-sm btn-success" id="btn-view" ><i class="glyphicon glyphicon-eye-open"></i> View</a>';
+
+
+						$data[] = $row;
+						$a++;
+				}
+
+
+			$output = array(
+					"draw" => 'dataPeserta',
+					"recordsTotal" => $a,
+					"recordsFiltered" => $a,
+					"data" => $data,
+			);
+			//output dalam format JSON
+			echo json_encode($output);
+		}
     public function importNilai(){
     //  $nilai = $this->input->post('file_nilai');
 
   		$upload = $this->do_upload('doc_nilai');
-      //$id_batch = $this->input->post('id_batch');
+      $id_batch = $this->input->post('id_batch');
+			 $dataAll=$this->batch->get_batch_by_id($id_batch);
   		if($upload['result_upload'] == "success"){
         $file=$upload['file'];
         $filename=$file['file_name'];
@@ -253,7 +348,7 @@ class PerhitunganNilai extends CI_Controller {
   			$excelreader = new PHPExcel_Reader_Excel2007();
   			$loadexcel = $excelreader->load('uploads/nilai/'.$filename);
   			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
-  			$data['sheet'] = $this->import($sheet);
+  			$data['sheet'] = $this->import($sheet,$dataAll);
   		}else{
   			$data['upload_error'] = $upload['error'];
   		}
@@ -267,7 +362,7 @@ class PerhitunganNilai extends CI_Controller {
         mkdir('./uploads/nilai/', 0777, TRUE);
       }
   		$config['upload_path']          = './uploads/nilai/';
-  		$config['allowed_types']        = 'xlsx';
+  		$config['allowed_types']        = 'xlsx|xls';
   		$config['max_size']             = 2048;
   		$config['max_width']            = 2048;
   		$config['max_height']           = 768;
@@ -280,75 +375,79 @@ class PerhitunganNilai extends CI_Controller {
       }
   	}
 
-  	public function import($sheet){
+  	public function import($sheet,$dataAll){
       $date = date('Ymd');
       $datex=date('Y-m-d');
   		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
   		$datasheet1 = [];
   		$numrow = 1;
       $indexbatch=0;
+			$kode_event=$dataAll[0]->KODE_EVENT;
+			$kelas=$dataAll[0]->KELAS;
     //  $dataAll=$this->batch->get_batch_by_id($id_batch);
   		foreach($sheet as $row){
         if($numrow > 1 ){
     			//if($row['A']==$dataAll[0]->KODE_EVENT){
             $indexbatch=$indexbatch+1;
     				array_push($datasheet1, [
-    				'FK_KODE_EVENT'=>$row['A'],
-    				'KELAS'=>$row['C'],
-    				'KODE_PESERTA'=>$row['D'],
-    				'KODE_SOAL'=>$row['F'],
+    				'FK_KODE_EVENT'=>$kode_event,//kode event ambil dr data selected
+    				'KELAS'=>$kelas,//kelas ambil dr data selected
+    				'KODE_PESERTA'=>$row['F'],
+						'KODE_UNIT'=>$row['G'],
+    				'KODE_SOAL'=>$row['C'],
             'CREATED_AT' =>  $this->session->userdata('logged_in'),
             'CREATED_DATE' => $datex,
-            'NO_1' =>$row['H'],
-            'NO_2' =>$row['I'],
-            'NO_3' =>$row['J'],
-            'NO_4' =>$row['K'],
-            'NO_5' =>$row['L'],
-            'NO_6' =>$row['M'],
-            'NO_7' =>$row['N'],
-            'NO_8' =>$row['O'],
-            'NO_9' =>$row['P'],
-            'NO_10' =>$row['Q'],
-            'NO_11' =>$row['R'],
-            'NO_12' =>$row['S'],
-            'NO_13' =>$row['T'],
-            'NO_14' =>$row['U'],
-            'NO_15' =>$row['V'],
-            'NO_16' =>$row['W'],
-            'NO_17' =>$row['X'],
-            'NO_18' =>$row['Y'],
-            'NO_19' =>$row['Z'],
-            'NO_20' =>$row['AA'],
-            'NO_21' =>$row['AB'],
-            'NO_22' =>$row['AC'],
-            'NO_23' =>$row['AD'],
-            'NO_24' =>$row['AE'],
-            'NO_25' =>$row['AF'],
-            'NO_26' =>$row['AG'],
-            'NO_27' =>$row['AH'],
-            'NO_28' =>$row['AI'],
-            'NO_29' =>$row['AJ'],
-            'NO_30' =>$row['AK'],
-            'NO_31' =>$row['AL'],
-            'NO_32' =>$row['AM'],
-            'NO_33' =>$row['AN'],
-            'NO_34' =>$row['AO'],
-            'NO_35' =>$row['AP'],
-            'NO_36' =>$row['AQ'],
-            'NO_37' =>$row['AR'],
-            'NO_38' =>$row['AS'],
-            'NO_39' =>$row['AT'],
-            'NO_40' =>$row['AU'],
-            'NO_41' =>$row['AV'],
-            'NO_42' =>$row['AW'],
-            'NO_43' =>$row['AX'],
-            'NO_44' =>$row['AY'],
-            'NO_45' =>$row['AZ'],
-            'NO_46' =>$row['BA'],
-            'NO_47' =>$row['BB'],
-            'NO_48' =>$row['BC'],
-            'NO_49' =>$row['BD'],
-            'NO_50' =>$row['BE'],
+
+            'NO_1' =>$row['I'],
+            'NO_2' =>$row['J'],
+            'NO_3' =>$row['K'],
+            'NO_4' =>$row['L'],
+            'NO_5' =>$row['M'],
+            'NO_6' =>$row['N'],
+            'NO_7' =>$row['O'],
+            'NO_8' =>$row['P'],
+            'NO_9' =>$row['Q'],
+            'NO_10' =>$row['R'],
+            'NO_11' =>$row['S'],
+            'NO_12' =>$row['T'],
+            'NO_13' =>$row['U'],
+            'NO_14' =>$row['V'],
+            'NO_15' =>$row['W'],
+            'NO_16' =>$row['X'],
+            'NO_17' =>$row['Y'],
+            'NO_18' =>$row['Z'],
+            'NO_19' =>$row['AA'],
+            'NO_20' =>$row['AB'],
+            'NO_21' =>$row['AC'],
+            'NO_22' =>$row['AD'],
+            'NO_23' =>$row['AE'],
+            'NO_24' =>$row['AF'],
+            'NO_25' =>$row['AG'],
+            'NO_26' =>$row['AH'],
+            'NO_27' =>$row['AI'],
+            'NO_28' =>$row['AJ'],
+            'NO_29' =>$row['AK'],
+            'NO_30' =>$row['AL'],
+            'NO_31' =>$row['AM'],
+            'NO_32' =>$row['AN'],
+            'NO_33' =>$row['AO'],
+            'NO_34' =>$row['AP'],
+            'NO_35' =>$row['AQ'],
+            'NO_36' =>$row['AR'],
+            'NO_37' =>$row['AS'],
+            'NO_38' =>$row['AT'],
+            'NO_39' =>$row['AU'],
+            'NO_40' =>$row['AV'],
+            'NO_41' =>$row['AW'],
+            'NO_42' =>$row['AX'],
+            'NO_43' =>$row['AY'],
+            'NO_44' =>$row['AZ'],
+            'NO_45' =>$row['BA'],
+            'NO_46' =>$row['BB'],
+            'NO_47' =>$row['BC'],
+            'NO_48' =>$row['BD'],
+            'NO_49' =>$row['BE'],
+						'NO_50' =>$row['BF'],
     				]);
 
     			//}
