@@ -12,7 +12,7 @@
 		</li>
 		<li role="presentation" class=""><a href="#tab_content3" role="tab" onclick="loadDataUserWidya();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Widyaiswara</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content4" role="tab" onclick="loadDataUserfasilitasPengangkatan();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Fasilitasi Pengangkatan</a>
+		<li role="presentation" class=""><a href="#tab_content4" role="tab" onclick="loadDataUserFP();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Fasilitasi Pengangkatan</a>
 		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
@@ -115,7 +115,7 @@
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-											<table id="dataUserWidyaiswara" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+											<table id="dataUserFP" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 												<thead>
 												<tr>
 													<td>NO</td>
@@ -209,10 +209,34 @@ function loadDataUserWidya(){
 
 	          });
 }
+function loadDataUserFP(){
+	var table;
+				table = $('#dataUserFP').DataTable({
+	              "processing": false, //Feature control the processing indicator.
+								 "destroy": true,
+	              "serverSide": true, //Feature control DataTables' server-side processing mode.
+	              "order": [], //Initial no order.
+	              // Load data for the table's content from an Ajax source
+	              "ajax": {
+	                  "url": '<?php echo base_url('sertifikasi/pusbin/ManagementUser/LoadDateUserFP/')?>',
+	                  "type": "POST"
+	              },
+	              //Set column definition initialisation properties.
+	              "columns": [
+	                  {"data": "0",width:50},
+	                  {"data": "1",width:100},
+	                  {"data": "2",width:100},
+	                  {"data": "3",width:100},
+										{"data": "4",width:100}
+	              ],
+
+	          });
+}
 function refresh(){
 	$('#dataUserWidyaiswara').DataTable().ajax.reload();
 	loadDataUserDiklat();
 	loadDataUserWidya();
+	loadDataUserFP();
 }
 function delete_user(id)
 {
