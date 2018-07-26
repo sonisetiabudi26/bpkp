@@ -155,6 +155,44 @@ class PerhitunganNilai extends CI_Controller {
       $data['event']	= $id_batch;
       $this->load->view('sertifikasi/pusbin/content/import_nilai',$data);
     }
+		public function vw_nilai_per_unitkerja($id){
+			$data['id']	= $id;
+			$this->load->view('sertifikasi/pusbin/content/view_nilai_by_unit',$data);
+		}
+		public function LoadDatePesertabyUnit($id){
+			$parameter	= explode('~',$id);
+			$kodeevent=$parameter[1];
+			$kode_unit=$parameter[0];
+			 $dataAll= $this->jawaban->getALlbyUnit($kodeevent,$kode_unit);
+			 $data = array();
+			 //$no = $_POST['start'];
+			 $a=0;
+
+				 foreach ($dataAll as $field) {
+						 $row = array();
+						 $nilai=0;
+						 $row[] = $a+1;
+						 $row[] = $field->FK_KODE_EVENT;
+						 $row[] = $field->KODE_PESERTA;
+						 $row[] = $field->KODE_SOAL;
+						 $row[] = $field->KELAS;
+						 $row[] = $field->Nilai;
+
+						 $data[] = $row;
+						 $a++;
+				 }
+
+
+			 $output = array(
+					 "draw" => 'dataPeserta',
+					 "recordsTotal" => $a,
+					 "recordsFiltered" => $a,
+					 "data" => $data,
+			 );
+			 //output dalam format JSON
+			 echo json_encode($output);
+			//echo json_encode($dataAll);
+		}
     public function vw_view_nilai($param){
       // $parameter	= explode('~',$param);
       // $data['kodeevent']=$parameter[0];
@@ -306,19 +344,22 @@ class PerhitunganNilai extends CI_Controller {
 		public function LoadDataUnit(){
 			$dataAll= $this->jawaban->getUnit();
 			$data = array();
-			//$no = $_POST['start'];
 			$a=0;
 
 				foreach ($dataAll as $field) {
+					  $dataJumlah= $this->jawaban->getPesertabyUnit($field->KODE_UNIT,$field->FK_KODE_EVENT);
+						$dataTotal=($dataJumlah!='no data'?$dataJumlah:'0');
 						$row = array();
 						$nilai=0;
 						$row[] = $a+1;
 						$row[] = $field->FK_KODE_EVENT;
 						$row[] = $field->KODE_UNIT;
-						$row[] ='';
+						$row[] = $dataTotal;
 						//$row[] = $field->KODE_SOAL;
 						//$row[] = $field->KELAS;
-						$row[] = '<a class="btn btn-sm btn-success" id="btn-view" ><i class="glyphicon glyphicon-eye-open"></i> View</a>';
+						$id=$field->KODE_UNIT.'~'.$field->FK_KODE_EVENT;
+						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
+						$row[] = '<a class="btn btn-sm btn-success" id="btn-view" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View</a>';
 
 
 						$data[] = $row;

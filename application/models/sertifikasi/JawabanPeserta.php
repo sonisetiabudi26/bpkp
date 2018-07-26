@@ -19,6 +19,15 @@ public function getALl($kodeevent,$kelas){
 	return $query->result();
 
 }
+public function getALlbyUnit($kodeevent,$kode_unit){
+  $condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KODE_UNIT =" . "'" . $kode_unit . "'";
+  $this->db->select('*');
+  $this->db->from($this->_table);
+  $this->db->where($condition);
+  $query = $this->db->get();
+	return $query->result();
+
+}
 public function NumrowPeserta($kodeevent,$kelas){
 	$condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
 	$this->db->select('*');
@@ -94,10 +103,23 @@ public function getUnit(){
 	// $condition = "";
 	$this->db->select('*');
 	$this->db->from($this->_table);
-	$this->db->group_by('KODE_UNIT'); 
+	$this->db->group_by('KODE_UNIT');
 	$query = $this->db->get();
 	if ($query->num_rows() > 0) {
 		return $query->result();
+	} else {
+		return "no data";
+	}
+}
+public function getPesertabyUnit($id_unit,$id_event){
+	$condition = "KODE_UNIT =" . "'" . $id_unit . "' AND " . "FK_KODE_EVENT =" . "'" . $id_event . "'";
+	$this->db->select('*');
+	$this->db->from($this->_table);
+	$this->db->where($condition);
+	//$this->db->group_by('KODE_UNIT');
+	$query = $this->db->get();
+	if ($query->num_rows() > 0) {
+	  return $query->num_rows();
 	} else {
 		return "no data";
 	}

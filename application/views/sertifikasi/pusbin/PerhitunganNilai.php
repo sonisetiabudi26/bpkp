@@ -11,7 +11,7 @@
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" onclick="loadDatabatch();" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Batch</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content3" onclick="loadDatalist();" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">List Nilai</a>
+		<li role="presentation" class=""><a href="#tab_content3" onclick="loadDatalist();" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">List Nilai by Unit Kerja</a>
 		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
