@@ -255,10 +255,11 @@ class PerhitunganNilai extends CI_Controller {
              $row[] = $field->REFF;
 						 $row[] = $numrowpeserta;
              $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
-             //$url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
+             $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
              $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->KODE_EVENT."'".','."'".$field->KELAS."'".')" id="btn-view" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
 						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
-             <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+             <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+						 <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View Data</a>';
 
              $data[] = $row;
              $a++;
