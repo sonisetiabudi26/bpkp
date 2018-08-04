@@ -204,6 +204,32 @@ function uploadFile(formTarget, responseContent){
 	return false;
 	});
 }
+
+function uploadFilePengusulan(formTarget, responseContent){
+	$(document).on('submit', '#'+formTarget.id, function(e) {
+		e.preventDefault();
+	var data = new FormData(document.getElementById(formTarget.id));
+	$.ajax({
+		data : data,
+		type : $(this).attr('method'),
+		url : $(this).attr('action'),
+        async: false,
+		processData: false,
+		contentType: false,
+		cache:false,
+        timeout: 600000,
+		dataType: "json",
+		success : function(response) {
+      alert(response.msg);
+
+			console.log("success : ", response);
+
+		}
+
+	});
+	return false;
+	});
+}
 function uploadFileNilai(formTarget, responseContent){
 	$(document).on('submit', '#'+formTarget.id, function(e) {
 		e.preventDefault();

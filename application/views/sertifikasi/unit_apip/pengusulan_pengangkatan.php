@@ -161,34 +161,6 @@ $(document).ready(function() {
   ]
 });
 
-//To Reload The Ajax
-//See DataTables.net for more information about the reload method
-
- // var dataTable = $('#employee-grid').DataTable( {
- //      type  : 'ajax',
- //      url   :  "<?php //echo base_url('sertifikasi/unit_apip/pengusulanpengangkatan/loadData/')?>",
- //      async : false,
- //      dataType : 'json',
- //      success : function(data){
- //
-	// 			var nip='';
-	// 			var a=1;
-	// 			data.forEach(function(resp) {
- //
- //           $("#dataAuditor").append("<tr><td>" + a + "</td>"+
-	// 				 "<td>" + (resp.NIP != nip ? resp.NAMA : '') + "</td>"+
-	// 				 "<td>" + (resp.NIP != nip ? resp.NIP : '') + "</td>"+
-	// 				 "<td>" + (resp.NIP != nip ? resp.DESC : '') + "</td>"+
-	// 				  "<td>" + (resp.NIP != nip ? resp.DESC_STATUS : '') + "</td>"+
-	// 				 "<td><button class='btn btn-primary'>Upload Doc </button><button onclick='remove("+resp.PK_PENGUSUL_PENGANGKATAN+")' class='btn btn-primary'>Delete</button><button class='btn btn-primary'>View</button></td>"+
-	// 				 "</tr>");
-	// 				 nip=resp.NIP;
-	// 				 a++;
-	// 		  });
- //      }
-	// });
-	//loadDatajadwal();
-
 });
 function refresh(){
 	$('#example_table').DataTable().ajax.reload();
@@ -209,19 +181,5 @@ function remove(obj){
 
 	});
 }
-// function submit(){
-// 	var nip=document.getElementById("Nip").innerHTML;
-// 	var nama=document.getElementById("Nama").innerHTML;
-// 	var status=document.getElementById("Status").value;
-// 	var statusDoc='1';
-// 	$.ajax({
-// 			method: 'POST',
-// 			data: { nip: nip,nama:nama,status:status,statusDoc:statusDoc },
-//       url   :  "<?php //echo base_url('sertifikasi/unit_apip/pengusulanpengangkatan/submit/')?>",
-//       success : function(data){
-//
-//
-//       }
-// 	});
-// }
+
 </script>

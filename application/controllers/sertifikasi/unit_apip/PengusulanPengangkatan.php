@@ -10,6 +10,7 @@ class PengusulanPengangkatan extends CI_Controller {
     		$this->load->helper('url');
     		$this->load->model('sertifikasi/menupage','menupage');
 				$this->load->model('sertifikasi/pengusulpengangkatan','pengusul');
+				$this->load->model('sertifikasi/DocPengusulanPengangkatan','doc_pengusul');
     }
 
     public function index()
@@ -136,6 +137,84 @@ class PengusulanPengangkatan extends CI_Controller {
 				echo json_encode(array("status"=>'gagal'));
 			}
 		}
+		public function upload_submit(){
+				$desc = $this->input->post('desc');
+				$folder='doc_pengangkatan/'.$desc;
+				$data = array('category' => 'pengusulan',
+							'id_pengusul' => '1',
+							'created_at' => 'admin',
+							'created_date' => ''
+							);
+				if($desc=='1'){
+					$data_upload = array(
+						'0' => 'doc_cpns',
+						'1' => 'doc_pns',
+						'2' => 'doc_ijazah',
+						'3' => 'doc_prajab',
+						'4' => 'doc_sk_diklat',
+						'5' => 'doc_skp',
+						'6' => 'doc_sk_lulus',
+						'7' => 'doc_penugasan'
+				 );
+
+				}elseif($desc=='2'){
+					$data_upload = array(
+						'0' => 'doc_cpns',
+						'1' => 'doc_pns',
+						'2' => 'doc_ijazah',
+						'3' => 'doc_prajab',
+						'4' => 'doc_sk_diklat',
+						'5' => 'doc_skp',
+						'6' => 'doc_sk_lulus',
+						'7' => 'doc_penugasan',
+						'8' => 'doc_pangkat_terakhir'
+				 );
+				}elseif($desc=='3'){
+
+				}elseif($desc=='4'){
+
+				}
+				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data);
+		}
+
+		public function do_upload_pdf($folder,$doc,$data){
+			$array_length = count($doc);
+			for ($i=0; $i < $array_length; $i++) {
+					if (!is_dir('uploads/'.$folder)) {
+						mkdir('./uploads/'.$folder, 0777, TRUE);
+					}
+					$config['upload_path']          = './uploads/'.$folder.'/';
+					$config['allowed_types']        = 'pdf';
+					$config['max_size']             = 2048;
+					$config['max_width']            = 2048;
+					$config['max_height']           = 768;
+					$this->load->library('upload', $config);
+
+						if (! $this->upload->do_upload($doc[$i])){
+							return array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
+						}else{
+							$datas = array(
+							 'STATUS_DOC' => '',
+							 'CATEGORY_DOC' => $data['category'],
+							 'DOC_PENGUSULAN_PENGANGKATAN' => $doc[$i],
+							 'FK_PENGUSUL_PENGANGKATAN' => $data['id_pengusul'],
+							 'CREATED_AT' => $data['created_at'],
+							 'CREATED_DATE' => $data['created_date'],
+						 );
+						 $insert=$this->doc_pengusul->save($datas);
+								 if($insert=='Data Inserted Successfully'){
+									 $output = array(
+																 "msg" => $doc[$i],
+												 );
+											 echo json_encode($output);
+								 }else{
+									 return array('result_upload_pdf' => 'error saveing data', 'file' => '', 'error' => '');
+								 }
+
+						}
+				}
+		}
+
 
 		public function search($nip){
 			$url="http://163.53.185.91:8083/sibijak/dca/api/api/pengguna?nip=".$nip;

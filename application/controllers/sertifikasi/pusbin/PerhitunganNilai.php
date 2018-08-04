@@ -99,7 +99,7 @@ class PerhitunganNilai extends CI_Controller {
              $kelas=$this->input->post('kelas');
              $jadwal=$this->input->post('jadwal');
 
-             if($kodeevent!=''&&$reff!=''&&$kelas!=''&&$jadwal!=''){
+             if($kodeevent!=''&&$kelas!=''&&$jadwal!=''){
                    $data = array(
                     'FK_KODE_EVENT' => $kodeevent,
                     'KELAS' => $kelas,
@@ -417,6 +417,8 @@ class PerhitunganNilai extends CI_Controller {
       }
   	}
 
+
+		
   	public function import($sheet,$dataAll){
       $date = date('Ymd');
       $datex=date('Y-m-d');
