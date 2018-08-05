@@ -15,7 +15,10 @@ class DocPengusulanPengangkatan extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
-
+	public function updateData($where,$table,$data){
+		$this->db->where($where);
+		$this->db->update($table,$data);
+	}
 }
 
   ?>

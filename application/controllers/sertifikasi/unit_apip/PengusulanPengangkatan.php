@@ -68,7 +68,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$dataRow['nip']=$key->NIP;
 				$dataRow['desc']=$key->DESC;
 				$dataRow['desc_status']=$key->DESC_STATUS;
-				$url=base_url('sertifikasi')."/unit_apip/pengusulanpengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN;
+				$url=base_url('sertifikasi')."/unit_apip/pengusulanpengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
 				$dataRow['action']="<td><button onclick='getModal(this)' id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
 						<span>Upload Doc</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-primary'>Delete</button><button class='btn btn-primary'>View</button></td>";
 				$data[]=$dataRow;
@@ -83,8 +83,12 @@ class PengusulanPengangkatan extends CI_Controller {
 	 	 echo json_encode($data);
 	 		// $data['provinsi']=$this->provinsi->_get_provinsi_information();
 	  }
-		public function vw_upload_doc($desc){
-			$data['desc']=$desc;
+		public function vw_upload_doc($param){
+
+			$parameter=explode('~',$param);
+			$data['desc']=$parameter[0];
+			$data['id_pengusul']=$parameter[1];
+			$data['nip']=$parameter[2];
 			$this->load->view('sertifikasi/unit_apip/content/modal_upload_pengusulan',$data);
 			// echo 'asd';
 		}
@@ -139,11 +143,14 @@ class PengusulanPengangkatan extends CI_Controller {
 		}
 		public function upload_submit(){
 				$desc = $this->input->post('desc');
-				$folder='doc_pengangkatan/'.$desc;
-				$data = array('category' => 'pengusulan',
-							'id_pengusul' => '1',
-							'created_at' => 'admin',
-							'created_date' => ''
+				$id_pengusul = $this->input->post('id_pengusul');
+				$nip = $this->input->post('nip');
+				$datex=date('Y-m-d');
+				$folder='doc_pengangkatan/'.$desc.'/'.$nip;
+				$data = array('category' => $desc,
+							'id_pengusul' => $id_pengusul,
+							'created_at' => $this->session->userdata('nip'),
+							'created_date' => $datex
 							);
 				if($desc=='1'){
 					$data_upload = array(
@@ -174,11 +181,12 @@ class PengusulanPengangkatan extends CI_Controller {
 				}elseif($desc=='4'){
 
 				}
-				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data);
+				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data,$desc);
 		}
 
-		public function do_upload_pdf($folder,$doc,$data){
+		public function do_upload_pdf($folder,$doc,$data,$desc){
 			$array_length = count($doc);
+			$no=1;
 			for ($i=0; $i < $array_length; $i++) {
 					if (!is_dir('uploads/'.$folder)) {
 						mkdir('./uploads/'.$folder, 0777, TRUE);
@@ -203,15 +211,40 @@ class PengusulanPengangkatan extends CI_Controller {
 						 );
 						 $insert=$this->doc_pengusul->save($datas);
 								 if($insert=='Data Inserted Successfully'){
+									 $no++;
 									 $output = array(
-																 "msg" => $doc[$i],
+																 "msg" => "success",
 												 );
 											 echo json_encode($output);
 								 }else{
-									 return array('result_upload_pdf' => 'error saveing data', 'file' => '', 'error' => '');
+									 return array('result_upload_pdf' => 'error saving data', 'file' => '', 'error' => '');
 								 }
 
 						}
+				}
+				$where=array(
+					'PK_PENGUSUL_PENGANGKATAN'=>$data['id_pengusul'],
+
+				);
+				$data_update=array(
+					'FK_STATUS_DOC'=>'2'
+				);
+				if($desc=='1'){
+					if($no>6){
+						 $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
+					}
+				}elseif($desc='2'){
+					if($no>7){
+						$update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
+					}
+				}elseif($desc='3'){
+					if($no<7){
+
+					}
+				}elseif($desc='4'){
+					if($no<7){
+
+					}
 				}
 		}
 

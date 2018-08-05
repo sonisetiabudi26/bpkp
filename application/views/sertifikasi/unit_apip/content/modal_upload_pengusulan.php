@@ -1,8 +1,11 @@
-<form onsubmit="uploadFilePengusulan(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/upload_submit"; ?>" enctype="multipart/form-data" method="POST" id="daftar_ujian">
-<div class="col-md-12" id="response-text" ></div>
+<form onsubmit="uploadFilePengusulan(this, 'response-texts')" action="<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/upload_submit"; ?>" enctype="multipart/form-data" method="POST" id="daftar_pengusulan">
+<div class="col-md-12" id="response-texts" ></div>
+<input name="desc" style="display:none;" value="<?php echo $desc; ?>"></input>
+<input name="id_pengusul" style="display:none;" value="<?php echo $id_pengusul; ?>"></input>
+<input name="nip" style="display:none;" value="<?php echo $nip; ?>"></input>
   <?php
   if($desc=='1' ||$desc=='2' ){?>
-    <input name="desc" style="display:none;" value="<?php echo $desc; ?>"></input>
+
     <div class="row">
       <div class="form-group">
         <div class="col-lg-4">
@@ -209,8 +212,9 @@
          <input type="text" class="form-control text-primary" name="file_ijazah_terakhir" id="text-ijazah_terakhir" placeholder="Ijazah Terakhir" />
        </div>
      </div>
-   </div><br/>
+   </div>
   <?php }?>
+  <br/>
   <div class="row">
     <input class="btn btn-primary btn-block" id="setuju_ujian_btn" value="submit" type="submit">
   </div>

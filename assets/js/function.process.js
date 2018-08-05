@@ -220,9 +220,22 @@ function uploadFilePengusulan(formTarget, responseContent){
         timeout: 600000,
 		dataType: "json",
 		success : function(response) {
-      alert(response.msg);
+      if(response.msg=='success'){
 
-			console.log("success : ", response);
+
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
+        $("#"+formTarget.id)[0].reset();
+      }else{
+        $("#"+responseContent).html("<div style='width:100%' class='alert alert-success'>"+
+                                    "<strong>Success!</strong>Data Inserted Successfully! ."+
+                                  "</div>");
+      }
+
+      console.log("success : ", "success");
+      $("#" + formTarget.id).find('[type=submit]').prop("disabled", true);
+
 
 		}
 

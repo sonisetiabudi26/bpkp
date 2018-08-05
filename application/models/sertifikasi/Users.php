@@ -69,4 +69,12 @@ class Users extends My_Model
 		$this->db->where('PK_USER', $id);
     $this->db->delete($this->_table);
 	}
+	public function check_validator(){
+		$condition = "fk_lookup_role =" . "'" . 28 . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+			return $query->result();
+	}
 }
