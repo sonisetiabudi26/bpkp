@@ -110,7 +110,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/4"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/28"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
 
 								<div class="x_content">
 									<div class="row">
