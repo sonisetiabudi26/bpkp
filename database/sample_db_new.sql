@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 06, 2018 at 02:27 AM
+-- Generation Time: Aug 07, 2018 at 12:17 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -640,7 +640,7 @@ CREATE TABLE `pengusul_pengangkatan` (
   `NAMA` varchar(150) NOT NULL,
   `FK_STATUS_PENGUSUL_PENGANGKATAN` int(11) NOT NULL,
   `FK_STATUS_DOC` int(11) NOT NULL,
-  `TOTAL_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL,
+  `RESULT` varchar(100) NOT NULL,
   `CREATED_AT` varchar(100) NOT NULL,
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -649,9 +649,9 @@ CREATE TABLE `pengusul_pengangkatan` (
 -- Dumping data for table `pengusul_pengangkatan`
 --
 
-INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `NAMA`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `TOTAL_DOC_PENGUSULAN_PENGANGKATAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(21, 2147483647, 'Natalina Br. Ginting ', 2, 2, 0, '1110', '2018-08-02'),
-(22, 1110, 'Test Admin', 1, 2, 0, '1110', '2018-08-06');
+INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `NAMA`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `RESULT`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(21, 2147483647, 'Natalina Br. Ginting ', 2, 2, '1', '1110', '2018-08-02'),
+(22, 1110, 'Test Admin', 1, 2, '0', '1110', '2018-08-06');
 
 -- --------------------------------------------------------
 
