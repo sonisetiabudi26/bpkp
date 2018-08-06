@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 25, 2018 at 04:42 AM
+-- Generation Time: Aug 06, 2018 at 02:27 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -83,7 +83,8 @@ CREATE TABLE `batch` (
 --
 
 INSERT INTO `batch` (`PK_BATCH`, `FK_KODE_EVENT`, `FK_PROVINSI`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(1, '3', 13, 'T-258     ', 17, 'qwer', 'Pusbin Budianto', '2018-07-08');
+(1, '3', 13, 'T-258     ', 17, 'qwer', 'Pusbin Budianto', '2018-07-08'),
+(2, '4', 12, '9iso', 18, '', 'Pusbin Budianto', '2018-08-02');
 
 -- --------------------------------------------------------
 
@@ -118,10 +119,35 @@ CREATE TABLE `document_pengusulan_pengangkatan` (
   `STATUS_DOC` varchar(150) NOT NULL,
   `CATEGORY_DOC` varchar(100) NOT NULL,
   `DOC_PENGUSULAN_PENGANGKATAN` text NOT NULL,
+  `DATA_DOC` text NOT NULL,
   `FK_PENGUSUL_PENGANGKATAN` int(11) NOT NULL,
+  `validator` int(11) NOT NULL,
   `CREATED_AT` varchar(150) NOT NULL,
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `document_pengusulan_pengangkatan`
+--
+
+INSERT INTO `document_pengusulan_pengangkatan` (`PK_DOC_PENGUSULAN_PENGANGKATAN`, `STATUS_DOC`, `CATEGORY_DOC`, `DOC_PENGUSULAN_PENGANGKATAN`, `DATA_DOC`, `FK_PENGUSUL_PENGANGKATAN`, `validator`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(26, '', '2', 'doc_cpns', '', 21, 1110, '1110', '2018-08-05'),
+(27, '', '2', 'doc_pns', '', 21, 1110, '1110', '2018-08-05'),
+(28, '', '2', 'doc_ijazah', '', 21, 1110, '1110', '2018-08-05'),
+(29, '', '2', 'doc_prajab', '', 21, 1110, '1110', '2018-08-05'),
+(30, '', '2', 'doc_sk_diklat', '', 21, 1110, '1110', '2018-08-05'),
+(31, '', '2', 'doc_skp', '', 21, 1110, '1110', '2018-08-05'),
+(32, '', '2', 'doc_sk_lulus', '', 21, 1110, '1110', '2018-08-05'),
+(33, '', '2', 'doc_penugasan', '', 21, 1110, '1110', '2018-08-05'),
+(34, '', '2', 'doc_pangkat_terakhir', '', 21, 1110, '1110', '2018-08-05'),
+(36, '', '1', 'doc_cpns', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(37, '', '1', 'doc_pns', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(38, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(39, '', '1', 'doc_prajab', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(40, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(41, '', '1', 'doc_skp', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(42, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06'),
+(43, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_1110/cv(1).pdf', 22, 0, '1110', '2018-08-06');
 
 -- --------------------------------------------------------
 
@@ -145,7 +171,8 @@ CREATE TABLE `event` (
 
 INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `NAMA_DIKLAT`, `URAIAN`, `FK_PROVINSI`, `CREATED_AT`, `CREATED_DATE`) VALUES
 (3, '10119', 'Tester', 'tester', 13, 'Pusbin Budianto', '2018-07-08'),
-(4, '51212', 'Auditor Madya', 'asd', 12, 'Pusbin Budianto', '2018-07-24');
+(4, '51212', 'Auditor Madya', 'asd', 12, 'Pusbin Budianto', '2018-07-24'),
+(5, '51219', 'Auditor Madya', 'tester', 13, 'Pusbin Budianto', '2018-08-02');
 
 -- --------------------------------------------------------
 
@@ -431,7 +458,8 @@ INSERT INTO `lookup` (`PK_LOOKUP`, `IS_ACTIVE`, `CODE`, `DESCR`, `LOOKUP_GROUP`,
 (24, 1, 'PENDING', 'SOAL SEDANG DIREVIEW', 'STATUS_PERMINTAAN', 'PENDING', 2),
 (25, 1, 'APPROVED', 'SOAL TELAH DISETUJUI', 'STATUS_PERMINTAAN', 'APPROVED', 3),
 (26, 1, 'REJECTED', 'SOAL TIDAK DISETUJUI', 'STATUS_PERMINTAAN', 'REJECTED', 4),
-(27, 1, 'UNCREATED', 'SOAL BELUM DIBUAT', 'STATUS_PERMINTAAN', 'UNCREATED', 5);
+(27, 1, 'UNCREATED', 'SOAL BELUM DIBUAT', 'STATUS_PERMINTAAN', 'UNCREATED', 5),
+(28, 1, 'FASILITAS_PENGANGKATAN', 'Fasilitas Pengangkatan', 'USER_ROLE', 'Fasilitas Pengangkatan', 26);
 
 -- --------------------------------------------------------
 
@@ -541,7 +569,9 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (29, 'Management Bank Soal', 'bank_soal', 'bank_soal/admin/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1),
 (30, 'Perhitungan Nilai', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', '', 5),
 (31, 'Home', 'bank_soal', 'bank_soal/koreksi/home', 'admin', '2018-07-07', 'home', 18),
-(32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20);
+(32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20),
+(38, 'Pengusulan Pengangkatan', 'pusbin', 'pusbin/PengusulanPengangkatan', 'admin', '2018-07-06', '', 5),
+(88, 'Home', 'fasilitas', 'fasilitas/home', 'admin', '2018-03-29', 'home', 28);
 
 -- --------------------------------------------------------
 
@@ -620,8 +650,8 @@ CREATE TABLE `pengusul_pengangkatan` (
 --
 
 INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `NAMA`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `TOTAL_DOC_PENGUSULAN_PENGANGKATAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(17, 2147483647, 'Natalina Br. Ginting ', 1, 1, 0, '196712252002122001', '2018-07-06'),
-(18, 1110, 'Test Admin', 1, 1, 0, '1110', '2018-07-20');
+(21, 2147483647, 'Natalina Br. Ginting ', 2, 2, 0, '1110', '2018-08-02'),
+(22, 1110, 'Test Admin', 1, 2, 0, '1110', '2018-08-06');
 
 -- --------------------------------------------------------
 
@@ -977,7 +1007,8 @@ INSERT INTO `status_doc` (`PK_STATUS_DOC`, `DESC_STATUS`, `CREATED_AT`, `CREATED
 (1, 'Document Belum Complete', 'admin', '2018-06-22'),
 (2, 'Document Complete', 'admin', '2018-06-22'),
 (3, 'Proccessing', 'admin', '2018-06-22'),
-(4, 'Reject', 'admin', '2018-06-22');
+(4, 'Reject', 'admin', '2018-06-22'),
+(5, 'Accept', 'admin', '2018-08-02');
 
 -- --------------------------------------------------------
 
@@ -1043,7 +1074,8 @@ INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) 
 (11, 'kapus', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 22),
 (12, 'pembuat_soal', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 20),
 (13, 'wi', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4),
-(14, '196006021982031001', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4);
+(14, '196006021982031001', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4),
+(89, '1110', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 28);
 
 -- --------------------------------------------------------
 
@@ -1278,7 +1310,7 @@ ALTER TABLE `bab_mata_ajar`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
 --
@@ -1288,12 +1320,12 @@ ALTER TABLE `bridge_lookup`
 -- AUTO_INCREMENT for table `document_pengusulan_pengangkatan`
 --
 ALTER TABLE `document_pengusulan_pengangkatan`
-  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `group_mata_ajar`
 --
@@ -1333,7 +1365,7 @@ ALTER TABLE `menu_page_detail`
 -- AUTO_INCREMENT for table `pengusul_pengangkatan`
 --
 ALTER TABLE `pengusul_pengangkatan`
-  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `permintaan_soal`
 --
@@ -1368,7 +1400,7 @@ ALTER TABLE `soal_ujian`
 -- AUTO_INCREMENT for table `status_doc`
 --
 ALTER TABLE `status_doc`
-  MODIFY `PK_STATUS_DOC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `PK_STATUS_DOC` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `status_pengusulan_pengangkatan`
 --
@@ -1378,7 +1410,7 @@ ALTER TABLE `status_pengusulan_pengangkatan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `PK_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `PK_USER` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT for table `widyaiswara_nilai`
 --

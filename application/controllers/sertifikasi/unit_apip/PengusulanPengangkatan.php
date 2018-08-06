@@ -146,7 +146,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$id_pengusul = $this->input->post('id_pengusul');
 				$nip = $this->input->post('nip');
 				$datex=date('Y-m-d');
-				$folder='doc_pengangkatan/'.$desc.'/'.$nip;
+				$folder='doc_pengangkatan/'.$desc.'_'.$nip;
 				$data = array('category' => $desc,
 							'id_pengusul' => $id_pengusul,
 							'created_at' => $this->session->userdata('nip'),
@@ -201,10 +201,12 @@ class PengusulanPengangkatan extends CI_Controller {
 						if (! $this->upload->do_upload($doc[$i])){
 							return array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
 						}else{
+							$doc_loc=$folder.'/'.$_FILES[$doc[$i]]['name'];
 							$datas = array(
 							 'STATUS_DOC' => '',
 							 'CATEGORY_DOC' => $data['category'],
 							 'DOC_PENGUSULAN_PENGANGKATAN' => $doc[$i],
+							 'DATA_DOC' => $doc_loc,
 							 'FK_PENGUSUL_PENGANGKATAN' => $data['id_pengusul'],
 							 'CREATED_AT' => $data['created_at'],
 							 'CREATED_DATE' => $data['created_date'],
