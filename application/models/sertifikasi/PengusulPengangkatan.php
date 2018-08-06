@@ -56,7 +56,7 @@ class PengusulPengangkatan extends My_Model
 		}
 	}
 	public function load($userAdmin){
-		$condition = "pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=1 and pengusul_pengangkatan.CREATED_AT =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=1 and pengusul_pengangkatan.CREATED_AT =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');

@@ -19,6 +19,32 @@ class DocPengusulanPengangkatan extends My_Model
 		$this->db->where($where);
 		$this->db->update($table,$data);
 	}
+	public function loaddoc($param){
+		$condition = " fk_pengusul_pengangkatan =" . "'" . $param . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+	//	return $query->result();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "no data";
+		}
+	}
+	public function loaddocbypk($param){
+		$condition = " pk_doc_pengusulan_pengangkatan =" . "'" . $param . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+	//	return $query->result();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "no data";
+		}
+	}
 }
 
   ?>

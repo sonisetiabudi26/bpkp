@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 $route['sertifikasi'] = 'sertifikasi/';
+$route['doc'] = 'uploads/';
 $route['login'] = 'login';
 $route['ujian-sertifikasi-jfa'] = 'ujian/home';
 $route['ujian-sertifikasi-jfa/ujian'] = 'ujian/ujiansertifikasi';

@@ -31,6 +31,7 @@
 													<td>NIP</td>
 													<td>Nama</td>
 													<td>Status Pengusulan Pengangkatan</td>
+													<td>Status</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -49,7 +50,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-						
+
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -60,6 +61,7 @@
 													<td>NIP</td>
 													<td>Nama</td>
 													<td>Status Pengusulan Pengangkatan</td>
+													<td>Status</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -155,7 +157,8 @@ var table;
                   {"data": "1",width:100},
                   {"data": "2",width:100},
                   {"data": "3",width:100},
-                  {"data": "4",width:100},
+									{"data": "4",width:100},
+                  {"data": "5",width:100},
               ],
 
           });
@@ -181,10 +184,37 @@ function loadDataperpindahan(){
                     {"data": "2",width:100},
                     {"data": "3",width:100},
                     {"data": "4",width:100},
+										{"data": "5",width:100},
                 ],
 
             });
 
+}
+function refresh(){
+	$('#dataUserpertama').DataTable().ajax.reload();
+	loadDataperpindahan();
+
+}
+function action(obj1){
+
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi/fasilitas/home/update')?>/"+obj1,
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+				if(data.msg=='success'){
+						refresh();
+					}else{
+						alert('gagal update');
+					}
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+					 alert('gagal update');
+
+			}
+	});
 }
 
 </script>
