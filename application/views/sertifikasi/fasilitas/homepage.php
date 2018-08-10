@@ -17,11 +17,59 @@
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
+
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 
 								<div class="x_content">
+									<div class="row">
+										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding:0;margin:0">
+												<input class="form-control" name="nip" id="nip" type="text" placeholder="Masukan NIP">
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
+											<button class="btn btn-primary btn-block" onclick="search();">Cari</button>
+										</div>
+									</div><br/>
+									<div class="row">
+										<div id="show_data" style="display: none">
+											<div class="panel panel-default">
+												<div class="panel-heading">Identitas</div>
+													<div class="panel-body">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>NAMA</span></div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="Nama"></span></div>
+														</div>
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">NIP</div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="NIP"></span></div>
+														</div>
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Tempat Tanggl Lahir</div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="ttl"></span></div>
+														</div>
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Pendidikan</div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="pendidikan"></span></div>
+														</div>
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Unit Kerja</div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="unit"></span></div>
+														</div>
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Jabatan</div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="jabatan"></span></div>
+														</div>
+														<!-- <div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Jenjang Jabatan</div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="jenjangjabatan"></span></div>
+														</div> -->
+														</div>
+													</div>
+												</div>
+										</div>
+									</div><br/>
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 					            <table id="dataUserpertama" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">

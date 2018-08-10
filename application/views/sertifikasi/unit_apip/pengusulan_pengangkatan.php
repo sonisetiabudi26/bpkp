@@ -12,11 +12,15 @@
 				<div class="x_panel">
 
 					<div class="x_content">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="row">
-                <input class="form-control" name="nip" id="nip" type="text" placeholder="Masukan NIP"><br>
-                <button class="btn btn-primary btn-block" onclick="search();">Cari</button>
+
+
+								<div class="row" >
+					        <div class="col-lg-10" style="padding:0;margin:0">
+										  <input class="form-control" name="nip" id="nip" type="text" placeholder="Masukan NIP">
+									</div>
+									<div class="col-md-2" style="padding:0;margin:0">
+										<button class="btn btn-primary btn-block" onclick="search();">Cari</button>
+									</div>
               </div>
 							<div class="row">
 								<div class="col-md-12" id="response-text" ></div>
@@ -99,8 +103,8 @@
               </div>
               </div>
 
-						</div>
-					</div>
+
+
 				</div>
 			</div>
 </div>
