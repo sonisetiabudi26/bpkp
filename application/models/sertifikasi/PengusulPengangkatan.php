@@ -43,6 +43,19 @@ class PengusulPengangkatan extends My_Model
 			return "no data";
 		}
 	}
+	public function datalistValidator($user,$doc){
+		$condition = "pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $user . "' group by pengusul_pengangkatan.UNITKERJA";
+		$this->db->select('pengusul_pengangkatan.*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+	//	return $query->result();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "no data";
+		}
+	}
 	public function numrowpeserta($nip){
 		$condition = "CREATED_AT =" . "'" . $nip . "' AND " . "FK_STATUS_DOC =" . "'" . 2 . "'";
 		$this->db->select('*');
@@ -56,7 +69,7 @@ class PengusulPengangkatan extends My_Model
 		}
 	}
 	public function load($userAdmin){
-		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=1 and pengusul_pengangkatan.CREATED_AT =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+		$condition = "pengusul_pengangkatan.FK_STATUS_DOC!=5 and pengusul_pengangkatan.NO_SURAT='' and pengusul_pengangkatan.CREATED_AT =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
@@ -70,8 +83,8 @@ class PengusulPengangkatan extends My_Model
 			return "no data";
 		}
 	}
-	public function loadValidasi($userAdmin,$doc){
-		$condition = "pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.CREATED_AT =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+	public function loadValidasi($userAdmin,$doc,$unit){
+		$condition = "pengusul_pengangkatan.CREATED_AT=" . "'" . $unit . "' and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
@@ -87,7 +100,7 @@ class PengusulPengangkatan extends My_Model
 	}
 	public function loadData(){
 		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' group by pengusul_pengangkatan.CREATED_AT";
-		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS,document_pengusulan_pengangkatan.validator');
+		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS,pengusul_pengangkatan.validator');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
 		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');

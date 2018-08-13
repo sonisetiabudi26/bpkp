@@ -73,17 +73,14 @@ class PengusulanPengangkatan extends CI_Controller {
     public function vw_validator($param){
         // $data['id_unitapip']=$param;
         $datas['unitkerja']=$param;
-        $apiuser=$this->apiuser($param);
-        $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
+        //$apiuser=$this->apiuser($param);
+        //$kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
         $validator=$this->user->check_validator();
         foreach ($validator as $key ) {
-          $apiuservalidator=$this->apiuser($key->USER_NAME);
-          $kodeunitkerjavalidator = $apiuser->data[0]->UnitKerja_Nama;
-          if($kodeunitkerjavalidator==$kodeunitkerja){
+          //$apiuservalidator=$this->apiuser($key->USER_NAME);
+          //$kodeunitkerjavalidator = $apiuser->data[0]->UnitKerja_Nama;
             $datas['validator'] = array('username' => $key->USER_NAME, );
-
-          }
-        }
+  			}
         $this->load->view('sertifikasi/pusbin/content/view_validator',$datas);
 
     }
@@ -96,12 +93,12 @@ class PengusulanPengangkatan extends CI_Controller {
     public function add_validator(){
       $where=array(
         'CREATED_AT'=>$this->input->post('unitkerja'),
-
+				'validator'=>''
       );
       $data_update=array(
         'validator'=>$this->input->post('validator'),
       );
-      $update=$this->doc_pengusul->updateData($where,'document_pengusulan_pengangkatan',$data_update);
+      $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
       if($update){
         $data = array(
                        "status" => "success",

@@ -10,6 +10,7 @@ class PengusulanPengangkatan extends CI_Controller {
     		$this->load->helper('url');
     		$this->load->model('sertifikasi/menupage','menupage');
 				$this->load->model('sertifikasi/pengusulpengangkatan','pengusul');
+				$this->load->model('sertifikasi/Pertek','pertek');
 				$this->load->model('sertifikasi/DocPengusulanPengangkatan','doc_pengusul');
     }
 
@@ -41,12 +42,14 @@ class PengusulanPengangkatan extends CI_Controller {
 				$nip=$this->input->post('nip');
 				$nama=$this->input->post('nama');
 				$status=$this->input->post('status');
-				// $username = $this->session->userdata('logged_in');
+				$apiuser=$this->apiuser($this->session->userdata('nip'));
+        $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
 				$data = array(
 				 'NIP' => $nip,
 				 'NAMA' => $nama,
 				 'FK_STATUS_PENGUSUL_PENGANGKATAN' => $status,
 				 'FK_STATUS_DOC' => '1',
+				 'UNITKERJA' => $kodeunitkerja,
 				 'CREATED_AT' => $this->session->userdata('nip'),
 				 'CREATED_DATE' => $datex
 			 );
@@ -56,6 +59,12 @@ class PengusulanPengangkatan extends CI_Controller {
 				}else{
 					print json_encode(array("status"=>"error", "data"=>$insert));
 				}
+		}
+		public function apiuser($param){
+			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
+			$check=file_get_contents($url);
+			$jsonResult=json_decode($check);
+			return $jsonResult;
 		}
 		public function loadData(){
 	 		$userAdmin=$this->session->userdata('nip');
@@ -182,6 +191,52 @@ class PengusulanPengangkatan extends CI_Controller {
 
 				}
 				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data,$desc);
+		}
+		public function submit_nosurat(){
+			$datex=date('Ymd');
+			$no_surat = $this->input->post('no_surat');
+			$nip_unitapip= $this->session->userdata('nip');
+			$folder='doc_surat_pengusulan/'.$datex.'/'.$datex.'_'.$nip_unitapip;
+			$doc='doc_surat';
+			$uploadpdf = $this->do_upload_pdf_surat($folder,$doc,$nip_unitapip,$no_surat);
+			echo json_encode(array('msg'=>$uploadpdf));
+
+		}
+		public function do_upload_pdf_surat($folder,$doc,$nip,$no){
+
+					if (!is_dir('uploads/'.$folder)) {
+						mkdir('./uploads/'.$folder, 0777, TRUE);
+					}
+					$config['upload_path']          = './uploads/'.$folder.'/';
+					$config['allowed_types']        = 'pdf';
+					$config['max_size']             = 2048;
+					$config['max_width']            = 2048;
+					$config['max_height']           = 768;
+					$this->load->library('upload', $config);
+
+						if (! $this->upload->do_upload($doc)){
+							return array('msg' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
+						}else{
+							$doc_loc=$folder.'/'.$_FILES[$doc]['name'];
+							$where=array(
+								'CREATED_AT'=>$nip,
+								'NO_SURAT'=>''
+							);
+							$data_update=array(
+								'DOC_SURAT_PENGUSULAN'=>$doc_loc,
+								'NO_SURAT'=>$no
+							);
+							$update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
+							$datas = array(
+							 'NO_SURAT' => $no,
+						 );
+						 $insert=$this->pertek->save($datas);
+									 $output = array(
+																 "msg" => "success",
+												 );
+											// echo json_encode($output);
+								return json_encode($output);
+						}
 		}
 
 		public function do_upload_pdf($folder,$doc,$data,$desc){

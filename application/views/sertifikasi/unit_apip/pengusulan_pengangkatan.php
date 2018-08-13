@@ -101,6 +101,41 @@
 									</table>
 
               </div>
+
+							<div class="row">
+								<div class="panel panel-default">
+									<div class="panel-heading">Upload No Surat Pengusulan </div>
+										<div class="panel-body">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<form onsubmit="procesFormPengusul(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/unit_apip/pengusulanpengangkatan/submit_nosurat"; ?>" enctype="multipart/form-data" method="POST" id="daftar_nosurat">
+
+												<div class="row">
+													<div class="form-group">
+														<div class="col-lg-4">
+															<span class="btn btn-primary btn-block btn-file" id="input_surat"><i class="fa fa-file"></i>
+														 		Surat Pengusulan <input name="doc_surat" id="doc_surat" type="file">
+															</span>
+														</div>
+													<div class="col-lg-8">
+														 <input type="text" class="form-control text-primary" name="file_surat" id="text-surat" placeholder="doc Surat Pengusulan" />
+													 </div>
+												 </div>
+											 </div><br/>
+											<div class="row">
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>No Surat</span></div>
+												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='no_surat' class="form-control" id="no_surat" placeholder='input no surat'/></div>
+											</div>
+											<br/>
+											<div class="row">
+												<button class="btn btn-primary btn-block" id="btn-upload-surat" type="submit">Submit</button>
+											</div>
+										</form>
+											</div>
+										</div>
+									</div>
+
+
+						 </div>
               </div>
 
 
@@ -184,6 +219,15 @@ function remove(obj){
 			}
 
 	});
+}
+$("#input_surat").change(function (){
+
+  var fileName = document.getElementById("doc_surat").value;
+  $("#text-surat").val(fileName);
+    $( "#btn-upload-surat" ).prop( "disabled", false );
+});
+function cleardata(){
+
 }
 
 </script>
