@@ -1,7 +1,7 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form action="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal"; ?>" method="POST" >
-		
+<form action="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/"; ?>" method="POST" >
+
 <div class="form-group">
 	<label for="select-mata-ajar">Mata Ajar :</label>
 	<select data-href="<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/listbab"; ?>"

@@ -139,7 +139,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -328,7 +328,11 @@ $config['cache_query_string'] = FALSE;
 |
 */
 $config['encryption_key'] = 'c1pt4AgEuNg7390';
+//$key = bin2hex($this->encryption->create_key(16));
 
+// Put the same value in your config with hex2bin(),
+// so that it is still passed as binary to the library:
+//$config['encryption_key'] = hex2bin($key);
 /*
 |--------------------------------------------------------------------------
 | Session Variables

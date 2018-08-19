@@ -5,16 +5,7 @@
       <div class="form-group">
         <div class="col-md-12">
         <label for="category">Kode Event :</label>
-        <select name="kodeevent" class="form-control input-sm">
-          <option value="">Pilihan</option>
-          <?php
-            foreach ($event as $key):
-          ?>
-            <option value="<?php echo $key->PK_EVENT.'~'.$key->FK_PROVINSI;?>"><?php echo $key->KODE_EVENT.'-'. $key->NAMA_DIKLAT?></option>
-          <?php
-            endforeach;
-          ?>
-        </select>
+        <input type="text" class="form-control text-primary" id="event" name="event" value="<?php echo $id_event?>" placeholder="Kelas" readonly />
       </div>
     </div>
   </div><br/>

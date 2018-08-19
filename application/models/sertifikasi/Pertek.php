@@ -22,4 +22,13 @@ class Pertek extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function updateData($where,$table,$data){
+		$this->db->where($where);
+		$update=$this->db->update($table,$data);
+		if($update){
+			return 'success';
+		}else{
+			return 'error';
+		}
+	}
 }

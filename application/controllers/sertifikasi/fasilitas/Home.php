@@ -26,50 +26,58 @@ class Home extends CI_Controller {
 			$data['username']=$username;
 
 			$data['validators']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),1);
+				$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),2);
 		//	}
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');
 		}
     }
-    public function loadperpindahan(){
-      	$username = $this->session->userdata('logged_in');
-      	$datas=$this->pengusul->loadValidasi($username,2);
-         $data = array();
-          $a=1;
-  			foreach ($datas as $key) {
-					if($key->RESULT==''){
-						$result='';
-					}elseif($key->RESULT==1){
-						$result='<i class="glyphicon glyphicon-remove"></i> Reject';
-					}else{
-						$result='<i class="glyphicon glyphicon-ok"></i> Accept';
-					}
-          $dataRow = array();
-  				$dataRow[]=$a;
-					$dataRow[]=$key->NO_SURAT;
-  				$dataRow[]=$key->NIP;
-  				$dataRow[]=$key->NAMA;
-  				$dataRow[]=$key->DESC;
-					$dataRow[]=$result;
-  				$url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN;
-					$accept=$key->PK_PENGUSUL_PENGANGKATAN."~0";
-					$reject=$key->PK_PENGUSUL_PENGANGKATAN."~1";
+    public function loadperpindahan($obj){
+			//$unitkerja=$this->session->set_userdata('unit_kerja',$obj);
+			$username = $this->session->userdata('logged_in');
 
-					$dataRow[]='<td><a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-primary">
-							View Doc</a><a class="btn btn-sm btn-success" href="javascript:void(0)" title="accept" onclick="action('."'".$accept."'".')"> Accept</a>
-							<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="reject" onclick="action('."'".$reject."'".')"> Reject</a></td>';
-					$data[]=$dataRow;
-  				$a++;
-  			}
-        $output = array(
-            "draw" => 'dataperpindahan',
-            "recordsTotal" => $a,
-            "recordsFiltered" => $a,
-            "data" => $data,
-        );
-  	 	 //output to json format
-  	 	 echo json_encode($output);
+			$datas=$this->pengusul->loadValidasi($username,2,$obj);
+			 $data = array();
+				$a=1;
+			foreach ($datas as $key) {
+				if($key->RESULT==''){
+					$result='';
+				}elseif($key->RESULT==1){
+					$result='<i class="glyphicon glyphicon-remove"></i> Reject';
+				}else{
+					$result='<i class="glyphicon glyphicon-ok"></i> Accept';
+				}
+				$dataRow = array();
+				$dataRow[]=$a;
+				$dataRow[]=$key->NO_SURAT;
+				$dataRow[]=$key->NIP;
+				$dataRow[]=$key->NAMA;
+				$dataRow[]=$key->DESC;
+				$dataRow[]=$result;
+
+
+				$url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN;
+				$url_angker=base_url('sertifikasi')."/fasilitas/home/vw_show_angker/".$key->PK_PENGUSUL_PENGANGKATAN;
+				$accept=$key->PK_PENGUSUL_PENGANGKATAN."~0";
+				$reject=$key->PK_PENGUSUL_PENGANGKATAN."~1";
+
+				$dataRow[]='<td><a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-primary">
+						View Doc</a><a class="btn btn-sm btn-success" href="javascript:void(0)" title="accept" onclick="action('."'".$accept."'".')"> Accept</a>
+						<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="reject" onclick="action('."'".$reject."'".')"> Reject</a>
+						<a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
+								Input Angka Kredit</a></td>';
+				$data[]=$dataRow;
+				$a++;
+			}
+			$output = array(
+					"draw" => 'dataEvent',
+					"recordsTotal" => $a,
+					"recordsFiltered" => $a,
+					"data" => $data,
+			);
+		 //output to json format
+		 echo json_encode($output);
     }
     public function loadpertama($obj){
 		  	//$unitkerja=$this->session->set_userdata('unit_kerja',$obj);
@@ -91,19 +99,21 @@ class Home extends CI_Controller {
 					$dataRow[]=$key->NO_SURAT;
 				  $dataRow[]=$key->NIP;
           $dataRow[]=$key->NAMA;
+
           $dataRow[]=$key->DESC;
 					$dataRow[]=$result;
+					$dataRow[]=$key->DESC_STATUS;
 
-
+					$disabled=($key->FK_STATUS_DOC=='1'?'disabled':'');
           $url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN;
 					$url_angker=base_url('sertifikasi')."/fasilitas/home/vw_show_angker/".$key->PK_PENGUSUL_PENGANGKATAN;
 					$accept=$key->PK_PENGUSUL_PENGANGKATAN."~0";
 					$reject=$key->PK_PENGUSUL_PENGANGKATAN."~1";
 
-					$dataRow[]='<td><a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-primary">
-							View Doc</a><a class="btn btn-sm btn-success" href="javascript:void(0)" title="accept" onclick="action('."'".$accept."'".')"> Accept</a>
-							<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="reject" onclick="action('."'".$reject."'".')"> Reject</a>
-							<a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
+					$dataRow[]='<td><a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" '.$disabled.' data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-primary">
+							View Doc</a><a class="btn btn-sm btn-success" href="javascript:void(0)" '.$disabled.' title="accept" onclick="action('."'".$accept."'".')"> Accept</a>
+							<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="reject" '.$disabled.' onclick="action('."'".$reject."'".')"> Reject</a>
+							<a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" '.$disabled.' data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
 									Input Angka Kredit</a></td>';
 					$data[]=$dataRow;
   				$a++;
@@ -126,10 +136,33 @@ class Home extends CI_Controller {
 			redirect("sertifikasi/fasilitas");
 		}
 		public function vw_show_doc($param){
-
-
 			$data['data']=$this->doc_pengusul->loaddoc($param);
+			$result=$this->pengusul->loadResultDatabyID($param);
+			if($result!='no data'){
+				$data['result']=$result[0]->RESULT;
+			}else{
+				$data['result']="0";
+			}
+
 			$this->load->view('sertifikasi/fasilitas/content/modal_view_doc',$data);
+		}
+		public function hapusDoc($param){
+			$parameter=explode('~',$param);
+			$this->doc_pengusul->delete_by_id($parameter[0]);
+			$no=$this->doc_pengusul->NumrowDoc($parameter[2],$parameter[1]);
+			$where=array(
+				'PK_PENGUSUL_PENGANGKATAN'=>$parameter[2],
+
+			);
+			$data_update=array(
+				'FK_STATUS_DOC'=>'1'
+			);
+			if($parameter[1]=='1'){
+				if($no<7){
+					 $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
+				}
+			}
+			echo json_encode(array("status" => $no));
 		}
 		public function vw_show_angker($param){
 			// $data['data']=$this->doc_pengusul->loaddoc($param);

@@ -18,6 +18,17 @@ class PengusulPengangkatan extends My_Model
 			return false;
 		}
 	}
+	public function detail_data($nosurat){
+		$this->db->select('*');
+		$this->db->from('pengusulan_pengangkatan');
+		$this->db->where('NO_SURAT',$nosurat);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 	public function save($data) {
 		$insert=$this->db->insert("pengusul_pengangkatan", $data);
 		 if($insert){
@@ -83,8 +94,26 @@ class PengusulPengangkatan extends My_Model
 			return "no data";
 		}
 	}
+	public function total_pengusul($param){
+		$condition = "NO_SURAT=" . "'" . $param . "'";
+		$this->db->select('*');
+		$this->db->from('total_pengusul');
+		$this->db->where($condition);
+		$query = $this->db->get();
+
+			return $query->row();
+	}
+	public function total_pengusul_by_id($param){
+		$condition = "PK_PERTEK=" . "'" . $param . "'";
+		$this->db->select('*');
+		$this->db->from('total_pengusul');
+		$this->db->where($condition);
+		$query = $this->db->get();
+
+			return $query->row();
+	}
 	public function loadValidasi($userAdmin,$doc,$unit){
-		$condition = "pengusul_pengangkatan.CREATED_AT=" . "'" . $unit . "' and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+		$condition = " pengusul_pengangkatan.CREATED_AT=" . "'" . $unit . "' and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
@@ -92,11 +121,25 @@ class PengusulPengangkatan extends My_Model
 		$this->db->where($condition);
 		$query = $this->db->get();
 	//	return $query->result();
-		if ($query->num_rows() > 0) {
+
 			return $query->result();
-		} else {
-			return "no data";
-		}
+
+	}
+
+	public function loadResultDatabyID($id){
+		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=2 and pengusul_pengangkatan.PK_PENGUSUL_PENGANGKATAN=" . "'" . $id . "' group by pengusul_pengangkatan.NIP";
+		$this->db->select('RESULT');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+	//	return $query->result();
+	if ($query->num_rows() > 0) {
+		return $query->result();
+	} else {
+		return "no data";
+	}
+
+
 	}
 	public function loadData(){
 		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' group by pengusul_pengangkatan.CREATED_AT";

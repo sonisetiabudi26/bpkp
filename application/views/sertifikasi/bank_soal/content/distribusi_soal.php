@@ -1,4 +1,4 @@
-<div class="col-md-12" id="response-text" ></div>
+<div class="col-md-12" id="response_table" ></div>
 <div class="col-md-12">
 <div class="row">
 	<div class="col-lg-12">
@@ -7,41 +7,43 @@
 </div>
 <div class="clearfix"></div>
 
-<form onsubmit="procesFormUjian(this, 'response_table')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/build_ujian"; ?>" method="POST" id="listDistribusiUjianForm" >
+<form action="" method="POST" id="listDistribusiUjianForm" >
+	<div class="form-group">
+		<label for="mata_ajar">Kode Soal :</label>
+		<input value='<?php echo $id_kode_soal?>' style="display:none" name='id_kode_soal'>
+		<input type="text" class="form-control text-primary" value="<?php echo $kode_soal?>" id="kode_soal" name="kode_soal" placeholder="kode_soal" required readonly />
+	</div>
 	<div class="form-group">
 		<label for="mata_ajar">Mata Ajar :</label>
-		<select data-show-obj="bab" data-show-key="PK_BAB_MATA_AJAR" data-show-value="NAMA_BAB_MATA_AJAR" onChange="getAnotherSelectOption(this, 'select-list-bab-soal', 'content-list-bab-soal')" data-href="<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/listbab"; ?>" 
-									name="fk_mata_ajar" id="select-mata-ajar-soal" class="form-control input-sm">
-		<option>Pilihan</option>
-		<?php
-			foreach ($mata_ajar as $mataajars):
-		?>
-		<option value="<?php echo $mataajars->PK_MATA_AJAR;?>"><?php echo $mataajars->NAMA_MATA_AJAR;?>(<?php echo $mataajars->DESCR;?>)</option>
-		<?php
-			endforeach;
-		?>
-		</select>
-	</div>				
-	<div class="form-group" id="content-list-bab-soal" style="display:none;">
-		<label for="select-list-bab-soal">List BAB :</label>
-		<select onChange="submitWithSelectOption(this, 'listDistribusiUjianForm', 'response_table')" name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
+		<input type="text" class="form-control text-primary" id="mata_ajar"  value="<?php echo $mata_ajar?>" name="mata_ajar" placeholder="Mata ajar" required readonly />
+	</div>
+	<div class="form-group" id="content-list-bab-soal">
+		<label for="select-list-bab-soal">List BAB yang memiliki soal ujian:</label>
+		<select  name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
 			<option>Pilihan</option>
+			<?php
+				foreach ($bab_mata_ajar as $key):
+			?>
+			<option value="<?php echo $key->PK_BAB_MATA_AJAR.'~'.intval($key->jml_soal - $num);?>"><?php echo $key->NAMA_BAB_MATA_AJAR.' ( jumlah soal '.intval($key->jml_soal - $num).')';?></option>
+			<?php
+				endforeach;
+			?>
 		</select>
 	</div>
 	<div class="form-group">
 			<label for="jumlah_soal">Jumlah Soal Ujian:</label>
-			<input type="number" class="form-control text-primary" id="jumlah_soal" name="jumlah_soal" placeholder="jumlah soal" required disabled />
+			<input type="number" class="form-control text-primary" id="jumlah_soal" name="jumlah_soal" placeholder="jumlah soal" required  />
 		</div>
 	<div class="row">
 		<div class="col-lg-12">
-			<input id="btn-save-ujian" type="submit" value="Buat Soal Ujian" class="btn btn-primary" disabled />
+			<input id="btn-save-ujian" type="submit" value="Buat Soal Ujian" class="btn btn-primary"  />
 		</div>
 	</div>
 	<div class="row">
 		&nbsp;
 	</div>
 </form>
-<div class="row">
+<!-- <div class="row">
 		<div class="col-lg-12">
 			<b><h4 class="text-primary" id="response-random">List Soal</h4></b>
 			<hr>
@@ -51,8 +53,8 @@
 			<button id="btn-save-ujian" class="btn btn-primary" disabled >Export to PDF</button>
 		</div>
 		<br>
-	</div>
-<div id="response_table">
+	</div> -->
+<!-- <div id="response_table">
 <table id="datatable-responsive" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
 	<thead style="color:#111;">
 		<tr>
@@ -65,40 +67,44 @@
 		</tr>
 	</thead>
 </table>
-</div>
-<script>	
-	$('#select-list-bab-soal').change(function(){
-		var fk_bab_mata_ajar = $(this).val();
-		if(fk_bab_mata_ajar==='Pilihan'){
-			$("input").prop("disabled", true);
-			$("#select-list-user").prop("disabled", true);
-		}else{
-			$('input').removeAttr('disabled');
-			$("#select-list-user").removeAttr('disabled');
-		}
-	});
-	
+</div> -->
+<script>
+
+	// $('#select-list-bab-soal').change(function(){
+	// 	var fk_bab_mata_ajar = $(this).val();
+	// 	if(fk_bab_mata_ajar==='Pilihan'){
+	// 		$("input").prop("disabled", true);
+	// 		$("#select-list-user").prop("disabled", true);
+	// 	}else{
+	// 		$('input').removeAttr('disabled');
+	// 		$("#select-list-user").removeAttr('disabled');
+	// 	}
+	// });
+	//
 	/** format parsing : this select, content id for show response */
-function procesFormUjian(formTarget, responseContent){
-	$(document).on('submit', '#'+formTarget.id, function(e) {
+	$(function () {
+  $('form').on('submit', function (e) {
 		e.preventDefault();
-		var data = new FormData(document.getElementById(formTarget.id));
+		data = new FormData(document.getElementById('listDistribusiUjianForm'));
 		$.ajax({
 			data : data,
-			type : $(this).attr('method'),
-			url : $(this).attr('action'),
+			type : 'POST',
+			url : "<?php echo base_url('sertifikasi')."/bank_soal/soal/build_ujian"; ?>",
 			async: false,
 			processData: false,
 			contentType: false,
 			cache:false,
+			dataType:"json",
 			timeout: 600000,
-			success : function(response) {
-				$('#response-random').html('List Soal Ujian (Random)');
-				$('#' + responseContent).show();
-				$('#' + responseContent).html(response);
+			success : function(data) {
+				if(data.msg=='success'){
+	       	swal("Success", "Data Inserted Successfully!", "success");
+				}else if(data.msg=='error'){
+	        swal("Failed!", "Data Inserted Failed!", "error");
+				}
+				$("#listDistribusiUjianForm")[0].reset();
 			}
 		});
-	return false;
 	});
-}
+});
 </script>

@@ -4,15 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Soal extends CI_Controller {
 
 	private $filename = "soal";
-	
+
 	public function __construct(){
         parent::__construct();
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
-    	$this->load->model('sertifikasi/soalujian','soalujian');
-		$this->load->model('sertifikasi/permintaansoal','permintaansoal');
+    		$this->load->model('sertifikasi/soalujian','soalujian');
+				$this->load->model('sertifikasi/permintaansoal','permintaansoal');
+				$this->load->model('sertifikasi/soaldistribusi','soal_distribusi');
     }
-	
+
+
 	public function insert_soal(){
 		if($this->input->post('parent_soal')==0){
 			$parent_soal=NULL;
@@ -44,7 +46,7 @@ class Soal extends CI_Controller {
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
     }
-	
+
 	public function update_soal(){
 		if($this->input->post('parent_soal')==0){
 			$parent_soal=NULL;
@@ -65,14 +67,14 @@ class Soal extends CI_Controller {
 		$where = array(
 			'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
 		);
-		
+
 		if($this->soalujian->_update($where, $data)){
 			print json_encode(array("status"=>"success", "data"=>"success"));
 		}else{
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
 	}
-	
+
 	public function hapus_soal(){
 		if($this->soalujian->_delete_by_id($this->input->post('pk_soal_ujian'))){
 			print json_encode(array("status"=>"success", "data"=>"success"));
@@ -80,7 +82,7 @@ class Soal extends CI_Controller {
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
 	}
-	
+
 	public function upload_soal(){
 		$upload = $this->do_upload($this->input->post('fk_bab_mata_ajar'));
 		$data = array('FK_BAB_MATA_AJAR' => $this->input->post('fk_bab_mata_ajar'));
@@ -95,7 +97,7 @@ class Soal extends CI_Controller {
 		}
 		print json_encode(array("status"=>$upload['result'], "data"=>$data));
 	}
-	
+
 	public function do_upload($fk_bab_mata_ajar){
 		$config['upload_path']          = './uploads/';
 		$config['allowed_types']        = 'xlsx';
@@ -113,7 +115,7 @@ class Soal extends CI_Controller {
 			}
 		}
 	}
-	
+
 	public function import($sheet, $data){
 		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
 		$datasheet = [];
@@ -121,15 +123,15 @@ class Soal extends CI_Controller {
 		foreach($sheet as $row){
 			if($numrow > 1){
 				array_push($datasheet, [
-				'PERTANYAAN'=>$row['A'], 
-				'PILIHAN_1'=>$row['B'], 
-				'PILIHAN_2'=>$row['C'], 
-				'PILIHAN_3'=>$row['D'], 
+				'PERTANYAAN'=>$row['A'],
+				'PILIHAN_1'=>$row['B'],
+				'PILIHAN_2'=>$row['C'],
+				'PILIHAN_3'=>$row['D'],
 				'PILIHAN_4'=>$row['E'],
 				'PILIHAN_5'=>$row['F'],
 				'PILIHAN_6'=>$row['G'],
 				'PILIHAN_7'=>$row['H'],
-				'PILIHAN_8'=>$row['I'],				
+				'PILIHAN_8'=>$row['I'],
 				'JAWABAN'=>$row['J'],
 				'PARENT_SOAL'=>NULL,
 				'FK_BAB_MATA_AJAR'=>$data['FK_BAB_MATA_AJAR']
@@ -144,33 +146,42 @@ class Soal extends CI_Controller {
 			return array('datasheet' => $datasheet, 'file' => '', 'response' => "error");
 		}
 	}
-	
+
 	function build_ujian(){
-		$fk_bab_mata_ajar = $this->input->post('fk_bab_mata_ajar');
+		$datex=date('Y-m-d');
+		$param = explode('~',$this->input->post('fk_bab_mata_ajar'));
+		$bab_mata_ajar=$param[0];
+		$jml_soal=$param[1];
 		$jumlah_soal = $this->input->post('jumlah_soal');
-		if(!empty($jumlah_soal)){
-			$data_update = array(
-				'TAMPIL_UJIAN' => 0
-			);
-			$where = array(
-				'fk_bab_mata_ajar' => $this->input->post('fk_bab_mata_ajar')
-			);
-			if($this->soalujian->update_all_for_not_ready_ujian($where, $data_update)){
-				$data['soal'] = $this->soalujian->get_random_soal($fk_bab_mata_ajar, $jumlah_soal);
-				foreach($data['soal'] as $row){
-					$data_randow_row = array(
-						'TAMPIL_UJIAN' => 1
-					);
-					$where = array(
-						'pk_soal_ujian' => $row->PK_SOAL_UJIAN
-					);
-					$this->soalujian->update_all_for_ready_ujian($where, $data_randow_row);
-				}
-				$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
-			}
+		$kode_soal = $this->input->post('kode_soal');
+		$id_kode_soal = $this->input->post('id_kode_soal');
+		$mata_ajar = $this->input->post('mata_ajar');
+		$datasheet1 = [];
+		if(empty($jumlah_soal)){
+				$output= array('msg' => "error");
 		}else{
-			$data['soal'] = $this->soalujian->_get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar);
-			$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
+			if($jml_soal>=$jumlah_soal){
+				$data['soal'] = $this->soalujian->get_random_soal($bab_mata_ajar, $jumlah_soal);
+					foreach($data['soal'] as $row){
+					//	$indexbatch=$indexbatch+1;
+						array_push($datasheet1, [
+							'FK_KODE_SOAL'=>$id_kode_soal,
+							'FK_SOAL_UJIAN'=>$row->PK_SOAL_UJIAN,
+							'CREATED_AT'=>$this->session->userdata('logged_in'),
+							'CREATED_DATE'=>$datex
+						]);
+					}
+					$upload=$this->soal_distribusi->insert_multiple($datasheet1);
+						if($upload=='success'){
+								$output= array('msg' => "success");
+							}else{
+								$output= array('msg' => "error");
+							}
+			}else{
+				$output= array('msg' => "error");
+			}
+
 		}
+			print json_encode($output);
 	}
 }

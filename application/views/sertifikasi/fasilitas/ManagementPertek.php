@@ -28,6 +28,7 @@
 								<td>Doc Pertek</td>
                 <td>Doc Angka Kredit</td>
                 <td>No Resi</td>
+                <td>Jumlah Peserta</td>
                 <td>Action</td>
 							</tr>
 							</thead>
@@ -67,6 +68,7 @@
                           {"data": "3",width:100},
         									{"data": "4",width:100},
                           {"data": "5",width:100},
+                          {"data": "6",width:100},
 
                       ],
 

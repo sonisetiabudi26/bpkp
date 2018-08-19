@@ -8,7 +8,7 @@ class Login extends CI_Controller{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->library('session');
-		$this->load->library('encrypt');
+		$this->load->library('encryption');
 		$this->load->model('sertifikasi/users','users');
 		$this->load->model('sertifikasi/lookup','lookup');
 		$this->load->model('sertifikasi/menupage','menupage');
@@ -24,6 +24,10 @@ class Login extends CI_Controller{
 			$this->processLogin();
 		}
 	}
+	public function createpass(){
+		 $pass=$this->encryption->encrypt('cipta12345');
+		//echo $password_decrypt = $this->encryption->decrypt('6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=');
+	}
 
 	private function process($username,$password)
 	{
@@ -32,7 +36,9 @@ class Login extends CI_Controller{
 
 		$result = $this->users->_get_user_information($username);
 		if(!empty($result)){
-			$password_decrypt = $this->encrypt->decode($result[0]->USER_PASSWORD);
+			  //$password = $this->input->post('password');
+				//$pass=$this->encryption->encrypt($password);
+			  $password_decrypt = $this->encryption->decrypt($result[0]->USER_PASSWORD);
 			if($password == $password_decrypt){
 				$session_data = array(
 					'username' => $result[0]->USER_NAME
@@ -51,6 +57,7 @@ class Login extends CI_Controller{
 				// 	redirectLogin(ERROR_LOGIN_PAGE_USERNAME);
 				// }
 			}else{
+				//echo $password_decrypt;
 				redirectLogin(ERROR_LOGIN_PAGE_PASS);
 			}
 		}else{

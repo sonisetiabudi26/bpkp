@@ -44,7 +44,7 @@
 												</div>
 										</div>
 										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
-											<button class="btn btn-primary btn-block" onclick="search();">Cari</button>
+											<button class="btn btn-primary btn-block" onclick="search(1);">Cari</button>
 										</div>
 									</div>
 									<hr>
@@ -62,6 +62,7 @@
 													<td>Nama</td>
 													<td>Status Pengusulan Pengangkatan</td>
 													<td>Status</td>
+													<td>Status Doc</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -82,6 +83,34 @@
 							<div class="x_panel">
 
 								<div class="x_content">
+									<div class="row">
+										<label>Pilih Unit Kerja</label>
+									</div>
+									<div class="row">
+										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding:0;margin:0">
+											<div>
+													<select class="form-control" name='validator_perpindahan' id='validatorion_perpindahan'>
+
+														<?php
+															foreach ($validators_perpindahan as $key):
+														?>
+														<option value="<?php echo $key->CREATED_AT?>">
+															<?php echo $key->UNITKERJA;?>
+														</option>
+														<?php
+															endforeach;
+														?>
+													</select>
+												</div>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
+											<button class="btn btn-primary btn-block" onclick="search(2);">Cari</button>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<h4>Data List Pengusulan Pengangkatan <label id='titletabel_perpindahan'></label></h4>
+									</div>
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 					            <table id="dataUserPerpindahan" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -168,15 +197,21 @@
 	</div>
 </div>
 <script>
-function search(){
-var	validator=$("#validatorion :selected").val();
-var	msgvalidator=$("#validatorion :selected").text();
-// alert(validator);
-document.getElementById("titletabel").innerHTML=msgvalidator;
+function search(obj){
+if(obj==1){
+	var	validator=$("#validatorion :selected").val();
+	var	msgvalidator=$("#validatorion :selected").text();
+	document.getElementById("titletabel").innerHTML=msgvalidator;
 	dataPertama(validator);
+}else{
+	var	validator=$("#validatorion_perpindahan :selected").val();
+	var	msgvalidator=$("#validatorion_perpindahan :selected").text();
+	document.getElementById("titletabel_perpindahan").innerHTML=msgvalidator;
+	loadDataperpindahan(validator);
+}
 }
 $(document).ready(function(){
-	search();
+	search(1);
 });
   //document.getElementById("datatable-responsive").innerHTML='';
 function dataPertama(obj){
@@ -200,6 +235,7 @@ var table;
 									{"data": "4",width:100},
                   {"data": "5",width:100},
 									{"data": "6",width:100},
+									{"data": "7",width:100},
               ],
 
           });
@@ -207,7 +243,7 @@ var table;
 
 //});
 
-function loadDataperpindahan(){
+function loadDataperpindahan(obj){
   var table;
         table = $('#dataUserPerpindahan').DataTable({
                 "processing": false, //Feature control the processing indicator.
@@ -216,7 +252,7 @@ function loadDataperpindahan(){
                 "order": [], //Initial no order.
                 // Load data for the table's content from an Ajax source
                 "ajax": {
-                    "url": '<?php echo base_url('sertifikasi/fasilitas/Home/loadperpindahan/')?>',
+                    "url": '<?php echo base_url('sertifikasi/fasilitas/Home/loadperpindahan/')?>'+obj,
                     "type": "POST"
                 },
                 //Set column definition initialisation properties.

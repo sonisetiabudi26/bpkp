@@ -60,7 +60,7 @@ public function index_post(){
         }
   }else{
     $status=200;
-    $message='get_data_success';
+    $message='get_data_empty';
     $data_list_angker='';
   }
 
@@ -71,7 +71,7 @@ public function index_post(){
 }
 
 public function apiuser($param){
-    $url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
+    $url="http://163.53.185.91:8083/sibijak/dca/dcaapi/api/fasilitasi?Auditor_NIP=".$param;
     $check=file_get_contents($url);
     $jsonResult=json_decode($check);
     return $jsonResult;

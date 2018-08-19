@@ -34,8 +34,6 @@
 													<td>Action</td>
 												</tr>
 												</thead>
-												<tbody>
-												</tbody>
 												</table>
 										</div>
 
@@ -50,7 +48,7 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<!-- <div class="form-group"> -->
-									<button class="btn btn-primary" id="btn-add-batch" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch"; ?>"   data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+									<!-- <button class="btn btn-primary" id="btn-add-batch" onclick="getModal(this)" data-href="<?php //echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch"; ?>"   data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button> -->
 									<!-- <button class="btn btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="<?php //echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/"?>" data-toggle="modal" data-target="#modal-content" style="float:right;"><i class="glyphicon glyphicon-import"></i> Import Data</button> -->
 							<!-- </div><br/> -->
 								<div class="x_content">
@@ -121,23 +119,19 @@
 $(document).ready(function(){
 var table;
 			table = $('#dataEventAll').DataTable({
-              "processing": false, //Feature control the processing indicator.
-							 "destroy": true,
-              "serverSide": true, //Feature control DataTables' server-side processing mode.
-              "order": [], //Initial no order.
-              // Load data for the table's content from an Ajax source
-              "ajax": {
-                  "url": '<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/LoadDateEvent/')?>',
-                  "type": "POST"
-              },
+            	'ajax': {
+			          "type"   : "POST",
+			          "url"    : '<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/LoadDateEvent/')?>',
+			          "dataSrc": ""
+			        },
               //Set column definition initialisation properties.
               "columns": [
-                  {"data": "0",width:50},
-                  {"data": "1",width:100},
-                  {"data": "2",width:100},
-                  {"data": "3",width:100},
-									{"data": "4",width:100},
-									{"data": "5",width:100}
+                  {"data": "no"},
+                  {"data": "kodeevent"},
+                  {"data": "namadiklat"},
+                  {"data": "uraian"},
+									{"data": "nama"},
+									{"data": "action"}
               ],
 
           });
@@ -155,7 +149,7 @@ function calculate(kode_event,kelas){
 			},
 			error: function (jqXHR, textStatus, errorThrown)
 			{
-					alert('Error deleting data');
+					alert('Error calculate data');
 			}
 	});
 }

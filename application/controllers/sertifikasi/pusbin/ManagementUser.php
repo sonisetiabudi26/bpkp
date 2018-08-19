@@ -10,7 +10,7 @@ class ManagementUser extends CI_Controller {
     		$this->load->helper('url');
     		$this->load->model('sertifikasi/menupage','menupage');
 				$this->load->model('sertifikasi/users','user');
-				$this->load->library('encrypt');
+				$this->load->library('encryption');
     }
 
     public function index()
@@ -152,7 +152,7 @@ class ManagementUser extends CI_Controller {
 			$date = date('Ymd');
 			$datex=date('Y-m-d');
 			$username=$this->input->post('username');
-			$password=$this->encrypt->encode($this->input->post('password'));
+			$password=$this->encryption->decrypt($this->input->post('password'));
 			$fk_lookup_role=$this->input->post('role');
 			// if($username!=''){
 						$data = array(

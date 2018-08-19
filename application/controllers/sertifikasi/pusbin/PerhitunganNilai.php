@@ -39,8 +39,8 @@ class PerhitunganNilai extends CI_Controller {
 			$data['kodediklat']	= $this->groupmataajar->_get_all_group_mata_ajar();
 			$this->load->view('sertifikasi/pusbin/content/add_event',$data);
 		}
-    public function vv_add_batch(){
-      $data['event']	= $this->event->loadEvent();
+    public function vv_add_batch($param){
+      $data['id_event']	= $param;
       $data['jadwal']	= $this->jadwal->loadJadwal();
       $this->load->view('sertifikasi/pusbin/content/add_batch',$data);
     }
@@ -92,9 +92,8 @@ class PerhitunganNilai extends CI_Controller {
 
              $date = date('Ymd');
              $datex=date('Y-m-d');
-             $kodeALL=explode('~',$this->input->post('kodeevent'));
-             $kodeevent=$kodeALL[0];
-             $provinsi=$kodeALL[1];
+            // $kodeALL=explode('~',$this->input->post('kodeevent'));
+             $kodeevent=$this->input->post('event');
              $reff=$this->input->post('reff');
              $kelas=$this->input->post('kelas');
              $jadwal=$this->input->post('jadwal');
@@ -103,7 +102,6 @@ class PerhitunganNilai extends CI_Controller {
                    $data = array(
                     'FK_KODE_EVENT' => $kodeevent,
                     'KELAS' => $kelas,
-                    'FK_PROVINSI' => $provinsi,
                     'FK_JADWAL' => $jadwal,
                     'REFF' => $reff,
                     'CREATED_AT' => $this->session->userdata('logged_in'),
@@ -111,14 +109,21 @@ class PerhitunganNilai extends CI_Controller {
                   );
                   $insert=$this->batch->save($data);
                   if($insert=='Data Inserted Successfully'){
-                    print json_encode(array("status"=>"success", "data"=>$insert));
+										 $data = array(
+																	 "status" => "success",
+													 );
                   }else{
-                    print json_encode(array("status"=>"error", "data"=>$insert));
+										 $data = array(
+																	 "status" => "error",
+													 );
                   }
                  // echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
              }else{
-               echo json_encode(array("status"=>'gagal'));
+							  $data = array(
+															"status" => "nodata",
+											);
              }
+						 echo json_encode($data);
     }
 
     public function LoadDateEvent(){
@@ -129,26 +134,28 @@ class PerhitunganNilai extends CI_Controller {
 
          foreach ($dataAll as $field) {
              $row = array();
-             $row[] = $a;
-             $row[] = $field->KODE_EVENT;
-             $row[] = $field->NAMA_DIKLAT;
-             $row[] = $field->URAIAN;
-             $row[] = $field->Nama;
-             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+             $row['no'] = $a;
+             $row['kodeevent'] = $field->KODE_EVENT;
+             $row['namadiklat'] = $field->NAMA_DIKLAT;
+             $row['uraian'] = $field->URAIAN;
+             $row['nama'] = $field->Nama;
+						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT;
+             $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Create Batch</a></td>';
 
              $data[] = $row;
              $a++;
          }
 
 
-       $output = array(
-           "draw" => 'dataEvent',
-           "recordsTotal" => $a,
-           "recordsFiltered" => $a,
-           "data" => $data,
-       );
+       // $output = array(
+       //     "draw" => 'dataEvent',
+       //     "recordsTotal" => $a,
+       //     "recordsFiltered" => $a,
+       //     "data" => $data,
+       // );
        //output dalam format JSON
-       echo json_encode($output);
+       echo json_encode($data);
       //echo json_encode($dataAll);
     }
     public function vw_upload_doc($id_batch){
@@ -418,7 +425,7 @@ class PerhitunganNilai extends CI_Controller {
   	}
 
 
-		
+
   	public function import($sheet,$dataAll){
       $date = date('Ymd');
       $datex=date('Y-m-d');

@@ -15,6 +15,10 @@ class DocPengusulanPengangkatan extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function delete_by_id($id){
+		$this->db->where($this->primary_key, $id);
+		$this->db->delete($this->_table);
+	}
 	public function updateData($where,$table,$data){
 		$this->db->where($where);
 		$this->db->update($table,$data);
@@ -32,6 +36,19 @@ class DocPengusulanPengangkatan extends My_Model
 			return "no data";
 		}
 	}
+	public function NumrowDoc($id,$desc){
+		$condition = "FK_PENGUSUL_PENGANGKATAN =" . "'" . $id . "' AND " . "CATEGORY_DOC =" . "'" . $desc . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->num_rows();
+		} else {
+			return "0";
+		}
+	}
+
 	public function loaddocbypk($param){
 		$condition = " pk_doc_pengusulan_pengangkatan =" . "'" . $param . "'";
 		$this->db->select('*');

@@ -31,7 +31,7 @@
 													<td>NO</td>
 													<td>Username</td>
 													<td>Login As</td>
-													<td>Password</td>
+
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -61,7 +61,7 @@
 													<td>NO</td>
 													<td>Username</td>
 													<td>Login As</td>
-													<td>Password</td>
+
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -91,7 +91,7 @@
 													<td>NO</td>
 													<td>Username</td>
 													<td>Login As</td>
-													<td>Password</td>
+
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -121,7 +121,7 @@
 													<td>NO</td>
 													<td>Username</td>
 													<td>Login As</td>
-													<td>Password</td>
+
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -156,7 +156,7 @@ var table;
                   {"data": "0",width:50},
                   {"data": "1",width:100},
                   {"data": "2",width:100},
-                  {"data": "3",width:100},
+
 									{"data": "4",width:100}
               ],
 
@@ -180,7 +180,7 @@ function loadDataUserDiklat(){
 	                  {"data": "0",width:50},
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
-	                  {"data": "3",width:100},
+
 										{"data": "4",width:100}
 	              ],
 
@@ -203,7 +203,7 @@ function loadDataUserWidya(){
 	                  {"data": "0",width:50},
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
-	                  {"data": "3",width:100},
+
 										{"data": "4",width:100}
 	              ],
 
@@ -226,7 +226,7 @@ function loadDataUserFP(){
 	                  {"data": "0",width:50},
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
-	                  {"data": "3",width:100},
+	                 
 										{"data": "4",width:100}
 	              ],
 

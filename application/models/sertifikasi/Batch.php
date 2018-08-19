@@ -16,11 +16,11 @@ class Batch extends My_Model
 		 }
 	}
   public function loadBatch(){
-    $this->db->select('batch.*,provinsi.Nama,jadwal_ujian.*,event.KODE_EVENT');
+    $this->db->select('batch.*,provinsi.Nama,jadwal_ujian.*,event.KODE_EVENT,event.FK_PROVINSI');
     $this->db->from($this->_table);
-    $this->db->join('provinsi', 'batch.FK_PROVINSI = provinsi.PK_PROVINSI');
     $this->db->join('jadwal_ujian', 'batch.FK_JADWAL = jadwal_ujian.PK_JADWAL_UJIAN');
     $this->db->join('event', 'batch.FK_KODE_EVENT = event.PK_EVENT');
+		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
     $query = $this->db->get();
   //	return $query->result();
       return $query->result();
