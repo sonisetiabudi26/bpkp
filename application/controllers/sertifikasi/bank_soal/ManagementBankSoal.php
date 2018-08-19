@@ -15,6 +15,7 @@ class ManagementBankSoal extends CI_Controller {
 		$this->load->model('sertifikasi/lookup','lookup');
 		$this->load->model('sertifikasi/kodesoal','kodesoal');
 		$this->load->model('sertifikasi/babmataajar','babmataajar');
+			$this->load->model('sertifikasi/soaldistribusi','soaldistribusi');
     }
 
     public function index(){
@@ -169,7 +170,7 @@ class ManagementBankSoal extends CI_Controller {
 							 $num=0;
 							 $num_kebutuhan_soal=0;
 						 }
-						 $disable=($num==$num_kebutuhan_soal ?'disabled':'');
+						 $disable=($num==$num_kebutuhan_soal ?'style="display:none"':'');
 						 $row[] = $num.'/'.$field->KEBUTUHAN_SOAL;
 						 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
 
@@ -294,6 +295,8 @@ class ManagementBankSoal extends CI_Controller {
 			$param=explode('~',$id);
 			if($param[1]=='kodesoal'){
 				$this->kodesoal->delete_by_id($param[0]);
+				$this->soaldistribusi->delete_by_id($param[0]);
+
 			}else if($param[1]=='babmataajar'){
 					$this->babmataajar->delete_by_id($param[0]);
 			}

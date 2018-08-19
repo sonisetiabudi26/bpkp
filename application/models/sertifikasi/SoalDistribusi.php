@@ -24,4 +24,8 @@ class SoalDistribusi extends My_Model
 	    $query = $this->db->get_where($this->_table, array('FK_BAB_MATA_AJAR' => $fk_bab_mata_ajar));
 	    return $query->result();
 	}
+	public function delete_by_id($id){
+		$this->db->where('FK_KODE_SOAL', $id);
+		$this->db->delete($this->_table);
+	}
 }

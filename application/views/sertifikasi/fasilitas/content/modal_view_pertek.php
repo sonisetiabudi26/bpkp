@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text-pertek_doc" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text-pertek_doc')" action="<?php echo base_url('sertifikasi')."/fasilitas/ManagementPertek/create_pertek"; ?>" method="POST" id="angka_kredit" >
+<form  action="" method="POST" id="pertek" >
   <input value='<?php echo $id_pertek?>' name='id_pertek' style="display:none;"/>
     <input value='<?php echo $data_doc?>' name='doc' style="display:none;"/>
 		<div class="form-group">
@@ -63,5 +63,29 @@
 </form>
 </div>
 <script>
-
+$(function () {
+$('form').on('submit', function (e) {
+  e.preventDefault();
+  data = new FormData(document.getElementById('pertek'));
+  $.ajax({
+    data : data,
+    type : 'POST',
+    url : "<?php echo base_url('sertifikasi')."/fasilitas/ManagementPertek/create_pertek"; ?>",
+    async: false,
+    processData: false,
+    contentType: false,
+    cache:false,
+    dataType:"json",
+    timeout: 600000,
+    success : function(data) {
+      if(data.msg=='success'){
+        swal("Success", "Data Inserted Successfully!", "success");
+      }else if(data.msg=='error'){
+        swal("Failed!", "Data Inserted Failed!", "error");
+      }
+      $("#pertek")[0].reset();
+    }
+  });
+});
+});
 </script>

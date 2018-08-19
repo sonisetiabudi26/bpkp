@@ -14,6 +14,15 @@ class Pertek extends My_Model
 	   return $query->result();
 
 	}
+	public function getdatabyid($id){
+
+    $this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where('PK_PERTEK',$id);
+		$query = $this->db->get();
+	   return $query->result();
+
+	}
 	public function save($data) {
 		$insert=$this->db->insert($this->_table, $data);
 		 if($insert){

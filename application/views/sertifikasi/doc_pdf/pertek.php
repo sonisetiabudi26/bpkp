@@ -1,11 +1,11 @@
 <?php
-$unitapip='Inspektur Kabupaten Aceh Barat';
-$nomor_surat='700/233/INSP/2017';
-$date='16 Oktober 2017';
-$status_pengusulan='Penyesuaian/inpassing';
-$user='Ardan Adiperdana';
-$nip='1959061619791001';
-$nopertek='123/asd/2019';
+// $unitapip='Inspektur Kabupaten Aceh Barat';
+// $nomor_surat='700/233/INSP/2017';
+// $date='16 Oktober 2017';
+// $status_pengusulan='Penyesuaian/inpassing';
+// $user='Ardan Adiperdana';
+// $nip='1959061619791001';
+// $nopertek='123/asd/2019';
  ?>
 <style>
 .left{
@@ -60,10 +60,24 @@ $nopertek='123/asd/2019';
   </div><br/><br/>
   <div class="row">
     <div class="full-width">
-      <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dengan Surat <?php echo $unitapip ?> Nomor <?php echo $nomor_surat ?> tanggal <?php echo $date ?>
+      <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dengan Surat <?php echo $unitapip ?> Nomor <?php echo $nosurat ?> tanggal <?php echo $datex ?>
        perihal Usulan Pengangkatan PNS dalam Jabatan Fungsional Auditor melalui <?php echo $status_pengusulan ?>, dan setelah
      dilakukan penelitian kelengkapan berkas persyaratan yang diterima, dapat disampaikan sebagai berikut: </p>
-     <p></p>
+     <table style="width:100%;border:none">
+       <tr>
+         <td>Jumlah yang diusulkan untuk diangkat dalam JFA</td>
+         <td>3 orang</td>
+      </tr>
+      <tr>
+        <td>Jumlah yang memenuhi syarat dan disetujui</td>
+        <td>3 orang</td>
+     </tr>
+     <tr>
+       <td>Jumlah yang Belum memenuhi persyarat</td>
+       <td>3 orang</td>
+    </tr>
+
+     </table>
      <p align='justify'>Rician lebih lanjut Pegawai Negeri Sipil yang memenuhi syarat dan disetujui untuk diangkat dalam JFA di lingkungan
      <?php echo $unitapip ?> dapat dilihat pada Lampiran Surat ini. Dua orang PNS belum disetujui atas nama Mudassir dan Elisma karena belum lulus
    uji kompetensi.</p>
@@ -83,15 +97,15 @@ $nopertek='123/asd/2019';
   <br/><br/><br/><br/><br/>
   <div class="row">
     <div style="width:30%;float:right">
-      <label><?php echo $user ?></label><br/>
-      <label><?php echo $nip ?></label>
+      <label><?php echo '' ?></label><br/>
+      <label><?php echo $kepala ?></label>
     </div>
   </div><br/><br/>
   <div class="row">
     <div style="width:100%;float:left">
       <label>Tembusan :</label><br/>
-      <label>1. <?php echo $user ?></label><br/>
-      <label>2. <?php echo $user ?></label><br/>
+      <label>1. </label><br/>
+      <label>2. </label><br/>
     </div>
   </div>
 </div>
