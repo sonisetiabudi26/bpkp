@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2018 at 04:16 PM
+-- Generation Time: Aug 19, 2018 at 06:33 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -90,7 +90,8 @@ CREATE TABLE `bab_mata_ajar` (
 INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_AJAR`) VALUES
 (9, 5, 'Dasar Auditor'),
 (10, 5, 'asd'),
-(12, 5, 'tester');
+(12, 5, 'tester'),
+(13, 5, 'tester');
 
 -- --------------------------------------------------------
 
@@ -434,8 +435,7 @@ CREATE TABLE `kode_soal` (
 --
 
 INSERT INTO `kode_soal` (`PK_KODE_SOAL`, `KODE_SOAL`, `FK_MATA_AJAR`, `KEBUTUHAN_SOAL`, `PUBLISH`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(1, 'c45t', '5', 30, 1, 'admin_bank', '2018-08-18 00:00:00'),
-(3, 'asc', '5', 12, 0, 'admin_bank', '2018-08-18 00:00:00');
+(1, 'c45t', '5', 30, 1, 'admin_bank', '2018-08-18 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -759,7 +759,7 @@ CREATE TABLE `pertek` (
 --
 
 INSERT INTO `pertek` (`PK_PERTEK`, `NO_SURAT`, `DOC_ANGKA_KREDIT`, `NO_PERTEK`, `DOC_PERTEK`, `PERTEK_DATE`, `NO_RESI`, `YTH`, `TEMPAT`, `KEPALA`, `TEMBUSAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(2, '12/JFA/2001', '', '2', 'http://localhost/bpkp/uploads/doc_pertek/pertek_12JFA2001.pdf', '2018-08-17', '', '', '', '', '', '1110', '2018-08-17 00:00:00');
+(2, '12/JFA/2001', '', '12333', 'http://localhost/bpkp/uploads/doc_pertek/pertek_12JFA2001.pdf', '2018-08-19', '', 'Soni Setiabudi', 'Jakarta', 'Kepala BPKP', 'asd', '1110', '2018-08-19 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1241,7 +1241,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `total_soal_distribusi`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total_soal_distribusi`  AS  select `kode_soal`.`KODE_SOAL` AS `KODE_SOAL`,`kode_soal`.`KEBUTUHAN_SOAL` AS `KEBUTUHAN_SOAL`,count(`soal_distribusi`.`FK_KODE_SOAL`) AS `total_soal`,`soal_ujian`.`FK_BAB_MATA_AJAR` AS `FK_BAB_MATA_AJAR` from ((`kode_soal` left join `soal_distribusi` on((`soal_distribusi`.`FK_KODE_SOAL` = `kode_soal`.`PK_KODE_SOAL`))) left join `soal_ujian` on((`soal_distribusi`.`FK_SOAL_UJIAN` = `soal_ujian`.`PK_SOAL_UJIAN`))) group by `soal_ujian`.`FK_BAB_MATA_AJAR` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total_soal_distribusi`  AS  select `kode_soal`.`KODE_SOAL` AS `KODE_SOAL`,`kode_soal`.`KEBUTUHAN_SOAL` AS `KEBUTUHAN_SOAL`,count(`soal_distribusi`.`FK_KODE_SOAL`) AS `total_soal`,`soal_ujian`.`FK_BAB_MATA_AJAR` AS `FK_BAB_MATA_AJAR` from ((`kode_soal` left join `soal_distribusi` on((`soal_distribusi`.`FK_KODE_SOAL` = `kode_soal`.`PK_KODE_SOAL`))) left join `soal_ujian` on((`soal_distribusi`.`FK_SOAL_UJIAN` = `soal_ujian`.`PK_SOAL_UJIAN`))) group by `kode_soal`.`PK_KODE_SOAL`,`soal_ujian`.`FK_BAB_MATA_AJAR` ;
 
 --
 -- Indexes for dumped tables
@@ -1461,7 +1461,7 @@ ALTER TABLE `angka_kredit`
 -- AUTO_INCREMENT for table `bab_mata_ajar`
 --
 ALTER TABLE `bab_mata_ajar`
-  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `batch`
@@ -1509,7 +1509,7 @@ ALTER TABLE `jawaban_peserta`
 -- AUTO_INCREMENT for table `kode_soal`
 --
 ALTER TABLE `kode_soal`
-  MODIFY `PK_KODE_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `PK_KODE_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `list_persetujuan`
@@ -1575,7 +1575,7 @@ ALTER TABLE `registrasi_ujian`
 -- AUTO_INCREMENT for table `soal_distribusi`
 --
 ALTER TABLE `soal_distribusi`
-  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `soal_kasus`
