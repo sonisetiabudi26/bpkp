@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2018 at 09:59 PM
+-- Generation Time: Aug 19, 2018 at 04:16 PM
 -- Server version: 10.1.34-MariaDB
--- PHP Version: 7.0.31
+-- PHP Version: 7.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -88,7 +88,9 @@ CREATE TABLE `bab_mata_ajar` (
 --
 
 INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_AJAR`) VALUES
-(9, 5, 'Dasar Auditor');
+(9, 5, 'Dasar Auditor'),
+(10, 5, 'asd'),
+(12, 5, 'tester');
 
 -- --------------------------------------------------------
 
@@ -99,7 +101,6 @@ INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_
 CREATE TABLE `batch` (
   `PK_BATCH` int(11) NOT NULL,
   `FK_KODE_EVENT` varchar(150) NOT NULL,
-  `FK_PROVINSI` int(11) NOT NULL,
   `KELAS` varchar(150) NOT NULL,
   `FK_JADWAL` int(11) NOT NULL,
   `REFF` varchar(150) NOT NULL,
@@ -111,9 +112,12 @@ CREATE TABLE `batch` (
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`PK_BATCH`, `FK_KODE_EVENT`, `FK_PROVINSI`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(1, '3', 13, 'T-258     ', 17, 'qwer', 'Pusbin Budianto', '2018-07-08'),
-(2, '4', 12, '9iso', 18, '', 'Pusbin Budianto', '2018-08-02');
+INSERT INTO `batch` (`PK_BATCH`, `FK_KODE_EVENT`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(1, '3', 'T-258     ', 17, 'qwer', 'Pusbin Budianto', '2018-07-08'),
+(2, '4', '9iso', 18, '', 'Pusbin Budianto', '2018-08-02'),
+(3, '3', 'asddasd', 18, 'asd', 'Pusbin Budianto', '2018-08-17'),
+(4, '4', 'fghj', 18, '', 'Pusbin Budianto', '2018-08-17'),
+(5, '5', 'yuib', 18, '', 'Pusbin Budianto', '2018-08-17');
 
 -- --------------------------------------------------------
 
@@ -159,14 +163,14 @@ CREATE TABLE `document_pengusulan_pengangkatan` (
 --
 
 INSERT INTO `document_pengusulan_pengangkatan` (`PK_DOC_PENGUSULAN_PENGANGKATAN`, `STATUS_DOC`, `CATEGORY_DOC`, `DOC_PENGUSULAN_PENGANGKATAN`, `DATA_DOC`, `FK_PENGUSUL_PENGANGKATAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(1, '', '1', 'doc_cpns', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(2, '', '1', 'doc_pns', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(3, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(4, '', '1', 'doc_prajab', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(5, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(6, '', '1', 'doc_skp', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(7, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13'),
-(8, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-13');
+(9, '', '1', 'doc_cpns', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(10, '', '1', 'doc_pns', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(11, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(12, '', '1', 'doc_prajab', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(13, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(16, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(17, '', '1', 'doc_sk_diklat2', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15'),
+(18, '', '1', 'doc_penugasan2', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 26, '1110', '2018-08-15');
 
 -- --------------------------------------------------------
 
@@ -412,6 +416,30 @@ INSERT INTO `jawaban_peserta` (`PK_JAWABAN_DETAIL`, `FK_KODE_EVENT`, `KODE_PESER
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kode_soal`
+--
+
+CREATE TABLE `kode_soal` (
+  `PK_KODE_SOAL` int(11) NOT NULL,
+  `KODE_SOAL` varchar(150) NOT NULL,
+  `FK_MATA_AJAR` varchar(100) NOT NULL,
+  `KEBUTUHAN_SOAL` int(11) NOT NULL,
+  `PUBLISH` int(11) NOT NULL,
+  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_DATE` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kode_soal`
+--
+
+INSERT INTO `kode_soal` (`PK_KODE_SOAL`, `KODE_SOAL`, `FK_MATA_AJAR`, `KEBUTUHAN_SOAL`, `PUBLISH`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(1, 'c45t', '5', 30, 1, 'admin_bank', '2018-08-18 00:00:00'),
+(3, 'asc', '5', 12, 0, 'admin_bank', '2018-08-18 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `list_persetujuan`
 --
 
@@ -428,7 +456,8 @@ CREATE TABLE `list_persetujuan` (
 --
 
 INSERT INTO `list_persetujuan` (`PK_PERSETUJUAN`, `GROUP_REGIS`, `DOC_PERSETUJUAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(8, '07001500103500_180530181629', 'doc_setuju/07001500103500_180530181629_180530181629/cv.pdf', 'Test Admin', '2018-05-30');
+(8, '07001500103500_180530181629', 'doc_setuju/07001500103500_180530181629_180530181629/cv.pdf', 'Test Admin', '2018-05-30'),
+(9, '07001500103500_180817151934', 'doc_setuju/07001500103500_180817151934_180817151934/pdf.pdf', 'Test Admin', '2018-08-17');
 
 -- --------------------------------------------------------
 
@@ -674,7 +703,7 @@ CREATE TABLE `pengusul_pengangkatan` (
 --
 
 INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `NAMA`, `DOC_SURAT_PENGUSULAN`, `NO_SURAT`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `RESULT`, `VALIDATOR`, `UNITKERJA`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(26, '199909092009101025', 'Hafidz Hubaidillah', 'doc_surat_pengusulan/20180813/20180813_1110/pdf.pdf', '12/pk/2019', 1, 2, '1', '1110', 'Perwakilan BPKP Provinsi Daerah Khusus Ibukota Jakarta', '1110', '2018-08-13');
+(26, '199909092009101025', 'Hafidz Hubaidillah', 'doc_surat_pengusulan/20180815/20180815_1110/pdf.pdf', '12/JFA/2001', 1, 2, '0', '1110', 'Perwakilan BPKP Provinsi Daerah Khusus Ibukota Jakarta', '1110', '2018-08-13');
 
 -- --------------------------------------------------------
 
@@ -717,6 +746,10 @@ CREATE TABLE `pertek` (
   `DOC_PERTEK` text NOT NULL,
   `PERTEK_DATE` date NOT NULL,
   `NO_RESI` varchar(100) NOT NULL,
+  `YTH` varchar(100) NOT NULL,
+  `TEMPAT` varchar(100) NOT NULL,
+  `KEPALA` varchar(100) NOT NULL,
+  `TEMBUSAN` text NOT NULL,
   `CREATED_AT` varchar(150) NOT NULL,
   `CREATED_DATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -725,8 +758,8 @@ CREATE TABLE `pertek` (
 -- Dumping data for table `pertek`
 --
 
-INSERT INTO `pertek` (`PK_PERTEK`, `NO_SURAT`, `DOC_ANGKA_KREDIT`, `NO_PERTEK`, `DOC_PERTEK`, `PERTEK_DATE`, `NO_RESI`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(1, '12/pk/2019', '', '', '', '0000-00-00', '', '', '0000-00-00 00:00:00');
+INSERT INTO `pertek` (`PK_PERTEK`, `NO_SURAT`, `DOC_ANGKA_KREDIT`, `NO_PERTEK`, `DOC_PERTEK`, `PERTEK_DATE`, `NO_RESI`, `YTH`, `TEMPAT`, `KEPALA`, `TEMBUSAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(2, '12/JFA/2001', '', '2', 'http://localhost/bpkp/uploads/doc_pertek/pertek_12JFA2001.pdf', '2018-08-17', '', '', '', '', '', '1110', '2018-08-17 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -905,9 +938,10 @@ CREATE TABLE `sertifikasi_jfa` (
 --
 
 CREATE TABLE `soal_distribusi` (
-  `KODE_SOAL` varchar(11) NOT NULL,
+  `PK_SOAL_DISTRIBUSI` int(11) NOT NULL,
+  `FK_KODE_SOAL` varchar(11) NOT NULL,
   `FK_SOAL_UJIAN` int(11) NOT NULL,
-  `NO_UJIAN` int(11) NOT NULL,
+  `NO_SOAL` int(11) NOT NULL,
   `FLAG` int(11) NOT NULL,
   `CREATED_AT` varchar(100) NOT NULL,
   `CREATED_DATE` date NOT NULL
@@ -917,37 +951,37 @@ CREATE TABLE `soal_distribusi` (
 -- Dumping data for table `soal_distribusi`
 --
 
-INSERT INTO `soal_distribusi` (`KODE_SOAL`, `FK_SOAL_UJIAN`, `NO_UJIAN`, `FLAG`, `CREATED_AT`, `CREATED_DATE`) VALUES
-('061430', 175, 1, 0, '', '0000-00-00'),
-('061430', 176, 2, 0, '', '0000-00-00'),
-('061430', 177, 3, 0, '', '0000-00-00'),
-('061430', 178, 4, 0, '', '0000-00-00'),
-('061430', 179, 5, 0, '', '0000-00-00'),
-('061430', 180, 6, 0, '', '0000-00-00'),
-('061430', 181, 7, 0, '', '0000-00-00'),
-('061430', 182, 8, 0, '', '0000-00-00'),
-('061430', 183, 9, 0, '', '0000-00-00'),
-('061430', 184, 10, 0, '', '0000-00-00'),
-('061430', 185, 11, 0, '', '0000-00-00'),
-('061430', 186, 12, 0, '', '0000-00-00'),
-('061430', 187, 13, 0, '', '0000-00-00'),
-('061430', 188, 14, 0, '', '0000-00-00'),
-('061430', 189, 15, 0, '', '0000-00-00'),
-('061430', 190, 16, 0, '', '0000-00-00'),
-('061430', 191, 17, 0, '', '0000-00-00'),
-('061430', 192, 18, 0, '', '0000-00-00'),
-('061430', 193, 19, 0, '', '0000-00-00'),
-('061430', 194, 20, 0, '', '0000-00-00'),
-('061430', 195, 21, 0, '', '0000-00-00'),
-('061430', 196, 22, 0, '', '0000-00-00'),
-('061430', 197, 23, 0, '', '0000-00-00'),
-('061430', 198, 24, 0, '', '0000-00-00'),
-('061430', 199, 25, 0, '', '0000-00-00'),
-('061430', 200, 26, 0, '', '0000-00-00'),
-('061430', 201, 27, 0, '', '0000-00-00'),
-('061430', 202, 28, 0, '', '0000-00-00'),
-('061430', 203, 29, 0, '', '0000-00-00'),
-('061430', 204, 30, 0, '', '0000-00-00');
+INSERT INTO `soal_distribusi` (`PK_SOAL_DISTRIBUSI`, `FK_KODE_SOAL`, `FK_SOAL_UJIAN`, `NO_SOAL`, `FLAG`, `CREATED_AT`, `CREATED_DATE`) VALUES
+(1, '1', 182, 0, 0, 'admin_bank', '2018-08-19'),
+(2, '1', 198, 0, 0, 'admin_bank', '2018-08-19'),
+(3, '1', 201, 0, 0, 'admin_bank', '2018-08-19'),
+(4, '1', 181, 0, 0, 'admin_bank', '2018-08-19'),
+(5, '1', 134, 0, 0, 'admin_bank', '2018-08-19'),
+(6, '1', 194, 0, 0, 'admin_bank', '2018-08-19'),
+(7, '1', 190, 0, 0, 'admin_bank', '2018-08-19'),
+(8, '1', 197, 0, 0, 'admin_bank', '2018-08-19'),
+(9, '1', 191, 0, 0, 'admin_bank', '2018-08-19'),
+(10, '1', 140, 0, 0, 'admin_bank', '2018-08-19'),
+(11, '1', 200, 0, 0, 'admin_bank', '2018-08-19'),
+(12, '1', 203, 0, 0, 'admin_bank', '2018-08-19'),
+(13, '1', 188, 0, 0, 'admin_bank', '2018-08-19'),
+(14, '1', 177, 0, 0, 'admin_bank', '2018-08-19'),
+(15, '1', 134, 0, 0, 'admin_bank', '2018-08-19'),
+(16, '1', 176, 0, 0, 'admin_bank', '2018-08-19'),
+(17, '1', 191, 0, 0, 'admin_bank', '2018-08-19'),
+(18, '1', 178, 0, 0, 'admin_bank', '2018-08-19'),
+(19, '1', 175, 0, 0, 'admin_bank', '2018-08-19'),
+(20, '1', 189, 0, 0, 'admin_bank', '2018-08-19'),
+(21, '1', 193, 0, 0, 'admin_bank', '2018-08-19'),
+(22, '1', 184, 0, 0, 'admin_bank', '2018-08-19'),
+(23, '1', 194, 0, 0, 'admin_bank', '2018-08-19'),
+(24, '1', 190, 0, 0, 'admin_bank', '2018-08-19'),
+(25, '1', 201, 0, 0, 'admin_bank', '2018-08-19'),
+(26, '1', 199, 0, 0, 'admin_bank', '2018-08-19'),
+(27, '1', 178, 0, 0, 'admin_bank', '2018-08-19'),
+(28, '1', 195, 0, 0, 'admin_bank', '2018-08-19'),
+(29, '1', 182, 0, 0, 'admin_bank', '2018-08-19'),
+(30, '1', 176, 0, 0, 'admin_bank', '2018-08-19');
 
 -- --------------------------------------------------------
 
@@ -998,41 +1032,41 @@ CREATE TABLE `soal_ujian` (
 --
 
 INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
-(134, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(135, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(139, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(140, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
+(134, 9, NULL, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(135, 9, NULL, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(139, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(140, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
 (141, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(175, 9, NULL, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 1),
-(176, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(177, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
+(175, 9, NULL, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0),
+(176, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '27 Agustus 1945', '17 Agustus 1945', '10 Maret 1990', '7 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(177, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
 (178, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(179, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(180, 9, 0, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 1),
-(181, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '3', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(182, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '28 Agustus 1945', '18 Agustus 1945', '11 Maret 1990', '8 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
+(179, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(180, 9, 0, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0),
+(181, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '3', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(182, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '28 Agustus 1945', '18 Agustus 1945', '11 Maret 1990', '8 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
 (183, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(184, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(185, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
+(184, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(185, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
 (186, 9, 0, 'KJKJK', '2', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 1),
-(187, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(188, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '29 Agustus 1945', '19 Agustus 1945', '12 Maret 1990', '9 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(189, 9, 2, 'ibukota indonesia?', '4', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(190, 9, 2, 'ibukota indonesia?', '3', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(191, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(192, 9, 0, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 1),
-(193, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '2', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(194, 9, 0, 'Tanggal kemerdekaan indonesia?', '3', '30 Agustus 1945', '20 Agustus 1945', '13 Maret 1990', '10 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
+(187, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '1', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(188, 9, 0, 'Tanggal kemerdekaan indonesia?', '2', '29 Agustus 1945', '19 Agustus 1945', '12 Maret 1990', '9 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(189, 9, 2, 'ibukota indonesia?', '4', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(190, 9, 2, 'ibukota indonesia?', '3', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(191, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(192, 9, 0, 'KJKJK', '1', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0),
+(193, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '2', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(194, 9, 0, 'Tanggal kemerdekaan indonesia?', '3', '30 Agustus 1945', '20 Agustus 1945', '13 Maret 1990', '10 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
 (195, 9, 2, 'ibukota indonesia?', '4', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(196, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(197, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(198, 9, 0, 'KJKJK', '2', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 1),
-(199, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '3', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(200, 9, 0, 'Tanggal kemerdekaan indonesia?', '1', '31 Agustus 1945', '21 Agustus 1945', '14 Maret 1990', '11 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 1),
-(201, 9, 2, 'ibukota indonesia?', '3', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(202, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(203, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 1),
-(204, 9, 0, 'KJKJK', '2', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 1);
+(196, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(197, 9, 2, 'ibukota indonesia?', '1', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(198, 9, 0, 'KJKJK', '2', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0),
+(199, 9, 0, 'Siapa Nama Presiden Indonesia pertama?', '3', 'Soekarno', 'soeharto', 'megawati', 'amien rais', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(200, 9, 0, 'Tanggal kemerdekaan indonesia?', '1', '31 Agustus 1945', '21 Agustus 1945', '14 Maret 1990', '11 Maret 1991', 'abcd', 'efgh', 'ijkl', 'mnop', 0),
+(201, 9, 2, 'ibukota indonesia?', '3', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(202, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(203, 9, 2, 'ibukota indonesia?', '2', 'jakarta', 'bandung', 'surabaya', 'semarang', 'denpasar', 'lombok', 'ntt', 'ntb', 0),
+(204, 9, 0, 'KJKJK', '2', 'KJKJK', 'KJKJ', 'KJKJKJ', 'KJKJK', 'KJKJ', 'KJK', 'KJK', 'KJK', 0);
 
 -- --------------------------------------------------------
 
@@ -1082,6 +1116,32 @@ INSERT INTO `status_pengusulan_pengangkatan` (`PK_STATUS_PENGUSUL_PENGANGKATAN`,
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `total_pengusul`
+-- (See below for the actual view)
+--
+CREATE TABLE `total_pengusul` (
+`PK_PERTEK` int(11)
+,`NO_SURAT` varchar(100)
+,`qualified` decimal(23,0)
+,`total` decimal(23,0)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `total_soal_distribusi`
+-- (See below for the actual view)
+--
+CREATE TABLE `total_soal_distribusi` (
+`KODE_SOAL` varchar(150)
+,`KEBUTUHAN_SOAL` int(11)
+,`total_soal` bigint(21)
+,`FK_BAB_MATA_AJAR` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `unit_apip`
 --
 
@@ -1100,7 +1160,7 @@ CREATE TABLE `unit_apip` (
 CREATE TABLE `users` (
   `PK_USER` int(11) NOT NULL,
   `USER_NAME` varchar(50) NOT NULL,
-  `USER_PASSWORD` varchar(100) NOT NULL,
+  `USER_PASSWORD` text NOT NULL,
   `FK_LOOKUP_ROLE` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1109,21 +1169,21 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) VALUES
-(1, 'auditor', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 3),
-(2, 'admin', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 2),
-(3, 'widyaiswara', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4),
-(4, 'pusbin', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 5),
-(5, 'unit_apip', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 6),
-(6, 'bpkp', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 11),
-(7, 'admin_bank', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 1),
-(8, 'review1', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 18),
-(9, 'review2', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 19),
-(10, 'subid', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 21),
-(11, 'kapus', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 22),
-(12, 'pembuat_soal', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 20),
-(13, 'wi', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4),
-(14, '196006021982031001', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 4),
-(89, '1110', 'CDkaHSZYVXUWH9uwCk7+ShWI/MR1BsZn+UIhdox4A2Q2wVlh7quSMqg9Bd5zVoZS/zvQDi8ZR4Z/fcWrhbjXbg==', 28);
+(1, 'auditor', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 3),
+(2, 'admin', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 2),
+(3, 'widyaiswara', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 4),
+(4, 'pusbin', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 5),
+(5, 'unit_apip', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 6),
+(6, 'bpkp', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 11),
+(7, 'admin_bank', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 1),
+(8, 'review1', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 18),
+(9, 'review2', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 19),
+(10, 'subid', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 21),
+(11, 'kapus', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 22),
+(12, 'pembuat_soal', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 20),
+(13, 'wi', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 4),
+(14, '196006021982031001', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 4),
+(89, '1110', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 28);
 
 -- --------------------------------------------------------
 
@@ -1164,6 +1224,24 @@ CREATE TABLE `wilayah` (
   `PK_WILAYAH` int(11) NOT NULL,
   `NAMA` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `total_pengusul`
+--
+DROP TABLE IF EXISTS `total_pengusul`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total_pengusul`  AS  select `pertek`.`PK_PERTEK` AS `PK_PERTEK`,`pengusul_pengangkatan`.`NO_SURAT` AS `NO_SURAT`,sum((case when ((`pengusul_pengangkatan`.`FK_STATUS_DOC` > 1) and (`pengusul_pengangkatan`.`RESULT` <> '')) then 1 else 0 end)) AS `qualified`,sum((case when (`pengusul_pengangkatan`.`FK_STATUS_DOC` <> '') then 1 else 0 end)) AS `total` from (`pengusul_pengangkatan` left join `pertek` on((`pertek`.`NO_SURAT` = `pengusul_pengangkatan`.`NO_SURAT`))) group by `pengusul_pengangkatan`.`NO_SURAT` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `total_soal_distribusi`
+--
+DROP TABLE IF EXISTS `total_soal_distribusi`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total_soal_distribusi`  AS  select `kode_soal`.`KODE_SOAL` AS `KODE_SOAL`,`kode_soal`.`KEBUTUHAN_SOAL` AS `KEBUTUHAN_SOAL`,count(`soal_distribusi`.`FK_KODE_SOAL`) AS `total_soal`,`soal_ujian`.`FK_BAB_MATA_AJAR` AS `FK_BAB_MATA_AJAR` from ((`kode_soal` left join `soal_distribusi` on((`soal_distribusi`.`FK_KODE_SOAL` = `kode_soal`.`PK_KODE_SOAL`))) left join `soal_ujian` on((`soal_distribusi`.`FK_SOAL_UJIAN` = `soal_ujian`.`PK_SOAL_UJIAN`))) group by `soal_ujian`.`FK_BAB_MATA_AJAR` ;
 
 --
 -- Indexes for dumped tables
@@ -1224,6 +1302,12 @@ ALTER TABLE `jadwal_ujian`
 --
 ALTER TABLE `jawaban_peserta`
   ADD PRIMARY KEY (`PK_JAWABAN_DETAIL`);
+
+--
+-- Indexes for table `kode_soal`
+--
+ALTER TABLE `kode_soal`
+  ADD PRIMARY KEY (`PK_KODE_SOAL`);
 
 --
 -- Indexes for table `list_persetujuan`
@@ -1313,6 +1397,12 @@ ALTER TABLE `review_soal`
   ADD PRIMARY KEY (`PK_REVIEW_SOAL`);
 
 --
+-- Indexes for table `soal_distribusi`
+--
+ALTER TABLE `soal_distribusi`
+  ADD PRIMARY KEY (`PK_SOAL_DISTRIBUSI`);
+
+--
 -- Indexes for table `soal_kasus`
 --
 ALTER TABLE `soal_kasus`
@@ -1371,13 +1461,13 @@ ALTER TABLE `angka_kredit`
 -- AUTO_INCREMENT for table `bab_mata_ajar`
 --
 ALTER TABLE `bab_mata_ajar`
-  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
@@ -1389,7 +1479,7 @@ ALTER TABLE `bridge_lookup`
 -- AUTO_INCREMENT for table `document_pengusulan_pengangkatan`
 --
 ALTER TABLE `document_pengusulan_pengangkatan`
-  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `event`
@@ -1416,10 +1506,16 @@ ALTER TABLE `jawaban_peserta`
   MODIFY `PK_JAWABAN_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
 
 --
+-- AUTO_INCREMENT for table `kode_soal`
+--
+ALTER TABLE `kode_soal`
+  MODIFY `PK_KODE_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `list_persetujuan`
 --
 ALTER TABLE `list_persetujuan`
-  MODIFY `PK_PERSETUJUAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `PK_PERSETUJUAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `lookup_registrasi`
@@ -1455,7 +1551,7 @@ ALTER TABLE `permintaan_soal`
 -- AUTO_INCREMENT for table `pertek`
 --
 ALTER TABLE `pertek`
-  MODIFY `PK_PERTEK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `PK_PERTEK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `perwakilan_bpkp`
@@ -1474,6 +1570,12 @@ ALTER TABLE `provinsi`
 --
 ALTER TABLE `registrasi_ujian`
   MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `soal_distribusi`
+--
+ALTER TABLE `soal_distribusi`
+  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `soal_kasus`
