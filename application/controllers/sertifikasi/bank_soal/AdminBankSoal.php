@@ -28,40 +28,41 @@ class AdminBankSoal extends CI_Controller {
 			redirect('/');
 		}
     }
-	
+
 	public function listsoal(){
 		$data['soal'] = $this->soalujian->_get_soal_ujian_from_bab_mata_ajar($this->input->post('fk_bab_mata_ajar'));
 		$data['jumlah_soal'] = $this->soalujian->count_all($this->input->post('fk_bab_mata_ajar'));
 		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
 		$this->load->view('sertifikasi/bank_soal/content/list_soal', $data);
     }
-	
+
 	public function add_soal(){
 		$data['mata_ajar']	= $this->mataajar->_get_all();
 		$this->load->view('sertifikasi/bank_soal/add_response', $data);
     }
-	
+
 	public function vw_add_soal(){
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/add_soal', $data);
 	}
-	
-	public function vw_import_soal(){
+
+	public function vw_import_soal($param){
+		$data['id_permintaan']=$param;
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/import_soal', $data);
 	}
-	
+
 	public function vw_review_soal(){
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
 		$this->load->view('sertifikasi/bank_soal/content/review_soal', $data);
 	}
-	
+
 	public function vw_add_soal_kasus(){
 		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/add_soal_kasus', $data);
 	}
-	
+
 	public function insert_soal_kasus(){
 		$data = array(
 			'KODE_KASUS' => $this->input->post('kode_kasus'),
@@ -74,7 +75,7 @@ class AdminBankSoal extends CI_Controller {
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
     }
-	
+
 	public function check_soal(){
 		print json_encode( $this->soalujian->count_all($this->input->get('fk_bab_mata_ajar')));
 	}

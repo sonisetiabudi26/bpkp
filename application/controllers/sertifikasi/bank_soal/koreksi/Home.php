@@ -21,14 +21,14 @@ class Home extends CI_Controller {
 			$data['title_page'] = 'BPKP Web Application';
 			$data['content_page']='bank_soal/koreksi/homepage.php';
 			$data['username']=$username;
-			$data['mata_ajar'] = $this->mataajar->_detail_review_mata_ajar();
+		//	$data['mata_ajar'] = $this->mataajar->_detail_review_mata_ajar();
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');
 		}
     }
-	
+
 	public function set_admin_role(){
-		
+
 	}
 }

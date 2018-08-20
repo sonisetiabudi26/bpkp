@@ -19,6 +19,8 @@ class Soal extends CI_Controller {
 		if($this->input->post('parent_soal')==0){
 			$parent_soal=NULL;
 		}
+		$pk_permintaan_soal=$this->input->post('pk_permintaan');
+		$data=$this->permintaansoal->getDatabyid($pk_permintaan_soal);
 		$data = array(
 			'PERTANYAAN' => $this->input->post('pertanyaan'),
 			'PILIHAN_1' => $this->input->post('pilihan1'),
@@ -31,19 +33,19 @@ class Soal extends CI_Controller {
 			'PILIHAN_8' => $this->input->post('pilihan8'),
 			'JAWABAN' => $this->input->post('jawaban'),
 			'PARENT_SOAL' => $parent_soal,
-			'FK_BAB_MATA_AJAR' => $this->input->post('fk_bab_mata_ajar')
+			'FK_BAB_MATA_AJAR' => $data[0]->FK_BAB_MATA_AJAR,
 		);
 		if($this->soalujian->_add($data)){
-			$data = array(
-				'FK_LOOKUP_STATUS_PERMINTAAN' => 23
-			);
-			$where = array(
-				'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
-			);
-			$this->permintaansoal->_update();
-			print json_encode(array("status"=>"success", "data"=>"success"));
+			// $data = array(
+			// 	'FK_LOOKUP_STATUS_PERMINTAAN' => 23
+			// );
+			// $where = array(
+			// 	'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
+			// );
+			// $this->permintaansoal->_update();
+			print json_encode(array("msg"=>"success"));
 		}else{
-			print json_encode(array("status"=>"error", "data"=>"error"));
+			print json_encode(array("msg"=>"error"));
 		}
     }
 
@@ -84,13 +86,18 @@ class Soal extends CI_Controller {
 	}
 
 	public function upload_soal(){
-		$upload = $this->do_upload($this->input->post('fk_bab_mata_ajar'));
-		$data = array('FK_BAB_MATA_AJAR' => $this->input->post('fk_bab_mata_ajar'));
+		$upload = $this->do_upload();
+		$id_permintaan=$this->input->post('id_permintaan');
+		$data_bab_mata_ajar=$this->permintaansoal->getDatabyidlimit($id_permintaan);
+		$fk_bab_mata_ajar=$data_bab_mata_ajar[0]->FK_BAB_MATA_AJAR;
+		$data = array('PK_PERMINTAAN_SOAL' => $id_permintaan,
+										'FK_BAB_MATA_AJAR' =>$fk_bab_mata_ajar);
 		if($upload['result'] == "success"){
 			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
 			$excelreader = new PHPExcel_Reader_Excel2007();
 			$loadexcel = $excelreader->load('uploads/'.$this->filename.'.xlsx');
 			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+
 			$data['sheet'] = $this->import($sheet, $data);
 		}else{
 			$data['upload_error'] = $upload['error'];
@@ -98,31 +105,30 @@ class Soal extends CI_Controller {
 		print json_encode(array("status"=>$upload['result'], "data"=>$data));
 	}
 
-	public function do_upload($fk_bab_mata_ajar){
+	public function do_upload(){
 		$config['upload_path']          = './uploads/';
 		$config['allowed_types']        = 'xlsx';
 		$config['max_size']             = 2048;
 		$config['max_width']            = 2048;
 		$config['max_height']           = 768;
 		$this->load->library('upload', $config);
-		if($fk_bab_mata_ajar==0){
-			return array('result' => 'input tidak boleh ada yang kosong', 'file' => '', 'error' => 'input tidak boleh ada yang kosong');
-		}else{
+		// if($fk_bab_mata_ajar==0){
+		// 	return array('result' => 'input tidak boleh ada yang kosong', 'file' => '', 'error' => 'input tidak boleh ada yang kosong');
+		// }else{
 			if (! $this->upload->do_upload('soalfile')){
 				return array('result' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
 			}else{
 				return array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
-			}
 		}
 	}
 
 	public function import($sheet, $data){
 		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
-		$datasheet = [];
+		$datasheet1 = [];
 		$numrow = 1;
 		foreach($sheet as $row){
 			if($numrow > 1){
-				array_push($datasheet, [
+				array_push($datasheet1, [
 				'PERTANYAAN'=>$row['A'],
 				'PILIHAN_1'=>$row['B'],
 				'PILIHAN_2'=>$row['C'],
@@ -134,17 +140,23 @@ class Soal extends CI_Controller {
 				'PILIHAN_8'=>$row['I'],
 				'JAWABAN'=>$row['J'],
 				'PARENT_SOAL'=>NULL,
+				'FK_PERMINTAAN_SOAL'=>$data['PK_PERMINTAAN_SOAL'],
 				'FK_BAB_MATA_AJAR'=>$data['FK_BAB_MATA_AJAR']
 				]);
 			}
 			$numrow++;
 		}
 		/** Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model */
-		if($this->soalujian->insert_multiple($datasheet)){
-			return array('datasheet' => $datasheet, 'file' => '', 'response' => "success");
-		}else{
-			return array('datasheet' => $datasheet, 'file' => '', 'response' => "error");
-		}
+		if($numrow >1){
+			if($this->soalujian->insert_multiple($datasheet1)){
+					return array('datasheet' => $datasheet1, 'file' => '', 'response' => "success");
+				}else{
+					return array('datasheet' => $datasheet1, 'file' => '', 'response' => "error");
+				}
+
+			}else{
+				return array('datasheet' => $datasheet1, 'file' => '', 'response' => 'error_row');
+			}
 	}
 
 	function build_ujian(){

@@ -1,181 +1,139 @@
-<div class="row">
-	<div class="col-lg-12 bg-warning" style="min-height:10px;">
-		<h4>Badan Pengawasan Keuangan dan Pembangunan</h4>
-		<small>Selamat datang dihalaman Bank Soal,</small><hr>
+<div class="clearfix"></div>
+<h1 class="text-primary">Management Bank Soal</h1>
+	<div class="info">
+		<p style="color:#777;"> Ujian Sertifikasi - Pembuat Soal <i class="fa fa-book"></i></p>
 	</div>
-	<div class="col-lg-12">
-		<div class="container bg-info" style="border-radius:5px;padding:5px">
-			<button onclick="getModal(this)" id="btn-add-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_bab_mata_ajar"; ?>" 
-			data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add Bab Soal</button>
-			
-			<button onclick="getModal(this)" id="btn-import-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_import_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary">
-			<i class="fa fa-pencil"></i> Import Soal
-		</button>
+<br><br>
+<div class="container">
+		<!-- <br/>
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<label>Setting Management Soal</label>
 		</div>
-		<br>
-		<div class="col-md-12" id="response-text" ></div>
-<div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/insert_soal"; ?>" method="POST" id="addSoalForm" >
-<table  class="table">
-	<thead>
-		<tr>
-			<td><h2 class="text-primary">Form Tambah Soal</h2></td>
-		</tr>
-	</thead>
-	<tbody>
-		
-		<tr>
-			<td>
-				<div class="form-group" id="content-list-bab-popup">
-					<label for="select-list-bab-popup">List BAB :</label>
-					<select data-show-obj="soalkasus" data-show-key="PK_SOAL_KASUS" data-show-value="KODE_KASUS" onChange="getAnotherSelectOption(this, 'select-list-kasus', 'content-list-bab-popup')" 
-					data-href="<?php echo base_url('sertifikasi')."/bank_soal/SoalUjianKasus/listsoalkasus"; ?>" name="fk_bab_mata_ajar" id="select-list-bab-popup" class="form-control input-sm">
-						<option value="0">Pilihan</option>
-						<?php
-							foreach ($bab_mata_ajar as $babmataajars):
-						?>
-						<option value="<?php echo $babmataajars->PK_BAB_MATA_AJAR;?>"><?php echo $babmataajars->NAMA_BAB_MATA_AJAR;?> (<?php echo $babmataajars->DESCR;?>)</option>
-						<?php
-							endforeach;
-						?>
-					</select>
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="img_soal" class="text-primary">Image Soal :</label>
-					<input type="file" class="form-control" name="img_soal" id="img_soal" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pertanyaan" class="text-primary">Pertanyaan :</label>
-					<input type="text" class="form-control disabled" name="pertanyaan" id="pertanyaan" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan1" class="text-primary">Pilihan 1 :</label>
-					<input type="text" class="form-control" name="pilihan1" id="pilihan1" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan2" class="text-primary">Pilihan 2 :</label>
-					<input type="text" class="form-control" name="pilihan2" id="pilihan2" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan3" class="text-primary">Pilihan 3 :</label>
-					<input type="text" class="form-control" name="pilihan3" id="pilihan3" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan4" class="text-primary">Pilihan 4 :</label>
-					<input type="text" class="form-control" name="pilihan4" id="pilihan4" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan4" class="text-primary">Pilihan 5 :</label>
-					<input type="text" class="form-control" name="pilihan5" id="pilihan5" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan4" class="text-primary">Pilihan 6 :</label>
-					<input type="text" class="form-control" name="pilihan6" id="pilihan6" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan4" class="text-primary">Pilihan 7 :</label>
-					<input type="text" class="form-control" name="pilihan7" id="pilihan7" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="pilihan4" class="text-primary">Pilihan 8 :</label>
-					<input type="text" class="form-control" name="pilihan8" id="pilihan8" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group text-default">
-					<label for="jawaban" class="text-primary">Jawaban :</label>
-					<input type="text" class="form-control" name="jawaban" id="jawaban" disabled />
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<div class="form-group" id="content-list-bab-popup" >
-					<label for="parent_soal">Parent Soal Kasus :</label>
-					<select class="form-control" name="parent_soal" id="select-list-kasus" disabled>
-						<option value="0">Pilihan</option>
-					</select>
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<input id="btn-save-detail" type="submit" value="Save Soal" class="btn btn-primary" disabled />
-			</td>
-		</tr>
-	</tbody>
-</table>
-</form>
-</div>
-	</div>
-</div>
+		</div>
+		<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div  style="border:dashed 1px #999; padding:5px;width:100%">
+	        <button onclick="getModal(this)" id="btn-add-soal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_bab_mata_ajar"; ?>"
+							data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Buat Bab Soal</button>
+					<button onclick="getModal(this)" id="btn-distribusi-kodesoal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Buat Kode Soal</button>
+					<button onclick="getModal(this)" id="btn-distribusi-soal" data-href="<?php// echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</button>
+	        <button class="btn btn-primary" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+					<button onclick="getModal(this)" id="btn-search-soal" data-href="<?php// echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_search_datatable"; ?>"
+							data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search from Mata Ajar</button>
+			</div>
+		</div>
+		</div> -->
+	  <br/>
+			<!-- <button onclick="getModal(this)" id="btn-distribusi-soal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</button> -->
+		<div class="" role="tabpanel" data-example-id="togglable-tabs" style="background:#fff !important;">
 
-<script>	
-	$('#select-list-bab-popup').change(function(){
-		var fk_bab_mata_ajar = $(this).val();
-		if(fk_bab_mata_ajar==='Pilihan'){
-			$("input").prop("disabled", true);
-			$("textarea").prop("disabled", true);
-			$("#select-list-kasus").prop("disabled", true);
+
+				<div  class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div style="float:right">
+							<button class="btn btn-primary" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+						 <!-- <button onclick="getModal(this)" id="btn-search-soal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_search_datatable"; ?>"
+								 data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search from Mata Ajar</button> -->
+							 </div>
+
+							<div class="x_content">
+								<div class="row">
+									<div class="col-lg-12" id="response">
+										<!-- <h2 style="font-weight:1000;color:#000">Table Bank Soal ALL</h2> -->
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+
+
+
+		        <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		            <thead>
+		                <tr>
+												<th>No</th>
+		                    <th>BAB Mata Ajar</th>
+		                    <th>Tipe Soal</th>
+		                    <th>Tanggal Permintaan</th>
+		                    <th>Jumlah Soal</th>
+		                    <th>Action</th>
+		                </tr>
+		            </thead>
+		            <tbody style="color:#333;">
+		            </tbody>
+
+		        </table>
+		    </div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+</div>
+<script type="text/javascript">
+	var save_method;
+	var table;
+	<?php
+		if(isset($_POST['fk_bab_mata_ajar'])){
+	?>
+			var url = "<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/".$_POST['fk_bab_mata_ajar']; ?>";
+	<?php
 		}else{
-			$('input').removeAttr('disabled');
-			$('textarea').removeAttr('disabled');
-			$("#select-list-kasus").removeAttr('disabled');
+		?>
+			var url = "<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/pembuat_soal"; ?>";
+		<?php
 		}
+	?>
+
+	$(document).ready(function() {
+		showDatatable(url);
 	});
+
+	function showDatatable(urlPar){
+		table = $('#table').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"order": [],
+			"ajax": {
+				"url": urlPar,
+				"type": "POST"
+			},
+			"columnDefs": [
+			{
+				"targets": [ -1 ],
+				"orderable": false
+			},
+			],
+		});
+	}
+
+	function reload_table()
+	{
+		table.ajax.reload(null,false);
+	}
+
+
+	function update_data(id)
+	{
+
+					// ajax delete data to database
+					$.ajax({
+							url : "<?php echo base_url('sertifikasi/bank_soal/permintaan/review')?>/"+id,
+							type: "POST",
+							dataType: "JSON",
+							success: function(data)
+							{
+								if(data.msg=='success'){
+									swal("Success", "Data Publish Successfully!", "success");
+								}else{
+									swal("Error", "Data Publish Failed!", "error");
+								}
+
+							 reload_table();
+							},
+
+					});
+
+	}
 </script>
