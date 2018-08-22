@@ -8,8 +8,8 @@ class PengusulanPengangkatan extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
     		$this->load->helper('url');
-    		$this->load->model('sertifikasi/menupage','menupage');
-				$this->load->model('sertifikasi/pengusulpengangkatan','pengusul');
+    		$this->load->model('sertifikasi/MenuPage','menupage');
+				$this->load->model('sertifikasi/PengusulPengangkatan','pengusul');
 				$this->load->model('sertifikasi/DocPengusulanPengangkatan','doc_pengusul');
         $this->load->model('sertifikasi/Users','user');
     }

@@ -9,13 +9,13 @@ class PerhitunganNilai extends CI_Controller {
 
         $this->load->library('session');
     		$this->load->helper('url');
-    		$this->load->model('sertifikasi/menupage','menupage');
-        $this->load->model('sertifikasi/provinsi','provinsi');
-        $this->load->model('sertifikasi/reffsimdiklat','diklat');
-        $this->load->model('sertifikasi/event','event');
-        $this->load->model('sertifikasi/batch','batch');
-        $this->load->model('sertifikasi/jadwalujian','jadwal');
-        $this->load->model('sertifikasi/jawabanpeserta','jawaban');
+    		$this->load->model('sertifikasi/MenuPage','menupage');
+        $this->load->model('sertifikasi/Provinsi','provinsi');
+        $this->load->model('sertifikasi/ReffSimdiklat','diklat');
+        $this->load->model('sertifikasi/Event','event');
+        $this->load->model('sertifikasi/Batch','batch');
+        $this->load->model('sertifikasi/JadwalUjian','jadwal');
+        $this->load->model('sertifikasi/JawabanPeserta','jawaban');
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
     }
 

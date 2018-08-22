@@ -2,13 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 //This is the menu_page Model for CodeIgniter CRUD using Ajax Application.
-class Persetujuan extends My_Model
+class DocRegistrationUjian extends MY_Model
 {
-	public $_table = 'dokumen_persetujuan';
-	public $primary_key = 'PK_PERSETUJUAN';
+	public $_table = 'dokumen_registrasi_ujian';
 
-
-  public function save($data) {
+	public function save($data) {
 		$insert=$this->db->insert($this->_table, $data);
 		 if($insert){
 			 	return  'Data Inserted Successfully';
@@ -16,6 +14,4 @@ class Persetujuan extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
-
-
 }

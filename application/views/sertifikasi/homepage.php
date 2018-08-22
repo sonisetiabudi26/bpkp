@@ -32,6 +32,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url('assets/css/develop.style.css')?>" rel="stylesheet">
 	<!-- jQuery -->
 	<script src="<?php echo base_url('assets/vendors/jquery/dist/jquery.min.js')?>"></script>
+	<style>
+	.mandatory{
+	 	color:#f00 !important;
+	 }
+	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -74,5 +79,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 </body>
 </html>

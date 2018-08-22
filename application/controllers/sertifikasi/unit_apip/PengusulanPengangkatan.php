@@ -8,8 +8,8 @@ class PengusulanPengangkatan extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
     		$this->load->helper('url');
-    		$this->load->model('sertifikasi/menupage','menupage');
-				$this->load->model('sertifikasi/pengusulpengangkatan','pengusul');
+    		$this->load->model('sertifikasi/MenuPage','menupage');
+				$this->load->model('sertifikasi/PengusulPengangkatan','pengusul');
 				$this->load->model('sertifikasi/Pertek','pertek');
 				$this->load->model('sertifikasi/DocPengusulanPengangkatan','doc_pengusul');
     }
@@ -40,25 +40,28 @@ class PengusulanPengangkatan extends CI_Controller {
 		public function submit(){
 				$datex=date('Y-m-d');
 				$nip=$this->input->post('nip');
-				$nama=$this->input->post('nama');
+				//$nama=$this->input->post('nama');
 				$status=$this->input->post('status');
+				if($nip!='' && $status!=''){
 				$apiuser=$this->apiuser($this->session->userdata('nip'));
         $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
 				$data = array(
 				 'NIP' => $nip,
-				 'NAMA' => $nama,
 				 'FK_STATUS_PENGUSUL_PENGANGKATAN' => $status,
 				 'FK_STATUS_DOC' => '1',
 				 'UNITKERJA' => $kodeunitkerja,
-				 'CREATED_AT' => $this->session->userdata('nip'),
+				 'CREATED_BY' => $this->session->userdata('nip'),
 				 'CREATED_DATE' => $datex
 			 );
 			 	$insert=$this->pengusul->save($data);
 				if($insert=='Data Inserted Successfully'){
 					print json_encode(array("status"=>"success", "data"=>$insert));
 				}else{
-					print json_encode(array("status"=>"error", "data"=>$insert));
+					print json_encode(array("status"=>"error", "msg"=>'Data Gagal disimpan ke database'));
 				}
+			}else{
+				print json_encode(array("status"=>"error", "msg"=>'NIP dan status tidak boleh kosong'));
+			}
 		}
 		public function apiuser($param){
 			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
@@ -73,13 +76,15 @@ class PengusulanPengangkatan extends CI_Controller {
 			if($datas!='no data'){
 			foreach ($datas as $key) {
 				$dataRow['no']=$a;
-				$dataRow['nama']=$key->NAMA;
+				$nama=$this->apiuser($key->NIP);
+				$dataRow['nama']=$nama->data[0]->Auditor_NamaLengkap;
 				$dataRow['nip']=$key->NIP;
 				$dataRow['desc']=$key->DESC;
 				$dataRow['desc_status']=$key->DESC_STATUS;
-				$url=base_url('sertifikasi')."/unit_apip/pengusulanpengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
-				$dataRow['action']="<td><button onclick='getModal(this)' id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
-						<span>Upload Doc</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-primary'>Delete</button><button class='btn btn-primary'>View</button></td>";
+				$disable=($key->FK_STATUS_DOC=='2'?'style="display:none"':'');
+				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
+				$dataRow['action']="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
+						<span>Upload Doc</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Delete</button></td>";
 				$data[]=$dataRow;
 				$a++;
 			}
@@ -101,55 +106,55 @@ class PengusulanPengangkatan extends CI_Controller {
 			$this->load->view('sertifikasi/unit_apip/content/modal_upload_pengusulan',$data);
 			// echo 'asd';
 		}
-		public function add_data(){
-
-			$date = date('Ymd');
-			$datex=date('Y-m-d');
-			$nip=$this->input->post('nip');
-			$dataCheckPeserta=$this->regis->loadbyNIP($nip,'1');
-			if(!$dataCheckPeserta){
-					$folder='doc_registrasi/'.$nip.'_'.$date;
-					$docksp='doc_ksp';
-					$docfoto='doc_foto';
-					$uploadpdf = $this->do_upload_pdf($folder,$docksp);
-					$uploadimg = $this->do_upload_img($folder,$docfoto);
-					//$uploadimg = $this->do_upload_img($folder);
-					// $uploadpdf='';
-
-					// $this->session->set_userdata('group_regis', $group_regis);
-					// $uploadpdf['result_upload_pdf']="success";
-					if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
-						$doc_ksp=$folder.'/'.$_FILES['doc_ksp']['name'];
-						$doc_foto=$folder.'/'.$_FILES['doc_foto']['name'];
-						$data = array(
-						 'NIP' => $this->input->post('nip'),
-						 'GROUP_REGIS' => '',
-						 'LOKASI_UJIAN' => $this->input->post('lokasi'),
-						 'PK_JADWAL_UJIAN' => $this->input->post('jadwal'),
-						 'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
-						 'NILAI_KSP' => $this->input->post('nilai_ksp'),
-						 'DOC_NILAI_KSP' => $doc_ksp,
-						 'DOC_FOTO' => $doc_foto,
-						 'CREATED_AT' => $this->session->userdata('logged_in'),
-						 'CREATED_DATE' => $datex,
-						 'PROVINSI' => 'unknown',
-						 'FLAG' => '1'
-					 );
-					 $insert=$this->regis->save($data);
-					 if($insert=='Data Inserted Successfully'){
-						 print json_encode(array("status"=>"success", "data"=>$insert));
-					 }else{
-						 print json_encode(array("status"=>"error", "data"=>$insert));
-					 }
-					}else{
-						$data['upload_error1'] = $uploadpdf['error'];
-						$data['upload_error2'] = $uploadimg['error'];
-					}
-					echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
-			}else{
-				echo json_encode(array("status"=>'gagal'));
-			}
-		}
+		// public function add_data(){
+		//
+		// 	$date = date('Ymd');
+		// 	$datex=date('Y-m-d');
+		// 	$nip=$this->input->post('nip');
+		// 	$dataCheckPeserta=$this->regis->loadbyNIP($nip,'1');
+		// 	if(!$dataCheckPeserta){
+		// 			$folder='doc_registrasi/'.$nip.'_'.$date;
+		// 			$docksp='doc_ksp';
+		// 			$docfoto='doc_foto';
+		// 			$uploadpdf = $this->do_upload_pdf($folder,$docksp);
+		// 			$uploadimg = $this->do_upload_img($folder,$docfoto);
+		// 			//$uploadimg = $this->do_upload_img($folder);
+		// 			// $uploadpdf='';
+		//
+		// 			// $this->session->set_userdata('group_regis', $group_regis);
+		// 			// $uploadpdf['result_upload_pdf']="success";
+		// 			if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
+		// 				$doc_ksp=$folder.'/'.$_FILES['doc_ksp']['name'];
+		// 				$doc_foto=$folder.'/'.$_FILES['doc_foto']['name'];
+		// 				$data = array(
+		// 				 'NIP' => $this->input->post('nip'),
+		// 				 'GROUP_REGIS' => '',
+		// 				 'LOKASI_UJIAN' => $this->input->post('lokasi'),
+		// 				 'PK_JADWAL_UJIAN' => $this->input->post('jadwal'),
+		// 				 'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
+		// 				 'NILAI_KSP' => $this->input->post('nilai_ksp'),
+		// 				 'DOC_NILAI_KSP' => $doc_ksp,
+		// 				 'DOC_FOTO' => $doc_foto,
+		// 				 'CREATED_BY' => $this->session->userdata('logged_in'),
+		// 				 'CREATED_DATE' => $datex,
+		// 				 'PROVINSI' => 'unknown',
+		// 				 'FLAG' => '1'
+		// 			 );
+		// 			 $insert=$this->regis->save($data);
+		// 			 if($insert=='Data Inserted Successfully'){
+		// 				 print json_encode(array("status"=>"success", "data"=>$insert));
+		// 			 }else{
+		// 				 print json_encode(array("status"=>"error", "data"=>$insert));
+		// 			 }
+		// 			}else{
+		// 				$data['upload_error1'] = $uploadpdf['error'];
+		// 				$data['upload_error2'] = $uploadimg['error'];
+		// 			}
+		// 			echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
+		// 	}else{
+		// 		echo json_encode(array("status"=>'gagal'));
+		// 	}
+		// }
 		public function upload_submit(){
 				$desc = $this->input->post('desc');
 				$id_pengusul = $this->input->post('id_pengusul');
@@ -158,7 +163,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$folder='doc_pengangkatan/'.$desc.'_'.$nip;
 				$data = array('category' => $desc,
 							'id_pengusul' => $id_pengusul,
-							'created_at' => $this->session->userdata('nip'),
+							'created_by' => $this->session->userdata('nip'),
 							'created_date' => $datex
 							);
 				if($desc=='1'){
@@ -196,10 +201,21 @@ class PengusulanPengangkatan extends CI_Controller {
 			$datex=date('Ymd');
 			$no_surat = $this->input->post('no_surat');
 			$nip_unitapip= $this->session->userdata('nip');
-			$folder='doc_surat_pengusulan/'.$datex.'/'.$datex.'_'.$nip_unitapip;
-			$doc='doc_surat';
-			$uploadpdf = $this->do_upload_pdf_surat($folder,$doc,$nip_unitapip,$no_surat);
-			echo json_encode(array('msg'=>$uploadpdf));
+			$data_pengusul=$this->pengusul->numrowpeserta($nip_unitapip);
+
+			if($no_surat!='' && $_FILES['doc_surat']['name']!=''){
+				if($data_pengusul!='no data'){
+				$folder='doc_surat_pengusulan/'.$datex.'/'.$datex.'_'.$nip_unitapip;
+				$doc='doc_surat';
+				$uploadpdf = $this->do_upload_pdf_surat($folder,$doc,$nip_unitapip,$no_surat);
+				print json_encode(array('status'=>'success','msg'=>'Data berhasil disimpan ke database'));
+			}else{
+				print json_encode(array('status'=>'error','msg'=>'Tidak ada/kurang lengkap dokumen calon peserta'));
+			}
+			}else{
+				print json_encode(array('status'=>'error','msg'=>'Data gagal disimpan ke database'));
+			}
+
 
 		}
 		public function do_upload_pdf_surat($folder,$doc,$nip,$no){
@@ -219,7 +235,7 @@ class PengusulanPengangkatan extends CI_Controller {
 						}else{
 							$doc_loc=$folder.'/'.$_FILES[$doc]['name'];
 							$where=array(
-								'CREATED_AT'=>$nip,
+								'CREATED_BY'=>$nip,
 								'NO_SURAT'=>''
 							);
 							$data_update=array(
@@ -263,7 +279,7 @@ class PengusulanPengangkatan extends CI_Controller {
 							 'DOC_PENGUSULAN_PENGANGKATAN' => $doc[$i],
 							 'DATA_DOC' => $doc_loc,
 							 'FK_PENGUSUL_PENGANGKATAN' => $data['id_pengusul'],
-							 'CREATED_AT' => $data['created_at'],
+							 'CREATED_BY' => $data['created_by'],
 							 'CREATED_DATE' => $data['created_date'],
 						 );
 						 $insert=$this->doc_pengusul->save($datas);
@@ -310,10 +326,10 @@ class PengusulanPengangkatan extends CI_Controller {
 			$url="http://163.53.185.91:8083/sibijak/dca/api/api/pengguna?nip=".$nip;
 			$check=file_get_contents($url);
 			$jsonResult=json_decode($check);
+			if($jsonResult->message!='Unit Kerja Tidak Di Temukan'){
 			$kodeunitkerja = $this->session->userdata('kodeunitkerja');
 			if($jsonResult->message=='get_data_success'  && $jsonResult->data[0]->isAuditor=='false'){
-				// $data['NIP'] = $jsonResult->data[0]->NIP;
-				// $data['NamaLengkap'] = $jsonResult->data[0]->NamaLengkap;
+
 				$url_auditor="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$nip;
 				$check_auditor=file_get_contents($url_auditor);
 				$jsonResult_auditor=json_decode($check_auditor);
@@ -325,22 +341,23 @@ class PengusulanPengangkatan extends CI_Controller {
 											 "pendidikan" => $jsonResult_auditor->data[0]->Pendidikan_Tingkat,
 											 "jabatan" => $jsonResult_auditor->data[0]->Jabatan_Nama,
 											 "golongan" => $jsonResult_auditor->data[0]->Golongan_Kode,
-
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TanggalLahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
 							 );
 			 //output to json format
-			 echo json_encode($output);
+			 // echo json_encode($output);
 		 }else{
 			 $output = array(
+				 							"status" => 'success',
 											"msg" => "NIP tidak sesuai dengan unit kerja",
 							);
-						echo json_encode($output);
+
 		 }
+	 }else{
+		 $output = array(
+										"status" => 'error',
+										"msg" => "NIP tidak ditemukan",
+						);
+	 }
+	 echo json_encode($output);
 		}
 
 }

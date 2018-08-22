@@ -7,13 +7,16 @@ class Registrasi extends CI_Controller {
         // Load parent construct
         parent::__construct();
         $this->load->library('session');
-    		$this->load->helper('url');
-    		$this->load->model('sertifikasi/menupage','menupage');
-				$this->load->model('sertifikasi/provinsi','provinsi');
-				$this->load->model('sertifikasi/jadwalujian','jadwal');
-				$this->load->model('sertifikasi/regisujian','regis');
-				$this->load->model('sertifikasi/persetujuan','setuju');
+    		$this->load->helper(array('form', 'url'));
+    		$this->load->model('sertifikasi/MenuPage','menupage');
+				$this->load->model('sertifikasi/Provinsi','provinsi');
+				$this->load->model('sertifikasi/JadwalUjian','jadwal');
+				$this->load->model('sertifikasi/RegisUjian','regis');
+				$this->load->model('sertifikasi/Persetujuan','setuju');
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
+				$this->load->model('sertifikasi/DocRegistrationUjian','doc_regis');
+				$this->load->model('sertifikasi/MataAjar','mataajar');
+				$this->load->library('form_validation');
     }
 
     public function index()
@@ -35,114 +38,149 @@ class Registrasi extends CI_Controller {
         redirect('/');
       }
     }
-		public function search($nip){
+		public function apiuser($nip){
 			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$nip;
 			$check=file_get_contents($url);
-			$jsonResult=json_decode($check);
-			$kodeunitkerja = $this->session->userdata('kodeunitkerja');
-			if($jsonResult->message=='get_data_success' && $jsonResult->data[0]->UnitKerja_Kode==$kodeunitkerja){
-				// $data['NIP'] = $jsonResult->data[0]->NIP;
-				// $data['NamaLengkap'] = $jsonResult->data[0]->NamaLengkap;
+			if($check){
+				$output=json_decode($check);
+			}else{
 				$output = array(
-											 "nip" => $jsonResult->data[0]->Auditor_NIP,
-											 "nama" => $jsonResult->data[0]->Auditor_NamaLengkap,
-											 "ttl" => $jsonResult->data[0]->Auditor_TglLahir,
-											 "pendidikan" => $jsonResult->data[0]->Pendidikan_Tingkat,
-											 "unit" => $jsonResult->data[0]->UnitKerja_Nama,
-											 "jabatan" => (!empty($jsonResult->data[0]->Jabatan_Nama)?$jsonResult->data[0]->Jabatan_Nama:'-'),
-											 "jenjangjabatan" => $jsonResult->data[0]->JenjangJabatan_Nama,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TanggalLahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-											 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
+ 				 							"status" => "error",
+ 											"msg" => "NIP tidak ditemukan",
+ 							);
+			}
+			return $output;
+		}
+
+		public function search($nip){
+			$apiuser=$this->apiuser($nip);
+			if($apiuser->message=='get_data_success'){
+			$namaunitkerja = $apiuser->data[0]->UnitKerja_Nama;
+			$kodeunitkerja = $this->session->userdata('kodeunitkerja');
+			if($apiuser->message=='get_data_success' && $apiuser->data[0]->UnitKerja_Kode==$kodeunitkerja && $apiuser->data[0]->IsAuditor=='true'){
+				$output = array(
+											 "nip" => $apiuser->data[0]->Auditor_NIP,
+											 "nama" => $apiuser->data[0]->Auditor_NamaLengkap,
+											 "ttl" => $apiuser->data[0]->Auditor_TglLahir,
+											 "pendidikan" => $apiuser->data[0]->Pendidikan_Tingkat,
+											 "unit" => $apiuser->data[0]->UnitKerja_Nama,
+											 "jabatan" => (!empty($apiuser->data[0]->Jabatan_Nama)?$apiuser->data[0]->Jabatan_Nama:'-'),
+											 "jenjangjabatan" => $apiuser->data[0]->JenjangJabatan_Nama,
 							 );
 			 //output to json format
-			 echo json_encode($output);
 		 }else{
 			 $output = array(
+				 							"status" => "error",
 											"msg" => "NIP tidak sesuai dengan unit kerja",
 							);
-						echo json_encode($output);
 		 }
+	 }else{
+		 $output = array(
+										"status" => "error",
+										"msg" => "NIP tidak ditemukan",
+						);
+	 }
+		 print json_encode($output);
 		}
 
 		 public function loadData(){
 			  $userAdmin=$this->session->userdata('logged_in');
-			 	$data=$this->regis->load($userAdmin);
-				//$this->load->view('sertifikasi/unit_apip/registrasi', $data);
-				// $output = array(
-				// 			 "nip" => $data[0]->Auditor_NIP,
-				// 			 "nama" => $jsonResult->data[0]->Auditor_NamaLengkap,
-				// 			 "no_surat" => $jsonResult->data[0]->Auditor_TglLahir,
-				// 			 "tgl_ujian" => $jsonResult->data[0]->Pendidikan_Tingkat,
-				// 			 // "unit" => $jsonResult->data[0]->UnitKerja_Nama,
-				// 			 // "jabatan" => (!empty($jsonResult->data[0]->Jabatan_Nama)?$jsonResult->data[0]->Jabatan_Nama:'-'),
-				// 			 // "jenjangjabatan" => $jsonResult->data[0]->JenjangJabatan_Nama,
-				// 			 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-				// 			 // "TanggalLahir" => $jsonResult->data[0]->TempatLlahir,
-				// 			 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-				// 			 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-				// 			 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-				// 			 // "TempatLlahir" => $jsonResult->data[0]->TempatLlahir,
-				// 			 );
+			 	$datas=$this->regis->loaddatabyuser($userAdmin);
+				foreach ($datas as $key ) {
+				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN);
+				 if($dataRow=='empty'){
+					 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY);
+				 }
+				}
 			 //output to json format
-			 echo json_encode($data);
-				// $data['provinsi']=$this->provinsi->_get_provinsi_information();
+			 echo json_encode($dataRow);
 		 }
 		 public function add_data(){
-
-			 $date = date('Ymd');
+    	 $date = date('Ymd');
 			 $datex=date('Y-m-d');
-			 $nip=$this->input->post('nip');
-			 $dataCheckPeserta=$this->regis->loadbyNIP($nip,'1');
-			 if(!$dataCheckPeserta){
-					 $folder='doc_registrasi/'.$nip.'_'.$date;
-					 $docksp='doc_ksp';
-					 $docfoto='doc_foto';
-					 $uploadpdf = $this->do_upload_pdf($folder,$docksp);
-					 $uploadimg = $this->do_upload_img($folder,$docfoto);
-					 //$uploadimg = $this->do_upload_img($folder);
-					 // $uploadpdf='';
 
-					 // $this->session->set_userdata('group_regis', $group_regis);
-					 // $uploadpdf['result_upload_pdf']="success";
-					 if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
-						 $doc_ksp=$folder.'/'.$_FILES['doc_ksp']['name'];
-						 $doc_foto=$folder.'/'.$_FILES['doc_foto']['name'];
-						 $data = array(
-				 			'NIP' => $this->input->post('nip'),
-							'GROUP_REGIS' => '',
-							'KODE_DIKLAT' => $this->input->post('diklat'),
-				 			'LOKASI_UJIAN' => $this->input->post('lokasi'),
-				 			'PK_JADWAL_UJIAN' => $this->input->post('jadwal'),
-				 			'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
-				 			'NILAI_KSP' => $this->input->post('nilai_ksp'),
-				 			'DOC_NILAI_KSP' => $doc_ksp,
-				 			'DOC_FOTO' => $doc_foto,
-				 			'CREATED_AT' => $this->session->userdata('logged_in'),
-							'CREATED_DATE' => $datex,
-							'PROVINSI' => 'unknown',
-							'FLAG' => '0'
-				 		);
-						$insert=$this->regis->save($data);
-						if($insert=='Data Inserted Successfully'){
-							print json_encode(array("status"=>"success", "data"=>$insert));
-						}else{
-							print json_encode(array("status"=>"error", "data"=>$insert));
-						}
-					 }else{
-						 $data['upload_error1'] = $uploadpdf['error'];
-						 $data['upload_error2'] = $uploadimg['error'];
-					 }
-					 echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
-			 }else{
-				 echo json_encode(array("status"=>'gagal'));
-			 }
+				 $nip=$this->input->post('nip');
+				 $dataCheckPeserta=$this->regis->loadbyNIP($nip,'0');
+				 if(!$dataCheckPeserta){
+						 $folder='doc_registrasi/'.$nip.'_'.$date;
+						 $data_doc[0]='doc_ksp';
+						 $data_doc[1]='doc_foto';
+
+						 $uploadpdf = $this->do_upload_pdf($folder,'doc_ksp');
+						 $uploadimg = $this->do_upload_img($folder,'doc_foto');
+
+						 if($this->input->post('checkpindah')){
+							 $data_doc[2]='doc_loc';
+							 $data_url_doc['doc_url_foto']=$folder.'/'.$_FILES['doc_loc']['name'];
+							 $pindah_berkas=1;
+							 $uploadpdf2 = $this->do_upload_pdf($folder,$data_doc['doc_nama_loc']);
+						 }else{
+							  $pindah_berkas=0;
+						 }
+
+						 if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
+							 $data_url_doc[0]=$folder.'/'.$_FILES['doc_ksp']['name'];
+							 $data_url_doc[1]=$folder.'/'.$_FILES['doc_foto']['name'];
+
+							 $data = array(
+					 			'NIP' => $this->input->post('nip'),
+								'GROUP_REGIS' => '',
+								'KODE_DIKLAT' => $this->input->post('diklat'),
+					 			'LOKASI_UJIAN' => $this->input->post('lokasi'),
+					 			'FK_JADWAL_UJIAN' => $this->input->post('jadwal'),
+					 			'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
+					 			'NILAI_KSP' => $this->input->post('nilai_ksp'),
+					 			'PINDAH_BERKAS' => $pindah_berkas,
+					 			'CREATED_BY' => $this->session->userdata('logged_in'),
+								'CREATED_DATE' => $datex,
+								'PROVINSI' => 'unknown',
+								'FLAG' => '0'
+					 		);
+							$insert=$this->regis->save($data);
+							if($insert!='Data Inserted Failed'){
+								$count=count($data_doc);
+								for ($i=0; $i < $count ; $i++) {
+									$data_insert = array('DOCUMENT' => $data_url_doc[$i],
+								 												'DOC_NAMA'=> $data_doc[$i],
+																				'FK_REGIS_UJIAN' => $insert);
+									$insertdoc=$this->doc_regis->save($data_insert);
+								}
+
+								if($insertdoc='Data Inserted Successfully'){
+									$output = array(
+					 				 							"status" => "success",
+					 											"msg" => $insert,
+					 							);
+								}else{
+									$output = array(
+					 				 							"status" => "error",
+					 											"msg" => "Gagal simpan data ke database",
+					 							);
+								}
+							}else{
+								$output = array(
+				 				 							"status" => "error",
+				 											"msg" => "Gagal simpan data ke database",
+				 							);
+							}
+						 }else{
+							 $output = array(
+								 							"status" => "error",
+															"msg" => $uploadpdf['result_upload_pdf'],
+											);
+						 }
+				 }else{
+					 $output = array(
+						 							"status" => "error",
+													"msg" => "NIP sudah terdaftar",
+									);
+				 }
+
+			 print json_encode($output);
 		 }
 
 		 public function do_upload_pdf($folder,$doc){
+
 			 if (!is_dir('uploads/'.$folder)) {
 				 mkdir('./uploads/'.$folder, 0777, TRUE);
 			 }
@@ -180,49 +218,36 @@ class Registrasi extends CI_Controller {
 			 $dates = date('ymdHis');
 			 $timex= date('His');
 			 $datex=date('Y-m-d');
-			 // $nip=$this->input->post('nip');
-			 // $dataCheckPeserta=$this->regis->loadbyNIP($nip);
-			 // if(!$dataCheckPeserta){
-			 	   // $group_regis=$this->session->userdata('group_regis');
+
 					 $admin=$this->session->userdata('logged_in');
 					 $group_regis=$this->session->userdata('kodeunitkerja').'_'.$dates;
-
 					 $update=$this->regis->updateDataRegis($group_regis,$admin);
 					 $folder='doc_setuju/'.$group_regis;
-
 					 $docpersetujuan='doc_persetujuan';
-					 // $docfoto='doc_foto';
 					 $uploadpdf = $this->do_upload_pdf($folder,$docpersetujuan);
-					 // $uploadimg = $this->do_upload_img($folder,$docfoto);
-					 //$uploadimg = $this->do_upload_img($folder);
-					 // $uploadpdf='';
 
-					 // $group_regis='REGIS_'.$this->session->userdata('kodeunitkerja');
-					 // $this->session->set_userdata('group_regis', $group_regis);
-					 // $uploadpdf['result_upload_pdf']="success";
 					 if($uploadpdf['result_upload_pdf'] == "success"){
 						 $doc_persetujuan='doc_setuju/'.$group_regis.'_'.$dates.'/'.$_FILES['doc_persetujuan']['name'];
 						 // $doc_foto='doc_registrasi/'.$folder.'/'.$_FILES['doc_foto']['name'];
 						 $data = array(
 				 			'GROUP_REGIS' => $group_regis,
-						  'DOC_PERSETUJUAN' => $doc_persetujuan,
-				 			'CREATED_AT' => $this->session->userdata('logged_in'),
+						  'DOKUMEN' => $doc_persetujuan,
+				 			'CREATED_BY' => $this->session->userdata('logged_in'),
 							'CREATED_DATE' => $datex
 				 		);
-
-
 						$update=$this->regis->updateData($group_regis);
 						$insert=$this->setuju->save($data);
 						if($insert=='Data Inserted Successfully'){
-							print json_encode(array("status"=>"success", "data"=>$insert));
+							print json_encode(array("status"=>"success", "msg"=>$insert));
 						}else{
-							print json_encode(array("status"=>"error", "data"=>$insert));
+							print json_encode(array("status"=>"error", "msg"=>'Gagal simpan data ke database'));
 						}
 					 }else{
 						 $data['upload_error1'] = $uploadpdf['error'];
 						 // $data['upload_error2'] = $uploadimg['error'];
+						 print json_encode(array("status"=>'error','msg'=>'gagal upload'));
 					 }
-					 echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
+
 			 // }else{
 				//  echo json_encode(array("status"=>'gagal'));
 			 // }

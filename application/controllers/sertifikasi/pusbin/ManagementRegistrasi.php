@@ -8,9 +8,9 @@ class ManagementRegistrasi extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
     		$this->load->helper('url');
-    		$this->load->model('sertifikasi/menupage','menupage');
-				$this->load->model('sertifikasi/regisujian','regis');
-				$this->load->model('sertifikasi/jadwalujian','jadwal');
+    		$this->load->model('sertifikasi/MenuPage','menupage');
+				$this->load->model('sertifikasi/RegisUjian','regis');
+				$this->load->model('sertifikasi/JadwalUjian','jadwal');
     }
 
     public function index()

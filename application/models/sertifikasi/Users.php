@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users extends My_Model
+class Users extends MY_Model
 {
 	public $_table = 'users';
 	public $primary_key = 'PK_USER';

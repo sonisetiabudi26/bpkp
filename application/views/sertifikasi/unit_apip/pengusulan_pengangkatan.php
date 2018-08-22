@@ -15,10 +15,10 @@
 
 
 								<div class="row" >
-					        <div class="col-lg-10" style="padding:0;margin:0">
+					        <div class="col-lg-10 col-md-10 col-sm-10" style="padding:0;margin:0">
 										  <input class="form-control" name="nip" id="nip" type="text" placeholder="Masukan NIP">
 									</div>
-									<div class="col-md-2" style="padding:0;margin:0">
+									<div class="col-lg-2 col-md-2 col-sm-2" style="padding:0;margin:0">
 										<button class="btn btn-primary btn-block" onclick="search();">Cari</button>
 									</div>
               </div>
@@ -26,7 +26,7 @@
 								<div class="col-md-12" id="response-text" ></div>
 
 								<div id="show_data" style="display:none;">
-									<form onsubmit="procesFormPengusul(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/unit_apip/pengusulanpengangkatan/submit"; ?>" enctype="multipart/form-data" method="POST" id="daftar_pengusul">
+									<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/submit"; ?>')"  enctype="multipart/form-data" method="POST" id="daftar_pengusul">
 
 									<div class="panel panel-default">
 										<div class="panel-heading">Identitas</div>
@@ -107,22 +107,22 @@
 									<div class="panel-heading">Upload No Surat Pengusulan </div>
 										<div class="panel-body">
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<form onsubmit="procesFormPengusul(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/unit_apip/pengusulanpengangkatan/submit_nosurat"; ?>" enctype="multipart/form-data" method="POST" id="daftar_nosurat">
+												<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/submit_nosurat"; ?>')" enctype="multipart/form-data" method="POST" id="daftar_nosurat">
 
 												<div class="row">
 													<div class="form-group">
-														<div class="col-lg-4">
+														<div class="col-lg-4 col-md-4 col-sm-4">
 															<span class="btn btn-primary btn-block btn-file" id="input_surat"><i class="fa fa-file"></i>
-														 		Surat Pengusulan <input name="doc_surat" id="doc_surat" type="file">
+														 		Surat Pengusulan <span class="mandatory">*</span> <input name="doc_surat" id="doc_surat" type="file">
 															</span>
 														</div>
-													<div class="col-lg-8">
+													<div class="col-lg-8 col-md-8 col-sm-8">
 														 <input type="text" class="form-control text-primary" name="file_surat" id="text-surat" placeholder="doc Surat Pengusulan" />
 													 </div>
 												 </div>
 											 </div><br/>
 											<div class="row">
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>No Surat</span></div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>No Surat <span class="mandatory">*</span></span></div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='no_surat' class="form-control" id="no_surat" placeholder='input no surat'/></div>
 											</div>
 											<br/>
@@ -148,38 +148,42 @@
 function search(){
 
 	 var nip=$( "#nip" ).val();
-	$.ajax({
-			type  : 'ajax',
-			url   :  "<?php echo base_url('sertifikasi/unit_apip/pengusulanpengangkatan/search/')?>/" + nip,
-			async : false,
-			dataType : 'json',
-			success : function(data){
-				if(!data.msg){
-				 document.getElementById("show_data").style.display = "block";
-				  document.getElementById("Nip").value=nip;
-					document.getElementById("Nama").value=data.nama;
-					document.getElementById("ttl").value=data.ttl;
-					document.getElementById("pendidikan").value=data.pendidikan;
-					document.getElementById("unit").value=data.unit;
-					document.getElementById("jabatan").value=data.jabatan;
-					document.getElementById("golongan").value=data.golongan;
-					// $( "#show_data" ).prop( "disabled", false );
-					// $('#show_data').html(html);
-				}else{
-					document.getElementById("Nip").value='';
-					document.getElementById("Nama").value='';
-					document.getElementById("ttl").value='';
-					document.getElementById("pendidikan").value='';
-					document.getElementById("unit").value='';
-					document.getElementById("jabatan").value='';
-					document.getElementById("golongan").value='';
-					document.getElementById("show_data").style.display = "none";
-					// $( "#show_data" ).prop( "disabled", true );
-					alert(data.msg);
+	 if(nip!=''){
+		$.ajax({
+				type  : 'ajax',
+				url   :  "<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/search/')?>/" + nip,
+				async : false,
+				dataType : 'json',
+				success : function(data){
+					if(!data.msg){
+					 document.getElementById("show_data").style.display = "block";
+					  document.getElementById("Nip").value=nip;
+						document.getElementById("Nama").value=data.nama;
+						document.getElementById("ttl").value=data.ttl;
+						document.getElementById("pendidikan").value=data.pendidikan;
+						document.getElementById("unit").value=data.unit;
+						document.getElementById("jabatan").value=data.jabatan;
+						document.getElementById("golongan").value=data.golongan;
+						// $( "#show_data" ).prop( "disabled", false );
+						// $('#show_data').html(html);
+					}else{
+						document.getElementById("Nip").value='';
+						document.getElementById("Nama").value='';
+						document.getElementById("ttl").value='';
+						document.getElementById("pendidikan").value='';
+						document.getElementById("unit").value='';
+						document.getElementById("jabatan").value='';
+						document.getElementById("golongan").value='';
+						document.getElementById("show_data").style.display = "none";
+						// $( "#show_data" ).prop( "disabled", true );
+						//alert(data.msg);
+					}
 				}
-			}
 
-	});
+		});
+	}else{
+		swal('Terjadi Kesalahan','NIP tidak boleh kosong','error');
+	}
 }
 $(document).ready(function() {
 
@@ -187,7 +191,7 @@ $(document).ready(function() {
 		var example_table = $('#example_table').DataTable({
   'ajax': {
     "type"   : "POST",
-    "url"    : '<?php echo base_url('sertifikasi/unit_apip/pengusulanpengangkatan/loadData/')?>',
+    "url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadData/')?>',
     "dataSrc": ""
   },
   'columns': [
@@ -201,24 +205,28 @@ $(document).ready(function() {
 });
 
 });
-function refresh(){
+function loadData(obj){
+	document.getElementById("show_data").style.display = "none";
 	$('#example_table').DataTable().ajax.reload();
 }
 function remove(obj){
+	if(confirm('Are you sure delete this data?'))
+	{
 	$.ajax({
 			type  : 'ajax',
-			url   :  "<?php echo base_url('sertifikasi/unit_apip/pengusulanpengangkatan/remove/')?>/" + obj,
+			url   :  "<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/remove/')?>/" + obj,
 			async : false,
 			dataType : 'json',
 			success : function(data){
 				if(!data.msg){
-					refresh();
+					loadData(1);
 				}else{
 
 				}
 			}
 
 	});
+}
 }
 $("#input_surat").change(function (){
 

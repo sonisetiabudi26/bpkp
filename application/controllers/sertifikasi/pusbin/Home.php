@@ -8,8 +8,8 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
     		$this->load->helper('url');
-    		$this->load->model('sertifikasi/menupage','menupage');
-				$this->load->model('sertifikasi/pusbin','pusbin');
+    		$this->load->model('sertifikasi/MenuPage','menupage');
+				$this->load->model('sertifikasi/Pusbin','pusbin');
     }
 
     public function index()
@@ -25,5 +25,5 @@ class Home extends CI_Controller {
 			redirect('/');
 		}
     }
-	
+
 }

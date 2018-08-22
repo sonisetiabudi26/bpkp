@@ -1,4 +1,4 @@
-<form onsubmit="uploadFilePengusulan(this, 'response-texts')" action="<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/upload_submit"; ?>" enctype="multipart/form-data" method="POST" id="daftar_pengusulan">
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/upload_submit"; ?>')"  enctype="multipart/form-data" method="POST" id="daftar_pengusulan">
 <div class="col-md-12" id="response-texts" ></div>
 <input name="desc" style="display:none;" value="<?php echo $desc; ?>"></input>
 <input name="id_pengusul" style="display:none;" value="<?php echo $id_pengusul; ?>"></input>

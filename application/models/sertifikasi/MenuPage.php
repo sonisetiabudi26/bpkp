@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 //This is the menu_page Model for CodeIgniter CRUD using Ajax Application.
-class MenuPage extends My_Model
+class MenuPage extends MY_Model
 {
 	public $_table = 'menu_page';
 	public $primary_key = 'PK_MENU_PAGE';
@@ -21,7 +21,7 @@ class MenuPage extends My_Model
 			return false;
 		}
 	}
-	
+
 	public function _get_access_menu_page($lookup_menu) {
 		$condition = "fk_lookup_menu =" . "'" . $lookup_menu . "' and menu_name <> menu_main";
 		$this->db->select('*');

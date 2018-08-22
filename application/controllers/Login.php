@@ -4,14 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller{
 
 	public function __construct(){
-        parent::__construct();
+    parent::__construct();
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->library('encryption');
-		$this->load->model('sertifikasi/users','users');
-		$this->load->model('sertifikasi/lookup','lookup');
-		$this->load->model('sertifikasi/menupage','menupage');
+		$this->load->model('sertifikasi/Users','users');
+		$this->load->model('sertifikasi/Lookup','lookup');
+		$this->load->model('sertifikasi/MenuPage','menupage');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('Curl');
     }
