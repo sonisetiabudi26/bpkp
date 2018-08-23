@@ -16,6 +16,14 @@ class JadwalUjian extends My_Model
 		$query = $this->db->get();
 	   return $query->result();
 	}
+	public function getdatabyid($id) {
+		$condition = "PK_JADWAL_UJIAN =" . "'" . $id . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+	   return $query->result();
+	}
 	public function loadJadwal(){
 
 		$this->db->select('*');
@@ -36,6 +44,14 @@ class JadwalUjian extends My_Model
  			 return 'Data Inserted Failed';
  		 }
  	}
-
+	public function updateData($where,$data){
+		$this->db->where($where);
+		$update=$this->db->update($this->_table,$data);
+		if($update){
+			return 'success';
+		}else{
+			return 'error';
+		}
+	}
 
 }

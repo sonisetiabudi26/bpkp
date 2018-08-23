@@ -437,7 +437,7 @@ function procesFormandUpload(formTarget, url){
 			dataType: "json",
 			success : function(data) {
         if(data.status=='success'){
-          swal("Success", "Data Inserted Successfully!", "success");
+          swal("Success", "Data berhasil disimpan!", "success");
           $("#"+formTarget.id)[0].reset();
           loadData(1);
         }else if(data.status=='error'){
@@ -530,11 +530,11 @@ function getModalWithParam(btnId){
 	});
 }
 
-$(document).ready(function() {
-	$('body').on('hidden.bs.modal', '.modal', function () {
-		location.reload();
-	});
-});
+// $(document).ready(function() {
+// 	$('body').on('hidden.bs.modal', '.modal', function () {
+// 	///	location.reload();
+// 	});
+// });
 
 /** FORM WIZARD STEP */
 $(document).ready(function () {

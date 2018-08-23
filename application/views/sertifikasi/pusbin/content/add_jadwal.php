@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/tambah"; ?>" method="POST" id="jadwalFrom" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/tambah"; ?>')" method="POST" id="jadwalFrom" >
 		<div class="form-group">
       	<label for="category">Category :</label>
         	<input type="text" class="form-control text-primary" id="category" name="category" placeholder="Category" />

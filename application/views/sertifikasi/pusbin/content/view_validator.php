@@ -1,9 +1,9 @@
 <div class="col-md-12" id="response-textx" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-textx')" action="<?php echo base_url('sertifikasi')."/pusbin/PengusulanPengangkatan/add_validator"; ?>" method="POST" id="jadwalFrom" >
-<input name="unitkerja" style="display:none;" value="<?php echo $unitkerja; ?>"></input>
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/PengusulanPengangkatan/add_validator"; ?>')" method="POST" id="validator_form" >
+<input name="no_surat" style="display:none;" value="<?php echo $no_surat; ?>"></input>
     <div class="form-group">
-        <label for="validator">Validator sesuai unit kerja</label>
+        <label for="validator">Validator</label>
         <div >
             <select class="form-control" name='validator' id='validator'>
               <?php

@@ -31,7 +31,7 @@
 													<td>Unit Kerja</td>
 													<td>Jenjang</td>
 													<td>Mata Pelajaran</td>
-													<td>Lokasi Ujian</td>
+													<!-- <td>Lokasi Ujian</td> -->
 												</tr>
 												</thead>
 												<tbody id="dataPeserta">
@@ -96,7 +96,7 @@
 </div>
 
 <script>
-loadData();
+loadDataPeserta();
 
 
 function add()
@@ -108,7 +108,7 @@ function add()
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Add Person'); // Set Title to Bootstrap modal title
 }
-function loadData(){
+function loadDataPeserta(){
 
 		document.getElementById("dataPeserta").innerHTML='';
 
@@ -120,20 +120,20 @@ function loadData(){
       success : function(data){
 
 				var nip='';
+				var no='';
 				var a=1;
 				data.forEach(function(resp) {
 
            $("#dataPeserta").append("<tr><td>" + a + "</td>"+
-					 "<td>" + (resp.nip != nip ? resp.nip : '') + "</td>"+
-					 "<td>" + (resp.nip != nip ? resp.nama : '') + "</td>"+
-					  "<td>" + (resp.nip != nip ? resp.unitkerja : '') + "</td>"+
-						"<td>" + (resp.nip != nip ? resp.jenjang : '') + "</td>"+
-					 "<td> unknown (comming soon) </td>"+
+					 "<td>" + (resp.NIP != nip ? resp.NIP : '') + "</td>"+
+					 "<td>" + (resp.NIP != nip ? resp.nama_peserta : '') + "</td>"+
+					  "<td>" + (resp.NIP != nip ? resp.unitkerja : '') + "</td>"+
+						"<td>" + (resp.NIP != nip ? resp.NAMA_JENJANG : '') + "</td>"+
+					 "<td> "+ resp.NAMA_MATA_AJAR +" </td>"+
 					 // "<td>" + (resp.nip != nip ? resp.start + " - "+ resp.END_DATE  : '')+"</td>"+
-					 "<td>" + (resp.nip != nip ? resp.provinsi : '') + "</td>"+
 					 "</tr>");
 					 nip=resp.NIP;
-					 a++;
+					a++;
 			  });
       }
 	});
@@ -163,30 +163,10 @@ var table;
 
           });
 }
-// function loadDatasoal(){
-// 	var table;
-//  table = $('#datajadwal').DataTable({
-// 				 "processing": false, //Feature control the processing indicator.
-// 				 "serverSide": true, //Feature control DataTables' server-side processing mode.
-// 				 "order": [], //Initial no order.
-// 				 // Load data for the table's content from an Ajax source
-// 				 "ajax": {
-// 						 "url": '<?php //echo base_url('sertifikasi/pusbin/ManagementRegistrasi/loadDataSoal/')?>',
-// 						 "type": "POST"
-// 				 },
-// 				 //Set column definition initialisation properties.
-// 				 "columns": [
-// 						 {"data": "0",width:170},
-// 						 {"data": "1",width:100},
-// 						 {"data": "2",width:100},
-// 						 {"data": "3",width:100},
-// 						 {"data": "2",width:100}
-// 				 ],
-//
-// 		 });
-// }
-
-
+function loadData(obj){
+	loadDataPeserta();
+	loadDatajadwal();
+}
 function delete_jadwal(id)
 {
     if(confirm('Are you sure delete this data?'))
@@ -200,7 +180,7 @@ function delete_jadwal(id)
             {
                 //if success reload ajax table
               //  $('#modal_form').modal('hide');
-                loadData();
+                loadData(1);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {

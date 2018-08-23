@@ -37,17 +37,17 @@ class PengusulanPengangkatan extends CI_Controller {
       if($datas!='no data'){
       foreach ($datas as $key) {
         $dataRow['no']=$a;
-        $dataRow['nipunitapip']=$key->CREATED_AT;
-        $apiuser=$this->apiuser($key->CREATED_AT);
+        $dataRow['nipunitapip']=$key->CREATED_BY;
+        $apiuser=$this->apiuser($key->CREATED_BY);
 
         $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
         $dataRow['unitapip']=$kodeunitkerja;
-        $datarow=$this->pengusul->numrowcategory($key->CREATED_AT);
+        $datarow=$this->pengusul->numrowcategory($key->CREATED_BY);
 
         if($datarow=='no data'){
           $datarow=0;
         }
-        $datarowpeserta=$this->pengusul->numrowpeserta($key->CREATED_AT);
+        $datarowpeserta=$this->pengusul->numrowpeserta($key->CREATED_BY);
 
         if($datarowpeserta=='no data'){
           $datarowpeserta=0;
@@ -55,7 +55,7 @@ class PengusulanPengangkatan extends CI_Controller {
         $dataRow['jml_category']=$datarow;
         $dataRow['jml_peserta']=$datarowpeserta;
         $dataRow['validator']=($key->validator!='0'?$key->validator:'');
-        $url=base_url('sertifikasi')."/pusbin/pengusulanpengangkatan/vw_validator/".$key->CREATED_AT;
+        $url=base_url('sertifikasi')."/pusbin/PengusulanPengangkatan/vw_validator/".$key->NO_SURAT;
         $dataRow['action']="<td><button onclick='getModal(this)' id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
             <span>Set Validator</span></button></td>";
         $data[]=$dataRow;
@@ -72,14 +72,16 @@ class PengusulanPengangkatan extends CI_Controller {
     }
     public function vw_validator($param){
         // $data['id_unitapip']=$param;
-        $datas['unitkerja']=$param;
+        $datas['no_surat']=$param;
         //$apiuser=$this->apiuser($param);
         //$kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
         $validator=$this->user->check_validator();
         foreach ($validator as $key ) {
           //$apiuservalidator=$this->apiuser($key->USER_NAME);
           //$kodeunitkerjavalidator = $apiuser->data[0]->UnitKerja_Nama;
-            $datas['validator'] = array('username' => $key->USER_NAME, );
+            $datas['validator'] = array('username' => $key->USER_NAME,
+					 															);
+
   			}
         $this->load->view('sertifikasi/pusbin/content/view_validator',$datas);
 
@@ -91,24 +93,28 @@ class PengusulanPengangkatan extends CI_Controller {
       return $jsonResult;
     }
     public function add_validator(){
+
       $where=array(
-        'CREATED_AT'=>$this->input->post('unitkerja'),
-				'validator'=>''
+				'validator'=>'',
+				'NO_SURAT'=>$this->input->post('no_surat'),
+
       );
       $data_update=array(
         'validator'=>$this->input->post('validator'),
       );
       $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
-      if($update){
+      if($update=='success'){
         $data = array(
                        "status" => "success",
+											 "msg" => "Data berhasil disimpan"
                );
       }else{
         $data = array(
-                       "status" => "failed",
+                       "status" => "error",
+											 "msg" => "Data gagal disimpan"
                );
       }
        //output to json format
-       echo json_encode($data);
+       print json_encode($data);
     }
   }
