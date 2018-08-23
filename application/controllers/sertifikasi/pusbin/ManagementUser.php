@@ -152,7 +152,7 @@ class ManagementUser extends CI_Controller {
 			$date = date('Ymd');
 			$datex=date('Y-m-d');
 			$username=$this->input->post('username');
-			$password=$this->encryption->decrypt($this->input->post('password'));
+			$password=$this->encryption->encrypt($this->input->post('password'));
 			$fk_lookup_role=$this->input->post('role');
 			 if($username!=''&& $password!=''){
 						$data = array(
