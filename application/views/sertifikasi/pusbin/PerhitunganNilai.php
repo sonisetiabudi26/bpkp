@@ -117,9 +117,8 @@
 <script>
 // loadDatajadwal();
 $(document).ready(function(){
-	loadadataevent();
-});
-function loadadataevent(){
+
+
 var table;
 			table = $('#dataEventAll').DataTable({
             	'ajax': {
@@ -138,17 +137,22 @@ var table;
               ],
 
           });
-}
+});
 function calculate(kode_event,kelas){
 	var kode=kode_event+'~'+kelas;
 	$.ajax({
 			url : "<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/calculate/')?>/"+kode,
 			type: "POST",
 			dataType: "JSON",
-			success: function(data)
+			success: function(resp)
 			{
+				if(resp.status=="success"){
 					loadData(1);
-					alert('Kalkulasi Nilai Selesai');
+					swal('Berhasil',resp.msg,resp.status);
+				}else{
+					loadData(1);
+					swal('Terjadi kesalahan',resp.msg,resp.status);
+				}
 			},
 			error: function (jqXHR, textStatus, errorThrown)
 			{
@@ -210,6 +214,7 @@ function loadDatalist(){
 }
 function loadData(obj){
 	$('#dataEventAll').DataTable().ajax.reload();
+		$('#dataBatchAll').DataTable().ajax.reload();
 }
 function delete_event(id){
 	if(confirm('Are you sure delete this data?'))
@@ -217,6 +222,28 @@ function delete_event(id){
 			// ajax delete data to database
 			$.ajax({
 					url : "<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/deleteEvent/')?>/"+id,
+					type: "POST",
+					dataType: "JSON",
+					success: function(data)
+					{
+							//if success reload ajax table
+						//  $('#modal_form').modal('hide');
+							loadData(1);
+					},
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+							alert('Error deleting data');
+					}
+			});
+
+	}
+}
+function delete_batch(id){
+	if(confirm('Are you sure delete this data?'))
+	{
+			// ajax delete data to database
+			$.ajax({
+					url : "<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/deleteBatch/')?>/"+id,
 					type: "POST",
 					dataType: "JSON",
 					success: function(data)

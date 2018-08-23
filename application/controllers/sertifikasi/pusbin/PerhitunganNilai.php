@@ -293,16 +293,22 @@ class PerhitunganNilai extends CI_Controller {
 
       $delete=$this->event->remove($id);
 
-				print json_encode(array("status"=>"success", "data"=>$delete));
+				print json_encode(array("status"=>"success", "msg"=>$delete));
     }
+		public function deleteBatch($id){
+
+			$delete=$this->batch->remove($id);
+
+				print json_encode(array("status"=>"success", "msg"=>$delete));
+		}
 		public function calculate($kode){
 			$parameter	= explode('~',$kode);
 			$kode_event=$parameter[0];
 			$kelas=$parameter[1];
 			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
 
+			if($dataAll!='no data'){
 
-			$a=6;
 			$nomor1=1;
 
 			foreach ($dataAll as $key) {
@@ -344,16 +350,19 @@ class PerhitunganNilai extends CI_Controller {
 				$a++;
 				$update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
 				if($update){
-					$data_response='success';
+					$output  = array('status' =>'success' ,
+				 										'msg'=>'Data berhasil dikalkulasi');
 				}else{
-					$data_response='error';
+					$output  = array('status' =>'error' ,
+				 										'msg'=>'Data gagal dikalkulasi');
 				}
 			}
-			$array = [
-						 'data' => $dataall, // Append a passengers key with the variable $passengers, this will most likely be an stdClass object or an arrays
-			 ];
 
-				  print json_encode(array("status"=>$data_response, "data"=>$array));
+		 }else{
+			 $output = array('status' =>'error' ,
+		  									'msg'=>'Data peserta tidak ada');
+		 }
+				  print json_encode($output);
 		}
 		public function LoadDataUnit(){
 			$dataAll= $this->jawaban->getUnit();
@@ -404,10 +413,15 @@ class PerhitunganNilai extends CI_Controller {
   			$loadexcel = $excelreader->load('uploads/nilai/'.$filename);
   			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
   			$data['sheet'] = $this->import($sheet,$dataAll);
+				if($data['sheet']=='success'){
+					$output = array('status' =>'success' ,'msg'=>'Berhasil di import' );
+				}else{
+						$output = array('status' =>'error' ,'msg'=>$data['sheet']);
+					}
   		}else{
-  			$data['upload_error'] = $upload['error'];
+  			$output = array('status' =>'error' ,'msg'=>'Gagal melakukan proses import' );
   		}
-      print json_encode(array("status"=>$upload['result_upload'], "data"=>$data));
+      print json_encode($output);
 
 
   	}
@@ -444,14 +458,14 @@ class PerhitunganNilai extends CI_Controller {
     //  $dataAll=$this->batch->get_batch_by_id($id_batch);
   		foreach($sheet as $row){
         if($numrow > 1 ){
-    			//if($row['A']==$dataAll[0]->KODE_EVENT){
+
             $indexbatch=$indexbatch+1;
     				array_push($datasheet1, [
     				'FK_KODE_EVENT'=>$kode_event,//kode event ambil dr data selected
     				'KELAS'=>$kelas,//kelas ambil dr data selected
     				'KODE_PESERTA'=>$row['F'],
 						'KODE_UNIT'=>$row['G'],
-    				'KODE_SOAL'=>$row['C'],
+    				'KODE_SOAL'=>$kelas,
             'CREATED_AT' =>  $this->session->userdata('logged_in'),
             'CREATED_DATE' => $datex,
 
@@ -507,20 +521,23 @@ class PerhitunganNilai extends CI_Controller {
 						'NO_50' =>$row['BF'],
     				]);
 
-    			//}
+
       }
       $numrow++;
   		}
   		/** Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model */
       if($numrow >1){
-    		if($this->jawaban->insert_multiple($datasheet1)){
-            return array('datasheet' => $datasheet1, 'file' => '', 'response' => "success");
-          }else{
-            return array('datasheet' => $datasheet1, 'file' => '', 'response' => "error");
-          }
-
+				if($indexbatch>0){
+	    		if($this->jawaban->insert_multiple($datasheet1)){
+	            return  "success";
+	          }else{
+	            return  "error";
+	          }
+				}else{
+					return "error";
+				}
     		}else{
-    			return array('datasheet' => $datasheet1, 'file' => '', 'response' => 'error');
+    			return 'error';
     		}
   	}
 }

@@ -105,11 +105,9 @@ public function getUnit(){
 	$this->db->from($this->_table);
 	$this->db->group_by('KODE_UNIT');
 	$query = $this->db->get();
-	if ($query->num_rows() > 0) {
+
 		return $query->result();
-	} else {
-		return "no data";
-	}
+	
 }
 public function getPesertabyUnit($id_unit,$id_event){
 	$condition = "KODE_UNIT =" . "'" . $id_unit . "' AND " . "FK_KODE_EVENT =" . "'" . $id_event . "'";
