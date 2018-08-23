@@ -6,7 +6,7 @@
 <div class="clearfix"></div>
 <div class="" role="tabpanel" data-example-id="togglable-tabs" style="background:#fff !important;">
 	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Bank Soal</a>
+		<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" onclick="loaddatapeserta();" role="tab" data-toggle="tab" aria-expanded="true">Bank Soal</a>
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDataUserDiklat();" id="profile-tab" data-toggle="tab" aria-expanded="false">Pengelola Diklat</a>
 		</li>
@@ -140,6 +140,9 @@
 </div>
 <script>
 $(document).ready(function(){
+loaddatapeserta();
+});
+function loaddatapeserta(){
 var table;
 			table = $('#dataUserAll').DataTable({
               "processing": false, //Feature control the processing indicator.
@@ -161,7 +164,8 @@ var table;
               ],
 
           });
-});
+
+}
 
 function loadDataUserDiklat(){
 	var table;
@@ -226,14 +230,14 @@ function loadDataUserFP(){
 	                  {"data": "0",width:50},
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
-	                 
+
 										{"data": "4",width:100}
 	              ],
 
 	          });
 }
-function refresh(){
-	$('#dataUserWidyaiswara').DataTable().ajax.reload();
+function loadData(obj){
+	loaddatapeserta();
 	loadDataUserDiklat();
 	loadDataUserWidya();
 	loadDataUserFP();
@@ -251,7 +255,7 @@ function delete_user(id)
             {
                 //if success reload ajax table
               //  $('#modal_form').modal('hide');
-                refresh();
+                loadData(1);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {

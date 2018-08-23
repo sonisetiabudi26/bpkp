@@ -154,7 +154,7 @@ class ManagementUser extends CI_Controller {
 			$username=$this->input->post('username');
 			$password=$this->encryption->decrypt($this->input->post('password'));
 			$fk_lookup_role=$this->input->post('role');
-			// if($username!=''){
+			 if($username!=''&& $password!=''){
 						$data = array(
 						 'USER_NAME' => $username,
 						 'FK_LOOKUP_ROLE' => $fk_lookup_role,
@@ -162,14 +162,13 @@ class ManagementUser extends CI_Controller {
 					 );
 					 $insert=$this->user->save($data);
 					 if($insert=='Data Inserted Successfully'){
-						 print json_encode(array("status"=>"success", "data"=>$insert));
+						 print json_encode(array("status"=>"success", "msg"=>'Data berhasil disimpan'));
 					 }else{
-						 print json_encode(array("status"=>"error", "data"=>$insert));
+						 print json_encode(array("status"=>"error", "msg"=>'Data gagal disimpan'));
 					 }
-					// echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
-			// }else{
-			// 	echo json_encode(array("status"=>'gagal'));
-			// }
+			}else{
+				echo json_encode(array("status"=>'error','msg'=>'Data gagal disimpan'));
+			}
 		}
 		public function delete_user($id)
 		{

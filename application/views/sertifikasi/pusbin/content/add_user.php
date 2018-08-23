@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/add_user"; ?>" method="POST" id="user" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/add_user"; ?>')" method="POST" id="add_user" >
   <input value='<?php echo $param ?>' name='role' style="display:none;"/>
 		<div class="form-group">
       	<label for="category">Username</label>
