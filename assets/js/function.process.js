@@ -439,11 +439,13 @@ function procesFormandUpload(formTarget, url){
         if(data.status=='success'){
           swal("Success", "Data berhasil disimpan!", "success");
           $("#"+formTarget.id)[0].reset();
-          loadData(1);
+
         }else if(data.status=='error'){
           swal("Terjadi Kesalahan", data.msg, data.status);
             $("#"+formTarget.id)[0].reset();
+
         }
+          loadData(1);
       },
       error: function (e) {
         swal('Terjadi Kesalahan',e,'error');

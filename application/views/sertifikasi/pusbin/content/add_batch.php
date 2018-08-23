@@ -1,11 +1,12 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/tambahBatch"; ?>" method="POST" id="batchList" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/tambahBatch"; ?>')" method="POST" id="batchList" >
   <div class="row">
       <div class="form-group">
         <div class="col-md-12">
         <label for="category">Kode Event :</label>
-        <input type="text" class="form-control text-primary" id="event" name="event" value="<?php echo $id_event?>" placeholder="Kelas" readonly />
+        <input name="event" value="<?php echo $id_event?>" style="display:none">
+        <input type="text" class="form-control text-primary" id="namaevent" name="namaevent" value="<?php echo $kode_event?>" placeholder="Kelas" readonly />
       </div>
     </div>
   </div><br/>

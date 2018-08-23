@@ -16,9 +16,10 @@ class Event extends My_Model
 		 }
 	}
   public function loadEvent(){
-    $this->db->select('event.*,provinsi.Nama');
+    $this->db->select('event.*,provinsi.Nama,jenjang.NAMA_JENJANG');
     $this->db->from($this->_table);
     $this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
+		$this->db->join('jenjang', 'event.FK_JENJANG = jenjang.PK_JENJANG');
     $query = $this->db->get();
   //	return $query->result();
       return $query->result();

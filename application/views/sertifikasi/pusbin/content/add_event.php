@@ -1,17 +1,17 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/tambah"; ?>" method="POST" id="eventList" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/tambah"; ?>')" method="POST" id="eventList" >
   <div class="row">
     <div class="form-group">
       <div class="col-md-3">
       	<label for="category">Kode Diklat :</label>
         	<!-- <input type="number" class="form-control text-primary" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" placeholder="Kode Diklat" /> -->
-          <select name="provinsi" class="form-control" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" >
+          <select class="form-control" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" >
             <option value="">Pilihan</option>
             <?php
               foreach ($kodediklat as $key):
             ?>
-              <option value="<?php echo $key->KODE_DIKLAT;?>"><?php echo $key->KODE_DIKLAT.'-'. $key->NAMA_GROUP_MATA_AJAR?></option>
+              <option value="<?php echo $key->KODE_DIKLAT;?>"><?php echo $key->KODE_DIKLAT.'-'. $key->NAMA_JENJANG?></option>
             <?php
               endforeach;
             ?>

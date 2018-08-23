@@ -40,21 +40,24 @@ class PerhitunganNilai extends CI_Controller {
 			$this->load->view('sertifikasi/pusbin/content/add_event',$data);
 		}
     public function vv_add_batch($param){
-      $data['id_event']	= $param;
+      $dataparam	= explode('~',$param);
+			$data['id_event']=$dataparam[0];
+			$data['kode_event']=$dataparam[1];
       $data['jadwal']	= $this->jadwal->loadJadwal();
       $this->load->view('sertifikasi/pusbin/content/add_batch',$data);
     }
     public function CheckNodiklat($kodediklat){
       $jsonResult	= $this->groupmataajar->_get_kodediklat_group_mata_ajar($kodediklat);
       	if($jsonResult!='no data'){
-            $data['diklat']	=$jsonResult[0]->NAMA_GROUP_MATA_AJAR;
+            $data['diklat']	=$jsonResult[0]->NAMA_JENJANG;
             $output[] = $data;
         }else{
           $output = array(
+												"status"=>"error",
    											"msg" => "No data diklat",
    							);
         }
-      echo json_encode($output);
+      print json_encode($output);
     }
 
     public function tambah(){
@@ -68,24 +71,24 @@ class PerhitunganNilai extends CI_Controller {
              $namadiklat=$this->input->post('namadiklat');
              $provinsi=$this->input->post('provinsi');
              $uraian=$this->input->post('uraian');
-      			 if($bulan!=''&&$tahun!=''&&$kodeevent!=''&&$namadiklat!=''&&$provinsi!=''){
+      			 if($bulan!=''&&$tahun!=''&&$kodeevent!=''&&$namadiklat!=''&&$provinsi!=''&&$kodediklat!=''){
       						 $data = array(
       				 			'KODE_EVENT' => $kodeevent,
-      							'NAMA_DIKLAT' => $namadiklat,
+      							'FK_JENJANG' => $kodediklat,
       				 			'URAIAN' => $uraian,
       				 			'FK_PROVINSI' => $provinsi,
-      				 			'CREATED_AT' => $this->session->userdata('logged_in'),
+      				 			'CREATED_BY' => $this->session->userdata('logged_in'),
       							'CREATED_DATE' => $datex
       				 		);
       						$insert=$this->event->save($data);
       						if($insert=='Data Inserted Successfully'){
-      							print json_encode(array("status"=>"success", "data"=>$insert));
+      							print json_encode(array("status"=>"success", "data"=>'Data Berhasil disimpan'));
       						}else{
-      							print json_encode(array("status"=>"error", "data"=>$insert));
+      							print json_encode(array("status"=>"error", "msg"=>'Data gagal disimpan'));
       						}
       					 // echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
       			 }else{
-      				 echo json_encode(array("status"=>'gagal', "data"=>$data));
+      				 echo json_encode(array("status"=>'error', "msg"=>'Data tidak boleh ada yang kosong'));
       			 }
     }
     public function tambahBatch(){
@@ -104,26 +107,29 @@ class PerhitunganNilai extends CI_Controller {
                     'KELAS' => $kelas,
                     'FK_JADWAL' => $jadwal,
                     'REFF' => $reff,
-                    'CREATED_AT' => $this->session->userdata('logged_in'),
+                    'CREATED_BY' => $this->session->userdata('logged_in'),
                     'CREATED_DATE' => $datex
                   );
                   $insert=$this->batch->save($data);
                   if($insert=='Data Inserted Successfully'){
 										 $data = array(
 																	 "status" => "success",
+																	 "msg" =>"Data berhasil disimpan"
 													 );
                   }else{
 										 $data = array(
 																	 "status" => "error",
+																	 "msg" => "Data gagal disimpan"
 													 );
                   }
                  // echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
              }else{
 							  $data = array(
-															"status" => "nodata",
+															"status" => "error",
+															"msg" => "Data tidak boleh kosong"
 											);
              }
-						 echo json_encode($data);
+						 print json_encode($data);
     }
 
     public function LoadDateEvent(){
@@ -136,10 +142,10 @@ class PerhitunganNilai extends CI_Controller {
              $row = array();
              $row['no'] = $a;
              $row['kodeevent'] = $field->KODE_EVENT;
-             $row['namadiklat'] = $field->NAMA_DIKLAT;
+             $row['namadiklat'] = $field->NAMA_JENJANG;
              $row['uraian'] = $field->URAIAN;
              $row['nama'] = $field->Nama;
-						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT;
+						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
              $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
 						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Create Batch</a></td>';
 

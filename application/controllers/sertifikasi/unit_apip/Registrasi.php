@@ -89,7 +89,7 @@ class Registrasi extends CI_Controller {
 				foreach ($datas as $key ) {
 				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN);
 				 if($dataRow=='empty'){
-					 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY);
+					 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
 				 }
 				}
 			 //output to json format

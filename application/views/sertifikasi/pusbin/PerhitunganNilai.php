@@ -7,7 +7,7 @@
 <div class="clearfix"></div>
 <div class="" role="tabpanel" data-example-id="togglable-tabs" style="background:#fff !important;">
 	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#tab_content1" onclick="loadData();" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Events</a>
+		<li role="presentation" class="active"><a href="#tab_content1" onclick="loadadataevent();" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Events</a>
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" onclick="loadDatabatch();" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Batch</a>
 		</li>
@@ -117,6 +117,9 @@
 <script>
 // loadDatajadwal();
 $(document).ready(function(){
+	loadadataevent();
+});
+function loadadataevent(){
 var table;
 			table = $('#dataEventAll').DataTable({
             	'ajax': {
@@ -135,7 +138,7 @@ var table;
               ],
 
           });
-});
+}
 function calculate(kode_event,kelas){
 	var kode=kode_event+'~'+kelas;
 	$.ajax({
@@ -144,7 +147,7 @@ function calculate(kode_event,kelas){
 			dataType: "JSON",
 			success: function(data)
 			{
-					refresh();
+					loadData(1);
 					alert('Kalkulasi Nilai Selesai');
 			},
 			error: function (jqXHR, textStatus, errorThrown)
@@ -205,7 +208,7 @@ function loadDatalist(){
 
 	          });
 }
-function refresh(){
+function loadData(obj){
 	$('#dataEventAll').DataTable().ajax.reload();
 }
 function delete_event(id){
@@ -220,7 +223,7 @@ function delete_event(id){
 					{
 							//if success reload ajax table
 						//  $('#modal_form').modal('hide');
-							refresh();
+							loadData(1);
 					},
 					error: function (jqXHR, textStatus, errorThrown)
 					{
