@@ -9,7 +9,7 @@ class Provinsi extends My_Model
 
 
   public function _get_provinsi_information() {
-		$this->db->select('NAMA');
+		$this->db->select('NAMA,PK_PROVINSI');
 		$this->db->from($this->_table);
 		$query = $this->db->get();
 	   return $query->result();

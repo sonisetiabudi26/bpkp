@@ -36,7 +36,7 @@ class PerhitunganNilai extends CI_Controller {
     }
     public function vw_add_event(){
 			$data['provinsi']	= $this->provinsi->_getAll();
-			$data['kodediklat']	= $this->groupmataajar->_get_all_group_mata_ajar();
+			$data['kodediklat']	= $this->groupmataajar->getalldatakodediklat_mataajar();
 			$this->load->view('sertifikasi/pusbin/content/add_event',$data);
 		}
     public function vv_add_batch($param){

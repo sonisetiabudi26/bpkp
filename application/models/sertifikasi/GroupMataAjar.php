@@ -27,6 +27,17 @@ class GroupMataAjar extends My_Model
 			$query = $this->db->get();
 	    return $query->result();
 	}
+	public function getalldatakodediklat_mataajar()
+	{
+	  	$condition = "group by jenjang.PK_JENJANG";
+			$this->db->select('*');
+			$this->db->from($this->_table);
+			$this->db->join('mata_ajar', 'jenjang.PK_JENAJANG = lookup.FK_JENJANG');
+			$this->db->where($condition);
+			$query = $this->db->get();
+
+			return $query->result();
+	}
 	public function loadbyuser($kode_diklat){
 	   $condition = "jenjang.KODE_DIKLAT =" . "'" . $kode_diklat . "'";
 		 $this->db->select('mata_ajar.NAMA_MATA_AJAR');
