@@ -29,11 +29,9 @@ class GroupMataAjar extends My_Model
 	}
 	public function getalldatakodediklat_mataajar()
 	{
-	  	$condition = "group by jenjang.PK_JENJANG";
-			$this->db->select('*');
+
+	  	$this->db->select('jenjang.KODE_DIKLAT,jenjang.NAMA_JENJANG');
 			$this->db->from($this->_table);
-			$this->db->join('mata_ajar', 'jenjang.PK_JENAJANG = lookup.FK_JENJANG');
-			$this->db->where($condition);
 			$query = $this->db->get();
 
 			return $query->result();
