@@ -7,7 +7,8 @@ class Permintaan extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
-    	$this->load->model('sertifikasi/permintaansoal','permintaansoal');
+    	  $this->load->model('sertifikasi/permintaansoal','permintaansoal');
+				$this->load->model('sertifikasi/detailpermintaansoal','detailpermintaansoal');
     }
 
 	public function loadPermintaan($id){
@@ -58,19 +59,40 @@ class Permintaan extends CI_Controller {
 	}
 	public function insert_permintaan(){
 		$data = array(
-			'FK_BAB_MATA_AJAR' => $this->input->post('fk_group_mata_ajar'),
+			'FK_BAB_MATA_AJAR' => $this->input->post('fk_bab_mata_ajar'),
 			'TIPE_SOAL' => $this->input->post('tipe_soal'),
-			'PEMBUAT_SOAL' => $this->input->post('pembuat'),
-			'REVIEW1' => $this->input->post('review1'),
-			'REVIEW2' => $this->input->post('review2'),
+			// 'PEMBUAT_SOAL' => $this->input->post('pembuat'),
+			// 'REVIEW1' => $this->input->post('review1'),
+			'STATUS' => 'pembuat_soal',
 			'TANGGAL_PERMINTAAN' => $this->input->post('tanggal_permintaan'),
 			'JUMLAH_SOAL' => $this->input->post('jumlah_soal'),
 			'FK_LOOKUP_STATUS_PERMINTAAN' => 27
 		);
-		if($this->permintaansoal->_add($data)){
-			print json_encode(array("status"=>"success", "data"=>"success"));
+		$insert=$this->permintaansoal->addPermintaan($data);
+		if($insert!='Data Inserted Failed'){
+			$dataid=$insert;
+			$data_detail[0] =$this->input->post('pembuat');
+			$tugas[0]='pembuat_soal';
+			$data_detail[1] =$this->input->post('review1');
+			$tugas[1]='review1';
+			$data_detail[2] =$this->input->post('review2');
+			$tugas[2]='review2';
+			$data_detail[3] =$this->input->post('review3');
+			$tugas[3]='review3';
+			$data_detail[4] =$this->input->post('review4');
+			$tugas[4]='review4';
+			$data_insert=count($data_detail);
+			for ($i=0; $i < $data_insert; $i++) {
+
+				$datainsert = array('FK_PERMINTAAN_SOAL' => $dataid,
+			 											'TUGAS'=>$tugas[$i],
+														'PETUGAS'=>$data_detail[$i]);
+				$insertdata=$this->detailpermintaansoal->_add($datainsert);
+			}
+
+			print json_encode(array("status"=>"success", "msg"=>"Data berhasil disimpan"));
 		}else{
-			print json_encode(array("status"=>"error", "data"=>"error"));
+			print json_encode(array("status"=>"error", "msg"=>"Data gagal disimpan"));
 		}
     }
 
@@ -139,7 +161,47 @@ class Permintaan extends CI_Controller {
 			}
 		}
 	}
+	public function list_permintaan(){
+		$list=$this->permintaansoal->getdata_diklat();
+		$data = array();
+		$no =1;
+		foreach ($list as $soal) {
+				$row = array();
+				$row[] =$no;
+				$row[] = $soal->NAMA_JENJANG;
+				$row[] = $soal->NAMA_MATA_AJAR;
+				$row[] = $soal->NAMA_BAB_MATA_AJAR;
+				$row[] = $soal->TIPE_SOAL;
+				$row[] = $soal->TANGGAL_PERMINTAAN;
+				$row[] = $soal->JUMLAH_SOAL;
+				$row[] = $soal->STATUS;
+				// $data_soal=$this->permintaansoal->numsoal($soal->PK_PERMINTAAN_SOAL);
+				// $row[] = $data_soal[0]->total_soal.'/'.$soal->JUMLAH_SOAL;
+				// if($data_soal[0]->total_soal==$soal->JUMLAH_SOAL&&$id=='pembuat_soal'){
+				// 	$disable="style='display:none'";
+				// }else{
+				// 	$disable='';
+				// }
 
+				// $row[] = '<div style="text-align:center;"><a data-var="pk_permintaan_soal" '.$disable.' data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-edit-soal"
+				// 	data-href="'. base_url('sertifikasi')."/bank_soal/permintaan/vw_create_soal".'" data-toggle="modal" data-target="#modal-content"
+				// 	><i class="glyphicon glyphicon-plus"></i> Buat Soal</a>
+				// 	<a '.$disable.' ata-var="id_permintaan" data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-default" onclick="getModal(this)" id="btn-import-soal" data-href="'.base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_import_soal/".$soal->PK_PERMINTAAN_SOAL.'" data-toggle="modal" data-target="#modal-content"
+				// 		><i class="glyphicon glyphicon-pencil"></i> Import Soal</a>
+				// 		<a  href="javascript:void(0)" class="btn btn-sm btn-primary"  title="Hapus" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."'".')"><i class="fa fa-paper-plane"></i> Kirim</a>
+				// 	</div>';
+
+				$data[] = $row;
+					$no++;
+	}
+	$output = array(
+		"draw" => $_POST['draw'],
+		"recordsTotal" => $no,
+		"recordsFiltered" => $no,
+		"data" => $data,
+					);
+	echo json_encode($output);
+}
 	public function import($sheet, $data){
 		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
 		$datasheet = [];

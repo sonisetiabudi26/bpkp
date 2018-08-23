@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BabMataPelajaran extends CI_Controller {
-	
+
 	public function __construct(){
         parent::__construct();
         $this->load->library('session');
@@ -17,17 +17,17 @@ class BabMataPelajaran extends CI_Controller {
 			'nama_bab_mata_ajar' => $this->input->post('bab_mata_ajar')
 			);
 			if($this->babmataajar->_add($data)){
-				print json_encode(array("status"=>"success", "data"=>"success"));
+				print json_encode(array("status"=>"success", "msg"=>"Data berhasil disimpan"));
 			}else{
-				print json_encode(array("status"=>"error", "data"=>"error"));
+				print json_encode(array("status"=>"error", "msg"=>"Data gagal disimpan"));
 			}
 		}else{
-			print json_encode(array("status"=>"mata ajar / bab mata harus diisi", "data"=>"mata ajar / bab mata harus diisi"));
+			print json_encode(array("status"=>"error", "msg"=>"mata ajar / bab mata harus diisi"));
 		}
     }
-	
+
 	public function listbab(){
 		$data['bab'] = $this->babmataajar->_get_bab_from_fk_mata_ajar($this->input->get('fk_mata_ajar'));
-		echo json_encode($data); 
+		echo json_encode($data);
     }
 }

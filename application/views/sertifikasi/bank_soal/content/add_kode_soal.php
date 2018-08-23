@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/tambah_kode_soal"; ?>" method="POST" id="kodesoal" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/tambah_kode_soal"; ?>')" method="POST" id="kodesoal_form" >
 
 
 		<div class="form-group">
@@ -12,8 +12,8 @@
 				<?php
 					foreach ($group_mata_ajar as $groupmataajars):
 				?>
-					<option value="<?php echo $groupmataajars->PK_GROUP_MATA_AJAR;?>">
-				<?php echo $groupmataajars->NAMA_GROUP_MATA_AJAR;?> (<?php echo $groupmataajars->DESCR;?>)
+					<option value="<?php echo $groupmataajars->PK_JENJANG;?>">
+				<?php echo $groupmataajars->NAMA_JENJANG;?> (<?php echo $groupmataajars->DESCR;?>)
 					</option>
 				<?php
 					endforeach;

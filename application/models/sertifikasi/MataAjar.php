@@ -15,15 +15,15 @@ class MataAjar extends My_Model
 	{
 	    $this->db->select('*');
 	    $this->db->from($this->_table);
-			$this->db->join('group_mata_ajar', 'group_mata_ajar.pk_group_mata_ajar = mata_ajar.fk_group_mata_ajar');
-			$this->db->join('lookup', 'group_mata_ajar.fk_lookup_diklat = lookup.pk_lookup');
+			$this->db->join('jenjang', 'jenjang.pk_jenjang = mata_ajar.fk_jenjang');
+			$this->db->join('lookup', 'jenjang.fk_lookup_diklat = lookup.pk_lookup');
 			$query = $this->db->get();
 	    return $query->result();
 	}
-	
+
 	public function _get_from_fk_group_mata_ajar($fk_mata_group_ajar)
 	{
-	    $query = $this->db->get_where($this->_table, array('FK_GROUP_MATA_AJAR' => $fk_mata_group_ajar));
+	    $query = $this->db->get_where($this->_table, array('FK_jenjang' => $fk_mata_group_ajar));
 	    return $query->result();
 	}
 }

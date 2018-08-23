@@ -466,6 +466,7 @@ class PerhitunganNilai extends CI_Controller {
     				'KODE_PESERTA'=>$row['F'],
 						'KODE_UNIT'=>$row['G'],
     				'KODE_SOAL'=>$kelas,
+						'TGL_UJIAN'=>$row['D'],
             'CREATED_AT' =>  $this->session->userdata('logged_in'),
             'CREATED_DATE' => $datex,
 

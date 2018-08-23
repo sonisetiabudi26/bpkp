@@ -23,6 +23,20 @@ class KodeSoal extends My_Model
 		}
 
 	}
+	public function getdataByIDjenjang($ID){
+		$this->db->select('kode_soal.*,mata_ajar.NAMA_MATA_AJAR,jenjang.NAMA_JENJANG');
+			$this->db->from($this->_table);
+		$this->db->join('mata_ajar', 'kode_soal.fk_mata_ajar = mata_ajar.PK_MATA_AJAR');
+		$this->db->join('jenjang', 'mata_ajar.fk_jenjang = jenjang.PK_JENJANG');
+			$this->db->where('kode_soal.PK_KODE_SOAL', $ID);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "nodata";
+		}
+
+	}
 	public function updateData($where,$table,$data){
 		$this->db->where($where);
 		$update=$this->db->update($table,$data);

@@ -75,16 +75,33 @@ class ManagementBankSoal extends CI_Controller {
 			'fk_mata_ajar' => $this->input->post('fk_mata_ajar'),
 			'kode_soal' => $this->input->post('kode_soal'),
 			'kebutuhan_soal' => $this->input->post('jml_kode_soal'),
-			'created_at' => $this->session->userdata('logged_in'),
+			'created_by' => $this->session->userdata('logged_in'),
 			'created_date' =>$datex
 			);
 			if($this->kodesoal->save($data)=='Data Inserted Successfully'){
-				print json_encode(array("status"=>"success", "data"=>"success"));
+				print json_encode(array("status"=>"success", "msg"=>"Data berhasil disimpan"));
 			}else{
-				print json_encode(array("status"=>"error", "data"=>"error"));
+				print json_encode(array("status"=>"error", "msg"=>"Data gagal disimpan"));
 			}
 		}else{
-			print json_encode(array("status"=>"Semua field harus diisi", "data"=>"Semua field harus diisi"));
+			print json_encode(array("status"=>"error", "msg"=>"Semua field harus diisi"));
+		}
+	}
+
+	public function edit_kode_soal(){
+		$data = array(
+			'KODE_SOAL' => $this->input->post('kode_soal'),
+			'KEBUTUHAN_SOAL' => $this->input->post('jml_kode_soal'),
+
+		);
+		$where = array(
+			'pk_kode_soal' => $this->input->post('id_kode')
+		);
+
+		if($this->kodesoal->updateData($where,'kode_soal',$data)){
+			print json_encode(array("status"=>"success", "msg"=>"success"));
+		}else{
+			print json_encode(array("status"=>"error", "msg"=>"Data gagal di ubah"));
 		}
 	}
 	public function datatable_list_soal($fk_bab_mata_ajar=null)
@@ -131,10 +148,12 @@ class ManagementBankSoal extends CI_Controller {
 				 foreach ($dataAll as $field) {
 						 $row = array();
 						 $row[] = $a;
-						 $row[] = $field->NAMA_GROUP_MATA_AJAR;
+						 $row[] = $field->NAMA_JENJANG;
 						 $row[] = $field->NAMA_MATA_AJAR;
 						 $row[] = $field->NAMA_BAB_MATA_AJAR;
-						 $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_BAB_MATA_AJAR.'~babmataajar'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+						 $url=base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_req_soal/".$field->PK_BAB_MATA_AJAR;
+						 $row[] = '<td><a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_BAB_MATA_AJAR.'~babmataajar'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" $disable id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Permintaan Buat Soal</a></td>';
 
 						 $data[] = $row;
 						 $a++;
@@ -150,6 +169,11 @@ class ManagementBankSoal extends CI_Controller {
 			 //output dalam format JSON
 			 echo json_encode($output);
 			//echo json_encode($dataAll);
+		}
+		public function vw_add_req_soal($param){
+		$data['pk_bab_mata_ajar']=$param;
+		$data['user_bank_soal']	= $this->users->_get_user_bank_soal();
+		$this->load->view('sertifikasi/bank_soal/content/add_permintaan_soal', $data);
 		}
 		public function loadKodeSoal(){
 			$dataAll=$this->kodesoal->view();
@@ -174,10 +198,9 @@ class ManagementBankSoal extends CI_Controller {
 						 $row[] = $num.'/'.$field->KEBUTUHAN_SOAL;
 						 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
 
-						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal";
+						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal/".$field->PK_KODE_SOAL;
 						 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_KODE_SOAL.'~kodesoal'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete Kode</a>
-						 <a class="btn btn-sm btn-warning"   onclick="getModal(this)" id="btn-add-soal" data-href="'.$url_edit.'"
-		 						data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Edit Kode</a>
+						 
 						 <a class="btn btn-sm btn-info"  onclick="getModal(this)" id="btn-add-soal" data-href="'.$url.'"
 		 						data-toggle="modal" data-target="#modal-content" '.$disable.' ><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</a>
 						 </td>';
@@ -196,6 +219,17 @@ class ManagementBankSoal extends CI_Controller {
 			 //output dalam format JSON
 			 echo json_encode($output);
 			//echo json_encode($dataAll);
+		}
+		public function vw_edit_kode_soal($param){
+			$data= $this->kodesoal->getdataByIDjenjang($param);
+			foreach ($data as $key ) {
+				$datarow['id_kode']=$key->PK_KODE_SOAL;
+				$datarow['kode_soal']=$key->KODE_SOAL;
+				$datarow['diklat']=$key->NAMA_JENJANG;
+				$datarow['mataajar']=$key->NAMA_MATA_AJAR;
+				$datarow['jml_soal']=$key->KEBUTUHAN_SOAL;
+			}
+			$this->load->view('sertifikasi/bank_soal/content/edit_kodesoal', $datarow);
 		}
 		public function loadKodeSoalpublish(){
 			$dataAll=$this->kodesoal->view();
@@ -246,7 +280,7 @@ class ManagementBankSoal extends CI_Controller {
 		}
     public function vw_edit_soal(){
 	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));
-		$this->load->view('sertifikasi/bank_soal/content/edit_soal', $data);
+			$this->load->view('sertifikasi/bank_soal/content/edit_soal', $data);
     }
 
     public function vw_hapus_soal(){

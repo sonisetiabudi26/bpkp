@@ -9,6 +9,24 @@ class PermintaanSoal extends My_Model
 	public function view(){
 		return $this->db->get($this->_table)->result();
 	}
+	public function addPermintaan($data){
+		$insert=$this->db->insert("permintaan_soal", $data);
+		$insert_id = $this->db->insert_id();
+		 if($insert){
+				return  $insert_id;
+		 }else{
+			 return 'Data Inserted Failed';
+		 }
+	}
+	public function getdata_diklat(){
+		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR,mata_ajar.NAMA_MATA_AJAR,jenjang.NAMA_JENJANG');
+		$this->db->from($this->_table);
+		$this->db->join('bab_mata_ajar','permintaan_soal.FK_BAB_MATA_AJAR = bab_mata_ajar.PK_BAB_MATA_AJAR');
+		$this->db->join('mata_ajar','bab_mata_ajar.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+		$this->db->join('jenjang','jenjang.PK_JENJANG = mata_ajar.FK_JENJANG');
+		$query = $this->db->get();
+		 return $query->result();
+	}
 	public function getDatabyPembuat($id){
 		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR');
 		$this->db->from($this->_table);

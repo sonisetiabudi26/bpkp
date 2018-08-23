@@ -1,5 +1,5 @@
 <div class="clearfix"></div>
-<h1 class="text-primary">Management Bank Soal</h1>
+<h1 class="text-primary">Management Soal</h1>
 	<div class="info">
 		<p style="color:#777;"> Ujian Sertifikasi <i class="fa fa-book"></i></p>
 	</div>
@@ -28,23 +28,23 @@
 			<!-- <button onclick="getModal(this)" id="btn-distribusi-soal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</button> -->
 		<div class="" role="tabpanel" data-example-id="togglable-tabs" style="background:#fff !important;">
 			<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Bank Soal</a>
+				<!-- <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Bank Soal</a>
+				</li> -->
+				<li role="presentation" class="active"><a href="#tab_content1" role="tab" onclick="loadDataBabMataAjar()" id="home-tab" data-toggle="tab" aria-expanded="true">Bab Soal</a>
 				</li>
-				<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDataBabMataAjar()" id="profile-tab" data-toggle="tab" aria-expanded="false">Bab Soal</a>
+				<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDatakodeSoal()"  id="profile-tab2" data-toggle="tab" aria-expanded="false">Kode Soal</a>
 				</li>
-				<li role="presentation" class=""><a href="#tab_content3" role="tab" onclick="loadDatakodeSoal()"  id="profile-tab2" data-toggle="tab" aria-expanded="false">Kode Soal</a>
-				</li>
-				<li role="presentation" class=""><a href="#tab_content4" role="tab"  id="profile-tab2"  onclick="loadDatakodeSoalpublish()"data-toggle="tab" aria-expanded="false">Publish Kode Soal</a>
+				<li role="presentation" class=""><a href="#tab_content3" role="tab"  id="profile-tab2"  onclick="loadDatakodeSoalpublish()"data-toggle="tab" aria-expanded="false">Publish Kode Soal</a>
 				</li>
 			</ul>
 			<div id="myTabContent" class="tab-content" style="background:#fff;">
-				<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
+				<!-- <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
 				<div  class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div style="float:right">
 							<button class="btn btn-primary" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
-						 <button onclick="getModal(this)" id="btn-search-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_search_datatable"; ?>"
+						 <button onclick="getModal(this)" id="btn-search-soal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_search_datatable"; ?>"
 								 data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search from Mata Ajar</button>
 							 </div>
 
@@ -68,7 +68,7 @@
 		                    <th>Pilihan 2</th>
 		                    <th>Pilihan 3</th>
 		                    <th>Pilihan 4</th>
-							<!-- <th>Jawaban</th> -->
+
 							<th>Soal Kasus</th>
 		                    <th>Action</th>
 		                </tr>
@@ -83,7 +83,7 @@
 		                <th>Pilihan 2</th>
 		                <th>Pilihan 3</th>
 		                <th>Pilihan 4</th>
-						<!-- <th>Jawaban</th> -->
+
 						<th>Soal Kasus</th>
 						<th>Action</th>
 		            </tr>
@@ -95,8 +95,8 @@
 		</div>
 		</div>
 		</div>
-</div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content2" aria-labelledby="home-tab" >
+</div> -->
+<div role="tabpanel" class="tab-pane active fade in" id="tab_content1" aria-labelledby="home-tab" >
 <div  class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
@@ -131,7 +131,7 @@
 </div>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content3" aria-labelledby="home-tab" >
+<div role="tabpanel" class="tab-pane fade in" id="tab_content2" aria-labelledby="home-tab" >
 <div  class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
@@ -166,7 +166,7 @@
 </div>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content4" aria-labelledby="home-tab" >
+<div role="tabpanel" class="tab-pane fade in" id="tab_content3" aria-labelledby="home-tab" >
 <div  class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
@@ -221,7 +221,28 @@
 	?>
 
 	$(document).ready(function() {
-		showDatatable(url);
+
+						table = $('#tableBabMataAjar').DataTable({
+			              "processing": false, //Feature control the processing indicator.
+										 "destroy": true,
+			              "serverSide": true, //Feature control DataTables' server-side processing mode.
+			              "order": [], //Initial no order.
+			              // Load data for the table's content from an Ajax source
+			              "ajax": {
+			                  "url": '<?php echo base_url('sertifikasi/bank_soal/managementbanksoal/loadBabMataAjar/')?>',
+			                  "type": "POST"
+			              },
+			              //Set column definition initialisation properties.
+			              "columns": [
+			                  {"data": "0",width:50},
+			                  {"data": "1",width:100},
+			                  {"data": "2",width:100},
+												{"data": "3",width:100},
+												{"data": "4",width:100},
+			              ],
+
+			          });
+
 	});
 
 	function showDatatable(urlPar){
@@ -242,32 +263,13 @@
 		});
 	}
 
-	function reload_table()
+	function loadData(obj)
 	{
 		table.ajax.reload(null,false);
+		loadDatakodeSoal();
+		loadDatakodeSoalpublish();
 	}
-	function loadDataBabMataAjar(){
-					table = $('#tableBabMataAjar').DataTable({
-		              "processing": false, //Feature control the processing indicator.
-									 "destroy": true,
-		              "serverSide": true, //Feature control DataTables' server-side processing mode.
-		              "order": [], //Initial no order.
-		              // Load data for the table's content from an Ajax source
-		              "ajax": {
-		                  "url": '<?php echo base_url('sertifikasi/bank_soal/managementbanksoal/loadBabMataAjar/')?>',
-		                  "type": "POST"
-		              },
-		              //Set column definition initialisation properties.
-		              "columns": [
-		                  {"data": "0",width:50},
-		                  {"data": "1",width:100},
-		                  {"data": "2",width:100},
-											{"data": "3",width:100},
-											{"data": "4",width:100},
-		              ],
 
-		          });
-	}
 	function loadDatakodeSoal(){
 					table = $('#tableKodeSoal').DataTable({
 		              "processing": false, //Feature control the processing indicator.
@@ -324,7 +326,7 @@
 	            dataType: "JSON",
 	            success: function(data)
 	            {
-	             reload_table();
+	             loadData(1);
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
 	            {
@@ -350,9 +352,9 @@
 									swal("Error", "Data Publish Failed!", "error");
 								}
 
-							 reload_table();
+							 loadData(1);
 							},
-						
+
 					});
 
 	}

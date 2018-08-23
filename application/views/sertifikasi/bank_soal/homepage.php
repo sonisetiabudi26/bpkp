@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-12 bg-warning" style="min-height:10px;">
 		<h4>Badan Pengawasan Keuangan dan Pembangunan</h4>
-		<small>Selamat datang dihalaman Bank Soal,</small><hr>
+		<small>Selamat datang dihalaman Management Soal,</small><hr>
 	</div>
 	<div class="col-lg-6">
 		<div class="container bg-info" style="border-radius:5px;padding:5px">
@@ -40,7 +40,7 @@
 					endforeach;
 				?>
 				</tbody>
-			</table>	
+			</table>
 		</div>
 	</div>
 	<div class="col-lg-6">

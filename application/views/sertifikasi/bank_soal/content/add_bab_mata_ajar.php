@@ -1,19 +1,19 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/tambah"; ?>" method="POST" id="babMataAjarForm" >
-		
-		
+<form onsubmit="procesFormandUpload(this,'<?php echo base_url('sertifikasi')."/bank_soal/BabMataPelajaran/tambah"; ?>')" method="POST" id="babMataAjarForm" >
+
+
 		<div class="form-group">
 			<label for="select-mata-ajar">Diklat :</label>
-			<select data-href="<?php echo base_url('sertifikasi')."/bank_soal/MataPelajaran/list_mata_ajar"; ?>" 
-				data-show-obj="mata_ajar" data-show-key="PK_MATA_AJAR" data-show-value="NAMA_MATA_AJAR" 
+			<select data-href="<?php echo base_url('sertifikasi')."/bank_soal/MataPelajaran/list_mata_ajar"; ?>"
+				data-show-obj="mata_ajar" data-show-key="PK_MATA_AJAR" data-show-value="NAMA_MATA_AJAR"
 					onChange="getAnotherSelectOption(this, 'select-list-mata-ajar', 'content-list-mata-ajar')" name="fk_group_mata_ajar" id="select-group-mata-ajar" class="form-control input-sm">
 				<option>Pilihan</option>
 				<?php
 					foreach ($group_mata_ajar as $groupmataajars):
 				?>
-					<option value="<?php echo $groupmataajars->PK_GROUP_MATA_AJAR;?>">
-				<?php echo $groupmataajars->NAMA_GROUP_MATA_AJAR;?> (<?php echo $groupmataajars->DESCR;?>)
+					<option value="<?php echo $groupmataajars->PK_JENJANG;?>">
+				<?php echo $groupmataajars->NAMA_JENJANG;?> (<?php echo $groupmataajars->DESCR;?>)
 					</option>
 				<?php
 					endforeach;
