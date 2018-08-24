@@ -71,6 +71,16 @@ class RegisUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function loadUjian(){
+		$condition = "flag=1";
+		$this->db->select('registrasi_ujian.*,jenjang.NAMA_JENJANG,jadwal_ujian.CATEGORY');
+		$this->db->from($this->_table);
+		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
+		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 	public function loadbyNIP($NIP,$flag){
 		$condition = "NIP =" . "'" . $NIP . "' and flag=" . "'" . $flag . "'";
