@@ -125,14 +125,14 @@ function loadDataPeserta(){
 				data.forEach(function(resp) {
 
            $("#dataPeserta").append("<tr><td>" + a + "</td>"+
-					 "<td>" + (resp.NIP != nip ? resp.NIP : '') + "</td>"+
-					 "<td>" + (resp.NIP != nip ? resp.nama_peserta : '') + "</td>"+
-					  "<td>" + (resp.NIP != nip ? resp.unitkerja : '') + "</td>"+
-						"<td>" + (resp.NIP != nip ? resp.NAMA_JENJANG : '') + "</td>"+
+					 "<td>" +  resp.NIP + "</td>"+
+					 "<td>" + resp.nama_peserta  + "</td>"+
+					  "<td>" + resp.unitkerja + "</td>"+
+						"<td>" + resp.NAMA_JENJANG + "</td>"+
 					 "<td> "+ resp.NAMA_MATA_AJAR +" </td>"+
 					 // "<td>" + (resp.nip != nip ? resp.start + " - "+ resp.END_DATE  : '')+"</td>"+
 					 "</tr>");
-					 nip=resp.NIP;
+					// nip=resp.NIP;
 					a++;
 			  });
       }

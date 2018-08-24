@@ -1,6 +1,6 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
-<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/bank_soal/AdminBankSoal/edit_soal_kasus"; ?>')" method="POST" id="addSoalForm" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/bank_soal/ManagementBankSoal/edit_soal_kasus"; ?>')" method="POST" id="addSoalForm" >
 <table  class="table">
   <input type="text" class="form-control" name="id_soal_kasus" value="<?php echo $PK_SOAL_KASUS;?>" id="id_soal_kasus" style="display:none" />
 	<thead>

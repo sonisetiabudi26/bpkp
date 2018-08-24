@@ -52,6 +52,17 @@ class RegisUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function loaddataregis($flag){
+		$condition = "registrasi_ujian.flag=" . "'" . $flag . "'";
+		$this->db->select('registrasi_ujian.NIP,registrasi_ujian.NO_SURAT_UJIAN,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,mata_ajar.NAMA_MATA_AJAR,jenjang.NAMA_JENJANG');
+		$this->db->from($this->_table);
+		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
+		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+		$this->db->join('mata_ajar', 'mata_ajar.FK_JENJANG = jenjang.PK_JENJANG');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 	public function load($userAdmin){
 		$condition = "CREATED_AT =" . "'" . $userAdmin . "' and flag=0";

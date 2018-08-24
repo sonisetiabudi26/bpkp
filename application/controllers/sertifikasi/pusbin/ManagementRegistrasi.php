@@ -44,29 +44,37 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 
 		public function loadData(){
-			 $dataAll=$this->regis->loadAll();
-			 foreach ($dataAll as $key) {
+			 // $dataAll=$this->regis->loadAll();
+			 // foreach ($dataAll as $key) {
 			 	//$data['nip']=$key->NIP;
-				$data=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,'1');
+				$datas=$this->regis->loaddataregis('1');
+				foreach ($datas as $key) {
+					$data['NIP']=$key->NIP;
+					$data['NAMA_JENJANG']=$key->NAMA_JENJANG;
+					$data['NAMA_MATA_AJAR']=$key->NAMA_MATA_AJAR;
+					$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$key->NIP;
+					$check=file_get_contents($url);
+					$jsonResult=json_decode($check);
+					$kodeunitkerja = $this->session->userdata('kodeunitkerja');
+						if($jsonResult->message=='get_data_success'){
+							$data['unitkerja']=$jsonResult->data[0]->UnitKerja_Nama;
+							$data['nama_peserta']=$jsonResult->data[0]->Auditor_NamaLengkap;
+							// $data['jenjang']=$jsonResult->data[0]->JenjangJabatan_Nama;
+						}
+						$output[]=$data;
+					// code...
+				}
 				// foreach ($data as $field) {
 				// 	$data['NIP']=$field->NIP;
 				// 	$data['NAMA_MATA_AJAR']=$field->NAMA_MATA_AJAR;
 				// 	// $data['PROVINSI']=$field->PROVINSI;
-				// 	$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$field->NIP;
-				// 	$check=file_get_contents($url);
-				// 	$jsonResult=json_decode($check);
-				// 	$kodeunitkerja = $this->session->userdata('kodeunitkerja');
-				// 		if($jsonResult->message=='get_data_success'){
-				// 			$data['unitkerja']=$jsonResult->data[0]->UnitKerja_Nama;
-				// 			$data['nama_peserta']=$jsonResult->data[0]->Auditor_NamaLengkap;
-				// 			$data['jenjang']=$jsonResult->data[0]->JenjangJabatan_Nama;
-				// 		}
+
 
 			//}
 					// $output[] = $data;
 
-			 }
-			echo json_encode($data);
+			 // }
+			echo json_encode($output);
 			 // $data['provinsi']=$this->provinsi->_get_provinsi_information();
 		}
 		public function loadDataJadwal(){
