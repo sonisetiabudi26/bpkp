@@ -52,7 +52,7 @@ class Home extends CI_Controller {
 				$dataRow[]=$a;
 				$dataRow[]=$key->NO_SURAT;
 				$dataRow[]=$key->NIP;
-				$dataRow[]=$key->NAMA;
+				// $dataRow[]=$key->NAMA;
 				$dataRow[]=$key->DESC;
 				$dataRow[]=$result;
 
@@ -98,7 +98,7 @@ class Home extends CI_Controller {
           $dataRow[]=$a;
 					$dataRow[]=$key->NO_SURAT;
 				  $dataRow[]=$key->NIP;
-          $dataRow[]=$key->NAMA;
+          // $dataRow[]=$key->NAMA;
 
           $dataRow[]=$key->DESC;
 					$dataRow[]=$result;
@@ -258,12 +258,17 @@ class Home extends CI_Controller {
 					 'CREATED_AT' => $this->session->userdata('nip'),
 					 'CREATED_DATE' => $datex
 				 );
+				 $checkdata=$this->angker->check($id_pengusul);
+				 if($checkdata=='no data'){
 					$insert=$this->angker->save($data);
 					if($insert=='Data Inserted Successfully'){
-						print json_encode(array("status"=>"success", "data"=>$insert));
+						print json_encode(array("status"=>"success", "msg"=>$insert));
 					}else{
-						print json_encode(array("status"=>"error", "data"=>$insert));
+						print json_encode(array("status"=>"error", "msg"=>'Data gagal disimpan'));
 					}
+				}else{
+					print json_encode(array("status"=>"error", "msg"=>'Data sudah ada didatabase'));
+				}
 			}
 
 }

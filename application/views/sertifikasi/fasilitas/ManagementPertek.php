@@ -74,6 +74,8 @@
 
                   });
         				}
-
+function loadData(obj){
+  dataPertek();
+}
 
 </script>

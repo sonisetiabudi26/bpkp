@@ -1,11 +1,11 @@
 <div class="col-md-12" id="response-text-angker" ></div>
 <div class="col-md-12">
-<form onsubmit="procesForm(this, 'response-text-angker')" action="<?php echo base_url('sertifikasi')."/fasilitas/Home/add_angka_kredit"; ?>" method="POST" id="angka_kredit" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/fasilitas/Home/add_angka_kredit"; ?>')" method="POST" id="angka_kredit" >
   <input value='<?php echo $id_pengusul ?>' name='id_pengusul' style="display:none;"/>
 		<div class="form-group">
       <div class="col-lg-3">
       	<label for="category">Pendidikan Sekolah</label>
-      </div> 
+      </div>
           <div class="col-lg-9" id='user'>
         	<input type="text" class="form-control text-primary" id="pendidikan_sekolah" name="pendidikan_sekolah" placeholder="Angka Pendidikan Sekolah" />
 

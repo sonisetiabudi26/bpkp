@@ -22,6 +22,18 @@ class AngkaKredit extends My_Model
   		}
 
 	}
+	public function check($id){
+		$this->db->select('*');
+		$this->db->from('angka_kredit');
+		$this->db->where("FK_PENGUSUL_PENGANGKATAN = " . "'" . $id. "'");
+		$query = $this->db->get();
+	//	return $query->result();
+		if ($query->num_rows() > 0) {
+			return 'ada data';
+		} else {
+			return "no data";
+		}
+	}
 	public function save($data) {
 		$insert=$this->db->insert($this->_table, $data);
 		 if($insert){

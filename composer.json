@@ -15,7 +15,7 @@
 		"chriskacerguis/codeigniter-restserver" : "^3.0",
 		"maltyxx/restclient" : "^3.0",
 		"firebase/php-jwt" : "^5.0",
-		"dompdf/dompdf": "0.7.x@beta"
+		"dompdf/dompdf": "0.7.x@dev"
 	},
 	"suggest" : {
 		"paragonie/random_compat" : "Provides better randomness in PHP 5.x"

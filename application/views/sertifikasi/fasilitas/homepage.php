@@ -34,7 +34,7 @@
 														<?php
 															foreach ($validators as $key):
 														?>
-														<option value="<?php echo $key->CREATED_AT?>">
+														<option value="<?php echo $key->CREATED_BY?>">
 															<?php echo $key->UNITKERJA;?>
 														</option>
 														<?php
@@ -59,7 +59,7 @@
                           <td>NO</td>
 													<td>No Surat</td>
 													<td>NIP</td>
-													<td>Nama</td>
+
 													<td>Status Pengusulan Pengangkatan</td>
 													<td>Status</td>
 													<td>Status Doc</td>
@@ -94,7 +94,7 @@
 														<?php
 															foreach ($validators_perpindahan as $key):
 														?>
-														<option value="<?php echo $key->CREATED_AT?>">
+														<option value="<?php echo $key->CREATED_BY?>">
 															<?php echo $key->UNITKERJA;?>
 														</option>
 														<?php
@@ -119,7 +119,7 @@
 													<td>NO</td>
 													<td>No Surat</td>
 													<td>NIP</td>
-													<td>Nama</td>
+
 													<td>Status Pengusulan Pengangkatan</td>
 													<td>Status</td>
 													<td>Action</td>
@@ -231,11 +231,11 @@ var table;
                   {"data": "0",width:50},
                   {"data": "1",width:100},
                   {"data": "2",width:100},
-                  {"data": "3",width:100},
-									{"data": "4",width:100},
-                  {"data": "5",width:100},
+                  // {"data": "3",width:100},
+									{"data": "3",width:100},
+                  {"data": "4",width:100},
+									{"data": "5",width:100},
 									{"data": "6",width:100},
-									{"data": "7",width:100},
               ],
 
           });

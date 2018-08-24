@@ -80,10 +80,12 @@ $('form').on('submit', function (e) {
     success : function(data) {
       if(data.msg=='success'){
         swal("Success", "Data Inserted Successfully!", "success");
+
       }else if(data.msg=='error'){
         swal("Failed!", "Data Inserted Failed!", "error");
       }
       $("#pertek")[0].reset();
+      loadData(1);
     }
   });
 });

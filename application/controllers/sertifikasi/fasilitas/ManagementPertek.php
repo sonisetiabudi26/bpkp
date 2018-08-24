@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'vendor/autoload.php';
+define('DOMPDF_ENABLE_AUTOLOAD', false);
+// require_once("./vendor/dompdf/dompdf/dompdf_config.inc.php");
+
 class ManagementPertek extends CI_Controller {
 
 	public function __construct(){
@@ -47,6 +50,7 @@ class ManagementPertek extends CI_Controller {
 		public function create_pertek(){
 
 			$data['datex']=date('Y F d');
+			$data['dates']=date('Y-m-d');
 
 			$data['no_pertek']=$this->input->post('nopertek');
 			$data['id_pertek']=$this->input->post('id_pertek');
@@ -91,6 +95,9 @@ class ManagementPertek extends CI_Controller {
 			 // Get the generated PDF file contents
 			 $pdf = $dompdf->output();
 			 if($this->input->post('doc')=='0'){
+					 if (!is_dir('uploads/doc_pertek/')) {
+						 	mkdir('./uploads/doc_pertek/', 0777, TRUE);
+					 }
 					 if ( ! write_file(FCPATH."/uploads/doc_pertek/".$namafile.".pdf", $pdf))
 					 {
 									 echo 'Unable to write the file';
@@ -104,8 +111,8 @@ class ManagementPertek extends CI_Controller {
 									 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
 									 'PERTEK_DATE'=>$data['datex'],
 									 'NO_PERTEK'=>$data['no_pertek'],
-									 'CREATED_AT'=> $this->session->userdata('logged_in'),
-									 'CREATED_DATE'=> $data['datex']
+									 'CREATED_BY'=> $this->session->userdata('logged_in'),
+									 'CREATED_DATE'=> $data['dates']
 								 );
 								 $update=$this->pertek->updateData($where,'pertek',$data_update);
 					 }
