@@ -302,8 +302,14 @@ class ManagementBankSoal extends CI_Controller {
 			$this->load->view('sertifikasi/bank_soal/content/edit_soal', $data);
     }
 		public function vw_edit_soal_kasus($pk){
-	    $data=$this->soalkasus->getdataby($pk);
-
+	    $datas=$this->soalkasus->getdataby($pk);
+			foreach ($datas as $key) {
+				$data['PK_SOAL_KASUS']=$key->PK_SOAL_KASUS;
+				$data['NAMA_MATA_AJAR']=$key->NAMA_MATA_AJAR;
+				$data['NAMA_BAB_MATA_AJAR']=$key->NAMA_BAB_MATA_AJAR;
+				$data['KODE_KASUS']=$key->KODE_KASUS;
+				$data['SOAL_KASUS']=$key->SOAL_KASUS;
+			}
 			$this->load->view('sertifikasi/bank_soal/content/edit_soal_kasus', $data);
     }
 
