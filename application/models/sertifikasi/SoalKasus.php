@@ -25,7 +25,7 @@ class SoalKasus extends My_Model
 	 $this->db->from($this->_table);
 	 $this->db->join('bab_mata_ajar', 'soal_kasus.FK_BAB_MATA_AJAR = bab_mata_ajar.PK_BAB_MATA_AJAR');
 	 $this->db->join('mata_ajar', 'bab_mata_ajar.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
-	 $this->db->where("soal_kasus.PK_SOAL_KASUS= '" . $pk . "' ")
+	 $this->db->where("soal_kasus.PK_SOAL_KASUS= '" . $pk . "' ");
 	 $query = $this->db->get();
 		 return $query->result();
  }

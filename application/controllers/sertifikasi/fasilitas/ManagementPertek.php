@@ -109,7 +109,7 @@ class ManagementPertek extends CI_Controller {
 								 );
 								 $data_update=array(
 									 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
-									 'PERTEK_DATE'=>$data['datex'],
+									 'PERTEK_DATE'=>$data['dates'],
 									 'NO_PERTEK'=>$data['no_pertek'],
 									 'CREATED_BY'=> $this->session->userdata('logged_in'),
 									 'CREATED_DATE'=> $data['dates']

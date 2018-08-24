@@ -25,7 +25,7 @@ class AngkaKreditAuditor extends REST_Controller {
 public function index_post(){
 	 	$nip = $this->post('nip');
 		$no_pertek = $this->post('no_pertek');
-
+		$data_list_angker = array();;
     $data_angker=$this->angker->view($nip,$no_pertek);
     $doc=array();
     if($data_angker!='no data'){
@@ -38,7 +38,7 @@ public function index_post(){
 					 if($apiuser->message=='get_data_success'){
            //print_r($apiuser);
           $doc['NIP']= $key->NIP;
-          $doc['Nama']=$key->NAMA;
+          $doc['Nama']=$apiuser->data[0]->Auditor_NamaLengkap;
           $doc['No_Surat']=$key->NO_SURAT;
           $doc['Tgl_Pengusul_Pengangkatan']=$key->date_pengusulan;
           $doc['Pangkat'] = $apiuser->data[0]->Pangkat_Nama;
@@ -71,7 +71,8 @@ public function index_post(){
 }
 
 public function apiuser($param){
-    $url="http://163.53.185.91:8083/sibijak/dca/dcaapi/api/fasilitasi?Auditor_NIP=".$param;
+    // $url="http://163.53.185.91:8083/sibijak/dca/dcaapi/api/fasilitasi?nip=".$param;
+		$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
     $check=file_get_contents($url);
     $jsonResult=json_decode($check);
     return $jsonResult;
