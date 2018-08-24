@@ -19,7 +19,7 @@ class Batch extends My_Model
     $this->db->select('batch.*,provinsi.Nama,jadwal_ujian.*,event.KODE_EVENT,event.FK_PROVINSI');
     $this->db->from($this->_table);
     $this->db->join('jadwal_ujian', 'batch.FK_JADWAL = jadwal_ujian.PK_JADWAL_UJIAN');
-    $this->db->join('event', 'batch.FK_KODE_EVENT = event.PK_EVENT');
+    $this->db->join('event', 'batch.FK_EVENT = event.PK_EVENT');
 		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
     $query = $this->db->get();
   //	return $query->result();
@@ -33,7 +33,7 @@ class Batch extends My_Model
 		$condition = "PK_BATCH =" . "'" . $id . "'";
 		$this->db->select('batch.*,event.KODE_EVENT');
 		$this->db->from($this->_table);
-		$this->db->join('event', 'batch.FK_KODE_EVENT = event.PK_EVENT');
+		$this->db->join('event', 'batch.FK_EVENT = event.PK_EVENT');
     $this->db->where($condition);
     $query = $this->db->get();
     if ($query->num_rows() > 0) {

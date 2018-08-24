@@ -1,5 +1,5 @@
 <div class="col-md-12">
-<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/importNilai"; ?>')" method="POST" enctype="multipart/form-data" id="import_nilai" >
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/importNilai"; ?>')" method="POST" enctype="multipart/form-data" id="import_nilai_form" >
   <div class="row">
     <div class="form-group">
       <label id="label-file"></label>

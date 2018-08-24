@@ -103,7 +103,7 @@ class PerhitunganNilai extends CI_Controller {
 
              if($kodeevent!=''&&$kelas!=''&&$jadwal!=''){
                    $data = array(
-                    'FK_KODE_EVENT' => $kodeevent,
+                    'FK_EVENT' => $kodeevent,
                     'KELAS' => $kelas,
                     'FK_JADWAL' => $jadwal,
                     'REFF' => $reff,
@@ -185,7 +185,7 @@ class PerhitunganNilai extends CI_Controller {
 						 $row = array();
 						 $nilai=0;
 						 $row[] = $a+1;
-						 $row[] = $field->FK_KODE_EVENT;
+						 $row[] = $field->FK_EVENT;
 						 $row[] = $field->KODE_PESERTA;
 						 $row[] = $field->KODE_SOAL;
 						 $row[] = $field->KELAS;
@@ -226,7 +226,7 @@ class PerhitunganNilai extends CI_Controller {
              $row = array();
              $nilai=0;
              $row[] = $a+1;
-             $row[] = $field->FK_KODE_EVENT;
+             $row[] = $field->FK_EVENT;
              $row[] = $field->KODE_PESERTA;
              $row[] = $field->KODE_SOAL;
              $row[] = $field->KELAS;
@@ -269,8 +269,9 @@ class PerhitunganNilai extends CI_Controller {
 						 $row[] = $numrowpeserta;
              $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
              $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
-             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->KODE_EVENT."'".','."'".$field->KELAS."'".')" id="btn-view" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
-						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
+
+             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->KODE_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
+						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-import" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
              <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
 						 <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View Data</a>';
 
@@ -339,7 +340,7 @@ class PerhitunganNilai extends CI_Controller {
 				$where=array(
 					'KODE_PESERTA'=>$data['nip'],
 					'KODE_SOAL'=>$data['kode_soal'],
-					'FK_KODE_EVENT'=>$kode_event
+					'FK_EVENT'=>$kode_event
 				);
 				$data_update=array(
 					'Nilai'=>$data['nilai']
@@ -370,17 +371,17 @@ class PerhitunganNilai extends CI_Controller {
 			$a=0;
 
 				foreach ($dataAll as $field) {
-					  $dataJumlah= $this->jawaban->getPesertabyUnit($field->KODE_UNIT,$field->FK_KODE_EVENT);
+					  $dataJumlah= $this->jawaban->getPesertabyUnit($field->KODE_UNIT,$field->FK_EVENT);
 						$dataTotal=($dataJumlah!='no data'?$dataJumlah:'0');
 						$row = array();
 						$nilai=0;
 						$row[] = $a+1;
-						$row[] = $field->FK_KODE_EVENT;
+						$row[] = $field->FK_EVENT;
 						$row[] = $field->KODE_UNIT;
 						$row[] = $dataTotal;
 						//$row[] = $field->KODE_SOAL;
 						//$row[] = $field->KELAS;
-						$id=$field->KODE_UNIT.'~'.$field->FK_KODE_EVENT;
+						$id=$field->KODE_UNIT.'~'.$field->FK_EVENT;
 						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
 						$row[] = '<a class="btn btn-sm btn-success" id="btn-view" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View</a>';
 
@@ -453,7 +454,7 @@ class PerhitunganNilai extends CI_Controller {
   		$datasheet1 = [];
   		$numrow = 1;
       $indexbatch=0;
-			$kode_event=$dataAll[0]->KODE_EVENT;
+			$kode_event=$dataAll[0]->FK_EVENT;
 			$kelas=$dataAll[0]->KELAS;
     //  $dataAll=$this->batch->get_batch_by_id($id_batch);
   		foreach($sheet as $row){
@@ -461,7 +462,7 @@ class PerhitunganNilai extends CI_Controller {
 
             $indexbatch=$indexbatch+1;
     				array_push($datasheet1, [
-    				'FK_KODE_EVENT'=>$kode_event,//kode event ambil dr data selected
+    				'FK_EVENT'=>$kode_event,//kode event ambil dr data selected
     				'KELAS'=>$kelas,//kelas ambil dr data selected
     				'KODE_PESERTA'=>$row['F'],
 						'KODE_UNIT'=>$row['G'],

@@ -214,7 +214,7 @@ function loadDatalist(){
 }
 function loadData(obj){
 	$('#dataEventAll').DataTable().ajax.reload();
-		$('#dataBatchAll').DataTable().ajax.reload();
+	loadDatabatch();
 }
 function delete_event(id){
 	if(confirm('Are you sure delete this data?'))

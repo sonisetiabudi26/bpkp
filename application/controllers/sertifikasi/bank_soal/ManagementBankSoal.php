@@ -16,6 +16,7 @@ class ManagementBankSoal extends CI_Controller {
 		$this->load->model('sertifikasi/kodesoal','kodesoal');
 		$this->load->model('sertifikasi/babmataajar','babmataajar');
 			$this->load->model('sertifikasi/soaldistribusi','soaldistribusi');
+				$this->load->model('sertifikasi/SoalKasus','soalkasus');
     }
 
     public function index(){
@@ -104,6 +105,24 @@ class ManagementBankSoal extends CI_Controller {
 			print json_encode(array("status"=>"error", "msg"=>"Data gagal di ubah"));
 		}
 	}
+
+	public function edit_soal_kasus(){
+		$data = array(
+			'KODE_KASUS' => $this->input->post('kode_kasus'),
+			'SOAL_KASUS' => $this->input->post('soal_kasus'),
+
+		);
+		$where = array(
+			'PK_SOAL_KASUS' => $this->input->post('id_soal_kasus')
+		);
+
+		if($this->soalkasus->updateData($where,$data)){
+			print json_encode(array("status"=>"success", "msg"=>"success"));
+		}else{
+			print json_encode(array("status"=>"error", "msg"=>"Data gagal di ubah"));
+		}
+	}
+
 	public function datatable_list_soal($fk_bab_mata_ajar=null)
     {
 		$list = $this->soalujian->get_datatables($fk_bab_mata_ajar);
@@ -200,7 +219,7 @@ class ManagementBankSoal extends CI_Controller {
 
 						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal/".$field->PK_KODE_SOAL;
 						 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_KODE_SOAL.'~kodesoal'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete Kode</a>
-						 
+
 						 <a class="btn btn-sm btn-info"  onclick="getModal(this)" id="btn-add-soal" data-href="'.$url.'"
 		 						data-toggle="modal" data-target="#modal-content" '.$disable.' ><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</a>
 						 </td>';
@@ -282,6 +301,11 @@ class ManagementBankSoal extends CI_Controller {
 	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));
 			$this->load->view('sertifikasi/bank_soal/content/edit_soal', $data);
     }
+		public function vw_edit_soal_kasus($pk){
+	    $data=$this->soalkasus->getdataby($pk);
+
+			$this->load->view('sertifikasi/bank_soal/content/edit_soal_kasus', $data);
+    }
 
     public function vw_hapus_soal(){
 	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));
@@ -305,10 +329,51 @@ class ManagementBankSoal extends CI_Controller {
 		$this->load->view('sertifikasi/bank_soal/content/distribusi_soal', $data);
 	}
 
+	public function loadSoalKasus(){
+		$dataAll=$this->soalkasus->view_detail();
+		 $data = array();
+		 //$no = $_POST['start'];
+		 $a=1;
+
+			 foreach ($dataAll as $field) {
+					 $row = array();
+					 $row[] = $a;
+					 $row[] = $field->SOAL_KASUS;
+					 $row[] = $field->NAMA_MATA_AJAR;
+					 $row[] = $field->NAMA_BAB_MATA_AJAR;
+					 $row[] = $field->KODE_KASUS;
+
+					 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_soal_kasus/".$field->PK_SOAL_KASUS;
+					 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_SOAL_KASUS.'~soalkasus'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+					 <a class="btn btn-sm btn-warning"  onclick="getModal(this)" id="btn-add-soal" data-href="'.$url.'"
+							data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+					 </td>';
+
+					 $data[] = $row;
+					 $a++;
+			 }
+
+
+		 $output = array(
+				 "draw" => 'dataEvent',
+				 "recordsTotal" => $a,
+				 "recordsFiltered" => $a,
+				 "data" => $data,
+		 );
+		 //output dalam format JSON
+		 echo json_encode($output);
+	}
+
+	public function vw_add_soal_kasus(){
+		$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
+		$this->load->view('sertifikasi/bank_soal/content/add_soal_kasus', $data);
+	}
+
 	public function vw_search_datatable(){
 		$data['mata_ajar'] = $this->mataajar->_detail_mata_ajar();
 		$this->load->view('sertifikasi/bank_soal/content/search_datatable', $data);
 	}
+
 	public function publish($id){
 		$where=array(
 			'PK_KODE_SOAL'=>$id,
@@ -324,6 +389,7 @@ class ManagementBankSoal extends CI_Controller {
 		}
 		print json_encode($output);
 	}
+
 	public function delete($id)
 	{
 			$param=explode('~',$id);
@@ -333,6 +399,9 @@ class ManagementBankSoal extends CI_Controller {
 
 			}else if($param[1]=='babmataajar'){
 					$this->babmataajar->delete_by_id($param[0]);
+			}
+			else if($param[1]=='soalkasus'){
+					$this->soalkasus->delete_by_id($param[0]);
 			}
 			echo json_encode(array("status" => TRUE));
 	}

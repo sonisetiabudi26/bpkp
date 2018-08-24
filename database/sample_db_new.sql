@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 24, 2018 at 05:54 AM
+-- Generation Time: Aug 24, 2018 at 03:39 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -53,28 +53,6 @@ INSERT INTO `angka_kredit` (`PK_ANGKA_KREDIT`, `FK_PENGUSUL_PENGANGKATAN`, `PEND
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auditor`
---
-
-CREATE TABLE `auditor` (
-  `PK_AUDITOR` int(11) NOT NULL,
-  `NIP` varchar(50) DEFAULT NULL,
-  `FK_PENDIDIKAN_AUDITOR` int(11) DEFAULT NULL,
-  `FK_JABATAN` int(11) DEFAULT NULL,
-  `FK_PANGKAT_GOLONGAN` int(11) DEFAULT NULL,
-  `FK_SERTIKASI_JFA` int(11) DEFAULT NULL,
-  `NAMA_LENGKAP` varchar(255) DEFAULT NULL,
-  `GELAR_DEPAN` varchar(50) DEFAULT NULL,
-  `GELAR_BELAKANG` varchar(50) DEFAULT NULL,
-  `EMAIL` varchar(255) DEFAULT NULL,
-  `TEMPAT_LAHIR` varchar(100) DEFAULT NULL,
-  `TANGGAL_LAHIR` date NOT NULL,
-  `JENIS_KELAMIN` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `bab_mata_ajar`
 --
 
@@ -100,7 +78,7 @@ INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_
 
 CREATE TABLE `batch` (
   `PK_BATCH` int(11) NOT NULL,
-  `FK_KODE_EVENT` int(150) NOT NULL,
+  `FK_EVENT` int(11) NOT NULL,
   `KELAS` varchar(150) NOT NULL,
   `FK_JADWAL` int(11) NOT NULL,
   `REFF` varchar(150) NOT NULL,
@@ -112,12 +90,8 @@ CREATE TABLE `batch` (
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`PK_BATCH`, `FK_KODE_EVENT`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(1, 3, 'T-258     ', 17, 'qwer', 'Pusbin Budianto', '2018-07-08'),
-(2, 4, '9iso', 18, '', 'Pusbin Budianto', '2018-08-02'),
-(3, 3, 'asddasd', 18, 'asd', 'Pusbin Budianto', '2018-08-17'),
-(4, 4, 'fghj', 18, '', 'Pusbin Budianto', '2018-08-17'),
-(5, 5, 'yuib', 18, '', 'Pusbin Budianto', '2018-08-17');
+INSERT INTO `batch` (`PK_BATCH`, `FK_EVENT`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(9, 8, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-08-24');
 
 -- --------------------------------------------------------
 
@@ -273,9 +247,7 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `FK_JENJANG`, `URAIAN`, `FK_PROVINSI`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(1, '61212', 6, 'tester', 13, 'Pusbin Budianto', '2018-08-23'),
-(2, '22222', 2, 'tester', 13, 'Pusbin Budianto', '2018-08-23'),
-(3, '61212', 6, 'tester', 12, 'Pusbin Budianto', '2018-08-24');
+(8, '61212', 6, 'tester', 13, 'Pusbin Budianto', '2018-08-24');
 
 -- --------------------------------------------------------
 
@@ -306,7 +278,7 @@ INSERT INTO `jadwal_ujian` (`PK_JADWAL_UJIAN`, `CATEGORY`, `START_DATE`, `END_DA
 
 CREATE TABLE `jawaban_peserta` (
   `PK_JAWABAN_DETAIL` int(11) NOT NULL,
-  `FK_KODE_EVENT` varchar(100) NOT NULL,
+  `FK_EVENT` varchar(100) NOT NULL,
   `KODE_PESERTA` varchar(100) NOT NULL,
   `TGL_UJIAN` date NOT NULL,
   `KODE_SOAL` varchar(100) NOT NULL,
@@ -363,7 +335,7 @@ CREATE TABLE `jawaban_peserta` (
   `NO_49` varchar(1) NOT NULL,
   `NO_50` varchar(1) NOT NULL,
   `Nilai` varchar(50) NOT NULL,
-  `CREATED_AT` varchar(100) NOT NULL,
+  `CREATED_BY` varchar(100) NOT NULL,
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -635,20 +607,6 @@ INSERT INTO `menu_page_detail` (`PK_MENU_DETAIL`, `MENU_NAME`, `MENU_URL`, `DETA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pendidikan_auditor`
---
-
-CREATE TABLE `pendidikan_auditor` (
-  `PK_PENDIDIKAN_AUDITOR` int(11) NOT NULL,
-  `TINGKAT` varchar(50) DEFAULT NULL,
-  `LEMBAGA` varchar(150) DEFAULT NULL,
-  `JURUSAN` varchar(50) DEFAULT NULL,
-  `IJAZAH` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pengusul_pengangkatan`
 --
 
@@ -684,9 +642,6 @@ CREATE TABLE `permintaan_soal` (
   `PK_PERMINTAAN_SOAL` int(11) NOT NULL,
   `FK_BAB_MATA_AJAR` int(11) NOT NULL,
   `TIPE_SOAL` varchar(30) NOT NULL,
-  `PEMBUAT_SOAL` varchar(255) NOT NULL,
-  `REVIEW1` varchar(255) NOT NULL,
-  `REVIEW2` varchar(255) NOT NULL,
   `TANGGAL_PERMINTAAN` date NOT NULL,
   `JUMLAH_SOAL` int(11) NOT NULL,
   `STATUS` varchar(150) NOT NULL,
@@ -697,9 +652,9 @@ CREATE TABLE `permintaan_soal` (
 -- Dumping data for table `permintaan_soal`
 --
 
-INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `PEMBUAT_SOAL`, `REVIEW1`, `REVIEW2`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `STATUS`, `FK_LOOKUP_STATUS_PERMINTAAN`) VALUES
-(20, 1, 'Pilihan Ganda', '', '', '', '2018-08-08', 12, 'pembuat_soal', 27),
-(21, 2, 'Soal Kasus', '', '', '', '2018-08-25', 7, 'pembuat_soal', 27);
+INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `STATUS`, `FK_LOOKUP_STATUS_PERMINTAAN`) VALUES
+(20, 1, 'Pilihan Ganda', '2018-08-08', 12, 'pembuat_soal', 24),
+(21, 2, 'Pilihan Ganda', '2018-08-25', 7, 'pembuat_soal', 27);
 
 -- --------------------------------------------------------
 
@@ -780,19 +735,6 @@ INSERT INTO `provinsi` (`PK_PROVINSI`, `NAMA`) VALUES
 (82, 'MALUKU UTARA'),
 (91, 'PAPUA BARAT'),
 (94, 'PAPUA');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pusbin`
---
-
-CREATE TABLE `pusbin` (
-  `PK_PUSBIN` int(11) NOT NULL,
-  `NIP` varchar(150) DEFAULT NULL,
-  `NAMA` varchar(255) DEFAULT NULL,
-  `FK_LOOKUP_ADMIN_PUSBIN` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -955,8 +897,7 @@ CREATE TABLE `soal_kasus` (
 --
 
 INSERT INTO `soal_kasus` (`PK_SOAL_KASUS`, `SOAL_KASUS`, `FK_BAB_MATA_AJAR`, `KODE_KASUS`) VALUES
-(2, 'Negara Indonesia merdeka tanggal 17 agustus 1945, presiden pertama adalah ir soekarno', 9, 'soal-kasus-presiden'),
-(3, 'negara indonesia dijajah pertama kali oleh belanda, hampir 100 tahun indonesia dijajah oleh belanda.', 9, 'kode-kasus-penjajahan');
+(2, 'Negara Indonesia merdeka tanggal 17 agustus 1945, presiden pertama adalah ir soekarno', 1, 'soal-kasus-presiden');
 
 -- --------------------------------------------------------
 
@@ -1108,18 +1049,6 @@ CREATE TABLE `total_soal_distribusi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `unit_apip`
---
-
-CREATE TABLE `unit_apip` (
-  `PK_UNIT_APIP` int(11) NOT NULL,
-  `NIP` varchar(150) DEFAULT NULL,
-  `NAMA` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
@@ -1229,7 +1158,7 @@ ALTER TABLE `bab_mata_ajar`
 --
 ALTER TABLE `batch`
   ADD PRIMARY KEY (`PK_BATCH`),
-  ADD KEY `CN_FK_KODE_EVENT` (`FK_KODE_EVENT`);
+  ADD KEY `CN_FK_KODE_EVENT` (`FK_EVENT`) USING BTREE;
 
 --
 -- Indexes for table `bridge_lookup`
@@ -1354,12 +1283,6 @@ ALTER TABLE `provinsi`
   ADD PRIMARY KEY (`PK_PROVINSI`);
 
 --
--- Indexes for table `pusbin`
---
-ALTER TABLE `pusbin`
-  ADD PRIMARY KEY (`PK_PUSBIN`);
-
---
 -- Indexes for table `registrasi_ujian`
 --
 ALTER TABLE `registrasi_ujian`
@@ -1446,7 +1369,7 @@ ALTER TABLE `bab_mata_ajar`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
@@ -1482,7 +1405,7 @@ ALTER TABLE `dokumen_registrasi_ujian`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
@@ -1609,16 +1532,10 @@ ALTER TABLE `wilayah`
 --
 
 --
--- Constraints for table `bab_mata_ajar`
---
-ALTER TABLE `bab_mata_ajar`
-  ADD CONSTRAINT `CN_BAB_MATA_AJAR` FOREIGN KEY (`FK_MATA_AJAR`) REFERENCES `mata_ajar` (`PK_MATA_AJAR`);
-
---
 -- Constraints for table `batch`
 --
 ALTER TABLE `batch`
-  ADD CONSTRAINT `batch_cp1` FOREIGN KEY (`FK_KODE_EVENT`) REFERENCES `event` (`PK_EVENT`);
+  ADD CONSTRAINT `CN_event12` FOREIGN KEY (`FK_EVENT`) REFERENCES `event` (`PK_EVENT`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `dokumen_registrasi_ujian`
@@ -1667,7 +1584,6 @@ ALTER TABLE `registrasi_ujian`
 -- Constraints for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  ADD CONSTRAINT `CN_SOAL_BAB_MATA_AJAR` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`),
   ADD CONSTRAINT `CN_SOAL_KASUS` FOREIGN KEY (`PARENT_SOAL`) REFERENCES `soal_kasus` (`PK_SOAL_KASUS`) ON UPDATE NO ACTION;
 
 --

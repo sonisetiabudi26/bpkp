@@ -26,8 +26,8 @@ class Home extends CI_Controller {
 			redirect('/');
 		}
     }
-	
+
 	public function set_admin_role(){
-		
+
 	}
 }

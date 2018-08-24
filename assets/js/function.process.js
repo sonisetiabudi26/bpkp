@@ -496,8 +496,11 @@ $('#'+obj).on('submit', function (e) {
 
 /** format parsing : this button action */
 function getModal(btnId){
-	var urlHref = $(btnId).attr('data-href');
-	var modalTarget = $(btnId).attr('data-target');
+
+   var modalTarget ='';
+   var urlHref='';
+	 urlHref = $(btnId).attr('data-href');
+	 modalTarget = $(btnId).attr('data-target');
 	$(modalTarget).on('show.bs.modal', function(e) {
 		var $modal = $(this), esseyId = e.relatedTarget.id;
 		$.ajax({
@@ -506,9 +509,11 @@ function getModal(btnId){
 			url : urlHref,
 			success : function(data) {
 				$modal.find('.modal-body').html(data);
+
 			}
 		});
 	});
+  clearcachemodal();
 }
 
 /** format parsing : this button action */
@@ -532,12 +537,37 @@ function getModalWithParam(btnId){
 	});
 }
 
-// $(document).ready(function() {
-// 	$('body').on('hidden.bs.modal', '.modal', function () {
-// 	///	location.reload();
-// 	});
-// });
+$('.modal').on('loaded.bs.modal', function (e) {
+clearcachemodal();
+});
 
+$(document).ready(function() {
+
+  clearcachemodal();
+
+
+	// $('body').on('hidden.bs.modal', '.modal', function () {
+	// ///	location.reload();
+	// });
+});
+function clearcachemodal(){
+  //var myBackup = $('.modal').clone();
+  $(this).remove();
+  $(this).removeData('bs.modal');
+  $('body').removeClass('show');
+  $('#modal-body #modal-content .modal').empty();
+  $(".modal").modal({
+    show: false,
+    backdrop: 'static'
+});
+}
+ // $(document).ready(function() {
+	$('body').on('hidden.bs.modal', '.modal', function () {
+
+       // remove the bs.modal data attribute from it
+       clearcachemodal();
+   });
+ // });
 /** FORM WIZARD STEP */
 $(document).ready(function () {
     $("#wizard").aiiaWizard();

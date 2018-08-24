@@ -27,7 +27,7 @@
 							<?php echo $bank_soals->DESCR; ?>
 						</td>
 						<td>
-							<?php echo $bank_soals->NAMA_GROUP_MATA_AJAR; ?>
+							<?php echo $bank_soals->NAMA_JENJANG; ?>
 						</td>
 						<td>
 							<?php echo $bank_soals->NAMA_MATA_AJAR; ?>

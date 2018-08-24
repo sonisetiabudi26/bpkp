@@ -11,9 +11,9 @@ class Permintaan extends CI_Controller {
 				$this->load->model('sertifikasi/detailpermintaansoal','detailpermintaansoal');
     }
 
-	public function loadPermintaan($id){
-
-		$list=$this->permintaansoal->getDatabyPembuat($id);
+	public function loadPermintaan(){
+		$username = $this->session->userdata('logged_in');
+		$list=$this->permintaansoal->getDatabyPembuat($username);
 		$data = array();
 		$no =1;
 		foreach ($list as $soal) {
@@ -26,7 +26,7 @@ class Permintaan extends CI_Controller {
 				$row[] = $soal->TANGGAL_PERMINTAAN;
 				$data_soal=$this->permintaansoal->numsoal($soal->PK_PERMINTAAN_SOAL);
 				$row[] = $data_soal[0]->total_soal.'/'.$soal->JUMLAH_SOAL;
-				if($data_soal[0]->total_soal==$soal->JUMLAH_SOAL&&$id=='pembuat_soal'){
+				if($data_soal[0]->total_soal==$soal->JUMLAH_SOAL&&$username=='pembuat_soal'){
 					$disable="style='display:none'";
 				}else{
 					$disable='';
@@ -46,8 +46,8 @@ class Permintaan extends CI_Controller {
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->permintaansoal->count_all($id),
-			"recordsFiltered" => $this->permintaansoal->count_filtered($id),
+			"recordsTotal" => $no,
+			"recordsFiltered" => $no,
 			"data" => $data,
 						);
 		echo json_encode($output);

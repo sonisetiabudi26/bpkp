@@ -45,7 +45,7 @@
 							<div class="x_content">
 								<div class="row">
 									<div class="col-lg-12" id="response">
-										<h2 style="font-weight:1000;color:#000">Table Bank Soal ALL</h2>
+										<h2 style="font-weight:1000;color:#000">Table Permintaan Soal</h2>
 									</div>
 								</div>
 								<div class="row">

@@ -11,7 +11,7 @@ class JawabanPeserta extends My_Model
 		$this->db->insert_batch($this->_table, $data);
 	}
 public function getALl($kodeevent,$kelas){
-  $condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
+  $condition = "FK_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
   $this->db->select('*');
   $this->db->from($this->_table);
   $this->db->where($condition);
@@ -20,7 +20,7 @@ public function getALl($kodeevent,$kelas){
 
 }
 public function getALlbyUnit($kodeevent,$kode_unit){
-  $condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KODE_UNIT =" . "'" . $kode_unit . "'";
+  $condition = "FK_EVENT =" . "'" . $kodeevent . "' AND " . "KODE_UNIT =" . "'" . $kode_unit . "'";
   $this->db->select('*');
   $this->db->from($this->_table);
   $this->db->where($condition);
@@ -29,7 +29,7 @@ public function getALlbyUnit($kodeevent,$kode_unit){
 
 }
 public function NumrowPeserta($kodeevent,$kelas){
-	$condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
+	$condition = "FK_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
 	$this->db->select('*');
 	$this->db->from($this->_table);
 	$this->db->where($condition);
@@ -41,7 +41,7 @@ public function NumrowPeserta($kodeevent,$kelas){
 	}
 }
 public function get_data_all_by_event($kodeevent,$kelas){
-	$condition = "FK_KODE_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
+	$condition = "FK_EVENT =" . "'" . $kodeevent . "' AND " . "KELAS =" . "'" . $kelas . "'";
 	$this->db->select('*');
 	$this->db->from($this->_table);
 	$this->db->where($condition);
@@ -107,10 +107,10 @@ public function getUnit(){
 	$query = $this->db->get();
 
 		return $query->result();
-	
+
 }
 public function getPesertabyUnit($id_unit,$id_event){
-	$condition = "KODE_UNIT =" . "'" . $id_unit . "' AND " . "FK_KODE_EVENT =" . "'" . $id_event . "'";
+	$condition = "KODE_UNIT =" . "'" . $id_unit . "' AND " . "FK_EVENT =" . "'" . $id_event . "'";
 	$this->db->select('*');
 	$this->db->from($this->_table);
 	$this->db->where($condition);

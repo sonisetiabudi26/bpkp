@@ -18,7 +18,7 @@
 					<select name="tipe_soal" id="tipe_soal" class="form-control input-sm">
 						<option value="">Pilih Tipe Soal</option>
 						<option value="Pilihan Ganda">Pilihan Ganda</option>
-						<option value="Soal Kasus">Soal Kasus</option>
+					
 					</select>
 				</div>
 			</td>

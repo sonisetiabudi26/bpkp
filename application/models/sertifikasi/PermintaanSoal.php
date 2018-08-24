@@ -31,14 +31,14 @@ class PermintaanSoal extends My_Model
 		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR');
 		$this->db->from($this->_table);
 		$this->db->join('bab_mata_ajar','permintaan_soal.FK_BAB_MATA_AJAR = bab_mata_ajar.PK_BAB_MATA_AJAR');
-
-		if($id=='pembuat_soal'){
-				$this->db->where('PEMBUAT_SOAL',$id);
-				$this->db->where('FK_LOOKUP_STATUS_PERMINTAAN','27');
-		}elseif($id=='review1'){
-			$this->db->where('REVIEW1',$id);
-			$this->db->where('FK_LOOKUP_STATUS_PERMINTAAN','24');
-		}
+			$this->db->where('STATUS',$id);
+		// if($id=='pembuat_soal'){
+		// 		$this->db->where('PEMBUAT_SOAL',$id);
+		// 		$this->db->where('FK_LOOKUP_STATUS_PERMINTAAN','27');
+		// }elseif($id=='review1'){
+		// 	$this->db->where('REVIEW1',$id);
+		// 	$this->db->where('FK_LOOKUP_STATUS_PERMINTAAN','24');
+		// }
 		$query = $this->db->get();
 		 return $query->result();
 	}
