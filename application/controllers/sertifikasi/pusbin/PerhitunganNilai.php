@@ -256,7 +256,7 @@ class PerhitunganNilai extends CI_Controller {
 
          foreach ($dataAll as $field) {
              $row = array();
-						 $numrowpeserta=$this->jawaban->NumrowPeserta($field->KODE_EVENT,$field->KELAS);
+						 $numrowpeserta=$this->jawaban->NumrowPeserta($field->FK_EVENT,$field->KELAS);
 						 if($numrowpeserta=='no data'){
 							 $numrowpeserta=0;
 						 }
@@ -270,7 +270,7 @@ class PerhitunganNilai extends CI_Controller {
              $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
              $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
 
-             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->KODE_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
+             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->FK_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
 						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-import" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
              <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
 						 <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View Data</a>';
@@ -348,7 +348,7 @@ class PerhitunganNilai extends CI_Controller {
 
 
 				$dataall[]=$data;
-				$a++;
+				// $a++;
 				$update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
 				if($update){
 					$output  = array('status' =>'success' ,
@@ -466,7 +466,7 @@ class PerhitunganNilai extends CI_Controller {
     				'KELAS'=>$kelas,//kelas ambil dr data selected
     				'KODE_PESERTA'=>$row['F'],
 						'KODE_UNIT'=>$row['G'],
-    				'KODE_SOAL'=>$kelas,
+    				'KODE_SOAL'=>$row['C'],
 						'TGL_UJIAN'=>$row['D'],
             'CREATED_BY' =>  $this->session->userdata('logged_in'),
             'CREATED_DATE' => $datex,

@@ -8,12 +8,8 @@
 	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Pengangkatan Pertama</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDataperpindahan();" id="profile-tab" data-toggle="tab" aria-expanded="false">Pengangkatan Perpindahan</a>
+		<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" onclick="search(2)" data-toggle="tab" aria-expanded="false">Pengangkatan Perpindahan</a>
 		</li>
-		<!-- <li role="presentation" class=""><a href="#tab_content3" role="tab" onclick="loadDataUserWidya();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Pengangkatan Penyesuaian (Inpassing)</a>
-		</li>
-		<li role="presentation" class=""><a href="#tab_content4" role="tab" onclick="loadDataUserFP();" id="profile-tab2" data-toggle="tab" aria-expanded="false">Pengangkatan Kembali</a>
-		</li> -->
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -202,76 +198,49 @@ if(obj==1){
 	var	validator=$("#validatorion :selected").val();
 	var	msgvalidator=$("#validatorion :selected").text();
 	document.getElementById("titletabel").innerHTML=msgvalidator;
-	dataPertama(validator);
+	ajaxProccess(validator,1,dataUserpertama);
 }else{
 	var	validator=$("#validatorion_perpindahan :selected").val();
 	var	msgvalidator=$("#validatorion_perpindahan :selected").text();
 	document.getElementById("titletabel_perpindahan").innerHTML=msgvalidator;
-	loadDataperpindahan(validator);
+	ajaxProccess(validator,2,dataUserPerpindahan);
 }
 }
 $(document).ready(function(){
 	search(1);
 });
-  //document.getElementById("datatable-responsive").innerHTML='';
-function dataPertama(obj){
-var table;
-      table = $('#dataUserpertama').DataTable({
-              "processing": false, //Feature control the processing indicator.
-               "destroy": true,
-              "serverSide": true, //Feature control DataTables' server-side processing mode.
-              "order": [], //Initial no order.
-              // Load data for the table's content from an Ajax source
-              "ajax": {
-                  "url": '<?php echo base_url('sertifikasi/fasilitas/Home/loadpertama/')?>'+obj,
-                  "type": "POST"
-              },
-              //Set column definition initialisation properties.
-              "columns": [
-                  {"data": "0",width:50},
-                  {"data": "1",width:100},
-                  {"data": "2",width:100},
-                  // {"data": "3",width:100},
-									{"data": "3",width:100},
-                  {"data": "4",width:100},
-									{"data": "5",width:100},
-									{"data": "6",width:100},
-              ],
 
-          });
-				}
-
-//});
-
-function loadDataperpindahan(obj){
-  var table;
-        table = $('#dataUserPerpindahan').DataTable({
-                "processing": false, //Feature control the processing indicator.
-                 "destroy": true,
-                "serverSide": true, //Feature control DataTables' server-side processing mode.
-                "order": [], //Initial no order.
-                // Load data for the table's content from an Ajax source
-                "ajax": {
-                    "url": '<?php echo base_url('sertifikasi/fasilitas/Home/loadperpindahan/')?>'+obj,
-                    "type": "POST"
-                },
-                //Set column definition initialisation properties.
-                "columns": [
-                    {"data": "0",width:50},
-                    {"data": "1",width:100},
-                    {"data": "2",width:100},
-                    {"data": "3",width:100},
-                    {"data": "4",width:100},
+function ajaxProccess(obj,type,table_dt){
+	var table;
+	      table = $(table_dt).DataTable({
+	              "processing": false, //Feature control the processing indicator.
+	               "destroy": true,
+	              "serverSide": true, //Feature control DataTables' server-side processing mode.
+	              "order": [], //Initial no order.
+	              // Load data for the table's content from an Ajax source
+	              "ajax": {
+	                  "url": '<?php echo base_url('sertifikasi/fasilitas/Home/loadData/')?>'+obj+'/'+type,
+	                  "type": "POST"
+	              },
+	              //Set column definition initialisation properties.
+	              "columns": [
+	                  {"data": "0",width:50},
+	                  {"data": "1",width:100},
+	                  {"data": "2",width:100},
+										{"data": "3",width:100},
+	                  {"data": "4",width:100},
 										{"data": "5",width:100},
 										{"data": "6",width:100},
-                ],
+	              ],
 
-            });
-
+	          });
 }
-function refresh(){
-	$('#dataUserpertama').DataTable().ajax.reload();
-	loadDataperpindahan();
+function loadData(obj){
+	// $('#dataUserpertama').DataTable().ajax.reload();
+	search(1);
+	search(2);
+	//$('#dataUserPerpindahan').DataTable().ajax.reload();
+	// loadDataperpindahan();
 
 }
 function action(obj1){
@@ -283,7 +252,7 @@ function action(obj1){
 			success: function(data)
 			{
 				if(data.msg=='success'){
-						refresh();
+						loadData(1);
 					}else{
 						alert('gagal update');
 					}

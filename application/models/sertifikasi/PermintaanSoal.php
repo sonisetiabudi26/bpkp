@@ -28,17 +28,23 @@ class PermintaanSoal extends My_Model
 		 return $query->result();
 	}
 	public function getDatabyPembuat($id){
-		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR');
+		$condition = "detail_permintaan_soal.PETUGAS =" . "'" . $id . "' AND detail_permintaan_soal.TUGAS ='pembuat_soal' AND permintaan_soal.STATUS ='pembuat_soal' AND flag=0";
+		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR,detail_permintaan_soal.TUGAS');
 		$this->db->from($this->_table);
 		$this->db->join('bab_mata_ajar','permintaan_soal.FK_BAB_MATA_AJAR = bab_mata_ajar.PK_BAB_MATA_AJAR');
-			$this->db->where('STATUS',$id);
-		// if($id=='pembuat_soal'){
-		// 		$this->db->where('PEMBUAT_SOAL',$id);
-		// 		$this->db->where('FK_LOOKUP_STATUS_PERMINTAAN','27');
-		// }elseif($id=='review1'){
-		// 	$this->db->where('REVIEW1',$id);
-		// 	$this->db->where('FK_LOOKUP_STATUS_PERMINTAAN','24');
-		// }
+		$this->db->join('detail_permintaan_soal','detail_permintaan_soal.FK_PERMINTAAN_SOAL = permintaan_soal.PK_PERMINTAAN_SOAL');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		 return $query->result();
+	}
+	public function getDatabyReview($id){
+		$condition = "STATUS=detail_permintaan_soal.TUGAS AND PETUGAS =" . "'" . $id . "' AND detail_permintaan_soal.TUGAS !='pembuat_soal' AND permintaan_soal.STATUS !='pembuat_soal' AND flag!=0";
+		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR,detail_permintaan_soal.TUGAS');
+		$this->db->from($this->_table);
+		$this->db->join('bab_mata_ajar','permintaan_soal.FK_BAB_MATA_AJAR = bab_mata_ajar.PK_BAB_MATA_AJAR');
+		$this->db->join('detail_permintaan_soal','detail_permintaan_soal.FK_PERMINTAAN_SOAL = permintaan_soal.PK_PERMINTAAN_SOAL');
+		$this->db->join('soal_ujian','permintaan_soal.PK_PERMINTAAN_SOAL = soal_ujian.FK_PERMINTAAN_SOAL');
+		$this->db->where($condition);
 		$query = $this->db->get();
 		 return $query->result();
 	}
@@ -90,6 +96,15 @@ class PermintaanSoal extends My_Model
 			}else{
 				return 'error';
 			}
+		}
+		public function kesediaansoal($id){
+			$this->db->select('permintaan_soal.JUMLAH_SOAL,count(soal_ujian.FK_PERMINTAAN_SOAL)as total_soal');
+			$this->db->from($this->_table);
+			$this->db->join('soal_ujian','permintaan_soal.PK_PERMINTAAN_SOAL = soal_ujian.FK_PERMINTAAN_SOAL');
+			$this->db->where('PK_PERMINTAAN_SOAL',$id);
+			$this->db->limit(1);
+			$query = $this->db->get();
+			 return $query->result();
 		}
 		private function _get_datatables_query($fk_bab_mata_ajar=null)
 	    {

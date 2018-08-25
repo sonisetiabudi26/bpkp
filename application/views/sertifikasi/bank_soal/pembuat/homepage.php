@@ -9,9 +9,9 @@
 		<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 			<!-- <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Bank Soal</a>
 			</li> -->
-			<li role="presentation" class="active"><a href="#tab_content1" role="tab" onclick="loadDataBabMataAjar()" id="home-tab" data-toggle="tab" aria-expanded="true">Buat Soal</a>
+			<li role="presentation" class="active"><a href="#tab_content1" role="tab"  onclick="asd()" id="home-tab" data-toggle="tab" aria-expanded="true">Buat Soal</a>
 			</li>
-			<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDatakodeSoal()"  id="profile-tab2" data-toggle="tab" aria-expanded="false">Review Soal</a>
+			<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDatareview('review')"  id="profile-tab2" data-toggle="tab" aria-expanded="false">Review Soal</a>
 			</li>
 			<!-- <li role="presentation" class=""><a href="#tab_content3" role="tab"  id="profile-tab2"  onclick="loadDatakodeSoalpublish()"data-toggle="tab" aria-expanded="false">Publish Kode Soal</a>
 			</li>
@@ -136,7 +136,7 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-	<table id="tableKodeSoal" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	<table id="tablereview" class="table table-striped table-bordered" cellspacing="0" width="100%">
 			<thead>
 					<tr>
 							<th>No</th>
@@ -238,31 +238,24 @@
 </div> -->
 <script type="text/javascript">
 	var save_method;
-	var table;
-	<?php
-		if(isset($_POST['fk_bab_mata_ajar'])){
-	?>
-			var url = "<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/".$_POST['fk_bab_mata_ajar']; ?>";
-	<?php
-		}else{
-		?>
-			var url = "<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/"; ?>";
-		<?php
-		}
-	?>
+  var table;
+
 
 	$(document).ready(function() {
-		showDatatable(url);
-	});
+		// alert();
+		var tugas='pembuat_soal';
 
-	function showDatatable(urlPar){
-		table = $('#table').DataTable({
+
+
+	table=	$('#table').DataTable({
 			"processing": true,
 			"serverSide": true,
+			 "destroy": true,
 			"order": [],
 			"ajax": {
-				"url": urlPar,
-				"type": "POST"
+				"url": '<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/"; ?>',
+				"type": "POST",
+				"data": { tugas: tugas },
 			},
 			"columnDefs": [
 			{
@@ -272,30 +265,53 @@
 			],
 		});
 	}
+);
 
-	function reload_table()
+	function loadData(obj)
 	{
+
 		table.ajax.reload(null,false);
+		loadDatareview('review');
 	}
 
+ function loadDatareview(tugas){
+	table= $('#tablereview').DataTable({
+		 "processing": true,
+		 "serverSide": true,
+		  "destroy": true,
+		 "order": [],
+		 "ajax": {
+			 "url": '<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/"; ?>',
+			 "type": "POST",
+			 "data": { tugas: tugas },
+		 },
+		 "columnDefs": [
+		 {
+			 "targets": [ -1 ],
+			 "orderable": false
+		 },
+		 ],
+	 });
+ }
 
-	function update_data(id)
+	function update_data(id,tugas)
 	{
 
 					// ajax delete data to database
 					$.ajax({
-							url : "<?php echo base_url('sertifikasi/bank_soal/permintaan/review')?>/"+id,
+							url : "<?php echo base_url('sertifikasi/bank_soal/permintaan/review')?>",
 							type: "POST",
 							dataType: "JSON",
+							data:{ id: id, tugas: tugas },
 							success: function(data)
 							{
 								if(data.msg=='success'){
 									swal("Success", "Data Publish Successfully!", "success");
 								}else{
-									swal("Error", "Data Publish Failed!", "error");
+									swal("Error", "Data gagal dikirim!", "error");
 								}
 
-							 reload_table();
+							 loadData(1);
 							},
 
 					});

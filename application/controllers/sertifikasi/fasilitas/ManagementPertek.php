@@ -10,7 +10,6 @@ class ManagementPertek extends CI_Controller {
         // Load parent construct
         parent::__construct();
         $this->load->library('session');
-    		//$this->load->helper('url');
 				$this->load->helper('file');
     		$this->load->model('sertifikasi/menupage','menupage');
 				$this->load->model('sertifikasi/pengusulpengangkatan','pengusul');
@@ -42,7 +41,6 @@ class ManagementPertek extends CI_Controller {
 				$data['nosurat']=$key->NO_SURAT;
 				$data['data_doc']=($key->DOC_PERTEK==''?'0':'1');
 			}
-
 			$this->load->view('sertifikasi/fasilitas/content/modal_view_pertek',$data);
 
 		}
@@ -159,11 +157,14 @@ class ManagementPertek extends CI_Controller {
 	         $namapertek=($key->DOC_PERTEK==''?'Create DOC PERTEK':'View DOC PERTEK');
 	         $namaangker=($key->DOC_ANGKA_KREDIT==''?'Create DOC Angka Kredit':'View DOC Angka Kredit');
 	         $resi=($key->NO_RESI==''?'Input No Resi':'Update No Resi');
+					 $styledisable='style="display:none"';
+					 $disable=($key->DOC_ANGKA_KREDIT==''||$key->DOC_PERTEK==''?$styledisable:"");
+
 	         $dataRow[]='<td><a '.$url.' >
              '.$namapertek.'</a>
              <a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-success">
                  '.$namaangker.'</a>
-             <a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
+             <a onclick="getModal(this)" id="btn-upload-doc" '.$disable.' data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
                  '.$resi.'</a></td>';
          $data[]=$dataRow;
          $a++;

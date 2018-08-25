@@ -18,72 +18,65 @@ class Home extends CI_Controller {
     public function index()
     {
 		$fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
-		//$unit_kerja=$this->session->userdata('unit_kerja');
 		$username = $this->session->userdata('logged_in');
-		if(isset($fk_lookup_menu) && isset($username)){
-			$data['title_page'] = 'BPKP Web Application';
-			$data['content_page']='fasilitas/homepage.php';
-			$data['username']=$username;
+			if(isset($fk_lookup_menu) && isset($username)){
+				$data['title_page'] = 'BPKP Web Application';
+				$data['content_page']='fasilitas/homepage.php';
+				$data['username']=$username;
 
-			$data['validators']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),1);
-				$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),2);
-		//	}
-			getMenuAccessPage($data, $fk_lookup_menu);
-		}else{
-			redirect('/');
-		}
-    }
-    public function loadperpindahan($obj){
-			//$unitkerja=$this->session->set_userdata('unit_kerja',$obj);
-			$username = $this->session->userdata('logged_in');
-
-			$datas=$this->pengusul->loadValidasi($username,2,$obj);
-			 $data = array();
-				$a=1;
-			foreach ($datas as $key) {
-				if($key->RESULT==''){
-					$result='';
-				}elseif($key->RESULT==1){
-					$result='<i class="glyphicon glyphicon-remove"></i> Reject';
-				}else{
-					$result='<i class="glyphicon glyphicon-ok"></i> Accept';
-				}
-				$dataRow = array();
-				$dataRow[]=$a;
-				$dataRow[]=$key->NO_SURAT;
-				$dataRow[]=$key->NIP;
-				// $dataRow[]=$key->NAMA;
-				$dataRow[]=$key->DESC;
-				$dataRow[]=$result;
-
-
-				$url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN;
-				$url_angker=base_url('sertifikasi')."/fasilitas/home/vw_show_angker/".$key->PK_PENGUSUL_PENGANGKATAN;
-				$accept=$key->PK_PENGUSUL_PENGANGKATAN."~0";
-				$reject=$key->PK_PENGUSUL_PENGANGKATAN."~1";
-
-				$dataRow[]='<td><a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-primary">
-						View Doc</a><a class="btn btn-sm btn-success" href="javascript:void(0)" title="accept" onclick="action('."'".$accept."'".')"> Accept</a>
-						<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="reject" onclick="action('."'".$reject."'".')"> Reject</a>
-						<a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
-								Input Angka Kredit</a></td>';
-				$data[]=$dataRow;
-				$a++;
+				$data['validators']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),1);
+					$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),2);
+				getMenuAccessPage($data, $fk_lookup_menu);
+			}else{
+				redirect('/');
 			}
-			$output = array(
-					"draw" => 'dataEvent',
-					"recordsTotal" => $a,
-					"recordsFiltered" => $a,
-					"data" => $data,
-			);
-		 //output to json format
-		 echo json_encode($output);
     }
-    public function loadpertama($obj){
-		  	//$unitkerja=$this->session->set_userdata('unit_kerja',$obj);
-      	$username = $this->session->userdata('logged_in');
+    // public function loadperpindahan($obj){
+		// 	$username = $this->session->userdata('logged_in');
+		// 	$datas=$this->pengusul->loadValidasi($username,2,$obj);
+		// 	 $data = array();
+		// 		$a=1;
+		// 			foreach ($datas as $key) {
+		// 				if($key->RESULT==''){
+		// 					$result='';
+		// 				}elseif($key->RESULT==1){
+		// 					$result='<i class="glyphicon glyphicon-remove"></i> Reject';
+		// 				}else{
+		// 					$result='<i class="glyphicon glyphicon-ok"></i> Accept';
+		// 				}
+		// 				$dataRow = array();
+		// 				$dataRow[]=$a;
+		// 				$dataRow[]=$key->NO_SURAT;
+		// 				$dataRow[]=$key->NIP;
+		// 				$dataRow[]=$key->DESC;
+		// 				$dataRow[]=$result;
+		//
+		// 				$url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN;
+		// 				$url_angker=base_url('sertifikasi')."/fasilitas/home/vw_show_angker/".$key->PK_PENGUSUL_PENGANGKATAN;
+		// 				$accept=$key->PK_PENGUSUL_PENGANGKATAN."~0";
+		// 				$reject=$key->PK_PENGUSUL_PENGANGKATAN."~1";
+		//
+		// 				$dataRow[]='<td><a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-primary">
+		// 						View Doc</a><a class="btn btn-sm btn-success" href="javascript:void(0)" title="accept" onclick="action('."'".$accept."'".')"> Accept</a>
+		// 						<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="reject" onclick="action('."'".$reject."'".')"> Reject</a>
+		// 						<a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
+		// 								Input Angka Kredit</a></td>';
+		// 				$data[]=$dataRow;
+		// 				$a++;
+		// 			}
+		// 	$output = array(
+		// 			"draw" => 'dataEvent',
+		// 			"recordsTotal" => $a,
+		// 			"recordsFiltered" => $a,
+		// 			"data" => $data,
+		// 	);
+		//  //output to json format
+		//  echo json_encode($output);
+    // }
+    public function loadData($obj,$type){
+		  	$username = $this->session->userdata('logged_in');
 
-        $datas=$this->pengusul->loadValidasi($username,1,$obj);
+        $datas=$this->pengusul->loadValidasi($username,$type,$obj);
          $data = array();
           $a=1;
   			foreach ($datas as $key) {
@@ -98,8 +91,6 @@ class Home extends CI_Controller {
           $dataRow[]=$a;
 					$dataRow[]=$key->NO_SURAT;
 				  $dataRow[]=$key->NIP;
-          // $dataRow[]=$key->NAMA;
-
           $dataRow[]=$key->DESC;
 					$dataRow[]=$result;
 					$dataRow[]=$key->DESC_STATUS;
@@ -227,12 +218,14 @@ class Home extends CI_Controller {
 														'data' => $data_angker);
 			echo json_encode($data_list);
 		}
+
 		public function apiuser($param){
 			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
 			$check=file_get_contents($url);
 			$jsonResult=json_decode($check);
 			return $jsonResult;
 		}
+
 		public function add_angka_kredit(){
 
 					$datex=date('Y-m-d');

@@ -53,9 +53,10 @@ public function get_data_all_by_event($kodeevent,$kelas){
 	}
 }
 public function get_data_all_by_numrows($kodesoal,$kelas){
-	$condition = "KODE_SOAL =" . "'" . $kodesoal . "'";
-	$this->db->select('*');
+	$condition = "kode_soal.KODE_SOAL =" . "'" . $kodesoal . "'";
+	$this->db->select('soal_distribusi.*,kode_soal.KODE_SOAL');
 	$this->db->from('soal_distribusi');
+	$this->db->join('kode_soal', 'soal_distribusi.FK_KODE_SOAL = kode_soal.PK_KODE_SOAL');
 	$this->db->where($condition);
 	$query = $this->db->get();
 	if ($query->num_rows() > 0) {
@@ -64,7 +65,7 @@ public function get_data_all_by_numrows($kodesoal,$kelas){
 		return "0";
 	}
 }
-public function calculate($kodesoal,$jawaban,$no_soal){
+public function calculate($kodesoal,$jawaban){
 	// soal_distribusi b on a.KODE_SOAL=b.KODE_SOAL inner join soal_ujian c on b.FK_SOAL_UJIAN=c.PK_SOAL_UJIAN
 	if($jawaban=='A'){
 		$jawaban="1";
@@ -83,10 +84,11 @@ public function calculate($kodesoal,$jawaban,$no_soal){
 	}elseif($jawaban=='H'){
 		$jawaban="8";
 	}
-	$condition = "soal_distribusi.KODE_SOAL =" . "'" . $kodesoal . "' AND " . "soal_ujian.JAWABAN =" . "'" . $jawaban . "' AND " . "soal_distribusi.NO_UJIAN =" . "'" . $no_soal . "'";
-	$this->db->select('soal_distribusi.FK_SOAL_UJIAN,soal_distribusi.NO_UJIAN,soal_ujian.JAWABAN');
+	$condition = "kode_soal.KODE_SOAL =" . "'" . $kodesoal . "' AND " . "soal_ujian.JAWABAN =" . "'" . $jawaban . "'";
+	$this->db->select('soal_distribusi.FK_SOAL_UJIAN,soal_ujian.JAWABAN,kode_soal.KODE_SOAL');
 	$this->db->from("soal_distribusi");
 	$this->db->join('soal_ujian', 'soal_distribusi.FK_SOAL_UJIAN = soal_ujian.PK_SOAL_UJIAN');
+	$this->db->join('kode_soal', 'soal_distribusi.FK_KODE_SOAL = kode_soal.PK_KODE_SOAL');
 	$this->db->where($condition);
 	$query = $this->db->get();
 	if ($query->num_rows() > 0) {

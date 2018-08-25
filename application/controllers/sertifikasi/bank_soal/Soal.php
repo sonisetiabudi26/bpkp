@@ -34,6 +34,7 @@ class Soal extends CI_Controller {
 			'JAWABAN' => $this->input->post('jawaban'),
 			'PARENT_SOAL' => $parent_soal,
 			'FK_BAB_MATA_AJAR' => $data[0]->FK_BAB_MATA_AJAR,
+			'FK_PERMINTAAN_SOAL' => $data[0]->FK_PERMINTAAN_SOAL,
 		);
 		if($this->soalujian->_add($data)){
 			// $data = array(

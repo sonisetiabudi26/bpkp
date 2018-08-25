@@ -4,19 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ManagementBankSoal extends CI_Controller {
 
 	public function __construct(){
-        parent::__construct();
-        $this->load->library('session');
-        $this->load->helper(array('form', 'url'));
-		$this->load->model('sertifikasi/menupage','menupage');
-    	$this->load->model('sertifikasi/soalujian','soalujian');
-		$this->load->model('sertifikasi/groupmataajar','groupmataajar');
-		$this->load->model('sertifikasi/mataajar','mataajar');
-		$this->load->model('sertifikasi/users','users');
-		$this->load->model('sertifikasi/lookup','lookup');
-		$this->load->model('sertifikasi/kodesoal','kodesoal');
-		$this->load->model('sertifikasi/babmataajar','babmataajar');
+			parent::__construct();
+			$this->load->library('session');
+			$this->load->helper(array('form', 'url'));
+			$this->load->model('sertifikasi/menupage','menupage');
+			$this->load->model('sertifikasi/soalujian','soalujian');
+			$this->load->model('sertifikasi/groupmataajar','groupmataajar');
+			$this->load->model('sertifikasi/mataajar','mataajar');
+			$this->load->model('sertifikasi/users','users');
+			$this->load->model('sertifikasi/lookup','lookup');
+			$this->load->model('sertifikasi/kodesoal','kodesoal');
+			$this->load->model('sertifikasi/babmataajar','babmataajar');
 			$this->load->model('sertifikasi/soaldistribusi','soaldistribusi');
-				$this->load->model('sertifikasi/SoalKasus','soalkasus');
+			$this->load->model('sertifikasi/SoalKasus','soalkasus');
     }
 
     public function index(){
@@ -143,7 +143,7 @@ class ManagementBankSoal extends CI_Controller {
             $row[] = '<div style="text-align:center;"><a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-primary" onclick="getModalWithParam(this)" id="btn-edit-soal"
 			data-href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_soal".'" data-toggle="modal" data-target="#modal-content"
 			><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-			<a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-danger" onclick="getModalWithParam(this)" id="btn-edit-soal"
+			<a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-danger" onclick="getModalWithParam(this)" id="btn-hapus-soal"
 			data-href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_hapus_soal".'" data-toggle="modal" data-target="#modal-content"
 			><i class="glyphicon glyphicon-trash"></i> Hapus</a></div>';
 
@@ -172,7 +172,7 @@ class ManagementBankSoal extends CI_Controller {
 						 $row[] = $field->NAMA_BAB_MATA_AJAR;
 						 $url=base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_req_soal/".$field->PK_BAB_MATA_AJAR;
 						 $row[] = '<td><a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_BAB_MATA_AJAR.'~babmataajar'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
-						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" $disable id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Permintaan Buat Soal</a></td>';
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" $disable id="btn-add-permintaan-soal" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Permintaan Buat Soal</a></td>';
 
 						 $data[] = $row;
 						 $a++;
@@ -220,7 +220,7 @@ class ManagementBankSoal extends CI_Controller {
 						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal/".$field->PK_KODE_SOAL;
 						 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_KODE_SOAL.'~kodesoal'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete Kode</a>
 
-						 <a class="btn btn-sm btn-info"  onclick="getModal(this)" id="btn-add-soal" data-href="'.$url.'"
+						 <a class="btn btn-sm btn-info"  onclick="getModal(this)" id="btn-distribusi-soal" data-href="'.$url.'"
 		 						data-toggle="modal" data-target="#modal-content" '.$disable.' ><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</a>
 						 </td>';
 
@@ -351,7 +351,7 @@ class ManagementBankSoal extends CI_Controller {
 
 					 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_soal_kasus/".$field->PK_SOAL_KASUS;
 					 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_SOAL_KASUS.'~soalkasus'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
-					 <a class="btn btn-sm btn-warning"  onclick="getModal(this)" id="btn-add-soal" data-href="'.$url.'"
+					 <a class="btn btn-sm btn-warning"  onclick="getModal(this)" id="btn-edit-kode-soal" data-href="'.$url.'"
 							data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-pencil"></i> Edit</a>
 					 </td>';
 

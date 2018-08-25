@@ -13,7 +13,12 @@ class Permintaan extends CI_Controller {
 
 	public function loadPermintaan(){
 		$username = $this->session->userdata('logged_in');
-		$list=$this->permintaansoal->getDatabyPembuat($username);
+		if($_POST['tugas']=='pembuat_soal'){
+			$list=$this->permintaansoal->getDatabyPembuat($username);
+		}else{
+			$list=$this->permintaansoal->getDatabyReview($username);
+		}
+
 		$data = array();
 		$no =1;
 		foreach ($list as $soal) {
@@ -26,18 +31,20 @@ class Permintaan extends CI_Controller {
 				$row[] = $soal->TANGGAL_PERMINTAAN;
 				$data_soal=$this->permintaansoal->numsoal($soal->PK_PERMINTAAN_SOAL);
 				$row[] = $data_soal[0]->total_soal.'/'.$soal->JUMLAH_SOAL;
-				if($data_soal[0]->total_soal==$soal->JUMLAH_SOAL&&$username=='pembuat_soal'){
+				if($data_soal[0]->total_soal==$soal->JUMLAH_SOAL){
 					$disable="style='display:none'";
+					$kirim="";
 				}else{
-					$disable='';
+					$disable="";
+					$kirim="style='display:none'";
 				}
 
-				$row[] = '<div style="text-align:center;"><a data-var="pk_permintaan_soal" '.$disable.' data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-edit-soal"
+				$row[] = '<div style="text-align:center;"><a data-var="pk_permintaan_soal" '.$disable.' data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-add-soal"
 					data-href="'. base_url('sertifikasi')."/bank_soal/permintaan/vw_create_soal".'" data-toggle="modal" data-target="#modal-content"
 					><i class="glyphicon glyphicon-plus"></i> Buat Soal</a>
 					<a '.$disable.' ata-var="id_permintaan" data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-default" onclick="getModal(this)" id="btn-import-soal" data-href="'.base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_import_soal/".$soal->PK_PERMINTAAN_SOAL.'" data-toggle="modal" data-target="#modal-content"
 						><i class="glyphicon glyphicon-pencil"></i> Import Soal</a>
-						<a  href="javascript:void(0)" class="btn btn-sm btn-primary"  title="Hapus" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."'".')"><i class="fa fa-paper-plane"></i> Kirim</a>
+						<a  href="javascript:void(0)" class="btn btn-sm btn-primary" '.$kirim.' title="Hapus" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."'".','."'".$soal->TUGAS."'".')"><i class="fa fa-paper-plane"></i> Kirim</a>
 					</div>';
 
 				$data[] = $row;
@@ -232,13 +239,20 @@ class Permintaan extends CI_Controller {
 			return array('datasheet' => $datasheet, 'file' => '', 'response' => "error");
 		}
 	}
-	public function review($id){
+	public function review(){
+		$datasoal=$this->permintaansoal->kesediaansoal($_POST['id']);
+		if($datasoal[0]->JUMLAH_SOAL==$datasoal[0]->total_soal){
+			$flag=1;
+		}else{
+			$flag=0;
+		}
 		$data_update = array(
-			'FK_LOOKUP_STATUS_PERMINTAAN' => 24
+			'STATUS' => 'review1',
+			'flag' => '1'
 		);
 		$where = array(
 
-			'PK_PERMINTAAN_SOAL' => $id
+			'PK_PERMINTAAN_SOAL' => $_POST['id']
 		);
 		$update=$this->permintaansoal->updateData($where,$data_update);
 		 if($update=='success'){

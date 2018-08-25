@@ -103,7 +103,7 @@
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div style="float:right">
-				<button onclick="getModal(this)" id="btn-add-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_bab_mata_ajar"; ?>"
+				<button onclick="getModal(this)" id="btn-add-bab-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_bab_mata_ajar"; ?>"
 						data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Buat Bab Soal</button>
 			 </div>
 			<div class="x_content">
@@ -138,7 +138,7 @@
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div style="float:right">
-				<button onclick="getModal(this)" id="btn-add-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_kode_soal"; ?>"
+				<button onclick="getModal(this)" id="btn-add-kode-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_kode_soal"; ?>"
 						data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Buat Kode Soal</button>
 			 </div>
 			<div class="x_content">
@@ -209,7 +209,7 @@
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div style="float:right">
-				<button onclick="getModal(this)" id="btn-add-soal" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_soal_kasus"; ?>"
+				<button onclick="getModal(this)" id="btn-add-soal-kasus" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_soal_kasus"; ?>"
 						data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Buat Materi Soal Kasus</button>
 			 </div>
 			<div class="x_content">
@@ -302,10 +302,12 @@
 
 	function loadData(obj)
 	{
+
 		table.ajax.reload(null,false);
 		loadDatakodeSoal();
 		loadDatakodeSoalpublish();
 		loadsoalkasus();
+
 	}
 
 	function loadDatakodeSoal(){

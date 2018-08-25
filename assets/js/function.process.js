@@ -437,20 +437,24 @@ function procesFormandUpload(formTarget, url){
 			dataType: "json",
 			success : function(data) {
         if(data.status=='success'){
+          $('.modal').modal('toggle');
           swal("Success", "Data berhasil disimpan!", "success");
           $("#"+formTarget.id)[0].reset();
 
         }else if(data.status=='error'){
+          $('.modal').modal('toggle');
           swal("Terjadi Kesalahan", data.msg, data.status);
             $("#"+formTarget.id)[0].reset();
 
         }
           loadData(1);
+
       },
       error: function (e) {
         swal('Terjadi Kesalahan',e,'error');
         console.log("ERROR : ", e);
       }
+
     });
     $(document).unbind('submit');
 	});
