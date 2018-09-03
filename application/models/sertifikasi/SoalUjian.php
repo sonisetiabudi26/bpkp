@@ -17,6 +17,14 @@ class SoalUjian extends My_Model
 	public function insert_multiple($data){
 		$this->db->insert_batch($this->_table, $data);
 	}
+	public function loadsoalkebutuhan(){
+		// $condition = "fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
+		$this->db->select('*');
+		$this->db->from('mata_ajar');
+		// $this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 	public function _get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar) {
 	    $condition = "fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";

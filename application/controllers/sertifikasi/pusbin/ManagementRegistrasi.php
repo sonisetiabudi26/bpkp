@@ -13,6 +13,7 @@ class ManagementRegistrasi extends CI_Controller {
 				$this->load->model('sertifikasi/JadwalUjian','jadwal');
 				$this->load->model('sertifikasi/Users','user');
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
+				$this->load->model('sertifikasi/SoalUjian','soal');
     }
 
     public function index()
@@ -30,6 +31,36 @@ class ManagementRegistrasi extends CI_Controller {
         redirect('/');
       }
     }
+		public function loadDataKebutuhanSoal(){
+			$dataAll=$this->soal->loadsoalkebutuhan();
+			 $data = array();
+			 //$no = $_POST['start'];
+			 $a=1;
+			 foreach ($dataAll as $field) {
+				 // $status=($datex>$field->START_DATE?'Expired':'Available');
+
+					 $row = array();
+					 $row[] = $a;
+					 $row[] = $field->KODE_MATA_AJAR;
+					 $row[] = $field->NAMA_MATA_AJAR;
+					 $row[] = '0';
+					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_edit_jadwal/".$field->PK_MATA_AJAR;
+					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Lihat Detail</a>
+                  ';
+
+					 $data[] = $row;
+					 $a++;
+			 }
+
+			 $output = array(
+					 "draw" => 'dataKebSoal',
+					 "recordsTotal" => $a,
+					 "recordsFiltered" => $a,
+					 "data" => $data,
+			 );
+			 //output dalam format JSON
+			 echo json_encode($output);
+		}
 		public function loadDatawidyaiswara(){
 			$datas=$this->user->loaddataWidyaiswarauser();
 			$no=1;
