@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2018 at 01:26 AM
+-- Generation Time: Sep 03, 2018 at 10:30 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -48,7 +48,8 @@ CREATE TABLE `angka_kredit` (
 
 INSERT INTO `angka_kredit` (`PK_ANGKA_KREDIT`, `FK_PENGUSUL_PENGANGKATAN`, `PENDIDIKAN_SEKOLAH`, `DIKLAT`, `PENGAWASAN`, `PENGEMBANGAN_PROFESI`, `PENUNJANG`, `JUMLAH`, `TUNJANGAN_JABATAN`, `CREATED_BY`, `CREATED_DATE`) VALUES
 (1, '26', 100, 100, 100, 100, 1001, 100, 100, NULL, '2018-08-13 00:00:00'),
-(2, '33', 123, 213, 23, 123, 23, 231, 23, NULL, '2018-08-24 00:00:00');
+(2, '33', 123, 213, 23, 123, 23, 231, 23, NULL, '2018-08-24 00:00:00'),
+(3, '1', 150000, 0, 243300, 22700, 0, 436000, 1100000, NULL, '2018-09-03 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -217,7 +218,15 @@ INSERT INTO `document_pengusulan_pengangkatan` (`PK_DOC_PENGUSULAN_PENGANGKATAN`
 (31, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
 (32, '', '1', 'doc_skp', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
 (33, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(34, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24');
+(34, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
+(35, '', '1', 'doc_cpns', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(36, '', '1', 'doc_pns', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(37, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(38, '', '1', 'doc_prajab', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(39, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(40, '', '1', 'doc_skp', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(41, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
+(42, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03');
 
 -- --------------------------------------------------------
 
@@ -293,7 +302,8 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `FK_JENJANG`, `URAIAN`, `FK_PROVINSI`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(9, '6122018', 6, 'tester', 11, 'Pusbin Budianto', '2018-08-29');
+(9, '6122018', 6, 'tester', 11, 'Pusbin Budianto', '2018-08-29'),
+(10, '20212', 2, 'qwe', 13, 'Pusbin Budianto', '2018-09-03');
 
 -- --------------------------------------------------------
 
@@ -693,6 +703,13 @@ CREATE TABLE `pengusul_pengangkatan` (
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pengusul_pengangkatan`
+--
+
+INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `DOC_SURAT_PENGUSULAN`, `NO_SURAT`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `RESULT`, `VALIDATOR`, `UNITKERJA`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(1, '1110', 'doc_surat_pengusulan/20180903/20180903_1110/pdf.pdf', '123456', 1, 2, '0', '1110', 'Perwakilan BPKP Provinsi Daerah Khusus Ibukota Jakarta', '1110', '2018-09-03');
+
 -- --------------------------------------------------------
 
 --
@@ -738,6 +755,13 @@ CREATE TABLE `pertek` (
   `CREATED_BY` varchar(150) NOT NULL,
   `CREATED_DATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pertek`
+--
+
+INSERT INTO `pertek` (`PK_PERTEK`, `NO_SURAT`, `DOC_ANGKA_KREDIT`, `NO_PERTEK`, `DOC_PERTEK`, `PERTEK_DATE`, `NO_RESI`, `YTH`, `TEMPAT`, `KEPALA`, `TEMBUSAN`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(2, '123456', '', '123', 'http://localhost/bpkp/uploads/doc_pertek/pertek_123456.pdf', '2018-09-03', '', 'Soni Setiabudi', 'Bandung', '123', 'nurman,icin', '1110', '2018-09-03 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1079,6 +1103,7 @@ INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) 
 CREATE TABLE `widyaiswara_nilai` (
   `PK_WIDYAISWARA_NILAI` int(11) NOT NULL,
   `NIP` varchar(150) DEFAULT NULL,
+  `NAMA` varchar(150) NOT NULL,
   `TGL_RELEASE_MATA_AJAR` varchar(255) DEFAULT NULL,
   `FK_MATA_AJAR` int(10) NOT NULL,
   `NILAI_1` float NOT NULL,
@@ -1093,11 +1118,10 @@ CREATE TABLE `widyaiswara_nilai` (
 -- Dumping data for table `widyaiswara_nilai`
 --
 
-INSERT INTO `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`, `NIP`, `TGL_RELEASE_MATA_AJAR`, `FK_MATA_AJAR`, `NILAI_1`, `NILAI_2`, `NIP_INSTRUKTUR`, `flag`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(25, '195301291982031008', '2018-09-13', 13, 0, 0, '03', 0, 'Pusbin Budianto', '2018-09-03'),
-(26, '195212211978031008', '2018-09-13', 13, 0, 0, '03', 0, 'Pusbin Budianto', '2018-09-03'),
-(29, '195301291982031008', '2018-09-10', 28, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03'),
-(30, '195212211978031008', '2018-09-10', 28, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03');
+INSERT INTO `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`, `NIP`, `NAMA`, `TGL_RELEASE_MATA_AJAR`, `FK_MATA_AJAR`, `NILAI_1`, `NILAI_2`, `NIP_INSTRUKTUR`, `flag`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(25, '195212211978031001', 'Soni', '2018-09-13', 13, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03'),
+(26, '195212211978031008', 'Nurman', '2018-09-13', 13, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03'),
+(29, '195301291982031008', 'Icin', '2018-09-10', 28, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03');
 
 -- --------------------------------------------------------
 
@@ -1361,7 +1385,7 @@ ALTER TABLE `wilayah`
 -- AUTO_INCREMENT for table `angka_kredit`
 --
 ALTER TABLE `angka_kredit`
-  MODIFY `PK_ANGKA_KREDIT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PK_ANGKA_KREDIT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `bab_mata_ajar`
@@ -1397,7 +1421,7 @@ ALTER TABLE `detail_permintaan_soal`
 -- AUTO_INCREMENT for table `document_pengusulan_pengangkatan`
 --
 ALTER TABLE `document_pengusulan_pengangkatan`
-  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `dokumen_persetujuan`
@@ -1415,7 +1439,7 @@ ALTER TABLE `dokumen_registrasi_ujian`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
@@ -1427,7 +1451,7 @@ ALTER TABLE `jadwal_ujian`
 -- AUTO_INCREMENT for table `jawaban_peserta`
 --
 ALTER TABLE `jawaban_peserta`
-  MODIFY `PK_JAWABAN_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=734;
+  MODIFY `PK_JAWABAN_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
 
 --
 -- AUTO_INCREMENT for table `jenjang`
@@ -1463,7 +1487,7 @@ ALTER TABLE `menu_page_detail`
 -- AUTO_INCREMENT for table `pengusul_pengangkatan`
 --
 ALTER TABLE `pengusul_pengangkatan`
-  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `permintaan_soal`
@@ -1475,7 +1499,7 @@ ALTER TABLE `permintaan_soal`
 -- AUTO_INCREMENT for table `pertek`
 --
 ALTER TABLE `pertek`
-  MODIFY `PK_PERTEK` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `PK_PERTEK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pilihan_soal`
@@ -1499,7 +1523,7 @@ ALTER TABLE `registrasi_ujian`
 -- AUTO_INCREMENT for table `soal_distribusi`
 --
 ALTER TABLE `soal_distribusi`
-  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `soal_kasus`
