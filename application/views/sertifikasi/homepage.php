@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<title>BPKP System</title>
 
-	<link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/normalize.min.css')?>" rel="stylesheet">
+	<!-- <link href="<?php //echo base_url('assets/vendors/bootstrap/dist/css/normalize.min.css')?>" rel="stylesheet"> -->
 	<!-- Bootstrap -->
 	<link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
 	<!-- Font Awesome -->

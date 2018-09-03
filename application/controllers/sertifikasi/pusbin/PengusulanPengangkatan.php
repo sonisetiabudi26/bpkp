@@ -57,7 +57,7 @@ class PengusulanPengangkatan extends CI_Controller {
         $dataRow['validator']=($key->validator!='0'?$key->validator:'');
         $url=base_url('sertifikasi')."/pusbin/PengusulanPengangkatan/vw_validator/".$key->NO_SURAT;
         $dataRow['action']="<td><button onclick='getModal(this)' id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
-            <span>Set Validator</span></button></td>";
+            <span>Tentukan Validator</span></button></td>";
         $data[]=$dataRow;
         $a++;
       }

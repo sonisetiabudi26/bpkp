@@ -9,5 +9,27 @@ class DetailPermintaanSoal extends My_Model
 	public function view(){
 		return $this->db->get($this->_table)->result();
 	}
-	
+	public function updateData($where,$data){
+		$this->db->where($where);
+		$update=$this->db->update($this->_table,$data);
+		if($update){
+			return $update;
+		}else{
+			return 'error';
+		}
+	}
+	public function getcomment($id){
+		$condition = " FK_PERMINTAAN_SOAL =" . "'" . $id . "' AND TUGAS!='pembuat_soal' AND permintaan_soal.flag=1";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->join('permintaan_soal','detail_permintaan_soal.FK_PERMINTAAN_SOAL=permintaan_soal.PK_PERMINTAAN_SOAL');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		// return $query->result();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "no data";
+		}
+	}
 }

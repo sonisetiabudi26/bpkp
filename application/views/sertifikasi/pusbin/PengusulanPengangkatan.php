@@ -19,10 +19,10 @@
 													<td>NO</td>
 													<td>NIP Unit Apip</td>
 													<td>Unit Kerja</td>
-													<td>Jumlah Category</td>
+													<td>Jumlah Kategori</td>
 													<td>Jumlah Peserta</td>
                           <td>Validator</td>
-													<td>Action</td>
+													<td>Tindakan</td>
 												</tr>
 												</thead>
 												<tbody>
@@ -57,7 +57,7 @@
       		{"data" : "action"}
         ]
       });
-		
+
 });
 		function loadData(obj){
 			$('#datatable-responsive').DataTable().ajax.reload();

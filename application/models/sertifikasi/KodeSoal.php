@@ -57,6 +57,19 @@ class KodeSoal extends My_Model
 			return "nodata";
 		}
 	}
+	public function getdatakode($param1,$param2){
+		$condition = " KODE_MATA_AJAR =" . "'" . $param1 . "' group by mata_ajar.KODE_MATA_AJAR";
+		$this->db->select('MAX(KODE_SOAL) as kodex');
+		$this->db->from($this->_table);
+		$this->db->join('mata_ajar', 'mata_ajar.pk_mata_ajar = kode_soal.fk_mata_ajar');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return 'false';
+		}
+	}
 	public function get_data_by_id_soal($id){
 
 		$this->db->select('*');

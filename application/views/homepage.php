@@ -11,17 +11,27 @@ ob_start("ob_gzhandler");
 	<link href="<?php echo base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" />
 	<link href="<?php echo base_url('assets/css/font-awesome.css')?>" rel="stylesheet" />
 	<link href="<?php echo base_url('assets/css/style.css')?>" rel="stylesheet" />
-
+<style>
+.form-control{
+  padding:20px !important;
+}
+</style>
 </head>
 <body class="body-1">
 	<div class="outer">
 		<div class="middle" >
+      <div class="blur"></div>
 			<div class="inner">
 				<div class="row">
 					 <div class="col-lg-12 col-md-12 col-xs-12 par-center">
 							<img class="img-logo-login" src="<?php echo base_url('assets/other/media/img/logo/bpkp.png') ?>" />
 					</div>
 				</div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 par-center">
+          <label style="font-size:40px;padding-left:10px;color:#000">SERTIFIKASI JFA</label>
+        </div>
+        </div>
 					<!-- <h4 class="text-center">Form Login</h4> -->
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-xs-12 par-center">
@@ -37,26 +47,26 @@ ob_start("ob_gzhandler");
 									<div class="row">
 										<div class="form-group has-feedback">
 											<i class="glyphicon glyphicon-user form-control-feedback"></i>
-									    <input type="text" name="username" class="form-control" placeholder="Username" required/>
+									    <input type="text" name="username" class="form-control" placeholder="Nama Pengguna" required/>
 										</div>
 									</div>
 									<div class="row">
 										<div class="form-group has-feedback">
 											<i class="glyphicon glyphicon-lock form-control-feedback"></i>
-									    <input type="password" name="password" class="form-control" placeholder="Password" required/>
+									    <input type="password" name="password" class="form-control" placeholder="Kata Sandi" required/>
 										</div>
 									</div>
 										<div class="row">
 											<select name='role' class="form-control">
-											 <option value="1">Source DB</option>
-											 <option value="2">Source API</option>
+											 <option value="1">Sumber Data DB</option>
+											 <option value="2">Sumber Data API</option>
 											</select>
 									</div>
 									<div class="row">
-										<br><a href="#" class="forgot">Forgot Password?</a>
+										<!-- <br><a href="#" class="forgot">Forgot Password?</a> -->
 									</div><br/>
 									<div class="row">
-										<input type="submit" class="btn btn-primary" value="Login" style="width:100%;" />
+										<input type="submit" class="btn btn-primary" value="Masuk" style="width:100%;" />
 									</div>
 								</div>
 							</form>
@@ -66,7 +76,7 @@ ob_start("ob_gzhandler");
 		</div>
 	</div>
 		<footer class="footer">
-        <p class="text-muted" style="margin-left:10px;color:#ddd !important">© 2018 BPKP. All rights reserved</p>
+        <p class="text-muted" style="margin-left:10px;color:#000 !important">© 2018 BPKP. All rights reserved</p>
     </footer>
 <!-- INCLUDE JS -->
 <script src="<?php echo base_url('assets/js/jquery-2.1.4.js')?>"></script>

@@ -4,15 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class AdminBankSoal extends CI_Controller {
 
 	public function __construct(){
-        parent::__construct();
-        $this->load->library('session');
-        $this->load->helper(array('form', 'url'));
-		$this->load->model('sertifikasi/menupage','menupage');
-    	$this->load->model('sertifikasi/soalujian','soalujian');
-		$this->load->model('sertifikasi/mataajar','mataajar');
-		$this->load->model('sertifikasi/babmataajar','babmataajar');
-		$this->load->model('sertifikasi/users','users');
-		$this->load->model('sertifikasi/soalkasus','soalkasus');
+			parent::__construct();
+			$this->load->library('session');
+			$this->load->helper(array('form', 'url'));
+			$this->load->model('sertifikasi/menupage','menupage');
+			$this->load->model('sertifikasi/soalujian','soalujian');
+			$this->load->model('sertifikasi/mataajar','mataajar');
+			$this->load->model('sertifikasi/babmataajar','babmataajar');
+			$this->load->model('sertifikasi/users','users');
+			$this->load->model('sertifikasi/soalkasus','soalkasus');
     }
 
     public function index(){
@@ -64,6 +64,7 @@ class AdminBankSoal extends CI_Controller {
 	}
 
 	public function insert_soal_kasus(){
+		if($this->input->post('kode_kasus')!=''&&$this->input->post('soal_kasus')!=''){
 		$data = array(
 			'KODE_KASUS' => $this->input->post('kode_kasus'),
 			'SOAL_KASUS' => $this->input->post('soal_kasus'),
@@ -74,6 +75,9 @@ class AdminBankSoal extends CI_Controller {
 		}else{
 			print json_encode(array("status"=>"error", "data"=>"error"));
 		}
+			}else{
+				print json_encode(array("status"=>"error", "data"=>"error"));
+			}
     }
 
 	public function check_soal(){

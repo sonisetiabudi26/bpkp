@@ -84,7 +84,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$disable=($key->FK_STATUS_DOC=='2'?'style="display:none"':'');
 				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
 				$dataRow['action']="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
-						<span>Upload Doc</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Delete</button></td>";
+						<span>Unggah Dokumen</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Hapus</button></td>";
 				$data[]=$dataRow;
 				$a++;
 			}
@@ -323,30 +323,40 @@ class PengusulanPengangkatan extends CI_Controller {
 
 
 		public function search($nip){
-			$url="http://163.53.185.91:8083/sibijak/dca/api/api/pengguna?nip=".$nip;
-			$check=file_get_contents($url);
+			$url="http://163.53.185.91:8083/sibijak/dca/api/api/dtpengguna";
+			$data_login = array(
+				'nip' => $nip,
+		);
+			$check=getDataCurl($data_login,$url);
 			$jsonResult=json_decode($check);
-			if($jsonResult->message!='Unit Kerja Tidak Di Temukan'){
+			if($jsonResult->message=='get_data_success'){
 			$kodeunitkerja = $this->session->userdata('kodeunitkerja');
-			if($jsonResult->message=='get_data_success'  && $jsonResult->data[0]->isAuditor=='false'){
+			if($jsonResult->message=='get_data_success'&&$kodeunitkerja==$jsonResult->data[0]->KodeUnitKerja){
 
 				$url_auditor="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$nip;
 				$check_auditor=file_get_contents($url_auditor);
 				$jsonResult_auditor=json_decode($check_auditor);
+				$date= date('Y-m-d');
+				$diff = date_diff( date_create($jsonResult->data[0]->TanggalLahir), date_create($date) );
+				$umur =$diff->y  . ' Tahun ' . $diff->m .' Bulan';
 				$output = array(
 											 "nip" => $jsonResult->data[0]->NIP,
 											 "nama" => $jsonResult->data[0]->NamaLengkap,
+											 "umur" => $umur,
+											 "gelarDepan" => $jsonResult_auditor->data[0]->Auditor_GelarDepan,
+											 "gelarbelakang" => $jsonResult_auditor->data[0]->Auditor_GelarBelakang,
 											 "ttl" => $jsonResult->data[0]->TanggalLahir,
 											 "unit" => $jsonResult->data[0]->NamaUnitKerja,
 											 "pendidikan" => $jsonResult_auditor->data[0]->Pendidikan_Tingkat,
 											 "jabatan" => $jsonResult_auditor->data[0]->Jabatan_Nama,
 											 "golongan" => $jsonResult_auditor->data[0]->Golongan_Kode,
+											 "Tmtpangkat" => $jsonResult_auditor->data[0]->Pangkat_TglMulaiTugas,
 							 );
 			 //output to json format
 			 // echo json_encode($output);
 		 }else{
 			 $output = array(
-				 							"status" => 'success',
+				 							"status" => 'error',
 											"msg" => "NIP tidak sesuai dengan unit kerja",
 							);
 

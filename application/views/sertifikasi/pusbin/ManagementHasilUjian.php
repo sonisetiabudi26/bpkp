@@ -1,6 +1,6 @@
 <div class="page-title">
 	<div class="title_left">
-		<h3>Management Hasil Ujian</h3>
+		<h3>Manajemen Hasil Ujian</h3>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -8,7 +8,7 @@
 	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Batch</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">List Penilaian Peserta</a>
+		<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Daftar Penilaian Peserta</a>
 		</li>
 		<!-- <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
 		</li> -->
@@ -57,9 +57,9 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Category</td>
-													<td>Start Date</td>
-													<td>End Date</td>
+													<td>Kategori</td>
+													<td>Tanggal Mulai</td>
+													<td>Tanggal Selesai</td>
 													<td>Status</td>
 												</tr>
 												</thead>

@@ -93,7 +93,7 @@
 								<td>Nama</td>
 								<td>Kode Diklat</td>
 								<td>Unit/ Instansi</td>
-								<td>Action</td>
+								<td>Tindakan</td>
 							</tr>
 							</thead>
 							<tbody>
@@ -139,6 +139,17 @@ $(document).ready(function() {
 });
 
 function cetak(){
-	swal('Under Maintenance','','warning');
+
+	$.ajax({
+			type  : 'ajax',
+			url   :  "<?php echo base_url('sertifikasi/unit_apip/home/print_kartu/')?>",
+			async : false,
+			dataType : 'json',
+			success : function(data){
+
+			}
+
+	});
+	//swal('Under Maintenance','','warning');
 }
 </script>

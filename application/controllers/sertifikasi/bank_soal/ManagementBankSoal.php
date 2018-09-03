@@ -66,12 +66,14 @@ class ManagementBankSoal extends CI_Controller {
 	}
 	public function vw_add_kode_soal(){
 		$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
+
 		$this->load->view('sertifikasi/bank_soal/content/add_kode_soal', $data);
 	}
 
 	public function tambah_kode_soal(){
 			$datex=date('Y-m-d');
 		if(!empty($this->input->post('fk_mata_ajar')) && !empty($this->input->post('kode_soal'))){
+
 			$data = array(
 			'fk_mata_ajar' => $this->input->post('fk_mata_ajar'),
 			'kode_soal' => $this->input->post('kode_soal'),
@@ -142,7 +144,7 @@ class ManagementBankSoal extends CI_Controller {
 
             $row[] = '<div style="text-align:center;"><a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-primary" onclick="getModalWithParam(this)" id="btn-edit-soal"
 			data-href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_soal".'" data-toggle="modal" data-target="#modal-content"
-			><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+			><i class="glyphicon glyphicon-pencil"></i> Ubah</a>
 			<a data-var="pk_soal_ujian" data-id='.$soal->PK_SOAL_UJIAN.' class="btn btn-sm btn-danger" onclick="getModalWithParam(this)" id="btn-hapus-soal"
 			data-href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_hapus_soal".'" data-toggle="modal" data-target="#modal-content"
 			><i class="glyphicon glyphicon-trash"></i> Hapus</a></div>';
@@ -171,7 +173,7 @@ class ManagementBankSoal extends CI_Controller {
 						 $row[] = $field->NAMA_MATA_AJAR;
 						 $row[] = $field->NAMA_BAB_MATA_AJAR;
 						 $url=base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_req_soal/".$field->PK_BAB_MATA_AJAR;
-						 $row[] = '<td><a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_BAB_MATA_AJAR.'~babmataajar'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+						 $row[] = '<td><a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_BAB_MATA_AJAR.'~babmataajar'."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
 						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" $disable id="btn-add-permintaan-soal" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Permintaan Buat Soal</a></td>';
 
 						 $data[] = $row;
@@ -218,7 +220,7 @@ class ManagementBankSoal extends CI_Controller {
 						 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
 
 						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal/".$field->PK_KODE_SOAL;
-						 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_KODE_SOAL.'~kodesoal'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete Kode</a>
+						 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_KODE_SOAL.'~kodesoal'."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus Kode</a>
 
 						 <a class="btn btn-sm btn-info"  onclick="getModal(this)" id="btn-distribusi-soal" data-href="'.$url.'"
 		 						data-toggle="modal" data-target="#modal-content" '.$disable.' ><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</a>
@@ -250,6 +252,25 @@ class ManagementBankSoal extends CI_Controller {
 			}
 			$this->load->view('sertifikasi/bank_soal/content/edit_kodesoal', $datarow);
 		}
+
+		public function createkodesoal(){
+			$param=$_POST['param'];
+			$kodeuruts='';
+			$data_kode_mata=$this->mataajar->getkode_mataajar($param);
+			$kode_mata_ajar=$data_kode_mata[0]->KODE_MATA_AJAR;
+			$kode_urut=$this->kodesoal->getdatakode($kode_mata_ajar,$param);
+			$kodeurut=($kode_urut=='false'? '' : substr($kode_urut[0]->kodex, 4));
+			if($kodeurut!=''){
+				$kodeuruts=$kodeurut+1;
+			}else{
+				$kodeuruts=1;
+			}
+			$kodesoal=$kode_mata_ajar.''.$kodeuruts;
+			$output = array('status' => 'success',
+		 										'msg'=>$kodesoal);
+			echo json_encode($output);
+
+		}
 		public function loadKodeSoalpublish(){
 			$dataAll=$this->kodesoal->view();
 			 $data = array();
@@ -278,7 +299,7 @@ class ManagementBankSoal extends CI_Controller {
 						 //$url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
 
 						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal";
-						 $row[] = '<td><a class="btn btn-sm btn-primary"  href="javascript:void(0)" title="update" onclick="publish('."'".$field->PK_KODE_SOAL."'".')"><i class="glyphicon glyphicon-pencil"></i>Publish</a>
+						 $row[] = '<td><a class="btn btn-sm btn-primary"  href="javascript:void(0)" title="update" onclick="publish('."'".$field->PK_KODE_SOAL."'".')"><i class="glyphicon glyphicon-pencil"></i> Tayangkan</a>
 						 </td>';
 
 						 $data[] = $row;
@@ -350,9 +371,9 @@ class ManagementBankSoal extends CI_Controller {
 					 $row[] = $field->KODE_KASUS;
 
 					 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_soal_kasus/".$field->PK_SOAL_KASUS;
-					 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_SOAL_KASUS.'~soalkasus'."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+					 $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$field->PK_SOAL_KASUS.'~soalkasus'."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
 					 <a class="btn btn-sm btn-warning"  onclick="getModal(this)" id="btn-edit-kode-soal" data-href="'.$url.'"
-							data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+							data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-pencil"></i> Ubah</a>
 					 </td>';
 
 					 $data[] = $row;

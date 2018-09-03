@@ -1,17 +1,18 @@
 <div class="page-title">
 	<div class="title_left">
-		<h3>Management Registrasi</h3>
+		<h3>Manajemen Pendaftaran</h3>
 	</div>
 </div>
 <div class="clearfix"></div>
 <div class="" role="tabpanel" data-example-id="togglable-tabs" style="background:#fff !important;">
 	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#tab_content1" onclick="loadData();" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Monitoring Peserta</a>
+		<li role="presentation" class="active"><a href="#tab_content1" onclick="loadData();" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Pemantauan Peserta</a>
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" onclick="loadDatajadwal();" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Jadwal Ujian</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content3" onclick="loadDatasoal();" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Management Kebutuhan Soal</a>
+		<li role="presentation" class=""><a href="#tab_content3" onclick="loadDatasoal();" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Manajemen Kebutuhan Soal</a>
 		</li>
+	
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -30,7 +31,7 @@
 													<td>Nama</td>
 													<td>Unit Kerja</td>
 													<td>Jenjang</td>
-													<td>Mata Pelajaran</td>
+													<td>Tindakan</td>
 													<!-- <td>Lokasi Ujian</td> -->
 												</tr>
 												</thead>
@@ -49,7 +50,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_add_jadwal"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_add_jadwal"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -57,11 +58,11 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Category</td>
-													<td>Start Date</td>
-													<td>End Date</td>
+													<td>Kategori</td>
+													<td>Tanggal Mulai</td>
+													<td>Tanggal Selesai</td>
 													<td>Status</td>
-													<td>Action</td>
+													<td>Tindakan</td>
 												</tr>
 												</thead>
 												<tbody>
@@ -92,6 +93,7 @@
 						</div>
 			</div>
 		</div>
+
 	</div>
 </div>
 
@@ -129,7 +131,7 @@ function loadDataPeserta(){
 					 "<td>" + resp.nama_peserta  + "</td>"+
 					  "<td>" + resp.unitkerja + "</td>"+
 						"<td>" + resp.NAMA_JENJANG + "</td>"+
-					 "<td> "+ resp.NAMA_MATA_AJAR +" </td>"+
+					 "<td> "+ resp.action +" </td>"+
 					 // "<td>" + (resp.nip != nip ? resp.start + " - "+ resp.END_DATE  : '')+"</td>"+
 					 "</tr>");
 					// nip=resp.NIP;
@@ -163,6 +165,7 @@ var table;
 
           });
 }
+
 function loadData(obj){
 	loadDataPeserta();
 	loadDatajadwal();

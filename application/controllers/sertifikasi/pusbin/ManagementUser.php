@@ -40,7 +40,7 @@ class ManagementUser extends CI_Controller {
              $row[] = $field->USER_NAME;
              $row[] = $field->DESCR;
              $row[] = $field->USER_PASSWORD;
-             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
 
              $data[] = $row;
              $a++;
@@ -69,7 +69,7 @@ class ManagementUser extends CI_Controller {
              $row[] = $field->USER_NAME;
              $row[] = $field->DESCR;
              $row[] = $field->USER_PASSWORD;
-             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
 
              $data[] = $row;
              $a++;
@@ -98,7 +98,7 @@ class ManagementUser extends CI_Controller {
              $row[] = $field->USER_NAME;
              $row[] = $field->DESCR;
              $row[] = $field->USER_PASSWORD;
-             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
 
              $data[] = $row;
              $a++;
@@ -127,7 +127,7 @@ class ManagementUser extends CI_Controller {
              $row[] = $field->USER_NAME;
              $row[] = $field->DESCR;
              $row[] = $field->USER_PASSWORD;
-             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
 
              $data[] = $row;
              $a++;

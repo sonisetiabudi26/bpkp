@@ -17,6 +17,8 @@ class PerhitunganNilai extends CI_Controller {
         $this->load->model('sertifikasi/JadwalUjian','jadwal');
         $this->load->model('sertifikasi/JawabanPeserta','jawaban');
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
+				$this->load->model('sertifikasi/RegisUjian','regis');
+				$this->load->model('sertifikasi/LookupUjian','lookup_ujian');
     }
 
     public function index()
@@ -131,7 +133,40 @@ class PerhitunganNilai extends CI_Controller {
              }
 						 print json_encode($data);
     }
+		public function LoadDataNilaiPeserta(){
+			$dataAll=$this->lookup_ujian->loadNilai();
+       $data = array();
+       //$no = $_POST['start'];
+       $a=1;
 
+         foreach ($dataAll as $field) {
+             $row = array();
+             $row[] = $a;
+             $row[] = $field->NIP;
+             $row[] = $field->NAMA_JENJANG;
+
+						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_detail_nilai/".$field->FK_REGIS_UJIAN;
+             $row[] = '<td><a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail Nilai</a>
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Sertifikasi</a></td>';
+             $data[] = $row;
+             $a++;
+         }
+				 $output = array(
+						 "draw" => 'dataPeserta',
+						 "recordsTotal" => $a,
+						 "recordsFiltered" => $a,
+						 "data" => $data,
+				 );
+
+       // $output = array(
+       //     "draw" => 'dataEvent',
+       //     "recordsTotal" => $a,
+       //     "recordsFiltered" => $a,
+       //     "data" => $data,
+       // );
+       //output dalam format JSON
+       echo json_encode($output);
+		}
     public function LoadDateEvent(){
       $dataAll=$this->event->loadEvent();
        $data = array();
@@ -146,8 +181,8 @@ class PerhitunganNilai extends CI_Controller {
              $row['uraian'] = $field->URAIAN;
              $row['nama'] = $field->Nama;
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
-             $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
-						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Create Batch</a></td>';
+             $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
 
              $data[] = $row;
              $a++;
@@ -168,6 +203,36 @@ class PerhitunganNilai extends CI_Controller {
       $data['event']	= $id_batch;
       $this->load->view('sertifikasi/pusbin/content/import_nilai',$data);
     }
+		public function vv_detail_nilai($id){
+			$data['id']=$id;
+			$this->load->view('sertifikasi/pusbin/content/view_nilai_detail',$data);
+		}
+		public function getdatanilai($id){
+			$datas=$this->lookup_ujian->getDetailNilai($id);
+			$a=1;
+			$datarow = array();
+			foreach ($datas as $key) {
+				$data = array();
+				$data[]=$key->NAMA_MATA_AJAR;
+				$data[]=ceil($key->HASIL_UJIAN*50/100);
+				$data[]=ceil($key->NILAI_1_WI*30/100);
+				$data[]=ceil($key->NILAI_2_WI*20/100);
+				$data[]=ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100);
+				$data[]=ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100);
+				$data[]=ceil($key->NILAI_KSP*20/100);
+				$data[]=ceil(ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100)+ceil($key->NILAI_KSP*20/100));
+				$datarow[]=$data;
+				$a++;
+			}
+			$output = array(
+					"draw" => 'dataPeserta',
+					"recordsTotal" => $a,
+					"recordsFiltered" => $a,
+					"data" => $datarow,
+			);
+			//output dalam format JSON
+			echo json_encode($output);
+		}
 		public function vw_nilai_per_unitkerja($id){
 			$data['id']	= $id;
 			$this->load->view('sertifikasi/pusbin/content/view_nilai_by_unit',$data);
@@ -270,10 +335,10 @@ class PerhitunganNilai extends CI_Controller {
              $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
              $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
 
-             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->FK_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Cakculate</a>
+             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->FK_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Kalkulasi</a>
 						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-import" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
-             <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
-						 <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View Data</a>';
+             <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
+						 <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-view-calc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>';
 
              $data[] = $row;
              $a++;
@@ -307,27 +372,24 @@ class PerhitunganNilai extends CI_Controller {
 			$kode_event=$parameter[0];
 			$kelas=$parameter[1];
 			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
-
 			if($dataAll!='no data'){
 
 			$nomor1=1;
-
 			foreach ($dataAll as $key) {
 				$totalJawaban=0;
 				$data = array();
 				$data['nip']=$key->KODE_PESERTA;
 				$data['kode_soal']=$key->KODE_SOAL;
-				for ($i=1; $i< 51 ; $i++) {
+				$datanum=$this->jawaban->get_data_all_by_numrows($key->KODE_SOAL,$key->KELAS);
+				$data['totalSoal']=$datanum;
+				for ($i=1; $i<= $datanum ; $i++) {
 					$nomor='NO_'.$i;
 					$data[$nomor]=$key->$nomor;
 					$dataCalc=$this->jawaban->calculate($key->KODE_SOAL,$key->$nomor,$i);
-					$datanum=$this->jawaban->get_data_all_by_numrows($key->KODE_SOAL,$kelas);
-					$data['totalSoal']=$datanum;
 					$jawaban='JAWABAN_'.$i;
 					if($dataCalc=='benar'){
 						$totalJawaban++;
 					}
-
 					$data[$jawaban]=$dataCalc;
 					$nomor1++;
 				}
@@ -335,7 +397,7 @@ class PerhitunganNilai extends CI_Controller {
 				if($data['totalSoal']!=0){
 					$data['nilai']=ceil(($totalJawaban/$datanum)*100);
 				}else{
-					$data['nilai']=0;
+					$data['nilai']='';
 				}
 				$where=array(
 					'KODE_PESERTA'=>$data['nip'],
@@ -350,13 +412,27 @@ class PerhitunganNilai extends CI_Controller {
 				$dataall[]=$data;
 				// $a++;
 				$update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
-				if($update){
+				// if($update){
+					$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
+					// $nilai=ceil($data['nilai']*35/100);
+					foreach ($data_lookup as $keys) {
+						$where=array(
+							'FK_REGIS_UJIAN'=>$keys->PK_REGIS_UJIAN,
+							'FK_MATA_AJAR'=>$key->FK_MATA_AJAR
+						);
+						$data_update=array(
+							'HASIL_UJIAN'=>$data['nilai'],
+							'flag'=>1
+						);
+					$update_lookup=$this->lookup_ujian->updateData($where,'lookup_ujian',$data_update);
+					}
 					$output  = array('status' =>'success' ,
-				 										'msg'=>'Data berhasil dikalkulasi');
-				}else{
-					$output  = array('status' =>'error' ,
-				 										'msg'=>'Data gagal dikalkulasi');
-				}
+				 										'msg'=>'Data berhasil dikalkulasi','data'=>$data);
+			//	}
+				// else{
+				// 	$output  = array('status' =>'error' ,
+				//  										'msg'=>'Data gagal dikalkulasi');
+				//}
 			}
 
 		 }else{
@@ -383,7 +459,7 @@ class PerhitunganNilai extends CI_Controller {
 						//$row[] = $field->KELAS;
 						$id=$field->KODE_UNIT.'~'.$field->FK_EVENT;
 						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
-						$row[] = '<a class="btn btn-sm btn-success" id="btn-view" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> View</a>';
+						$row[] = '<a class="btn btn-sm btn-success" id="btn-view-nilai" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>';
 
 
 						$data[] = $row;
@@ -530,7 +606,8 @@ class PerhitunganNilai extends CI_Controller {
   		/** Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model */
       if($numrow >1){
 				if($indexbatch>0){
-	    		if($this->jawaban->insert_multiple($datasheet1)){
+					$insertmulti=$this->jawaban->insert_multiple($datasheet1);
+	    		if($insertmulti=='success'){
 	            return  "success";
 	          }else{
 	            return  "error";

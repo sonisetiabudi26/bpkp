@@ -20,7 +20,7 @@
 	<div class="form-group" id="content-list-bab-soal">
 		<label for="select-list-bab-soal">List BAB yang memiliki soal ujian:</label>
 		<select  name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
-			<option>Pilihan</option>
+			<option value=''>Pilihan</option>
 			<?php
 				foreach ($bab_mata_ajar as $key):
 			?>

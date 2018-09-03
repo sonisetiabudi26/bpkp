@@ -248,7 +248,7 @@ class Home extends CI_Controller {
 					 'PENUNJANG' => $penunjang,
 					 'JUMLAH' => $jumlah,
 					 'TUNJANGAN_JABATAN' => $tunjangan_jabatan,
-					 'CREATED_AT' => $this->session->userdata('nip'),
+					 'CREATED_BY' => $this->session->userdata('nip'),
 					 'CREATED_DATE' => $datex
 				 );
 				 $checkdata=$this->angker->check($id_pengusul);

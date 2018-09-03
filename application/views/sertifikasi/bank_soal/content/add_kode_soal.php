@@ -17,18 +17,18 @@
 					</option>
 				<?php
 					endforeach;
-				?>
+				?> 
 			</select>
 		</div>
 		<div class="form-group" id="content-list-mata-ajar" style="display:none;">
 			<label for="select-list-mata-ajar">List Mata Ajar :</label>
-			<select name="fk_mata_ajar" id="select-list-mata-ajar" class="form-control input-sm">
+			<select name="fk_mata_ajar" id="select-list-mata-ajar" onchange="getkodesoal()" class="form-control input-sm">
 				<option>Pilihan</option>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="bab_mata_ajar">Kode Soal :</label>
-			<input type="text" class="form-control text-primary" id="kode_soal" name="kode_soal" placeholder="nama kode soal" />
+			<input type="text" class="form-control text-primary" id="kode_soal" name="kode_soal" readonly placeholder="nama kode soal" />
 		</div>
     <div class="form-group">
 			<label for="jml_kode_soal">kebutuhan Soal :</label>
@@ -38,3 +38,23 @@
 	</br>
 </form>
 </div>
+
+<script>
+function getkodesoal(){
+	var param1= $("#select-list-mata-ajar option:selected").val();
+  	$.ajax({
+			url : "<?php echo base_url('sertifikasi/bank_soal/managementbanksoal/createkodesoal')?>",
+			type: "POST",
+			dataType: "JSON",
+			data:{param: param1 },
+			success: function(data)
+			{
+				if(data.status=='success'){
+					$('#kode_soal').val(data.msg);
+				}
+			 // loadData(1);
+			},
+
+	});
+}
+</script>

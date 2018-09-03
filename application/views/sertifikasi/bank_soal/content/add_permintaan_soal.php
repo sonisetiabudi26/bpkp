@@ -18,7 +18,7 @@
 					<select name="tipe_soal" id="tipe_soal" class="form-control input-sm">
 						<option value="">Pilih Tipe Soal</option>
 						<option value="Pilihan Ganda">Pilihan Ganda</option>
-					
+
 					</select>
 				</div>
 			</td>
@@ -28,7 +28,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="pembuat" class="text-primary">Pembuat Soal :</label>
-					<select name="pembuat" id="pembuat" class="form-control input-sm select-list"  >
+					<select name="pembuat" id="pembuat" class="form-control input-sm select-list"  required>
 						<option>Pilihan</option>
 						<?php
 							foreach ($user_bank_soal as $user_bank_soals):
@@ -46,7 +46,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="review1" class="text-primary">Reviewer 1 :</label>
-					<select name="review1" id="review1" class="form-control input-sm select-list"  >
+					<select name="review1" id="review1" class="form-control input-sm select-list" required >
 						<option>Pilihan</option>
 						<?php
 							foreach ($user_bank_soal as $user_bank_soals):
@@ -64,7 +64,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="review1" class="text-primary">Reviewer 2 :</label>
-					<select name="review2" id="review2" class="form-control input-sm select-list"  >
+					<select name="review2" id="review2" class="form-control input-sm select-list" required >
 						<option>Pilihan</option>
 						<?php
 							foreach ($user_bank_soal as $user_bank_soals):
@@ -81,7 +81,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="review1" class="text-primary">Reviewer 3 :</label>
-					<select name="review3" id="review3" class="form-control input-sm select-list"  >
+					<select name="review3" id="review3" class="form-control input-sm select-list" required >
 						<option>Pilihan</option>
 						<?php
 							foreach ($user_bank_soal as $user_bank_soals):
@@ -98,7 +98,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="review1" class="text-primary">Reviewer 4 :</label>
-					<select name="review4" id="review4" class="form-control input-sm select-list"  >
+					<select name="review4" id="review4" class="form-control input-sm select-list" required >
 						<option>Pilihan</option>
 						<?php
 							foreach ($user_bank_soal as $user_bank_soals):

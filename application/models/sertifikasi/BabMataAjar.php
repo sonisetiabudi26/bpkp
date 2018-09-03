@@ -24,7 +24,7 @@ class BabMataAjar extends My_Model
 
 	}
 	public function _get_bab_from_fk_mata_ajar_value($fk_mata_ajar){
-		$condition= "FK_MATA_AJAR =" . "'" . $fk_mata_ajar . "'  group by soal_ujian.FK_BAB_MATA_AJAR";
+		$condition= "FK_MATA_AJAR =" . "'" . $fk_mata_ajar . "' AND TAMPIL_UJIAN='1' group by soal_ujian.FK_BAB_MATA_AJAR";
 		$this->db->select('*,count(soal_ujian.FK_BAB_MATA_AJAR)as jml_soal');
 		$this->db->from($this->_table);
 		$this->db->join('mata_ajar', 'mata_ajar.pk_mata_ajar = bab_mata_ajar.FK_MATA_AJAR');

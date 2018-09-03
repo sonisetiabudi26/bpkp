@@ -437,12 +437,12 @@ function procesFormandUpload(formTarget, url){
 			dataType: "json",
 			success : function(data) {
         if(data.status=='success'){
-          $('.modal').modal('toggle');
+          $('.modal').modal('hide');
           swal("Success", "Data berhasil disimpan!", "success");
           $("#"+formTarget.id)[0].reset();
 
         }else if(data.status=='error'){
-          $('.modal').modal('toggle');
+          $('.modal').modal('hide');
           swal("Terjadi Kesalahan", data.msg, data.status);
             $("#"+formTarget.id)[0].reset();
 
@@ -559,6 +559,7 @@ function clearcachemodal(){
   $(this).remove();
   $(this).removeData('bs.modal');
   $('body').removeClass('show');
+  $('body').removeClass('modal-open');
   $('#modal-body #modal-content .modal').empty();
   $(".modal").modal({
     show: false,

@@ -79,15 +79,19 @@ class Login extends CI_Controller{
 
 				$jsonDataEncoded = json_decode($result);
 				if($jsonDataEncoded->message=='login_success'){
-					$url="http://163.53.185.91:8083/sibijak/dca/api/api/pengguna?nip=".$username;
-					$check=file_get_contents($url);
+					$url="http://163.53.185.91:8083/sibijak/dca/api/api/dtpengguna";
+					$data_login = array(
+						'nip' => $username,
+				);
+					$check=getDataCurl($data_login,$url);
 					$jsonResult=json_decode($check);
-					if($jsonResult->message=='get_data_success'){
+
+					if($jsonResult->data[0]!=''){
 						if( $jsonResult->data[0]->RoleGroup!='Level 4' && $jsonResult->data[0]->isAdmin=="true"){
 						 $role=$jsonResult->data[0]->RoleGroup;
 						 $result = $this->lookup->_get_user_bridge_api($role);
 						// var_dump($result);
-
+						//echo $jsonResult->data[0][25];
 					   $this->session->set_userdata('nip', $username);
 						 $this->session->set_userdata('logged_in', $jsonResult->data[0]->NamaLengkap);
 						 $this->session->set_userdata('fk_lookup_menu',$result[0]->PK_LOOKUP);

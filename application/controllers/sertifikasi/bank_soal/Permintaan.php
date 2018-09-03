@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once 'vendor/autoload.php';
+define('DOMPDF_ENABLE_AUTOLOAD', false);
 
 class Permintaan extends CI_Controller {
 
@@ -8,13 +10,16 @@ class Permintaan extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
     	  $this->load->model('sertifikasi/permintaansoal','permintaansoal');
+				$this->load->model('sertifikasi/soalujian','soalujian');
 				$this->load->model('sertifikasi/detailpermintaansoal','detailpermintaansoal');
     }
 
 	public function loadPermintaan(){
 		$username = $this->session->userdata('logged_in');
 		if($_POST['tugas']=='pembuat_soal'){
-			$list=$this->permintaansoal->getDatabyPembuat($username);
+			$list=$this->permintaansoal->getDatabyPembuat($username,0);
+		}elseif($_POST['tugas']=='reviewResult'){
+			$list=$this->permintaansoal->getDatabyPembuat($username,1);
 		}else{
 			$list=$this->permintaansoal->getDatabyReview($username);
 		}
@@ -36,17 +41,22 @@ class Permintaan extends CI_Controller {
 					$kirim="";
 				}else{
 					$disable="";
-					$kirim="style='display:none'";
+					$kirim=($soal->STATUS!='pembuat_soal'?"":"style='display:none'");
 				}
+				$comment=($soal->STATUS!='pembuat_soal'?"":"style='display:none'");
+				$viewcomment=($soal->STATUS=='pembuat_soal' && $soal->flag=='1'?"":"style='display:none'");
 
 				$row[] = '<div style="text-align:center;"><a data-var="pk_permintaan_soal" '.$disable.' data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-add-soal"
 					data-href="'. base_url('sertifikasi')."/bank_soal/permintaan/vw_create_soal".'" data-toggle="modal" data-target="#modal-content"
 					><i class="glyphicon glyphicon-plus"></i> Buat Soal</a>
-					<a '.$disable.' ata-var="id_permintaan" data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-default" onclick="getModal(this)" id="btn-import-soal" data-href="'.base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_import_soal/".$soal->PK_PERMINTAAN_SOAL.'" data-toggle="modal" data-target="#modal-content"
+					<a '.$disable.' data-var="id_permintaan" data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-default" onclick="getModal(this)" id="btn-import-soal" data-href="'.base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_import_soal/".$soal->PK_PERMINTAAN_SOAL.'" data-toggle="modal" data-target="#modal-content"
 						><i class="glyphicon glyphicon-pencil"></i> Import Soal</a>
-						<a  href="javascript:void(0)" class="btn btn-sm btn-primary" '.$kirim.' title="Hapus" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."'".','."'".$soal->TUGAS."'".')"><i class="fa fa-paper-plane"></i> Kirim</a>
-					</div>';
+						<a '.$comment.'  class="btn btn-sm btn-default"  id="btn-comment-soal" href="'.base_url('sertifikasi')."/bank_soal/pembuat/home/soal/".$soal->PK_PERMINTAAN_SOAL.'"
+							><i class="glyphicon glyphicon-pencil"></i> Komentar</a>
+						<a  href="'.base_url('sertifikasi')."/bank_soal/pembuat/home/soal/".$soal->PK_PERMINTAAN_SOAL.'" class="btn btn-sm btn-default" '.$viewcomment.' id="btn-ubah-soal"><i class="fa fa-pencil"></i> Validasi Soal</a>
+						<a  href="javascript:void(0)"  class="btn btn-sm btn-primary"  title="update" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."','".$soal->STATUS."'".')" class="btn btn-sm btn-default" '.$kirim.' id="btn-update-soal"><i class="fa fa-paper-plane"></i> Kirim</a>
 
+					</div>';
 				$data[] = $row;
 					$no++;
 		}
@@ -59,10 +69,97 @@ class Permintaan extends CI_Controller {
 						);
 		echo json_encode($output);
 	}
+		public function vw_edit_soal($id){
+			$data['pk_soal']=$id;
+			$dataSoal=$this->soalujian->_get_soal_ujian_from_soal($id,1);
+			foreach ($dataSoal as $key) {
+				$data['pertanyaan']=$key->PERTANYAAN;
+				$data['pilihan1']=$key->PILIHAN_1;
+				$data['pilihan2']=$key->PILIHAN_2;
+				$data['pilihan3']=$key->PILIHAN_3;
+				$data['pilihan4']=$key->PILIHAN_4;
+				$data['pilihan5']=$key->PILIHAN_5;
+				$data['pilihan6']=$key->PILIHAN_6;
+				$data['pilihan7']=$key->PILIHAN_7;
+				$data['pilihan8']=$key->PILIHAN_8;
+				$data['jawaban']=$key->JAWABAN;
+				$data['parent_soal']=$key->PARENT_SOAL;
+			}
+			$this->load->view('sertifikasi/bank_soal/content/edit_soal', $data);
+		}
 	public function vw_create_soal(){
-		$data['pk_permintaan_soal']=$this->input->post('pk_permintaan_soal');
+			$data['pk_permintaan_soal']=$this->input->post('pk_permintaan_soal');
+
 			$this->load->view('sertifikasi/bank_soal/content/add_soal', $data);
 
+	}
+	public function loadSoalPermintaan(){
+		$id=$_POST['id'];
+		$datas=$this->soalujian->_get_soal_ujian_from_permintaan_soal($id,1);
+		$data = array();
+		$no =1;
+
+		foreach ($datas as $key) {
+
+			  $datakey = array();
+			  $datakey[] =$no;
+				$datakey[]=$key->PERTANYAAN;
+				$datakey[]=$key->PILIHAN_1;
+				$datakey[]=$key->PILIHAN_2;
+				$datakey[]=$key->PILIHAN_3;
+				$datakey[]=$key->PILIHAN_4;
+				$datakey[]=$key->PILIHAN_5;
+				$datakey[]=$key->PILIHAN_6;
+				$datakey[]=$key->PILIHAN_7;
+				$datakey[]=$key->PILIHAN_8;
+				$datakey[]=$key->JAWABAN;
+				$kirim=($key->STATUS=='pembuat_soal'?"":"style='display:none'");
+				$action=($key->STATUS!='pembuat_soal'?"":"style='display:none'");
+
+				$datakey[]='<div style="text-align:center;"><a data-var="pk_permintaan_soal" '.$kirim.' data-id='.$key->PK_SOAL_UJIAN.' class="btn btn-sm btn-warning" onclick="getModalWithParam(this)" id="btn-edit-soal"
+					data-href="'. base_url('sertifikasi')."/bank_soal/permintaan/vw_edit_soal/".$key->PK_SOAL_UJIAN.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Edit Soal</a>
+					<a '.$action.'>No Action</a></div>';
+
+			 $data[] = $datakey;
+				$no++;
+
+			}
+
+			$output = array(
+				"draw" => $_POST['draw'],
+				"recordsTotal" => $no,
+				"recordsFiltered" => $no,
+				"data" => $data,
+							);
+			echo json_encode($output);
+	}
+	// public function vw_comment_soal($id){
+	//
+	// 		$datas=$this->permintaansoal->getdatastatus($id);
+	// 		// $data=$this->permintaansoal->getdatastatusbyid();
+	// 		// foreach ($datas as $key) {
+	// 		$data['id_permintaan']=$id;
+	// 		$data['status']=$datas->STATUS;
+	// 		// }
+	// 		$this->load->view('sertifikasi/bank_soal/content/add_comment', $data);
+	// }
+
+	public function add_comment(){
+		$data_update = array(
+			'COMMENT' => $this->input->post('comment')
+		);
+		$where = array(
+			'TUGAS' => $this->input->post('status'),
+			'FK_PERMINTAAN_SOAL' => $this->input->post('id_permintaan')
+		);
+		$update=$this->detailpermintaansoal->updateData($where,$data_update);
+		 if($update=='success'){
+			$output = array('status' => 'success' , 'msg' => "Data berhasil disimpan");
+
+		}else{
+			$output = array('status' => 'error' , 'msg'=>'Data gagal disimpan' );
+		}
+		print json_encode($output);
 	}
 	public function insert_permintaan(){
 		$data = array(
@@ -102,7 +199,30 @@ class Permintaan extends CI_Controller {
 			print json_encode(array("status"=>"error", "msg"=>"Data gagal disimpan"));
 		}
     }
+		public function updatepublish(){
+			$data = array(
+				'TAMPIL_UJIAN' => '1'
+			);
+			$where = array(
+				'FK_PERMINTAAN_SOAL' => $_POST['id'],
+				'TAMPIL_UJIAN' =>'0'
+			);
 
+			if($this->soalujian->_update($where, $data)){
+				$data = array('STATUS' => 'selesai', );
+				$where = array(
+					'PK_PERMINTAAN_SOAL' => $_POST['id'],
+					'flag' =>'2'
+				);
+				if($this->permintaansoal->_update($where, $data)){
+					print json_encode(array("status"=>"success", "msg"=>"success"));
+				}else{
+					print json_encode(array("status"=>"error", "msg"=>"error"));
+				}
+			}else{
+				print json_encode(array("status"=>"error", "msg"=>"error"));
+			}
+		}
 	public function update_soal(){
 		$data = array(
 			'PERTANYAAN' => $this->input->post('pertanyaan'),
@@ -182,21 +302,20 @@ class Permintaan extends CI_Controller {
 				$row[] = $soal->TANGGAL_PERMINTAAN;
 				$row[] = $soal->JUMLAH_SOAL;
 				$row[] = $soal->STATUS;
-				// $data_soal=$this->permintaansoal->numsoal($soal->PK_PERMINTAAN_SOAL);
-				// $row[] = $data_soal[0]->total_soal.'/'.$soal->JUMLAH_SOAL;
-				// if($data_soal[0]->total_soal==$soal->JUMLAH_SOAL&&$id=='pembuat_soal'){
-				// 	$disable="style='display:none'";
-				// }else{
-				// 	$disable='';
-				// }
+				//$data_soal=$this->permintaansoal->numsoal($soal->PK_PERMINTAAN_SOAL);
+				//$row[] = $data_soal[0]->total_soal.'/'.$soal->JUMLAH_SOAL;
+				if($soal->STATUS=='validasi admin'&&$soal->flag=='2'){
+						$disable='';
+				}else{
+					$disable="style='display:none'";
+				}
 
-				// $row[] = '<div style="text-align:center;"><a data-var="pk_permintaan_soal" '.$disable.' data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-edit-soal"
-				// 	data-href="'. base_url('sertifikasi')."/bank_soal/permintaan/vw_create_soal".'" data-toggle="modal" data-target="#modal-content"
-				// 	><i class="glyphicon glyphicon-plus"></i> Buat Soal</a>
-				// 	<a '.$disable.' ata-var="id_permintaan" data-id='.$soal->PK_PERMINTAAN_SOAL.' class="btn btn-sm btn-default" onclick="getModal(this)" id="btn-import-soal" data-href="'.base_url('sertifikasi')."/bank_soal/AdminBankSoal/vw_import_soal/".$soal->PK_PERMINTAAN_SOAL.'" data-toggle="modal" data-target="#modal-content"
-				// 		><i class="glyphicon glyphicon-pencil"></i> Import Soal</a>
-				// 		<a  href="javascript:void(0)" class="btn btn-sm btn-primary"  title="Hapus" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."'".')"><i class="fa fa-paper-plane"></i> Kirim</a>
-				// 	</div>';
+				$row[] = '<div style="text-align:center;">
+				<a class="btn btn-sm btn-success" '.$disable.' id="btn-print-soal"
+					href="'. base_url('sertifikasi')."/bank_soal/permintaan/vw_print_soal/".$soal->PK_PERMINTAAN_SOAL.'"
+					><i class="glyphicon glyphicon-plus"></i> Cetak Soal</a>
+					<a  href="javascript:void(0)" '.$disable.'  class="btn btn-sm btn-primary"  title="Hapus" onclick="update_data('."'".$soal->PK_PERMINTAAN_SOAL."'".')"><i class="fa fa-paper-plane"></i> Publish</a>
+					</div>';
 
 				$data[] = $row;
 					$no++;
@@ -208,6 +327,28 @@ class Permintaan extends CI_Controller {
 		"data" => $data,
 					);
 	echo json_encode($output);
+}
+public function vw_print_soal($id){
+	// $id=$this->input->post('pk_permintaan_soal');
+	$namafile='soal_permintaan_'.$id;
+	$dompdf = new Dompdf\Dompdf();
+	$datasoal['data']=$this->permintaansoal->getdatasoal($id);
+	// foreach ($datasoal as $key) {
+	//
+	// }
+	$html = $this->load->view('sertifikasi/doc_pdf/permintaan_soal',$datasoal,true);
+
+	 $dompdf->loadHtml($html);
+
+	 // (Optional) Setup the paper size and orientation
+	 $dompdf->setPaper('A4', 'portrait');
+
+	 // Render the HTML as PDF
+	 $dompdf->render();
+
+	 // Get the generated PDF file contents
+	 $pdf = $dompdf->output();
+	 $dompdf->stream($namafile);
 }
 	public function import($sheet, $data){
 		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
@@ -246,9 +387,23 @@ class Permintaan extends CI_Controller {
 		}else{
 			$flag=0;
 		}
+		if($_POST['tugas']=='pembuat_soal' && $datasoal[0]->flag=='0'){
+			$status='review1';
+		}else if($_POST['tugas']=='review1' && $datasoal[0]->flag=='1'){
+			$status='review2';
+		}else if($_POST['tugas']=='review2' && $datasoal[0]->flag=='1'){
+			$status='review3';
+		}else if($_POST['tugas']=='review3' && $datasoal[0]->flag=='1'){
+			$status='review4';
+		}else if($_POST['tugas']=='review4' && $datasoal[0]->flag=='1'){
+			$status='pembuat_soal';
+		}elseif($_POST['tugas']=='pembuat_soal' && $datasoal[0]->flag=='1'){
+			$status='validasi admin';
+			$flag='2';
+		}
 		$data_update = array(
-			'STATUS' => 'review1',
-			'flag' => '1'
+			'STATUS' => $status,
+			'flag' => $flag
 		);
 		$where = array(
 

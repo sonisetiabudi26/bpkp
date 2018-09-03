@@ -12,6 +12,7 @@ class Soal extends CI_Controller {
     		$this->load->model('sertifikasi/soalujian','soalujian');
 				$this->load->model('sertifikasi/permintaansoal','permintaansoal');
 				$this->load->model('sertifikasi/soaldistribusi','soal_distribusi');
+				  $this->load->model('sertifikasi/JawabanPeserta','jawaban');
     }
 
 
@@ -34,7 +35,7 @@ class Soal extends CI_Controller {
 			'JAWABAN' => $this->input->post('jawaban'),
 			'PARENT_SOAL' => $parent_soal,
 			'FK_BAB_MATA_AJAR' => $data[0]->FK_BAB_MATA_AJAR,
-			'FK_PERMINTAAN_SOAL' => $data[0]->FK_PERMINTAAN_SOAL,
+			'FK_PERMINTAAN_SOAL' => $data[0]->PK_PERMINTAAN_SOAL,
 		);
 		if($this->soalujian->_add($data)){
 			// $data = array(
@@ -68,13 +69,14 @@ class Soal extends CI_Controller {
 			'PARENT_SOAL' => $parent_soal
 		);
 		$where = array(
-			'pk_soal_ujian' => $this->input->post('pk_soal_ujian')
+			'PK_SOAL_UJIAN' => $this->input->post('pk_soal'),
+			'tampil_ujian' => '0'
 		);
 
 		if($this->soalujian->_update($where, $data)){
-			print json_encode(array("status"=>"success", "data"=>"success"));
+			print json_encode(array("status"=>"success", "msg"=>"success"));
 		}else{
-			print json_encode(array("status"=>"error", "data"=>"error"));
+			print json_encode(array("status"=>"error", "msg"=>"Data gagal insert"));
 		}
 	}
 
@@ -162,7 +164,9 @@ class Soal extends CI_Controller {
 
 	function build_ujian(){
 		$datex=date('Y-m-d');
-		$param = explode('~',$this->input->post('fk_bab_mata_ajar'));
+		$a=1;
+		if($this->input->post('fk_bab_mata_ajar')!=''){
+		$param = $this->input->post('fk_bab_mata_ajar');
 		$bab_mata_ajar=$param[0];
 		$jml_soal=$param[1];
 		$jumlah_soal = $this->input->post('jumlah_soal');
@@ -175,18 +179,62 @@ class Soal extends CI_Controller {
 		}else{
 			if($jml_soal>=$jumlah_soal){
 				$data['soal'] = $this->soalujian->get_random_soal($bab_mata_ajar, $jumlah_soal);
+				$no_ujian=$this->jawaban->getnoujian($kode_soal);
+				$no_ujians=($no_ujian=='0'? '' : $no_ujian[0]->soal_ujian);
+				if($no_ujians!=''){
+					$no_ujianss=$no_ujians+1;
+				}else{
+					$no_ujianss=1;
+				}
+
 					foreach($data['soal'] as $row){
-					//	$indexbatch=$indexbatch+1;
+
+						// unset($input);
+						// unset($inputAll);
+						// unset($pilihan_keys);
+						// unset($pilihan);
+						$jawaban='PILIHAN_'.$row->JAWABAN;
+						$input = array('0' => $row->PILIHAN_1,'1' => $row->PILIHAN_2,'2' => $row->PILIHAN_3,'3' => $row->PILIHAN_4,'4' => $row->PILIHAN_5,'5' => $row->PILIHAN_6,'6' => $row->PILIHAN_7,'7' => $row->PILIHAN_8, );
+						$inputAll = array('0' => $row->PILIHAN_1,'1' => $row->PILIHAN_2,'2' => $row->PILIHAN_3,'3' => $row->PILIHAN_4,'4' => $row->PILIHAN_5,'5' => $row->PILIHAN_6,'6' => $row->PILIHAN_7,'7' => $row->PILIHAN_8, );
+
+						unset($input[($row->JAWABAN-1)]);
+						$pilihan_keys = array_rand($input, 3);
+						$pilihan_key123=array_push($pilihan_keys,($row->JAWABAN-1));
+						shuffle($pilihan_keys);
+
+							  $jwb=$row->JAWABAN-1;
+						  	$pilihan_1=$inputAll[$pilihan_keys[0]];
+								$pilihan_2=$inputAll[$pilihan_keys[1]];
+								$pilihan_3=$inputAll[$pilihan_keys[2]];
+								$pilihan_4=$inputAll[$pilihan_keys[3]];
+								if($inputAll[$jwb]==$inputAll[$pilihan_keys[0]]){
+									$jawaban=1;
+								}else if($inputAll[$jwb]==$inputAll[$pilihan_keys[1]]){
+									$jawaban=2;
+								}else if($inputAll[$jwb]==$inputAll[$pilihan_keys[2]]){
+									$jawaban=3;
+								}else if($inputAll[$jwb]==$inputAll[$pilihan_keys[3]]){
+									$jawaban=4;
+								}
+								//$jawaban=$inputAll[$jwb];
+
 						array_push($datasheet1, [
 							'FK_KODE_SOAL'=>$id_kode_soal,
 							'FK_SOAL_UJIAN'=>$row->PK_SOAL_UJIAN,
+							'NO_UJIAN'=>$no_ujianss,
+							'PILIHAN_1'=>$pilihan_1,
+							'PILIHAN_2'=>$pilihan_2,
+							'PILIHAN_3'=>$pilihan_3,
+							'PILIHAN_4'=>$pilihan_4,
+							'JAWABAN'=>$jawaban,
 							'CREATED_AT'=>$this->session->userdata('logged_in'),
 							'CREATED_DATE'=>$datex
 						]);
+						$no_ujianss++;
 					}
 					$upload=$this->soal_distribusi->insert_multiple($datasheet1);
 						if($upload=='success'){
-								$output= array('msg' => "success");
+								$output= array('msg' => "success", 'file' => $pilihan_keys, 'data'=> $pilihan_keys);
 							}else{
 								$output= array('msg' => "error");
 							}
@@ -195,6 +243,9 @@ class Soal extends CI_Controller {
 			}
 
 		}
+	}else{
+		$output= array('msg' => "error");
+	}
 			print json_encode($output);
 	}
 }

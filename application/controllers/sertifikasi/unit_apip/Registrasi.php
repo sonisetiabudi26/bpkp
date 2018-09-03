@@ -16,6 +16,7 @@ class Registrasi extends CI_Controller {
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
 				$this->load->model('sertifikasi/DocRegistrationUjian','doc_regis');
 				$this->load->model('sertifikasi/MataAjar','mataajar');
+				$this->load->model('sertifikasi/LookupUjian','lookup_ujian');
 				$this->load->library('form_validation');
     }
 
@@ -84,12 +85,15 @@ class Registrasi extends CI_Controller {
 		}
 
 		 public function loadData(){
+			 $dataRow=array();
 			  $userAdmin=$this->session->userdata('logged_in');
 			 	$datas=$this->regis->loaddatabyuser($userAdmin);
 				foreach ($datas as $key ) {
 				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN);
 				 if($dataRow=='empty'){
 					 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
+				 }else{
+					 $dataRow=$dataRow;
 				 }
 				}
 			 //output to json format
@@ -118,7 +122,7 @@ class Registrasi extends CI_Controller {
 							  $pindah_berkas=0;
 						 }
 
-						 if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
+						 if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']=='success'){
 							 $data_url_doc[0]=$folder.'/'.$_FILES['doc_ksp']['name'];
 							 $data_url_doc[1]=$folder.'/'.$_FILES['doc_foto']['name'];
 
@@ -185,11 +189,13 @@ class Registrasi extends CI_Controller {
 				 mkdir('./uploads/'.$folder, 0777, TRUE);
 			 }
 			 $config['upload_path']          = './uploads/'.$folder.'/';
-			 $config['allowed_types']        = 'pdf|png';
+			 $config['allowed_types']        = 'pdf';
 			 $config['max_size']             = 2048;
 			 $config['max_width']            = 2048;
 			 $config['max_height']           = 768;
+			 $config['overwrite'] = TRUE;
 			 $this->load->library('upload', $config);
+			 $this->upload->initialize($config);
 
 				 if (! $this->upload->do_upload($doc)){
 					 return array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
@@ -197,18 +203,19 @@ class Registrasi extends CI_Controller {
 					 return array('result_upload_pdf' => 'success', 'file' => $this->upload->data(), 'error' => '');
 				 }
 		 }
-		 public function do_upload_img($folder){
+		 public function do_upload_img($folder,$doc){
 			 if (!is_dir('uploads/'.$folder)) {
 				 mkdir('./uploads/'.$folder, 0777, TRUE);
 			 }
 			 $config2['upload_path']          = './uploads/'.$folder.'/';
-			 $config2['allowed_types']        = 'png';
-			 $config2['max_size']             = '100';
-			 $config2['max_width']            = '1024';
-		   $config2['max_height']           = '768';
+			 $config2['allowed_types']        = 'jpg|jpeg';
+			 $config2['max_size']             = 2048;
+			 $config2['max_width']            = 2048;
+		   $config2['max_height']           = 768;
+			 $config2['overwrite'] = TRUE;
 			 $this->load->library('upload', $config2);
 
-				 if (! $this->upload->do_upload('doc_foto')){
+				 if (!$this->upload->do_upload('doc_foto')){
 					 return array('result_upload_img' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
 				 }else{
 					 return array('result_upload_img' => 'success', 'file' => $this->upload->data(), 'error' => '');
@@ -222,6 +229,7 @@ class Registrasi extends CI_Controller {
 					 $admin=$this->session->userdata('logged_in');
 					 $group_regis=$this->session->userdata('kodeunitkerja').'_'.$dates;
 					 $update=$this->regis->updateDataRegis($group_regis,$admin);
+
 					 $folder='doc_setuju/'.$group_regis;
 					 $docpersetujuan='doc_persetujuan';
 					 $uploadpdf = $this->do_upload_pdf($folder,$docpersetujuan);
@@ -236,9 +244,33 @@ class Registrasi extends CI_Controller {
 							'CREATED_DATE' => $datex
 				 		);
 						$update=$this->regis->updateData($group_regis);
+
 						$insert=$this->setuju->save($data);
 						if($insert=='Data Inserted Successfully'){
-							print json_encode(array("status"=>"success", "msg"=>$insert));
+							$data_ujians = array();
+							$dataregis=$this->regis->getPKREGIS($group_regis);
+							foreach ($dataregis as $key) {
+								$id_regis=$key->PK_REGIS_UJIAN;
+								$data_ujian=$this->regis->data_detail_peserta(1,$id_regis);
+								if($data_ujian[0]!='false'){
+									$data_ujians=$this->regis->data_detail_notnull('1',$id_regis);
+								}else{
+									$data_ujians=$data_ujian;
+								}
+
+								foreach ($data_ujians as $key ) {
+									$nilai_ksp=ceil($key->NILAI_KSP*20/100);
+									$data_insert = array('FK_REGIS_UJIAN' => $key->PK_REGIS_UJIAN,
+																				'FK_MATA_AJAR'=>$key->PK_MATA_AJAR,
+																				'NILAI_KSP'=>$nilai_ksp,
+																				'CREATED_BY' => $this->session->userdata('logged_in'),
+																				'CREATED_DATE' => $datex);
+										$inser_lookup=$this->lookup_ujian->save($data_insert);
+								}
+
+							}
+
+							print json_encode(array("status"=>"success", "msg"=>'Data Berhasil disimpan'));
 						}else{
 							print json_encode(array("status"=>"error", "msg"=>'Gagal simpan data ke database'));
 						}

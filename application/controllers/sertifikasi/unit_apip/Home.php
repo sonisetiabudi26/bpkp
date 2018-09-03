@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once 'vendor/autoload.php';
+define('DOMPDF_ENABLE_AUTOLOAD', false);
 
 class Home extends CI_Controller {
 
@@ -28,6 +30,44 @@ class Home extends CI_Controller {
         redirect('/');
       }
     }
+		public function print_kartu($pk){
+			// $id=$this->input->post('pk_permintaan_soal');
+			$namafile='kartu_ujian_'.$pk;
+			$dompdf = new Dompdf\Dompdf();
+			$data_identitas=$this->regisujian->getDatabypk($pk);
+			foreach ($data_identitas as $key) {
+				$data['nip']=$key->NIP;
+				$data['kode_diklat']=$key->KODE_DIKLAT.' - '.$key->NAMA_JENJANG;
+				$apiuser=$this->apiuser($key->NIP);
+				$data['unit'] = $apiuser->data[0]->UnitKerja_Nama;
+				//$dataRow['unitapip']=$kodeunitkerja;
+				$data['nama'] = $apiuser->data[0]->Auditor_NamaLengkap;
+				$data['kode_unit'] = $apiuser->data[0]->UnitKerja_Kode;
+			}
+			$data_detail=$this->regisujian->data_detail_peserta('1',$pk);
+			if($data_detail[0]!='false'){
+				$data['data_detail']=$this->regisujian->data_detail_notnull('1',$pk);
+			}else{
+				$data['data_detail']=$data_detail;
+			}
+			// foreach ($datasoal as $key) {
+			//
+			// }
+			// print_r($data);
+			$html = $this->load->view('sertifikasi/doc_pdf/kartu_ujian',$data,true);
+
+			 $dompdf->loadHtml($html);
+
+			 // (Optional) Setup the paper size and orientation
+			 $dompdf->setPaper('A4', 'portrait');
+
+			 // Render the HTML as PDF
+			 $dompdf->render();
+
+			 // Get the generated PDF file contents
+			 $pdf = $dompdf->output();
+			 $dompdf->stream($namafile);
+		}
 		public function apiuser($param){
       $url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
       $check=file_get_contents($url);
@@ -48,10 +88,10 @@ class Home extends CI_Controller {
 		        $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
 		        //$dataRow['unitapip']=$kodeunitkerja;
 						$row[] = $apiuser->data[0]->Auditor_NamaLengkap;
-						$row[] = $field->KODE_DIKLAT;
+						$row[] = $field->KODE_DIKLAT.' - '.$field->NAMA_JENJANG;
 						$row[] = $kodeunitkerja;
 
-						$row[] = '<a class="btn btn-sm btn-success" onclick="cetak();" style="width:100%" ><i class="glyphicon glyphicon-print"></i> Cetak</a>';
+						$row[] = '<a class="btn btn-sm btn-success" href="'. base_url('sertifikasi')."/unit_apip/Home/print_kartu/".$field->PK_REGIS_UJIAN.'" style="width:100%" ><i class="glyphicon glyphicon-print"></i> Cetak</a>';
 
 						$data[] = $row;
 						$a++;

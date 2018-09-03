@@ -17,6 +17,7 @@ class RegisUjian extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+
 	public function getdataHistory($id){
 		$condition = "lookup_ujian.FK_REGIS_UJIAN =" . "'" . $id . "'";
 		$this->db->select('mata_ajar.NAMA_MATA_AJAR');
@@ -31,6 +32,24 @@ class RegisUjian extends My_Model
 			return 'empty';
 		}
 
+	}
+	public function getPKREGIS($pk){
+		$condition = "registrasi_ujian.GROUP_REGIS =" . "'" . $pk . "' and flag=1";
+		$this->db->select('PK_REGIS_UJIAN');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getDatabypk($pk){
+		$condition = "registrasi_ujian.PK_REGIS_UJIAN =" . "'" . $pk . "' and flag=1";
+		$this->db->select('registrasi_ujian.NIP,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
+		$this->db->from($this->_table);
+		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
+		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
 	}
 	public function loaddatabyuser($user){
 		$condition = "CREATED_BY =" . "'" . $user . "' and flag=0";
@@ -54,16 +73,41 @@ class RegisUjian extends My_Model
 	}
 	public function loaddataregis($flag){
 		$condition = "registrasi_ujian.flag=" . "'" . $flag . "'";
-		$this->db->select('registrasi_ujian.NIP,registrasi_ujian.NO_SURAT_UJIAN,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,mata_ajar.NAMA_MATA_AJAR,jenjang.NAMA_JENJANG');
+		$this->db->select('registrasi_ujian.NIP,registrasi_ujian.NO_SURAT_UJIAN,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
-		$this->db->join('mata_ajar', 'mata_ajar.FK_JENJANG = jenjang.PK_JENJANG');
+		// $this->db->join('mata_ajar', 'mata_ajar.FK_JENJANG = jenjang.PK_JENJANG');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		return $query->result();
 	}
+ public function data_detail_peserta($flag,$id){
+	 $condition = "registrasi_ujian.flag=" . "'" . $flag . "' AND registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $id . "' AND lookup_ujian.flag='1'";
+	 $this->db->select('mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.PK_REGIS_UJIAN,mata_ajar.PK_MATA_AJAR');
+	 $this->db->from($this->_table);
+	 $this->db->join('lookup_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = lookup_ujian.FK_REGIS_UJIAN');
+	 $this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+	 $this->db->where($condition);
+	 $query = $this->db->get();
+	 if ($query->num_rows() > 0) {
+		 return $query->result();
+	 } else {
+		 	return 'false';
+	 }
 
+ }
+ public function data_detail_notnull($flag,$id){
+	 $condition = "registrasi_ujian.flag=" . "'" . $flag . "' AND registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $id . "'";
+	 $this->db->select('mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.PK_REGIS_UJIAN,mata_ajar.PK_MATA_AJAR,registrasi_ujian.NILAI_KSP');
+	 $this->db->from($this->_table);
+	 // $this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
+	 $this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+	 $this->db->join('mata_ajar', 'mata_ajar.FK_JENJANG = jenjang.PK_JENJANG');
+	 $this->db->where($condition);
+	 $query = $this->db->get();
+	 return $query->result();
+ }
 	public function load($userAdmin){
 		$condition = "CREATED_AT =" . "'" . $userAdmin . "' and flag=0";
 		$this->db->select('*');

@@ -1,6 +1,6 @@
 <div class="page-title">
 	<div class="title_left">
-		<h3>Management User</h3>
+		<h3>Manajemen Pengguna</h3>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -20,7 +20,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/1"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/1"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
 
 								<div class="x_content">
 									<div class="row">
@@ -29,10 +29,10 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Username</td>
-													<td>Login As</td>
+													<td>Pengguna</td>
+													<td>Masuk sebagai</td>
 
-													<td>Action</td>
+													<td>Tindakan</td>
 												</tr>
 												</thead>
 												<tbody>
@@ -50,7 +50,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/17"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/17"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
 
 								<div class="x_content">
 									<div class="row">
@@ -59,10 +59,10 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Username</td>
-													<td>Login As</td>
+													<td>Pengguna</td>
+													<td>Masuk sebagai</td>
 
-													<td>Action</td>
+													<td>Tindakan</td>
 												</tr>
 												</thead>
 												<tbody>
@@ -80,7 +80,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/4"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/4"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
 
 								<div class="x_content">
 									<div class="row">
@@ -89,10 +89,10 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Username</td>
-													<td>Login As</td>
+													<td>Pengguna</td>
+													<td>Masuk sebagai</td>
 
-													<td>Action</td>
+													<td>Tindakan</td>
 												</tr>
 												</thead>
 												<tbody>
@@ -110,7 +110,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/28"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Add data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/28"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
 
 								<div class="x_content">
 									<div class="row">
@@ -119,10 +119,10 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Username</td>
-													<td>Login As</td>
+													<td>Pengguna</td>
+													<td>Masuk sebagai</td>
 
-													<td>Action</td>
+													<td>Tindakan</td>
 												</tr>
 												</thead>
 												<tbody>

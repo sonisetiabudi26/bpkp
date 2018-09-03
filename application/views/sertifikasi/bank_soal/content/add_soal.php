@@ -134,7 +134,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="jawaban" class="text-primary">Jawaban :</label>
-					<select class="form-control" name="jawaban"  >
+					<select class="form-control" name="jawaban">
 						<option value="1">Pilihan 1</option>
 						<option value="2">Pilihan 2</option>
 						<option value="3">Pilihan 3</option>

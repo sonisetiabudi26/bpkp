@@ -63,21 +63,15 @@
       <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dengan Surat <?php echo $unitapip ?> Nomor <?php echo $nosurat ?> tanggal <?php echo $datex ?>
        perihal Usulan Pengangkatan PNS dalam Jabatan Fungsional Auditor melalui <?php echo $status_pengusulan ?>, dan setelah
      dilakukan penelitian kelengkapan berkas persyaratan yang diterima, dapat disampaikan sebagai berikut: </p>
-     <table style="width:100%;border:none">
-       <tr>
-         <td>Jumlah yang diusulkan untuk diangkat dalam JFA</td>
-         <td>3 orang</td>
-      </tr>
-      <tr>
-        <td>Jumlah yang memenuhi syarat dan disetujui</td>
-        <td>3 orang</td>
-     </tr>
-     <tr>
-       <td>Jumlah yang Belum memenuhi persyarat</td>
-       <td>3 orang</td>
-    </tr>
+     <!-- <table style="width:100%;border:none"> -->
+       <ul>
+         <li>Jumlah yang diusulkan untuk diangkat dalam JFA 3 Orang</li>
+         <li>Jumlah yang memenuhi syarat dan disetujui 3 orang</li>
+         <li>Jumlah yang Belum memenuhi persyarat 3 orang</li>
 
-     </table>
+    </ul>
+
+     <!-- </table> -->
      <p align='justify'>Rician lebih lanjut Pegawai Negeri Sipil yang memenuhi syarat dan disetujui untuk diangkat dalam JFA di lingkungan
      <?php echo $unitapip ?> dapat dilihat pada Lampiran Surat ini. Dua orang PNS belum disetujui atas nama Mudassir dan Elisma karena belum lulus
    uji kompetensi.</p>

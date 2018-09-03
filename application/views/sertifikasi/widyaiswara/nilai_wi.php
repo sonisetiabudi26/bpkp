@@ -1,6 +1,6 @@
 <div class="page-title">
 	<div class="title_left">
-		<h3 style="text-align:left">Input Nilai Widyaiswara</h3>
+		<h3 style="text-align:left">Masukan Nilai Widyaiswara</h3>
    <!-- <div  style="text-align:left;color:#eee;"><p> Form Input Nilai <i class="fa fa-pencil"></i></p></div> -->
 	</div>
 </div>
@@ -14,13 +14,13 @@
 					<div class="panel-heading">Input nilai dasar widyaiswara
 					</div>
 						<div class="panel-body" id="pindahlokasi" >
-  
+  					<form onsubmit="procesFormandUpload(this,'<?php echo base_url('sertifikasi')."/widyaiswara/Nilai/add_nilai_default"; ?>')" method="POST" id="nilai_default" >
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 							<div class="row">
 							<div class="form-group">
 								<div class="col-lg-4">
-									<span class="" id="input_lokasi"><i class="fa fa-file"></i>
+									<span class="" name='nilai1' id="nilai1"><i class="fa fa-file"></i>
 										Nilai dasar simulasi
 									</span>
 								</div>
@@ -32,8 +32,8 @@
 					 <div class="row">
 						 <div class="form-group">
 							 <div class="col-lg-4">
-								 <span class="" id="input_lokasi"><i class="fa fa-file"></i>
-									 Nilai dasar Activity
+								 <span class="" name='nilai2' id="nilai2"><i class="fa fa-file"></i>
+									 Nilai dasar Aktifitas
 								 </span>
 							 </div>
 						 <div class="col-lg-8">
@@ -43,11 +43,12 @@
 					</div><br/>
 					<div class="row">
 						<div class="col-lg-12">
-					<button class="btn btn-primary" onclick="submitNilaiDasar();" style="float:right">Submit</button>
+					<button class="btn btn-primary" style="float:right">Ajukan</button>
 				</div>
 				</div>
 						</div>
 					</div>
+				</form>
 				</div>
 			</div>
 
@@ -60,18 +61,22 @@
 								<tr>
 									<td>No</td>
 									<td>NIP</td>
-									<td>Tanggal Release Mata Ajar</td>
+									<td>NAMA</td>
+									<td>Tanggal Terbit Mata Ajar</td>
 									<td>Mata Pelajaran</td>
 									<td>Nilai Simulasi</td>
 									<td>Nilai Aktivitas</td>
 									<td>Instruktur</td>
-									<td>Action</td>
+
 								</tr>
 							</thead>
 							<tbody>
 							</tbody>
 						</table>
 					</div>
+				</div>
+				<div class="row">
+					<button class="btn btn-primary" style="width:100%;"><i class="fa fa-paper-plane"></i> Ajukan</button>
 				</div>
 			</div>
 		</div>
@@ -80,7 +85,7 @@
 	<div class="modal fade" id="modalNilai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-			<form onsubmit="procesForm(this, 'response-text')" action="<?php echo base_url('sertifikasi')."/widyaiswara/NilaiAPI/tambah"; ?>" method="POST" id="jadwalFrom" >
+			<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/widyaiswara/NilaiAPI/tambah"; ?>')" method="POST" id="nilai_edit_wi" >
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -93,19 +98,19 @@
 
              <div class="row">
                 <div class="col-lg-4">
-                  <label class="control-label" for="title">Nilai 1</label>
+                  <label class="control-label" for="title">Nilai Simulasi</label>
                 </div>
                 <div class="col-lg-8">
-                  <input type="text" name="nilai1" id="nilai1" class="form-control" required="required" />
+                  <input type="text" name="nilai1_edit" id="nilai1_edit" class="form-control" required="required" />
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-lg-4">
-                  <label class="control-label" for="title">Nilai 2</label>
+                  <label class="control-label" for="title">Nilai Aktivitas</label>
                 </div>
 								<div class="col-lg-8">
-                  <input type="text" name="nilai2" id="nilai2" class="form-control" required="required" />
+                  <input type="text" name="nilai2_edit" id="nilai2_edit" class="form-control" required="required" />
                 </div>
             </div>
 
@@ -114,12 +119,9 @@
         </div>
       </div>
       <div class="modal-footer">
-				<input type="text" name="nip_m" id="nip_m" class="form-control" style="display:none;" />
-				<input type="text" name="mataajar_m" id="mataajar_m" class="form-control" style="display:none;" />
-				<input type="text" name="tglrelease_m" id="tglrelease_m" class="form-control" style="display:none;" />
-				<input type="text" name="instruktur_m" id="instruktur_m" class="form-control" style="display:none;" />
-         <input type="submit"  name="submit" id="action" value="Add" class="btn btn-info" />
-         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<input type="text" name="id_wi" id="id_wi" class="form-control" style="display:none;" />
+         <input type="submit"  name="submit" id="action" value="Ubah" class="btn btn-info" />
+         <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
       </div>
     </form>
     </div>
@@ -157,15 +159,15 @@ var table;
 
           });
 });
-function submitNilaiDasar(){
-
+function loadData(obj){
+	$('#pesertaByWI').DataTable().ajax.reload();
 }
 function ModalNilai(obj1){
-		var data=obj1.split('~');
-		 $('#modalNilai').modal('show');
-		 $('#nilai1').val(data[4]);
-		 $('#nilai2').val(data[5]);
-		 $('#nip_m').val(obj1);
+	  var param=obj1.split('~');
+	   $('#modalNilai').modal('show');
+		 $('#id_wi').val(param[0]);
+		 $('#nilai1_edit').val(param[1]);
+		 $('#nilai2_edit').val(param[2]);
 }
 
 </script>

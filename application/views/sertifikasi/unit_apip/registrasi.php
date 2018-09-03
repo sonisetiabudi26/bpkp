@@ -30,7 +30,7 @@
 								<div class="row">
 
 	                <input class="form-control" type="text" id="nip" name="nip" placeholder="Masukan NIP Calon Peserta"><br>
-	                <span class="btn btn-primary btn-block" onclick="search()">Cari</span>
+	                <span class="btn btn-success btn-block" onclick="search()"><i class="fa fa-search"></i> Cari</span>
 
               </div>
 							<div class="row">
@@ -88,12 +88,13 @@
 											<div class="row">
 												<div class="form-group">
 													<div class="col-lg-4 col-md-4 col-xs-4">
-														<span class="btn btn-primary btn-block btn-file" id="input_lokasi"><i class="fa fa-file"></i>
+														<span class="btn btn-default btn-block btn-file" id="input_lokasi"><i class="fa fa-file-pdf-o"></i>
 												 			Unggah Surat <input name="doc_loc" id="doc_loc" type="file">
 														</span>
 											 		</div>
 											 	<div class="col-lg-8 col-md-8 col-xs-8">
 													 <input type="text" class="form-control text-primary" name="file_lokasi" id="text-loc" placeholder="Surat Permohonan" />
+													 <span class="mandatory"><i>* Format dokumen harus .pdf</i></span>
 												 </div>
 											 </div>
 											</div>
@@ -132,29 +133,32 @@
 							<div class="row">
 										<div class="form-group">
 											<div class="col-lg-4 col-md-4 col-xs-4">
-												<span class="btn btn-primary btn-block btn-file" id="input_ksp"><i class="fa fa-file"></i>
+												<span class="btn btn-default btn-block btn-file" id="input_ksp"><i class="fa fa-file-pdf-o"></i>
 										 			Unggah Dokumen<input name="doc_ksp" id="doc_ksp" type="file">
 												</span>
 									 		</div>
 									 	<div class="col-lg-8 col-md-8 col-xs-8">
-											 <input type="text" class="form-control text-primary" name="file_ksp" id="text-ksp" placeholder="Dokumen Nilan KSP" disabled/>
+											 <input type="text" class="form-control text-primary" name="file_ksp" id="text-ksp" placeholder="Dokumen Nilan KSP" readonly/>
+											 <span class="mandatory"><i>* Format dokumen harus .pdf</i></span>
 										 </div>
 									 </div>
                 </div><br/>
               	<div class="row">
 									<div class="form-group">
 										<div class="col-lg-4 col-md-4 col-xs-4">
-											<span class="btn btn-primary btn-block btn-file" id="input_foto"><i class="fa fa-file"></i>
+											<span class="btn btn-default btn-block btn-file" id="input_foto"><i class="fa fa-file-image-o"></i>
 												Unggah foto <input name="doc_foto" id="doc_foto" type="file">
 											</span>
 										</div>
 									<div class="col-lg-8 col-md-8 col-xs-8">
-										 <input type="text" class="form-control text-primary" name="file_foto" id="text-foto" placeholder="Dokumen Foto"  disabled/>
+										 <input type="text" class="form-control text-primary" name="file_foto" id="text-foto" placeholder="Dokumen Foto Maks. 2mb, Latar Belakang Merah"  readonly/>
+										 <span class="mandatory"><i>* Format foto harus .jpg</i></span>
 									 </div>
 								 </div>
 							 </div><br/>
               </div>
-              <input class="btn btn-primary btn-block" disabled id="daftar_ujian_btn" type="submit" value="Ajukan">
+							<button class="btn btn-primary btn-block" disabled id="daftar_ujian_btn" type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
+              <!-- <input class="btn btn-primary btn-block" disabled id="daftar_ujian_btn" type="submit" value="Ajukan"> -->
 						</form>
 						</div>
 					</div>
@@ -188,18 +192,21 @@
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-4 col-md-4 col-xs-4">
-										<span class="btn btn-primary btn-block btn-file" id="input_persetujuan"><i class="fa fa-file"></i>
+										<span class="btn btn-default btn-block btn-file" id="input_persetujuan"><i class="fa fa-file-pdf-o"></i>
 											Unggah Surat <input name="doc_persetujuan" id="doc_persetujuan" type="file">
 										</span>
 									</div>
 								<div class="col-lg-8 col-md-8 col-xs-8">
-									 <input type="text" class="form-control text-primary" name="file_persetujuan" id="text-persetujuan" placeholder="Dokumen Surat Persetujuan" disabled/>
+									 <input type="text" class="form-control text-primary" name="file_persetujuan" id="text-persetujuan" placeholder="Dokumen Surat Persetujuan" readonly/>
+									 <span class="mandatory"><i>* Format dokumen harus .pdf</i></span>
 								 </div>
 							 </div>
 							</div>
 							<br/>
 						<div class="row">
-							<input class="btn btn-primary btn-block" disabled id="setuju_ujian_btn" value="Ajukan" type="submit">
+							<!-- <input class="btn btn-primary btn-block" disabled id="setuju_ujian_btn" value="Ajukan" type="submit"> -->
+							<button class="btn btn-primary btn-block" disabled id="setuju_ujian_btn" type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
+
 						</div>
 				</form>
 				</div>

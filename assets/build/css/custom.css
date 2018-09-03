@@ -2,7 +2,7 @@
 html , body{
 
  height:100%;
- font-family: "Open Sans",sans-serif;
+ /* font-family: "Montserrat"; */
 
 }
 
@@ -518,7 +518,8 @@ body {
 		/* background: #3a7bd5;  /* fallback for old browsers */ */
 		/* background: -webkit-linear-gradient(to right, #3a6073, #3a7bd5);  /* Chrome 10-25, Safari 5.1-6 */ */
 		/* background: linear-gradient(to right, #3a6073, #3a7bd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ */
-    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif ;
+    /* font-family: "Montserrat"; */
     font-size: 13px;
     font-weight: 400;
     line-height: 1.471
@@ -2547,7 +2548,8 @@ span.tag {
     margin-right: 5px;
     font-weight: 500;
     margin-bottom: 5px;
-    font-family: helvetica
+    /* font-family: helvetica */
+    font-family: "Montserrat";
 }
 span.tag a {
     color: #F1F6F7 !important
@@ -2561,7 +2563,8 @@ span.tag a {
 .tagsinput input {
     width: 80px;
     margin: 0px;
-    font-family: helvetica;
+    /* font-family: helvetica; */
+    font-family: "Montserrat";
     font-size: 13px;
     border: 1px solid transparent;
     padding: 3px;
@@ -3213,7 +3216,8 @@ ul.project_files li a i {
     padding: 0 4px
 }
 .view p {
-    font-family: Georgia, serif;
+    /* font-family: Georgia, serif; */
+    font-family: "Montserrat";
     font-style: italic;
     font-size: 12px;
     position: relative;
@@ -3372,7 +3376,8 @@ ul.project_files li a i {
     color: #666;
     background: rgba(243, 242, 243, 0.8);
     border: solid 2px rgba(195, 194, 196, 0.8);
-    font-family: sans-serif;
+    /* font-family: sans-serif; */
+    font-family: "Montserrat";
     font-size: 12px;
     text-align: center
 }
@@ -4317,7 +4322,8 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 .form-style {
   margin: auto;
   background: transparent;
-  font-family: 'Open Sans', sans-serif;
+  /* font-family: 'Open Sans', sans-serif; */
+font-family: "Montserrat";
    border-radius: 5px;
   max-width:900px;
   width:100%;

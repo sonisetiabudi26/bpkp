@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="col-lg-6" style="padding-top:10px;">
-  <button class="btn btn-primary" style="width:200px;float:right;" onclick="add_perwakilan()">Add</button>
+  <button class="btn btn-primary" style="width:200px;float:right;" onclick="add_perwakilan()">Tambah</button>
 </div>
 </div><br/>
 <div class="clearfix"></div>
@@ -82,14 +82,14 @@
               </div>
             </div>
 						<div class="form-group">
-							<label class="control-label col-md-3 text-left">User</label>
+							<label class="control-label col-md-3 text-left">Pengguna</label>
 							<div class="col-md-9">
 								<input name="user" placeholder="Masukan Username" class="form-control" type="text">
 
 							</div>
 						</div>
             <div class="form-group">
-							<label class="control-label col-md-3 text-left">Password</label>
+							<label class="control-label col-md-3 text-left">Kata Sandi</label>
 							<div class="col-md-9">
 								<input name="password" placeholder="Password" class="form-control" type="password">
 
@@ -123,13 +123,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="exampleModalLabel">Delete Product</h4>
+          <h4 class="modal-title" id="exampleModalLabel">Hapus Product</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-             <strong>Are you sure to delete this record?</strong>
+             <strong>Apakah anda yakin mengahpus data?</strong>
         </div>
         <div class="modal-footer">
           <input type="hidden" name="product_code_delete" id="product_code_delete" class="form-control">
@@ -175,8 +175,8 @@
                                 '<td>'+data[i].PROVINSI+'</td>'+
                                 '<td>'+data[i].NAME+'</td>'+
                                 '<td style="text-align:right;">'+
-                                    '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" onclick="edit_data('+data[i].PK_PERWAKILAN_BPKP+')">Edit</a>'+' '+
-                                    '<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" onclick="delete_data('+data[i].PK_PERWAKILAN_BPKP+')>Delete</a>'+
+                                    '<a href="javascript:void(0);" class="btn btn-info btn-sm item_edit" onclick="edit_data('+data[i].PK_PERWAKILAN_BPKP+')">Ubah</a>'+' '+
+                                    '<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" onclick="delete_data('+data[i].PK_PERWAKILAN_BPKP+')>Hapus</a>'+
                                 '</td>'+
                                 '</tr>';
                     }

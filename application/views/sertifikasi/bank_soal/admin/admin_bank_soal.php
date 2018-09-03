@@ -28,7 +28,7 @@
 			<!-- <button onclick="getModal(this)" id="btn-distribusi-soal" data-href="<?php //echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal"; ?>" data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-cog"></i> Distribusi Soal</button> -->
 		<div class="" role="tabpanel" data-example-id="togglable-tabs" style="background:#fff !important;">
 			<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">List Permintaan Buat Soal</a>
+				<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Daftar Permintaan Buat Soal</a>
 				</li>
 
 			</ul>
@@ -38,14 +38,14 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div style="float:right">
-							<button class="btn btn-primary" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+							<button class="btn btn-primary" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Segarkan</button>
 							<!-- <button class="btn btn-primary" onclick="add()"><i class="glyphicon glyphicon-plus"></i> Buat Permintaan</button> -->
 						 </div>
 
 							<div class="x_content">
 								<div class="row">
 									<div class="col-lg-12" id="response">
-										<h2 style="font-weight:1000;color:#000">Table Permintaan Soal</h2>
+										<h2 style="font-weight:1000;color:#000">Tabel Permintaan Soal</h2>
 									</div>
 								</div>
 								<div class="row">
@@ -64,7 +64,7 @@
 		                    <th>Tanggal Permintaan</th>
 												<th>Jumlah Soal</th>
 												<th>Status</th>
-		                    <!-- <th>Action</th> -->
+		                    <th>Tindakan</th>
 		                </tr>
 		            </thead>
 		            <tbody style="color:#333;">
@@ -138,6 +138,29 @@
 	        });
 
 	    }
+	}
+	function update_data(id)
+	{
+
+					// ajax delete data to database
+					$.ajax({
+							url : "<?php echo base_url('sertifikasi/bank_soal/permintaan/updatepublish')?>",
+							type: "POST",
+							dataType: "JSON",
+							data:{ id: id},
+							success: function(data)
+							{
+								if(data.msg=='success'){
+									swal("Success", "Data Publish Successfully!", "success");
+								}else{
+									swal("Error", "Data gagal dikirim!", "error");
+								}
+
+							 loadData(1);
+							},
+
+					});
+
 	}
 
 </script>

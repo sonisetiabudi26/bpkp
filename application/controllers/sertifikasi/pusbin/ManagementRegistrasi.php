@@ -11,6 +11,8 @@ class ManagementRegistrasi extends CI_Controller {
     		$this->load->model('sertifikasi/MenuPage','menupage');
 				$this->load->model('sertifikasi/RegisUjian','regis');
 				$this->load->model('sertifikasi/JadwalUjian','jadwal');
+				$this->load->model('sertifikasi/Users','user');
+				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
     }
 
     public function index()
@@ -28,6 +30,41 @@ class ManagementRegistrasi extends CI_Controller {
         redirect('/');
       }
     }
+		public function loadDatawidyaiswara(){
+			$datas=$this->user->loaddataWidyaiswarauser();
+			$no=1;
+			$datarow = array();
+			foreach ($datas as $key) {
+				$data = array();
+				$data[]=$no;
+				$data[]=$key->USER_NAME;
+
+				$url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_show_data_wi/".$key->PK_USER;
+				$url_detail=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_show_data_detail_wi/".$key->PK_USER;
+				$data[]='<a class="btn btn-sm btn-success" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="fa fa-upload"></i> Unggah Data WI </a>
+				<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-lihat_wi-doc" data-href="'.$url_detail.'" data-toggle="modal" data-target="#modal-content"><i class="fa fa-eye"></i> Lihat Data Detail </a>';
+					$datarow[]=$data;
+					$no++;
+				}
+				$output = array(
+						"draw" => 'dataJadwal',
+						"recordsTotal" => $no,
+						"recordsFiltered" => $no,
+						"data" => $datarow,
+				);
+				//output dalam format JSON
+				echo json_encode($output);
+		}
+		public function vw_show_data_detail_wi($id){
+			// $data['id_wi']=$id;
+			$data['dataALL']=$this->user->loaddataWidyaiswarauserbyid($id);
+			$this->load->view('sertifikasi/pusbin/content/view_data_nilai_wi',$data);
+		}
+		public function vw_show_data_wi($id){
+			$data['id_wi']=$id;
+			$data['group_mata_ajar']	= $this->groupmataajar->_detail_group_mata_ajar();
+			$this->load->view('sertifikasi/pusbin/content/view_data_wi',$data);
+		}
 		public function vw_add_jadwal(){
 		//	$data['mata_ajar']	= $this->mataajar->_detail_mata_ajar();
 			$this->load->view('sertifikasi/pusbin/content/add_jadwal');
@@ -44,14 +81,11 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 
 		public function loadData(){
-			 // $dataAll=$this->regis->loadAll();
-			 // foreach ($dataAll as $key) {
-			 	//$data['nip']=$key->NIP;
+
 				$datas=$this->regis->loaddataregis('1');
 				foreach ($datas as $key) {
 					$data['NIP']=$key->NIP;
 					$data['NAMA_JENJANG']=$key->NAMA_JENJANG;
-					$data['NAMA_MATA_AJAR']=$key->NAMA_MATA_AJAR;
 					$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$key->NIP;
 					$check=file_get_contents($url);
 					$jsonResult=json_decode($check);
@@ -59,24 +93,27 @@ class ManagementRegistrasi extends CI_Controller {
 						if($jsonResult->message=='get_data_success'){
 							$data['unitkerja']=$jsonResult->data[0]->UnitKerja_Nama;
 							$data['nama_peserta']=$jsonResult->data[0]->Auditor_NamaLengkap;
-							// $data['jenjang']=$jsonResult->data[0]->JenjangJabatan_Nama;
 						}
+					$url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_show_detail/".$key->PK_REGIS_UJIAN;
+					$data['action']='<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail</a>';
 						$output[]=$data;
-					// code...
+
 				}
-				// foreach ($data as $field) {
-				// 	$data['NIP']=$field->NIP;
-				// 	$data['NAMA_MATA_AJAR']=$field->NAMA_MATA_AJAR;
-				// 	// $data['PROVINSI']=$field->PROVINSI;
-
-
-			//}
-					// $output[] = $data;
-
-			 // }
 			echo json_encode($output);
-			 // $data['provinsi']=$this->provinsi->_get_provinsi_information();
 		}
+		public function vw_show_detail($id){
+			$data_detail=$this->regis->data_detail_peserta('1',$id);
+			if($data_detail[0]!='false'){
+				$data['data_detail']=$this->regis->data_detail_notnull('1',$id);
+			}else{
+				$data['data_detail']=$data_detail;
+			}
+			// return $data;
+			$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta',$data);
+		}
+		// public function load_detail(){
+		//
+		// }
 		public function loadDataJadwal(){
 			//$date = date('Ymd');
 			$datex=date('m/d/Y');
@@ -94,8 +131,8 @@ class ManagementRegistrasi extends CI_Controller {
 					 $row[] = $field->END_DATE;
 					 $row[] = $status;
 					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_edit_jadwal/".$field->PK_JADWAL_UJIAN;
-					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-                  <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Ubah</a>
+                  <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
 
 					 $data[] = $row;
 					 $a++;

@@ -58,5 +58,6 @@ var table;
               ],
 
           });
+          return false;
 });
 </script>
