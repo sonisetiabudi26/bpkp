@@ -32,11 +32,11 @@
 				</li> -->
 				<li role="presentation" class="active"><a href="#tab_content1" role="tab" onclick="loadDataBabMataAjar()" id="home-tab" data-toggle="tab" aria-expanded="true">Bab Soal</a>
 				</li>
-				<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDatakodeSoal()"  id="profile-tab2" data-toggle="tab" aria-expanded="false">Kode Soal</a>
+				<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="loadDatakodeSoal()"  id="kode_soal-tab2" data-toggle="tab" aria-expanded="false">Kode Soal</a>
 				</li>
-				<li role="presentation" class=""><a href="#tab_content3" role="tab"  id="profile-tab2"  onclick="loadDatakodeSoalpublish()"data-toggle="tab" aria-expanded="false">Publish Kode Soal</a>
+				<li role="presentation" class=""><a href="#tab_content3" role="tab"  id="publish_kode_soal-tab2"  onclick="loadDatakodeSoalpublish()"data-toggle="tab" aria-expanded="false">Terbitkan Kode Soal</a>
 				</li>
-				<li role="presentation" class=""><a href="#tab_content4" role="tab"  id="profile-tab3"  onclick="loadsoalkasus()"data-toggle="tab" aria-expanded="false">Materi Soal Kasus</a>
+				<li role="presentation" class=""><a href="#tab_content4" role="tab"  id="kode_kasus-tab3"  onclick="loadsoalkasus()"data-toggle="tab" aria-expanded="false">Materi Soal Kasus</a>
 				</li>
 			</ul>
 			<div id="myTabContent" class="tab-content" style="background:#fff;">
@@ -133,7 +133,7 @@
 </div>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content2" aria-labelledby="home-tab" >
+<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="kode_soal-tab" >
 <div  class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
@@ -168,7 +168,7 @@
 </div>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content3" aria-labelledby="home-tab" >
+<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="publish_kode_soal-tab" >
 <div  class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
@@ -204,7 +204,7 @@
 </div>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content4" aria-labelledby="home-tab" >
+<div role="tabpanel" class="tab-pane fade in" id="tab_content4" aria-labelledby="kode_kasus-tab" >
 <div  class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">

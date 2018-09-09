@@ -20,7 +20,72 @@ class PerhitunganNilai extends CI_Controller {
 				$this->load->model('sertifikasi/RegisUjian','regis');
 				$this->load->model('sertifikasi/LookupUjian','lookup_ujian');
     }
+		public function loadDataJenjang(){
+			$dataAll=$this->groupmataajar->_get_all_group_mata_ajar();
+			$data = array();
+			$a=1;
 
+				foreach ($dataAll as $field) {
+						$row = array();
+
+						$row['kode'] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_event/".$field->KODE_DIKLAT.'">'.$field->KODE_DIKLAT.'</a>';
+						$row['nama'] = $field->NAMA_JENJANG;
+						$data[] = $row;
+						$a++;
+				}
+				$output = array(
+						"draw" => 'dataJenjang',
+						"recordsTotal" => $a,
+						"recordsFiltered" => $a,
+						"data" => $data,
+				);
+			//output dalam format JSON
+			echo json_encode($output);
+		}
+		public function list_event($id){
+			$fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
+			$username = $this->session->userdata('logged_in');
+			if(isset($fk_lookup_menu) && isset($username)){
+				$data['title_page'] = 'BPKP Web Application';
+				$data['content_page']='pusbin/Event_batch.php';
+				$data['category']='Event';
+				$data['username']=$username;
+				$data['id']=$id;
+				// $data['comment']=$this->detailpermintaansoal->getcomment($id);
+				// if($data['comment']!='no data'){
+				// 	$data['status']=$data['comment'][0]->STATUS;
+				// }else{
+				// 	$data['status']='';
+				// 	$data['comment']=[];
+				// }
+				// $data['bab_mata_ajar']	= $this->babmataajar->_review_bab_mata_ajar();
+				getMenuAccessPage($data, $fk_lookup_menu);
+			}else{
+				redirect('/');
+			}
+		}
+		public function list_batch($id){
+			$fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
+			$username = $this->session->userdata('logged_in');
+			if(isset($fk_lookup_menu) && isset($username)){
+				$data['title_page'] = 'BPKP Web Application';
+				$data['content_page']='pusbin/Event_batch.php';
+				$data['category']='Batch';
+				$data['username']=$username;
+				$data['id']=$id;
+				// $data['comment']=$this->detailpermintaansoal->getcomment($id);
+				// if($data['comment']!='no data'){
+				// 	$data['status']=$data['comment'][0]->STATUS;
+				// }else{
+				// 	$data['status']='';
+				// 	$data['comment']=[];
+				// }
+				// $data['bab_mata_ajar']	= $this->babmataajar->_review_bab_mata_ajar();
+				getMenuAccessPage($data, $fk_lookup_menu);
+			}else{
+				redirect('/');
+			}
+		}
     public function index()
     {
       $fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
@@ -36,9 +101,9 @@ class PerhitunganNilai extends CI_Controller {
         redirect('/');
       }
     }
-    public function vw_add_event(){
+    public function vw_add_event($id){
 			$data['provinsi']	= $this->provinsi->_getAll();
-			$data['kodediklat']	= $this->groupmataajar->getalldatakodediklat_mataajar();
+			$data['kodediklat']	= $this->groupmataajar->getalldatakodediklat_mataajar_byId($id);
 			$this->load->view('sertifikasi/pusbin/content/add_event',$data);
 		}
     public function vv_add_batch($param){
@@ -134,7 +199,7 @@ class PerhitunganNilai extends CI_Controller {
 						 print json_encode($data);
     }
 		public function LoadDataNilaiPeserta(){
-			$dataAll=$this->lookup_ujian->loadNilai();
+			 $dataAll=$this->lookup_ujian->loadNilai();
        $data = array();
        //$no = $_POST['start'];
        $a=1;
@@ -157,6 +222,29 @@ class PerhitunganNilai extends CI_Controller {
 						 "recordsFiltered" => $a,
 						 "data" => $data,
 				 );
+       echo json_encode($output);
+		}
+    public function LoadDateEventbyid($id){
+      $dataAll=$this->event->loadEventbyid($id);
+       $data = array();
+       //$no = $_POST['start'];
+       $a=1;
+
+         foreach ($dataAll as $field) {
+             $row = array();
+             $row['no'] = $a;
+             $row['kodeevent'] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_batch/".$field->KODE_EVENT.'">'.$field->KODE_EVENT.'</a>';
+             $row['namadiklat'] = $field->NAMA_JENJANG;
+             $row['uraian'] = $field->URAIAN;
+             $row['nama'] = $field->Nama;
+						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
+             $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
+
+             $data[] = $row;
+             $a++;
+         }
+
 
        // $output = array(
        //     "draw" => 'dataEvent',
@@ -165,9 +253,10 @@ class PerhitunganNilai extends CI_Controller {
        //     "data" => $data,
        // );
        //output dalam format JSON
-       echo json_encode($output);
-		}
-    public function LoadDateEvent(){
+       echo json_encode($data);
+      //echo json_encode($dataAll);
+    }
+		public function LoadDateEvent(){
       $dataAll=$this->event->loadEvent();
        $data = array();
        //$no = $_POST['start'];
@@ -312,8 +401,8 @@ class PerhitunganNilai extends CI_Controller {
        echo json_encode($output);
       //echo json_encode($dataAll);
     }
-    public function LoadBatch(){
-      $dataAll=$this->batch->loadBatch();
+    public function LoadBatch($id){
+      $dataAll=$this->batch->loadBatchbyid($id);
        $data = array();
        //$no = $_POST['start'];
 

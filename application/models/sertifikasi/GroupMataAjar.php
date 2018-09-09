@@ -22,8 +22,10 @@ class GroupMataAjar extends My_Model
 
 	public function _get_all_group_mata_ajar()
 	{
+			// $condition = "order by KODE_DIKLAT";
 	    $this->db->select('*');
 	    $this->db->from($this->_table);
+			$this->db->order_by('KODE_DIKLAT','asc');
 			$query = $this->db->get();
 	    return $query->result();
 	}
@@ -32,6 +34,16 @@ class GroupMataAjar extends My_Model
 
 	  	$this->db->select('jenjang.KODE_DIKLAT,jenjang.NAMA_JENJANG');
 			$this->db->from($this->_table);
+			$query = $this->db->get();
+
+			return $query->result();
+	}
+	public function getalldatakodediklat_mataajar_byId($id)
+	{
+			$condition="jenjang.KODE_DIKLAT =" . "'" . $id . "'";
+	  	$this->db->select('jenjang.KODE_DIKLAT,jenjang.NAMA_JENJANG');
+			$this->db->from($this->_table);
+			$this->db->where($condition);
 			$query = $this->db->get();
 
 			return $query->result();

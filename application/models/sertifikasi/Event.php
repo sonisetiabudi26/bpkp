@@ -24,6 +24,19 @@ class Event extends My_Model
   //	return $query->result();
       return $query->result();
   }
+	public function loadEventbyid($id){
+		$condition = "jenjang.KODE_DIKLAT =" . "'" . $id . "'";
+		$this->db->select('event.*,provinsi.Nama,jenjang.NAMA_JENJANG');
+		$this->db->from($this->_table);
+		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
+		$this->db->join('jenjang', 'event.FK_JENJANG = jenjang.KODE_DIKLAT');
+			 $this->db->where($condition);
+		$query = $this->db->get();
+
+	//	return $query->result();
+			return $query->result();
+	}
+
   public function remove($id){
     $this->db->where('PK_EVENT', $id);
     $this->db->delete($this->_table);

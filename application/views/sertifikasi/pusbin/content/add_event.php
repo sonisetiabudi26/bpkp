@@ -5,9 +5,9 @@
     <div class="form-group">
       <div class="col-md-3">
       	<label for="category">Kode Diklat :</label>
-        	<!-- <input type="number" class="form-control text-primary" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" placeholder="Kode Diklat" /> -->
+        	<!-- <input type="number" class="form-control text-primary" id="kodediklat" name="kodediklat" placeholder="Kode Diklat" value="" /> -->
           <select class="form-control" onchange="createKodeEventDiklat()" id="kodediklat" name="kodediklat" >
-            <option value="">Pilihan</option>
+            <!-- <option value="">Pilihan</option> -->
             <?php
               foreach ($kodediklat as $key):
             ?>
@@ -35,7 +35,7 @@
       <div class="form-group">
         <div class="col-md-12">
         <label for="category">Nama Diklat :</label>
-        	<input type="text" class="form-control text-primary" readonly id="namadiklat" name="namadiklat" placeholder="Nama Diklat" />
+        	<input type="text" class="form-control text-primary" readonly id="namadiklat" name="namadiklat" value="<?php echo $key->NAMA_JENJANG;?>" placeholder="Nama Diklat" />
         </div>
       </div>
   </div><br/>

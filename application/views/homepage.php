@@ -44,7 +44,7 @@ ob_start("ob_gzhandler");
 						<?php }?>
 							<form class="form" id=form action="<?php echo base_url('login'); ?>" method=POST style="margin:0px auto;border: 0.7px solid #999;">
 								<div class="col-lg-12">
-									<div class="row">
+									<div class="row"> 
 										<div class="form-group has-feedback">
 											<i class="glyphicon glyphicon-user form-control-feedback"></i>
 									    <input type="text" name="username" class="form-control" placeholder="Nama Pengguna" required/>

@@ -25,6 +25,18 @@ class Batch extends My_Model
   //	return $query->result();
       return $query->result();
   }
+	public function loadBatchbyid($id){
+		$condition="event.KODE_EVENT =" . "'" . $id . "'";
+    $this->db->select('batch.*,provinsi.Nama,jadwal_ujian.*,event.KODE_EVENT,event.FK_PROVINSI');
+    $this->db->from($this->_table);
+    $this->db->join('jadwal_ujian', 'batch.FK_JADWAL = jadwal_ujian.PK_JADWAL_UJIAN');
+    $this->db->join('event', 'batch.FK_EVENT = event.PK_EVENT');
+		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
+		$this->db->where($condition);
+    $query = $this->db->get();
+  //	return $query->result();
+      return $query->result();
+  }
   public function remove($id){
     $this->db->where('PK_BATCH', $id);
     $this->db->delete($this->_table);
