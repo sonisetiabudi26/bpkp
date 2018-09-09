@@ -19,31 +19,31 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 							<div class="row">
 							<div class="form-group">
-								<div class="col-lg-4">
+								<div class="col-lg-4 col-md-4 col-sm-4">
 									<span class="" name='nilai1' id="nilai1"><i class="fa fa-file"></i>
 										Nilai dasar simulasi
 									</span>
 								</div>
-							<div class="col-lg-8">
-								 <input type="text" class="form-control text-primary" name="nilai_1" id="text-loc" placeholder="Nilai Simulasi" />
+							<div class="col-lg-8 col-md-8 col-sm-8">
+								 <input type="number" class="form-control text-primary" name="nilai_1" id="text-loc" placeholder="Nilai Simulasi" />
 							 </div>
 						 </div>
 					 </div>
 					 <div class="row">
 						 <div class="form-group">
-							 <div class="col-lg-4">
+							 <div class="col-lg-4 col-md-4 col-sm-4">
 								 <span class="" name='nilai2' id="nilai2"><i class="fa fa-file"></i>
 									 Nilai dasar Aktifitas
 								 </span>
 							 </div>
-						 <div class="col-lg-8">
-								<input type="text" class="form-control text-primary" name="nilai_2" id="text-loc" placeholder="Nilai Activity" />
+						 <div class="col-lg-8 col-md-8 col-sm-8">
+								<input type="number" class="form-control text-primary" name="nilai_2" id="text-loc" placeholder="Nilai Activity" />
 							</div>
 						</div>
 					</div><br/>
 					<div class="row">
 						<div class="col-lg-12">
-					<button class="btn btn-primary" style="float:right">Ajukan</button>
+					<button class="btn btn-primary" style="float:right"><i class="fa fa-paper-plane"></i> Ajukan</button>
 				</div>
 				</div>
 						</div>
@@ -76,7 +76,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<button class="btn btn-primary" style="width:100%;"><i class="fa fa-paper-plane"></i> Ajukan</button>
+					<button class="btn btn-primary" id="send" style="width:100%;"><i class="fa fa-paper-plane"></i> Ajukan</button>
 				</div>
 			</div>
 		</div>
@@ -158,6 +158,46 @@ var table;
               ],
 
           });
+				 $('button').click( function() {
+						 var data = table.$('input').serialize();
+						 if(data.substr( 0, 3)=='nip'){
+							$.ajax({
+								data : data,
+								type : 'GET',
+								url : '<?php echo base_url('sertifikasi')."/widyaiswara/NilaiAPI/updateDataNilai"; ?>',
+								async: true,
+								processData: false,
+								contentType: false,
+								cache:false,
+								timeout: 600000,
+								success : function(data) {
+
+					        if(data.status=='success'){
+					         // $('.modal').modal('hide');
+					          swal("Berhasil", "Data berhasil disimpan!", "success");
+					          //$("#"+formTarget.id)[0].reset();
+
+					        }else if(data.status=='error'){
+					         // $('.modal').modal('hide');
+					          swal("Terjadi Kesalahan", data.msg, data.status);
+					          //  $("#"+formTarget.id)[0].reset();
+
+					        }
+					          loadData(1);
+
+									console.log(data);
+					      },
+					      error: function (e) {
+					        // swal('Terjadi Kesalahan',e,'error');
+					        console.log("ERROR : ", e);
+					      }
+
+					    });
+						}else{
+							swal("Terjadi Kesalahan", 'Data peserta tidak boleh kosong', 'error');
+						}
+
+					});
 });
 function loadData(obj){
 	$('#pesertaByWI').DataTable().ajax.reload();

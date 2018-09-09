@@ -135,18 +135,36 @@ class Nilai extends CI_Controller{
 						if(empty($data_all)){
 								print json_encode(array("status"=>"error", "msg"=>'Data tidak boleh kosong'));
 						}
-				}
+						foreach ($data_all as $key) {
+						array_push($datasheet1, ['NILAI_1' => $nilai1,
+																	'NILAI_2' =>$nilai2,
+																	'FK_WIDYAISWARA_NILAI' => $key->PK_WIDYAISWARA_NILAI]);
+						}
+						$insert=$this->detail_wi->insert_multiple($datasheet1);
+						if($insert=='success'){
+							print json_encode(array("status"=>"success", "msg"=>$insert));
+						}else{
+							print json_encode(array("status"=>"error", "msg"=>$insert));
+						}
+				}else{
 					foreach ($data_all as $key) {
-					array_push($datasheet1, ['NILAI_1' => $nilai1,
-				 												'NILAI_2' =>$nilai2,
-																'FK_WIDYAISWARA_NILAI' => $key->PK_WIDYAISWARA_NILAI]);
+					$where=array(
+						'FK_WIDYAISWARA_NILAI' => $key->PK_WIDYAISWARA_NILAI,
+						'flag' => 0
+					);
+					$data_update=array(
+						'NILAI_1' => $nilai1,
+						'NILAI_2' =>$nilai2,
+					);
+					$update=$this->wi->updateDataNilai($where,'detail_nilai_wi',$data_update);
 					}
-					$insert=$this->detail_wi->insert_multiple($datasheet1);
-					if($insert=='success'){
-						print json_encode(array("status"=>"success", "msg"=>$insert));
+					if($update=='success'){
+						print json_encode(array("status"=>"success", "msg"=>$update));
 					}else{
-						print json_encode(array("status"=>"error", "msg"=>$insert));
+					print json_encode(array("status"=>"error", "msg"=>$update));
 					}
+				}
+
 
 			}else{
 					print json_encode(array("status"=>"error", "msg"=>'Data tidak boleh kosong'));

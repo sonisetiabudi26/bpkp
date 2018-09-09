@@ -18,9 +18,29 @@ class NilaiAPI extends CI_Controller{
 			  // $result_login=$check['token'];
 
 				$dataAll=$this->nilaiwi->getdatabynip($nip);
-				if(empty($dataAll)){
-					$dataAll=$this->nilaiwi->getdatabynipifnull($nip);
-				}
+
+					$a=0;
+				 $data = array();
+					foreach ($dataAll as $key) {
+
+					 $row = array();
+						$nilai=0;
+						$row[] = $a+1;
+						$row[] = '<input readonly name="nip_'.$key->PK_DETAIL_NILAI_WI.'" value='.$key->NIP.' id="nip_"'.$key->NIP.'"" />';
+					 $row[] = $key->NAMA;
+					 $row[] = $key->TGL_RELEASE_MATA_AJAR;
+						$row[] = $key->NAMA_MATA_AJAR;
+						$row[] = '<input type="number" name="nilai1_'.$key->PK_DETAIL_NILAI_WI.'" id="nilai1_'.$key->PK_DETAIL_NILAI_WI.'" value="'.$key->NILAI_1.'"/>';
+					 $row[] = '<input type="number" name="nilai2_'.$key->PK_DETAIL_NILAI_WI.'" id="nilai2_'.$key->PK_DETAIL_NILAI_WI.'" value="'.$key->NILAI_2.'"/>';
+						$row[] = $key->USER_NAME;
+
+					 // $dataNIlaiEdit=$key->PK_WIDYAISWARA_NILAI.'~'.$key->NILAI_1.'~'.$key->NILAI_2;
+					 // 	$row[] = '<td><button onclick="ModalNilai('."'".$dataNIlaiEdit."'".')" id="edit-nilai-doc" class="btn btn-warning"><i class="fa fa-pencil"></i> Ubah Nilai</button></td>';
+
+						$data[] = $row;
+						$a++;
+					}
+
 				// if($dataAll=='nodata'){
 				// 	$nilai1='';
 				// 	$nilai2='';
@@ -31,27 +51,7 @@ class NilaiAPI extends CI_Controller{
 				// 	$nilai2=$dataAll[0]->NILAI_2;
 				//
 				// }
-			  $a=0;
-				$data = array();
-        foreach ($dataAll as $key) {
 
-					$row = array();
-          $nilai=0;
-          $row[] = $a+1;
-          $row[] = '<label name="nip_"'.$key->NIP.'"" id="nip_"'.$key->NIP.'"" >'.$key->NIP.'</label>';
-					$row[] = $key->NAMA;
-					$row[] = $key->TGL_RELEASE_MATA_AJAR;
-          $row[] = $key->NAMA_MATA_AJAR;
-          $row[] = '<input type="number" name="nilai1"'.$key->NIP.'"" id="nilai1"'.$key->NIP.'"" value="'.$key->NILAI_1.'"/>';
-					$row[] = '<input type="number" name="nilai2"'.$key->NIP.'"" id="nilai2"'.$key->NIP.'"" value="'.$key->NILAI_2.'"/>';
-          $row[] = $key->USER_NAME;
-
-					// $dataNIlaiEdit=$key->PK_WIDYAISWARA_NILAI.'~'.$key->NILAI_1.'~'.$key->NILAI_2;
-					// 	$row[] = '<td><button onclick="ModalNilai('."'".$dataNIlaiEdit."'".')" id="edit-nilai-doc" class="btn btn-warning"><i class="fa fa-pencil"></i> Ubah Nilai</button></td>';
-
-          $data[] = $row;
-          $a++;
-        }
 
 
         $output = array(
@@ -70,6 +70,37 @@ class NilaiAPI extends CI_Controller{
 				// 			echo json_encode($output);
 			 // }
 
+		}
+		public function updateDataNilai(){
+			$nip = $this->session->userdata('logged_in');
+			$dataAll=$this->nilaiwi->getdatabynip($nip);
+			foreach ($dataAll as $key) {
+				$nilai1='nilai1_'.$key->PK_DETAIL_NILAI_WI;
+				$nilai2='nilai2_'.$key->PK_DETAIL_NILAI_WI;
+				// $nilai['nilai1']=$this->input->get($nilai1);
+				// $nilai['nilai2']=$this->input->get($nilai2);
+				$data_update = array(
+				 'NILAI_1' =>$this->input->get($nilai1),
+				 'NILAI_2' => $this->input->get($nilai2),
+				 'flag' => 1
+			 );
+			 $data_where = array('PK_DETAIL_NILAI_WI' => $key->PK_DETAIL_NILAI_WI, );
+			 $update_data=$this->detail_wi->updateData($data_where,$data_update);
+			 	if($update_data!='error'){
+					 $data_update2 = array(
+						'flag' => 1
+					);
+					$data_where2 = array('PK_WIDYAISWARA_NILAI' => $key->PK_WIDYAISWARA_NILAI, );
+					$update_data2=$this->nilaiwi->updateData($data_where2,$data_update2);
+				}
+			}
+			if($update_data!='error'){
+
+				print json_encode(array("status"=>"success", "msg"=>'success'));
+			}else{
+				print json_encode(array("status"=>"error", "msg"=>'error'));
+			}
+			//	print json_encode($nilai);
 		}
     public function postCURL($_url, $_param){
 
