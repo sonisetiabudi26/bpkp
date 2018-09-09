@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2018 at 10:30 PM
+-- Generation Time: Sep 09, 2018 at 09:06 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -91,7 +91,8 @@ CREATE TABLE `batch` (
 --
 
 INSERT INTO `batch` (`PK_BATCH`, `FK_EVENT`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(10, 9, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-08-29');
+(10, 9, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-08-29'),
+(11, 12, 'asd', 18, 'tester', 'Pusbin Budianto', '2018-09-09');
 
 -- --------------------------------------------------------
 
@@ -303,7 +304,10 @@ CREATE TABLE `event` (
 
 INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `FK_JENJANG`, `URAIAN`, `FK_PROVINSI`, `CREATED_BY`, `CREATED_DATE`) VALUES
 (9, '6122018', 6, 'tester', 11, 'Pusbin Budianto', '2018-08-29'),
-(10, '20212', 2, 'qwe', 13, 'Pusbin Budianto', '2018-09-03');
+(10, '20212', 2, 'qwe', 13, 'Pusbin Budianto', '2018-09-03'),
+(11, '61212', 6, 'tester', 12, 'Pusbin Budianto', '2018-09-09'),
+(12, '11212', 1, 'tester', 12, 'Pusbin Budianto', '2018-09-09'),
+(14, '11111', 1, 'tester', 14, 'Pusbin Budianto', '2018-09-09');
 
 -- --------------------------------------------------------
 
@@ -643,7 +647,7 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (16, 'Beranda', 'pusbin', 'pusbin/home', 'admin', '2018-03-29', 'home', 5),
 (17, 'Manajemen Registrasi', 'pusbin', 'pusbin/ManagementRegistrasi', 'admin', '2018-03-29', 'registered', 5),
 (20, 'Manajemen Pengguna', 'pusbin', 'pusbin/ManagementUser', 'admin', '2018-03-29', 'users', 5),
-(21, 'Nilai WI', 'widyaiswara', 'widyaiswara/Nilai', 'admin', '2018-03-29', '', 4),
+(21, 'Nilai WI', 'widyaiswara', 'widyaiswara/Nilai', 'admin', '2018-03-29', 'file-text-o', 4),
 (22, 'Beranda', 'bpkp', 'bpkp/home', 'admin', '2018-03-29', 'home', 11),
 (24, 'bpkp', 'bpkp', 'sertifikasi/bpkp', 'admin', '2018-03-29', '', 11),
 (25, 'Daftar Unit Apip', 'bpkp', 'bpkp/registrasi', 'admin', '2018-03-29', 'registered', 11),
@@ -654,6 +658,7 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (30, 'Perhitungan Nilai', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', 'line-chart', 5),
 (31, 'Beranda', 'bank_soal', 'bank_soal/koreksi/home', 'admin', '2018-07-07', 'home', 18),
 (32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20),
+(33, 'Laporan', 'pusbin', 'pusbin/Report', 'admin', '2018-07-06', 'paperclip', 5),
 (38, 'Pengusulan Pengangkatan', 'pusbin', 'pusbin/PengusulanPengangkatan', 'admin', '2018-07-06', 'user', 5),
 (88, 'Home', 'fasilitas', 'fasilitas/home', 'admin', '2018-03-29', 'home', 28),
 (89, 'Manajemen PERTEK', 'fasilitas', 'fasilitas/ManagementPertek', 'admin', '2018-03-29', 'home', 28);
@@ -1397,7 +1402,7 @@ ALTER TABLE `bab_mata_ajar`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
@@ -1439,7 +1444,7 @@ ALTER TABLE `dokumen_registrasi_ujian`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
@@ -1559,7 +1564,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `widyaiswara_nilai`
 --
 ALTER TABLE `widyaiswara_nilai`
-  MODIFY `PK_WIDYAISWARA_NILAI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `PK_WIDYAISWARA_NILAI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `wilayah`
