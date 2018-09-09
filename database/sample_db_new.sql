@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 09, 2018 at 09:06 PM
+-- Generation Time: Sep 10, 2018 at 01:36 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -126,26 +126,18 @@ CREATE TABLE `detail_nilai_wi` (
   `PK_DETAIL_NILAI_WI` int(15) NOT NULL,
   `FK_WIDYAISWARA_NILAI` varchar(150) NOT NULL,
   `NILAI_1` int(11) NOT NULL,
-  `NILAI_2` int(11) NOT NULL
+  `NILAI_2` int(11) NOT NULL,
+  `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `detail_nilai_wi`
 --
 
-INSERT INTO `detail_nilai_wi` (`PK_DETAIL_NILAI_WI`, `FK_WIDYAISWARA_NILAI`, `NILAI_1`, `NILAI_2`) VALUES
-(11, '25', 83, 70),
-(12, '26', 80, 45),
-(13, '25', 83, 70),
-(14, '26', 80, 45),
-(15, '25', 83, 70),
-(16, '26', 80, 80),
-(17, '25', 83, 70),
-(18, '26', 90, 90),
-(19, '25', 80, 80),
-(20, '26', 80, 80),
-(21, '25', 80, 45),
-(22, '26', 80, 45);
+INSERT INTO `detail_nilai_wi` (`PK_DETAIL_NILAI_WI`, `FK_WIDYAISWARA_NILAI`, `NILAI_1`, `NILAI_2`, `flag`) VALUES
+(29, '25', 99, 90, 1),
+(30, '26', 50, 30, 1),
+(31, '29', 90, 55, 1);
 
 -- --------------------------------------------------------
 
@@ -1124,9 +1116,9 @@ CREATE TABLE `widyaiswara_nilai` (
 --
 
 INSERT INTO `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`, `NIP`, `NAMA`, `TGL_RELEASE_MATA_AJAR`, `FK_MATA_AJAR`, `NILAI_1`, `NILAI_2`, `NIP_INSTRUKTUR`, `flag`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(25, '195212211978031001', 'Soni', '2018-09-13', 13, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03'),
-(26, '195212211978031008', 'Nurman', '2018-09-13', 13, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03'),
-(29, '195301291982031008', 'Icin', '2018-09-10', 28, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-03');
+(25, '195212211978031001', 'Soni', '2018-09-13', 13, 0, 0, '3', 1, 'Pusbin Budianto', '2018-09-03'),
+(26, '195212211978031008', 'Nurman', '2018-09-13', 13, 0, 0, '3', 1, 'Pusbin Budianto', '2018-09-03'),
+(29, '195301291982031008', 'Icin', '2018-09-10', 28, 0, 0, '3', 1, 'Pusbin Budianto', '2018-09-03');
 
 -- --------------------------------------------------------
 
@@ -1414,7 +1406,7 @@ ALTER TABLE `bridge_lookup`
 -- AUTO_INCREMENT for table `detail_nilai_wi`
 --
 ALTER TABLE `detail_nilai_wi`
-  MODIFY `PK_DETAIL_NILAI_WI` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `PK_DETAIL_NILAI_WI` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `detail_permintaan_soal`
