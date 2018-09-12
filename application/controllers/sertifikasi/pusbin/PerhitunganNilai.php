@@ -138,12 +138,14 @@ class PerhitunganNilai extends CI_Controller {
              $namadiklat=$this->input->post('namadiklat');
              $provinsi=$this->input->post('provinsi');
              $uraian=$this->input->post('uraian');
+						 $pass_grade=$this->input->post('pass_grade');
       			 if($bulan!=''&&$tahun!=''&&$kodeevent!=''&&$namadiklat!=''&&$provinsi!=''&&$kodediklat!=''){
       						 $data = array(
       				 			'KODE_EVENT' => $kodeevent,
       							'FK_JENJANG' => $kodediklat,
       				 			'URAIAN' => $uraian,
       				 			'FK_PROVINSI' => $provinsi,
+										'PASS_GRADE' => $pass_grade,
       				 			'CREATED_BY' => $this->session->userdata('logged_in'),
       							'CREATED_DATE' => $datex
       				 		);
@@ -237,9 +239,10 @@ class PerhitunganNilai extends CI_Controller {
              $row['namadiklat'] = $field->NAMA_JENJANG;
              $row['uraian'] = $field->URAIAN;
              $row['nama'] = $field->Nama;
+						 $row['pass_grade'] = $field->PASS_GRADE;
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
              $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
-						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-create-batch" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
 
              $data[] = $row;
              $a++;
@@ -303,14 +306,14 @@ class PerhitunganNilai extends CI_Controller {
 			foreach ($datas as $key) {
 				$data = array();
 				switch ($key->NAMA_JENJANG) {
-					// case 'Auditor Terampil':
-					// 	$perc_ujian_tertulis=45;
-					// 	$perc_nilai_wi1=35;
-					// break;
-					// case 'Auditor Ahli':
-					// 	$perc_ujian_tertulis=;
-					// 	$perc_nilai_wi1=;
-					// break;
+					case 'Auditor Terampil':
+						$perc_ujian_tertulis=50;
+						$perc_nilai_wi1=50;
+					break;
+					case 'Auditor Ahli':
+						$perc_ujian_tertulis=50;
+						$perc_nilai_wi1=30;
+					break;
 					// case 'Pindah Jalur':
 					// 	$perc_ujian_tertulis=;
 					// 	$perc_nilai_wi1=;
@@ -333,13 +336,19 @@ class PerhitunganNilai extends CI_Controller {
 						break;
 				}
 				$total_kelulusan=ceil(ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100)+ceil($key->NILAI_KSP*20/100));
-				$data_pass_grade=$this->lookup_ujian->getdataPassGrade($key->FK_JADWAL_UJIAN);
-				if($total_kelulusan>=$data_pass_grade[0]->PASS_GRADE){
-					$ket_lulus='LULUS';
-				}else{
-					$ket_lulus='BELUM LULUS';
-				}
-
+				$data_pass_grade=$this->lookup_ujian->getdataPassGrade($key->FK_JAWABAN_DETAIL);
+				if(!empty($data_pass_grade)){
+					if($total_kelulusan>=$data_pass_grade[0]->PASS_GRADE){
+						$ket_lulus='LULUS';
+						$style='"color:blue"';
+					}else{
+						$ket_lulus='BELUM LULUS';
+						$style='"color:red"';
+					}
+			}else{
+				$ket_lulus='BELUM LULUS';
+				$style='"color:red"';
+			}
 				$data[]=$key->NAMA_MATA_AJAR;
 				$data[]=ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100);
 				$data[]=ceil($key->NILAI_1_WI*$perc_nilai_wi1/100);
@@ -347,7 +356,7 @@ class PerhitunganNilai extends CI_Controller {
 				$data[]=ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100);
 				$data[]=ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100);
 				$data[]=ceil($key->NILAI_KSP*20/100);
-				$data[]=$total_kelulusan.' ('.$ket_lulus.')';
+				$data[]='<b style='.$style.' >'.$total_kelulusan.' ('.$ket_lulus.')'.'</b>';
 				$datarow[]=$data;
 				$a++;
 			}
@@ -503,6 +512,7 @@ class PerhitunganNilai extends CI_Controller {
 
 			$nomor1=1;
 			foreach ($dataAll as $key) {
+				$fk_jawaban_detail=$key->PK_JAWABAN_DETAIL;
 				$totalJawaban=0;
 				$data = array();
 				$data['nip']=$key->KODE_PESERTA;
@@ -548,6 +558,7 @@ class PerhitunganNilai extends CI_Controller {
 							'FK_MATA_AJAR'=>$key->FK_MATA_AJAR
 						);
 						$data_update=array(
+							'FK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
 							'HASIL_UJIAN'=>$data['nilai'],
 							'flag'=>1
 						);

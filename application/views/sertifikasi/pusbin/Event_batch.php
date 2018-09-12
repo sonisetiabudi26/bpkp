@@ -21,7 +21,7 @@
   			<div class="row">
   						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
   							<div class="x_panel">
-  								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_add_event/".$id; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
+  								<button class="btn btn-primary" id="tambah_event" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_add_event/".$id; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
   								<div class="x_content">
   									<div class="row">
   										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -33,6 +33,7 @@
   													<td>Nama Diklat</td>
   													<td>Uraian</td>
   													<td>Provinsi</td>
+														<td>Pass Grade</td>
   													<td>Tindakan</td>
   												</tr>
   												</thead>
@@ -106,6 +107,7 @@ $(document).ready(function(){
                     {"data": "namadiklat"},
                     {"data": "uraian"},
                     {"data": "nama"},
+										{"data": "pass_grade"},
                     {"data": "action"}
                 ],
 

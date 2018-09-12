@@ -263,10 +263,10 @@ class Registrasi extends CI_Controller {
 								}
 
 								foreach ($data_ujians as $key ) {
-									$nilai_ksp=ceil($key->NILAI_KSP*20/100);
+									// $nilai_ksp=ceil($key->NILAI_KSP*20/100);
 									$data_insert = array('FK_REGIS_UJIAN' => $key->PK_REGIS_UJIAN,
 																				'FK_MATA_AJAR'=>$key->PK_MATA_AJAR,
-																				'NILAI_KSP'=>$nilai_ksp,
+																				'NILAI_KSP'=>$key->NILAI_KSP,
 																				'CREATED_BY' => $this->session->userdata('logged_in'),
 																				'CREATED_DATE' => $datex);
 										$inser_lookup=$this->lookup_ujian->save($data_insert);

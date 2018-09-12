@@ -35,9 +35,10 @@ class LookupUjian extends My_Model
 		return $query->result();
 	}
 	public function getdataPassGrade($fk_jadwal){
-		$condition = "PK_JADWAL_UJIAN = '" . $fk_jadwal . "'";
-		$this->db->select('PASS_GRADE');
-		$this->db->from('jadwal_ujian');
+		$condition = "jawaban_peserta.PK_JAWABAN_DETAIL= '" . $fk_jadwal . "'";
+		$this->db->select('event.PASS_GRADE');
+		$this->db->from('jawaban_peserta');
+		$this->db->join('event', 'jawaban_peserta.FK_EVENT=event.PK_EVENT ');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		return $query->result();

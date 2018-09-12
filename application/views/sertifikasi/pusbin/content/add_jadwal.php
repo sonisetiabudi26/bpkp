@@ -23,10 +23,7 @@
             </div>
           </div>
     </div>
-		<div class="form-group">
-      	<label for="pass_grade">Passing Grade Kelulusan:</label>
-        	<input type="number" class="form-control text-primary" id="pass_grade" name="pass_grade" placeholder="Passing Grade" />
-    </div>
+	
 		<input id="btn-add-jadwal" type="submit" value="Submit" class="btn btn-primary" />
 	</br>
 </form>

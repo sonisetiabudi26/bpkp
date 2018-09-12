@@ -65,6 +65,14 @@
     </div>
   </div><br/>
   <div class="row">
+      <div class="form-group">
+        <div class="col-md-12">
+        <label for="category">Passing Grade Kelulusan :</label>
+        	<input type="number" class="form-control text-primary" id="pass_grade" name="pass_grade" placeholder="Passing Grade" />
+      </div>
+    </div>
+  </div><br/>
+  <div class="row">
     <div class="col-md-12">
   	<input id="btn-add-event" type="submit" value="Submit" class="btn btn-primary" />
   </div>

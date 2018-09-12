@@ -107,7 +107,7 @@ class ManagementRegistrasi extends CI_Controller {
 				$data['START_DATE']=$key->START_DATE;
 				$data['END_DATE']=$key->END_DATE;
 				$data['CATEGORY']=$key->CATEGORY;
-				$data['PASS_GRADE']=$key->PASS_GRADE;
+				// $data['PASS_GRADE']=$key->PASS_GRADE;
 			}
 			$this->load->view('sertifikasi/pusbin/content/edit_jadwal',$data);
 		}
@@ -162,7 +162,7 @@ class ManagementRegistrasi extends CI_Controller {
 					 $row[] = $field->START_DATE;
 					 $row[] = $field->END_DATE;
 					 $row[] = $status;
-					 $row[] = $field->PASS_GRADE;
+					 // $row[] = $field->PASS_GRADE;
 					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_edit_jadwal/".$field->PK_JADWAL_UJIAN;
 					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Ubah</a>
                   <a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_jadwal('."'".$field->PK_JADWAL_UJIAN."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
