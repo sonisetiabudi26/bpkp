@@ -208,12 +208,16 @@ class Registrasi extends CI_Controller {
 				 mkdir('./uploads/'.$folder, 0777, TRUE);
 			 }
 			 $config2['upload_path']          = './uploads/'.$folder.'/';
-			 $config2['allowed_types']        = 'jpg|jpeg';
+			 $config2['allowed_types']        = 'JPG|JPEG|jpg|jpeg';
 			 $config2['max_size']             = 2048;
 			 $config2['max_width']            = 2048;
 		   $config2['max_height']           = 768;
 			 $config2['overwrite'] = TRUE;
 			 $this->load->library('upload', $config2);
+			 $config2['file_name'] = $_FILES['doc_foto']['name'];
+
+        $this->upload->initialize($config2);
+
 
 				 if (!$this->upload->do_upload('doc_foto')){
 					 return array('result_upload_img' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());

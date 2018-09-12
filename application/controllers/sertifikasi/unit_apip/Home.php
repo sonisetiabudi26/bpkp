@@ -41,6 +41,9 @@ class Home extends CI_Controller {
 				$apiuser=$this->apiuser($key->NIP);
 				$data['unit'] = $apiuser->data[0]->UnitKerja_Nama;
 				//$dataRow['unitapip']=$kodeunitkerja;
+				if($key->DOC_NAMA=='doc_foto'){
+					$data['foto']=$key->DOCUMENT;
+				}
 				$data['nama'] = $apiuser->data[0]->Auditor_NamaLengkap;
 				$data['kode_unit'] = $apiuser->data[0]->UnitKerja_Kode;
 			}

@@ -43,10 +43,11 @@ class RegisUjian extends My_Model
 	}
 	public function getDatabypk($pk){
 		$condition = "registrasi_ujian.PK_REGIS_UJIAN =" . "'" . $pk . "' and flag=1";
-		$this->db->select('registrasi_ujian.NIP,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
+		$this->db->select('registrasi_ujian.NIP,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+		$this->db->join('dokumen_registrasi_ujian', 'dokumen_registrasi_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		return $query->result();

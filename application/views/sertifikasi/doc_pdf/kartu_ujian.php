@@ -1,3 +1,4 @@
+<?php error_reporting(0);?>
 <style>
   .full-width{width:100%}
   .title{
@@ -98,22 +99,13 @@
       <div class="row">
         <table>
         <tr height="472" width="354" style="border:1px solid #999">
-          <td height="150" width="130"><img src="uploads/".<?php echo $FOTO; ?> width="100%" height="100%"></td>
+          <td height="150" width="130"><img src="<?php echo base_url('doc')."/doc_registrasi/195301291982031001_20180912/1.jpg"; ?>" width="100%" height="100%"></td>
         </tr>
       </table>
       </div>
     </div>
     <div class="col-lg-6" style="float:right">
-      <div class="row">
-        <label></label>
-        <label>Yang Menyetuji,</label><br/><br/>
-        <div>
-          <h3>TTD</h3>
-        </div><br/><br/>
-        <label><u>Panitia Ujian</u></label><br/>
 
-
-      </div>
     </div>
   </div>
 </div>
