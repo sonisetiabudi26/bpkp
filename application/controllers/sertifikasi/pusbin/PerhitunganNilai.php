@@ -302,14 +302,52 @@ class PerhitunganNilai extends CI_Controller {
 			$datarow = array();
 			foreach ($datas as $key) {
 				$data = array();
+				switch ($key->NAMA_JENJANG) {
+					// case 'Auditor Terampil':
+					// 	$perc_ujian_tertulis=45;
+					// 	$perc_nilai_wi1=35;
+					// break;
+					// case 'Auditor Ahli':
+					// 	$perc_ujian_tertulis=;
+					// 	$perc_nilai_wi1=;
+					// break;
+					// case 'Pindah Jalur':
+					// 	$perc_ujian_tertulis=;
+					// 	$perc_nilai_wi1=;
+					// break;
+					case 'Auditor Muda':
+						$perc_ujian_tertulis=45;
+						$perc_nilai_wi1=35;
+					break;
+					case 'Auditor Madya':
+						$perc_ujian_tertulis=40;
+						$perc_nilai_wi1=40;
+					break;
+					case 'Auditor Utama':
+					$perc_ujian_tertulis=35;
+					$perc_nilai_wi1=45;
+					break;
+					default:
+						$perc_ujian_tertulis=50;
+						$perc_nilai_wi1=30;
+						break;
+				}
+				$total_kelulusan=ceil(ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100)+ceil($key->NILAI_KSP*20/100));
+				$data_pass_grade=$this->lookup_ujian->getdataPassGrade($key->FK_JADWAL_UJIAN);
+				if($total_kelulusan>=$data_pass_grade[0]->PASS_GRADE){
+					$ket_lulus='LULUS';
+				}else{
+					$ket_lulus='BELUM LULUS';
+				}
+
 				$data[]=$key->NAMA_MATA_AJAR;
-				$data[]=ceil($key->HASIL_UJIAN*50/100);
-				$data[]=ceil($key->NILAI_1_WI*30/100);
+				$data[]=ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100);
+				$data[]=ceil($key->NILAI_1_WI*$perc_nilai_wi1/100);
 				$data[]=ceil($key->NILAI_2_WI*20/100);
 				$data[]=ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100);
 				$data[]=ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100);
 				$data[]=ceil($key->NILAI_KSP*20/100);
-				$data[]=ceil(ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100)+ceil($key->NILAI_KSP*20/100));
+				$data[]=$total_kelulusan.' ('.$ket_lulus.')';
 				$datarow[]=$data;
 				$a++;
 			}

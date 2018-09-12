@@ -62,6 +62,7 @@
 													<td>Tanggal Mulai</td>
 													<td>Tanggal Selesai</td>
 													<td>Status</td>
+													<td>Passing Grade</td>
 													<td>Tindakan</td>
 												</tr>
 												</thead>
@@ -172,7 +173,8 @@ var table;
                   {"data": "2",width:100},
                   {"data": "3",width:100},
 									{"data": "4",width:100},
-									{"data": "5",width:100}
+									{"data": "5",width:100},
+									{"data": "6",width:100}
               ],
 
           });

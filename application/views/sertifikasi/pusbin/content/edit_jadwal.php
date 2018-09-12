@@ -24,7 +24,10 @@
             </div>
           </div>
     </div>
-
+		<div class="form-group">
+				<label for="pass_grade">Passing Grade Kelulusan:</label>
+					<input type="number" class="form-control text-primary" id="pass_grade" name="pass_grade" value="<?php echo $PASS_GRADE ?>" placeholder="Passing Grade" />
+		</div>
 		<input id="btn-edit-jadwal" type="submit" value="Ubah" class="btn btn-primary" />
 	</br>
 </form>

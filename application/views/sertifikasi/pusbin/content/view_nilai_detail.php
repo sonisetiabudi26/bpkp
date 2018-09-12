@@ -6,13 +6,14 @@
         <thead>
         <tr>
           <td>MATA AJAR</td>
+          <td>Bobot Nilai Total Kelulusan</td>
           <td>Nilai Tertulis</td>
           <td>Simulasi Kegiatan Pengawasan</td>
           <td>Aktivitas Pada Saat Mengikuti Diklat</td>
           <td>Jumlah Nilai Hasil Diklat</td>
           <td>Bobot Nilai Diklat</td>
           <td>Bobot Nilai KSP</td>
-          <td>Bobot Nilai Total Kelulusan</td>
+
         </tr>
         </thead>
         <tbody>
@@ -39,13 +40,14 @@ var table;
               //Set column definition initialisation properties.
               "columns": [
                   {"data": "0",width:50},
+                  {"data": "7",width:100},
                   {"data": "1",width:100},
                   {"data": "2",width:100},
                   {"data": "3",width:100},
 									{"data": "4",width:100},
                   {"data": "5",width:100},
                   {"data": "6",width:100},
-									{"data": "7",width:100},
+
                   // {"data": "5",width:100}
 
               ],
