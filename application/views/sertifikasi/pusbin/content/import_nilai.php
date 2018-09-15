@@ -11,6 +11,7 @@
       </div>
     <div class="col-lg-8 col-md-8 col-xs-8">
        <input type="text" class="form-control text-primary" name="file_nilai" id="text-nilai" placeholder="doc nilai"/>
+       <span class="mandatory"><i>* Format dokumen harus .xlsx</i></span>
      </div>
    </div>
   </div><br/>

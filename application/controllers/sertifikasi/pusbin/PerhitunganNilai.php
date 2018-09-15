@@ -507,6 +507,7 @@ class PerhitunganNilai extends CI_Controller {
 			$parameter	= explode('~',$kode);
 			$kode_event=$parameter[0];
 			$kelas=$parameter[1];
+
 			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
 			if($dataAll!='no data'){
 
@@ -519,27 +520,27 @@ class PerhitunganNilai extends CI_Controller {
 				$data['kode_soal']=$key->KODE_SOAL;
 				$datanum=$this->jawaban->get_data_all_by_numrows($key->KODE_SOAL,$key->KELAS);
 				$data['totalSoal']=$datanum;
-				for ($i=1; $i<= $datanum ; $i++) {
-					$nomor='NO_'.$i;
-					$data[$nomor]=$key->$nomor;
-					$dataCalc=$this->jawaban->calculate($key->KODE_SOAL,$key->$nomor,$i);
-					$jawaban='JAWABAN_'.$i;
+				$dataJawaban=$this->jawaban->getDataJawaban($fk_jawaban_detail);
+				foreach ($dataJawaban as $row) {
+					$dataCalc=$this->jawaban->calculate($key->KODE_SOAL,$row->JAWABAN,$row->NO_UJIAN);
+					$jawaban='JAWABAN_'.$row->NO_UJIAN;
 					if($dataCalc=='benar'){
 						$totalJawaban++;
 					}
 					$data[$jawaban]=$dataCalc;
 					$nomor1++;
 				}
+
 				$data['totalJawaban']=$totalJawaban;
-				if($data['totalSoal']!=0){
+				if($datanum!=0){
 					$data['nilai']=ceil(($totalJawaban/$datanum)*100);
 				}else{
-					$data['nilai']='';
+					$data['nilai']='0';
 				}
 				$where=array(
-					'KODE_PESERTA'=>$data['nip'],
-					'KODE_SOAL'=>$data['kode_soal'],
-					'FK_EVENT'=>$kode_event
+					'PK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
+					// 'KODE_SOAL'=>$data['kode_soal'],
+					// 'FK_EVENT'=>$kode_event
 				);
 				$data_update=array(
 					'Nilai'=>$data['nilai']
@@ -565,7 +566,7 @@ class PerhitunganNilai extends CI_Controller {
 					$update_lookup=$this->lookup_ujian->updateData($where,'lookup_ujian',$data_update);
 					}
 					$output  = array('status' =>'success' ,
-				 										'msg'=>'Data berhasil dikalkulasi','data'=>$data);
+				 										'msg'=>'Data berhasil dikalkulasi','data'=>$datanum);
 			//	}
 				// else{
 				// 	$output  = array('status' =>'error' ,
@@ -624,21 +625,40 @@ class PerhitunganNilai extends CI_Controller {
         $file=$upload['file'];
         $filename=$file['file_name'];
   			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-  			$excelreader = new PHPExcel_Reader_Excel2007();
+  			$excelreader =PHPExcel_IOFactory::createReader('Excel2007');
   			$loadexcel = $excelreader->load('uploads/nilai/'.$filename);
-  			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
-  			$data['sheet'] = $this->import($sheet,$dataAll);
-				if($data['sheet']=='success'){
-					$output = array('status' =>'success' ,'msg'=>'Berhasil di import' );
-				}else{
-						$output = array('status' =>'error' ,'msg'=>$data['sheet']);
+  			$objWorksheet = $loadexcel->setActiveSheetIndex();
+				$no=1;
+
+					foreach ($objWorksheet->getRowIterator() as $row) {
+						if($no>1){
+							$a=0;
+					  $cellIterator = $row->getCellIterator();
+					  $cellIterator->setIterateOnlyExistingCells(false);
+
+					  foreach ($cellIterator as $cell) {
+							$rowasd[$no][$a]=$cell->getValue();
+							$a++;
+					  }
 					}
-  		}else{
-  			$output = array('status' =>'error' ,'msg'=>'Gagal melakukan proses import' );
-  		}
-      print json_encode($output);
 
-
+					$no++;
+				}
+				//	print_r($rowasd);
+				$dataimport=$this->import($a,$rowasd,$dataAll);
+				if($dataimport=='success')
+				{
+					$output  = array('status' =>'success' ,
+														'msg'=>'Data berhasil import data');
+				}else{
+					$output = array('status' =>'error' ,
+													 'msg'=>'gagal import data');
+					}
+			}else{
+				$output = array('status' =>'error' ,
+												 'msg'=>'gagal import data');
+			}
+				print json_encode($output);
   	}
 
   	public function do_upload($doc){
@@ -661,100 +681,52 @@ class PerhitunganNilai extends CI_Controller {
 
 
 
-  	public function import($sheet,$dataAll){
+  	public function import($no,$rowData,$dataAll){
       $date = date('Ymd');
       $datex=date('Y-m-d');
   		/** Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database */
   		$datasheet1 = [];
-  		$numrow = 1;
+			$datasheet2 = [];
+  		$numrow = 0;
       $indexbatch=0;
 			$kode_event=$dataAll[0]->FK_EVENT;
 			$kelas=$dataAll[0]->KELAS;
+
     //  $dataAll=$this->batch->get_batch_by_id($id_batch);
-  		foreach($sheet as $row){
-        if($numrow > 1 ){
+  		foreach($rowData as $row){
 
-            $indexbatch=$indexbatch+1;
+					$data = array(
+						'FK_EVENT'=>$kode_event,//kode event ambil dr data selected
+						'KELAS'=>$kelas,//kelas ambil dr data selected
+						'KODE_PESERTA'=>$row[5],
+						'KODE_UNIT'=>$row[6],
+						'KODE_SOAL'=>$row[2],
+						'TGL_UJIAN'=>$row[3],
+						'CREATED_BY' =>  $this->session->userdata('logged_in'),
+						'CREATED_DATE' => $datex,
+					);
+					$insertmulti=$this->jawaban->addSoal($data);
+					if($insertmulti!='Data Inserted Failed'){
+						$no_ujian=1;
+						for ($i=8; $i < $no ; $i++) {
     				array_push($datasheet1, [
-    				'FK_EVENT'=>$kode_event,//kode event ambil dr data selected
-    				'KELAS'=>$kelas,//kelas ambil dr data selected
-    				'KODE_PESERTA'=>$row['F'],
-						'KODE_UNIT'=>$row['G'],
-    				'KODE_SOAL'=>$row['C'],
-						'TGL_UJIAN'=>$row['D'],
-            'CREATED_BY' =>  $this->session->userdata('logged_in'),
-            'CREATED_DATE' => $datex,
+							'FK_JAWABAN_DETAIL'=>$insertmulti,//kode event ambil dr data selected
+							'NO_UJIAN'=>$no_ujian,//kelas ambil dr data selected
+							'JAWABAN'=>$row[$i],
 
-            'NO_1' =>$row['I'],
-            'NO_2' =>$row['J'],
-            'NO_3' =>$row['K'],
-            'NO_4' =>$row['L'],
-            'NO_5' =>$row['M'],
-            'NO_6' =>$row['N'],
-            'NO_7' =>$row['O'],
-            'NO_8' =>$row['P'],
-            'NO_9' =>$row['Q'],
-            'NO_10' =>$row['R'],
-            'NO_11' =>$row['S'],
-            'NO_12' =>$row['T'],
-            'NO_13' =>$row['U'],
-            'NO_14' =>$row['V'],
-            'NO_15' =>$row['W'],
-            'NO_16' =>$row['X'],
-            'NO_17' =>$row['Y'],
-            'NO_18' =>$row['Z'],
-            'NO_19' =>$row['AA'],
-            'NO_20' =>$row['AB'],
-            'NO_21' =>$row['AC'],
-            'NO_22' =>$row['AD'],
-            'NO_23' =>$row['AE'],
-            'NO_24' =>$row['AF'],
-            'NO_25' =>$row['AG'],
-            'NO_26' =>$row['AH'],
-            'NO_27' =>$row['AI'],
-            'NO_28' =>$row['AJ'],
-            'NO_29' =>$row['AK'],
-            'NO_30' =>$row['AL'],
-            'NO_31' =>$row['AM'],
-            'NO_32' =>$row['AN'],
-            'NO_33' =>$row['AO'],
-            'NO_34' =>$row['AP'],
-            'NO_35' =>$row['AQ'],
-            'NO_36' =>$row['AR'],
-            'NO_37' =>$row['AS'],
-            'NO_38' =>$row['AT'],
-            'NO_39' =>$row['AU'],
-            'NO_40' =>$row['AV'],
-            'NO_41' =>$row['AW'],
-            'NO_42' =>$row['AX'],
-            'NO_43' =>$row['AY'],
-            'NO_44' =>$row['AZ'],
-            'NO_45' =>$row['BA'],
-            'NO_46' =>$row['BB'],
-            'NO_47' =>$row['BC'],
-            'NO_48' =>$row['BD'],
-            'NO_49' =>$row['BE'],
-						'NO_50' =>$row['BF'],
     				]);
+						$no_ujian++;
+						}
 
+					}
+					$numrow++;
 
-      }
-      $numrow++;
   		}
-  		/** Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model */
-      if($numrow >1){
-				if($indexbatch>0){
-					$insertmulti=$this->jawaban->insert_multiple($datasheet1);
-	    		if($insertmulti=='success'){
-	            return  "success";
-	          }else{
-	            return  "error";
-	          }
-				}else{
-					return "error";
-				}
-    		}else{
-    			return 'error';
-    		}
+			$insertmulti_jawaban=$this->jawaban->insert_multiple($datasheet1);
+				if($insertmulti_jawaban=='success'){
+						return  "success";
+					}else{
+						return  "error";
+					}
   	}
 }

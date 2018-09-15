@@ -195,5 +195,27 @@ function delete_batch(id){
 
 	}
 }
+function calculate(kode_event,kelas){
+	var kode=kode_event+'~'+kelas;
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/calculate/')?>/"+kode,
+			type: "POST",
+			dataType: "JSON",
+			success: function(resp)
+			{
+				if(resp.status=="success"){
+					loadData(1);
+					swal('Berhasil',resp.msg,resp.status);
+				}else{
+					loadData(1);
+					swal('Terjadi kesalahan',resp.msg,resp.status);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+					alert('Error calculate data');
+			}
+	});
+}
 
 </script>

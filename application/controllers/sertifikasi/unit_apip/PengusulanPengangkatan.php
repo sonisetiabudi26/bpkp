@@ -196,7 +196,14 @@ class PengusulanPengangkatan extends CI_Controller {
 
 				}
 				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data,$desc);
+				if($uploadpdf=='success'){
+						$output = array('status' =>'success' ,'msg'=>'Berhasil');
+				}else{
+					 $output = array('status' =>'error' ,'msg'=>'Gagal upload');
+				}
+				print json_encode($output);
 		}
+
 		public function submit_nosurat(){
 			$datex=date('Ymd');
 			$no_surat = $this->input->post('no_surat');
@@ -270,7 +277,7 @@ class PengusulanPengangkatan extends CI_Controller {
 					$this->load->library('upload', $config);
 
 						if (! $this->upload->do_upload($doc[$i])){
-							return array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
+							$outout= array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
 						}else{
 							$doc_loc=$folder.'/'.$_FILES[$doc[$i]]['name'];
 							$datas = array(
@@ -285,12 +292,6 @@ class PengusulanPengangkatan extends CI_Controller {
 						 $insert=$this->doc_pengusul->save($datas);
 								 if($insert=='Data Inserted Successfully'){
 									 $no++;
-									 $output = array(
-																 "msg" => "success",
-												 );
-											 echo json_encode($output);
-								 }else{
-									 return array('result_upload_pdf' => 'error saving data', 'file' => '', 'error' => '');
 								 }
 
 						}
@@ -305,10 +306,12 @@ class PengusulanPengangkatan extends CI_Controller {
 				if($desc=='1'){
 					if($no>6){
 						 $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
+						 return 'success';
 					}
 				}elseif($desc='2'){
 					if($no>7){
 						$update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
+						return 'success';
 					}
 				}elseif($desc='3'){
 					if($no<7){

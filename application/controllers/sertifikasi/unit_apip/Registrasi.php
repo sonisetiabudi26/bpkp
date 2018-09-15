@@ -170,7 +170,7 @@ class Registrasi extends CI_Controller {
 						 }else{
 							 $output = array(
 								 							"status" => "error",
-															"msg" => $uploadpdf['result_upload_pdf'],
+															"msg" => $uploadimg['result_upload_img'],
 											);
 						 }
 				 }else{
@@ -209,10 +209,9 @@ class Registrasi extends CI_Controller {
 			 }
 			 $config2['upload_path']          = './uploads/'.$folder.'/';
 			 $config2['allowed_types']        = 'JPG|JPEG|jpg|jpeg';
-			 $config2['max_size']             = 2048;
-			 $config2['max_width']            = 2048;
-		   $config2['max_height']           = 768;
-			 $config2['overwrite'] = TRUE;
+			 $config2['max_size'] 						= '0';
+       $config2['max_filename']					= '255';
+			 $config2['overwrite'] 						= TRUE;
 			 $this->load->library('upload', $config2);
 			 $config2['file_name'] = $_FILES['doc_foto']['name'];
 
@@ -222,6 +221,16 @@ class Registrasi extends CI_Controller {
 				 if (!$this->upload->do_upload('doc_foto')){
 					 return array('result_upload_img' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
 				 }else{
+					 $image_data = $this->upload->data();
+					 $config3['image_library'] = 'gd2';
+					 $config3['source_image'] = $image_data['full_path']; //get original image
+					 $config3['maintain_ratio'] = TRUE;
+					 $config3['width'] = 100;
+					 $config3['height'] = 150;
+					 $this->load->library('image_lib', $config3);
+					 if (!$this->image_lib->resize()) {
+							 $this->handle_error($this->image_lib->display_errors());
+					 }
 					 return array('result_upload_img' => 'success', 'file' => $this->upload->data(), 'error' => '');
 				 }
 		 }

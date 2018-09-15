@@ -49,7 +49,7 @@ class PengusulPengangkatan extends My_Model
 	}
 
 	public function numrowcategory($nip){
-		$condition = "CREATED_BY =" . "'" . $nip . "' AND " . "FK_STATUS_DOC =" . "'" . 2 . "' group by FK_STATUS_PENGUSUL_PENGANGKATAN";
+		$condition = "CREATED_BY =" . "'" . $nip . "' AND " . "FK_STATUS_DOC =" . "'" . 2 . "' and validator='' group by FK_STATUS_PENGUSUL_PENGANGKATAN";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->where($condition);
@@ -74,7 +74,7 @@ class PengusulPengangkatan extends My_Model
 		}
 	}
 	public function numrowpeserta($nip){
-		$condition = "CREATED_BY =" . "'" . $nip . "' AND " . "FK_STATUS_DOC =" . "'" . 2 . "'";
+		$condition = "CREATED_BY =" . "'" . $nip . "' AND " . "FK_STATUS_DOC =" . "'" . 2 . "' and validator=''";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->where($condition);
@@ -149,7 +149,7 @@ class PengusulPengangkatan extends My_Model
 
 	}
 	public function loadData(){
-		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' group by pengusul_pengangkatan.CREATED_BY";
+		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' and pengusul_pengangkatan.validator='' group by pengusul_pengangkatan.CREATED_BY";
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS,pengusul_pengangkatan.validator');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');

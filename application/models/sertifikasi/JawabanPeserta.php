@@ -8,12 +8,21 @@ class JawabanPeserta extends My_Model
 
 	/** ini fungsi untuk melakukan insert lebih dari 1 data */
 	public function insert_multiple($data){
-		$insert=$this->db->insert_batch($this->_table, $data);
+		$insert=$this->db->insert_batch('detail_jawaban_peserta', $data);
 		if($insert){
 			return 'success';
 		}else{
 			return 'failed';
 		}
+	}
+	public function addSoal($data){
+		$insert=$this->db->insert("jawaban_peserta", $data);
+		$insert_id = $this->db->insert_id();
+		 if($insert){
+				return  $insert_id;
+		 }else{
+			 return 'Data Inserted Failed';
+		 }
 	}
 public function getALl($kodeevent,$kelas){
   $condition = "event.KODE_EVENT =" . "'" . $kodeevent . "' AND jawaban_peserta.KELAS =" . "'" . $kelas . "'";
@@ -48,9 +57,10 @@ public function NumrowPeserta($kodeevent,$kelas){
 }
 public function get_data_all_by_event($kodeevent,$kelas){
 	$condition = "jawaban_peserta.FK_EVENT =" . "'" . $kodeevent . "' AND " . "jawaban_peserta.KELAS =" . "'" . $kelas . "'";
-	$this->db->select('jawaban_peserta.*,kode_soal.FK_MATA_AJAR');
+	$this->db->select('jawaban_peserta.*,kode_soal.FK_MATA_AJAR,detail_jawaban_peserta.*');
 	$this->db->from($this->_table);
 	$this->db->join('kode_soal', 'jawaban_peserta.KODE_SOAL = kode_soal.KODE_SOAL');
+	$this->db->join('detail_jawaban_peserta', 'jawaban_peserta.PK_JAWABAN_DETAIL = detail_jawaban_peserta.FK_JAWABAN_DETAIL');
 	$this->db->where($condition);
 	$query = $this->db->get();
 	if ($query->num_rows() > 0) {
@@ -58,6 +68,15 @@ public function get_data_all_by_event($kodeevent,$kelas){
 	} else {
 		return "no data";
 	}
+}
+public function getDataJawaban($fk_jawaban_detail){
+$condition = "FK_JAWABAN_DETAIL =" . "'" . $fk_jawaban_detail . "'";
+	$this->db->select('NO_UJIAN,JAWABAN');
+	$this->db->from('detail_jawaban_peserta');
+	$this->db->where($condition);
+	$query = $this->db->get();
+
+		return $query->result();
 }
 public function get_data_all_by_numrows($kodesoal,$kelas){
 	$condition = "kode_soal.KODE_SOAL =" . "'" . $kodesoal . "'";
@@ -107,7 +126,6 @@ public function calculate($kodesoal,$jawaban,$no_soal){
 	$condition = "kode_soal.KODE_SOAL =" . "'" . $kodesoal . "' AND soal_distribusi.JAWABAN =" . "'" . $jawaban . "' AND soal_distribusi.NO_UJIAN=" . "'" . $no_soal . "'  ";
 	$this->db->select('soal_distribusi.FK_SOAL_UJIAN,soal_distribusi.JAWABAN,kode_soal.KODE_SOAL');
 	$this->db->from("soal_distribusi");
-	// $this->db->join('soal_ujian', 'soal_distribusi.FK_SOAL_UJIAN = soal_ujian.PK_SOAL_UJIAN');
 	$this->db->join('kode_soal', 'soal_distribusi.FK_KODE_SOAL = kode_soal.PK_KODE_SOAL');
 	$this->db->where($condition);
 	$query = $this->db->get();

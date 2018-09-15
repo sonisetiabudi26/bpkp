@@ -166,7 +166,8 @@ class Soal extends CI_Controller {
 		$datex=date('Y-m-d');
 		$a=1;
 		if($this->input->post('fk_bab_mata_ajar')!=''){
-		$param = $this->input->post('fk_bab_mata_ajar');
+		$parameter = $this->input->post('fk_bab_mata_ajar');
+		$param=explode('~',$parameter);
 		$bab_mata_ajar=$param[0];
 		$jml_soal=$param[1];
 		$jumlah_soal = $this->input->post('jumlah_soal');

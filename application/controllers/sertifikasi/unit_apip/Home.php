@@ -33,7 +33,12 @@ class Home extends CI_Controller {
 		public function print_kartu($pk){
 			// $id=$this->input->post('pk_permintaan_soal');
 			$namafile='kartu_ujian_'.$pk;
-			$dompdf = new Dompdf\Dompdf();
+			$dompdf_option = new \Dompdf\Options();
+	    $dompdf_option->setIsFontSubsettingEnabled(true);
+	    $dompdf_option->setIsRemoteEnabled(true);
+	    $dompdf_option->setIsHtml5ParserEnabled(true);
+	    // $dompdf->setOptions($dompdf_option);
+			$dompdf = new Dompdf\Dompdf($dompdf_option);
 			$data_identitas=$this->regisujian->getDatabypk($pk);
 			foreach ($data_identitas as $key) {
 				$data['nip']=$key->NIP;
@@ -66,7 +71,7 @@ class Home extends CI_Controller {
 
 			 // Render the HTML as PDF
 			 $dompdf->render();
-
+			 // echo $data['foto'];
 			 // Get the generated PDF file contents
 			 $pdf = $dompdf->output();
 			 $dompdf->stream($namafile);

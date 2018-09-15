@@ -5,10 +5,7 @@
     font-size: 18px;
     font-weight: bolder;
   }
-  td,tr{
-   border:1px solid #999;
 
-  }
   .subtitle{
     width:40%;
     border:none;
@@ -24,6 +21,13 @@
   .ujian{
     width:90%;
   }
+  table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
 </style>
 <div class="full-width">
   <div class="row">
@@ -37,7 +41,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="row">
-        <table style="width:100%;">
+        <table style="border: none;width:100%;">
 
             <tr>
               <td class="subtitle"><b>Nama</b></td>
@@ -69,7 +73,7 @@
     <div class="col-lg-12">
       <div class="row">
         <label>Mata Ujian yang akan diikuti</label>
-        <table style="width:100%;border:1px solid #999;">
+        <table style="width:100%;">
           <thead>
             <tr style="text-align:center">
               <td class="no"><b>No</b></td>
@@ -97,11 +101,13 @@
   <div class="row">
     <div class="col-lg-6" style="float:left">
       <div class="row">
-        <table>
-        <tr height="472" width="354" style="border:1px solid #999">
-          <td height="150" width="130"><img src="<?php echo base_url('doc')."/doc_registrasi/195301291982031001_20180912/1.jpg"; ?>" width="100%" height="100%"></td>
-        </tr>
-      </table>
+        <!-- <table> -->
+        <div height="472" width="354" style="border:1px solid #999">
+           <!-- <td height="150" width="130"> -->
+          <img src="http://localhost/bpkp/uploads/doc_registrasi/195212211978031001_20180914/357515.jpg" width="130" height="150">
+        <!-- </td> -->
+        </div>
+      <!-- </table> -->
       </div>
     </div>
     <div class="col-lg-6" style="float:right">

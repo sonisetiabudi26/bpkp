@@ -81,6 +81,7 @@
 
 </div>
 </div>
+</div>
 <script type="text/javascript">
 	var save_method;
 	var table;
