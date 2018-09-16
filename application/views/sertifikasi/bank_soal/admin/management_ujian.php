@@ -17,12 +17,13 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div style="float:right">
-            <button class="btn btn-primary" onclick="reload_table()"><i class="glyphicon glyphicon-plus"></i> Tambah</button>
+            <button  onclick="getModal(this)" id="btn-add-management-ujian" data-href="<?php echo base_url('sertifikasi')."/bank_soal/admin/ManagementUjian/vw_add_konfig"; ?>"
+    						data-toggle="modal" data-target="#modal-content" class="btn btn-primary" ><i class="glyphicon glyphicon-plus"></i> Tambah</button>
             <!-- <button class="btn btn-primary" onclick="add()"><i class="glyphicon glyphicon-plus"></i> Buat Permintaan</button> -->
            </div>
 
             <div class="x_content">
-              
+
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 
@@ -37,6 +38,7 @@
                       <th>Mata Ajar</th>
                       <th>Pin</th>
                       <th>Jadwal Ujian</th>
+											<th>Lokasi Ujian</th>
                       <th>Tindakan</th>
                   </tr>
               </thead>
@@ -57,12 +59,12 @@
 </div>
 <script type="text/javascript">
 	var save_method;
-	var table;
+	var tables;
 
 
 	$(document).ready(function() {
 
-						table = $('#table_konfig').DataTable({
+						tables = $('#table_konfig').DataTable({
 			              "processing": false, //Feature control the processing indicator.
 										 "destroy": true,
 			              "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -81,6 +83,7 @@
 												{"data": "4",width:100},
                         {"data": "5",width:100},
                         {"data": "6",width:100},
+												{"data": "7",width:100},
 			              ],
 
 			          });
@@ -92,7 +95,7 @@
 	function loadData(obj)
 	{
 
-		table.ajax.reload(null,false);
+		tables.ajax.reload(null,false);
 
 
 	}
@@ -104,7 +107,7 @@
 	    {
 	        // ajax delete data to database
 	        $.ajax({
-	            url : "<?php echo base_url('sertifikasi/bank_soal/ManagementBankSoal/delete/')?>/"+id,
+	            url : "<?php echo base_url('sertifikasi/bank_soal/admin/ManagementUjian/delete/')?>/"+id,
 	            type: "POST",
 	            dataType: "JSON",
 	            success: function(data)

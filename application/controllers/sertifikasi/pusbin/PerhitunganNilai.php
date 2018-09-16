@@ -142,7 +142,7 @@ class PerhitunganNilai extends CI_Controller {
       			 if($bulan!=''&&$tahun!=''&&$kodeevent!=''&&$namadiklat!=''&&$provinsi!=''&&$kodediklat!=''){
       						 $data = array(
       				 			'KODE_EVENT' => $kodeevent,
-      							'FK_JENJANG' => $kodediklat,
+      							'KODE_DIKLAT' => $kodediklat,
       				 			'URAIAN' => $uraian,
       				 			'FK_PROVINSI' => $provinsi,
 										'PASS_GRADE' => $pass_grade,

@@ -15,11 +15,20 @@ class Event extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function saveByReturn($data) {
+		$this->db->insert($this->_table, $data);
+		$insert_id = $this->db->insert_id();
+		 if($insert_id!=''){
+			 	return  $insert_id;
+		 }else{
+			 return 'Data Inserted Failed';
+		 }
+	}
   public function loadEvent(){
     $this->db->select('event.*,provinsi.Nama,jenjang.NAMA_JENJANG');
     $this->db->from($this->_table);
     $this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
-		$this->db->join('jenjang', 'event.FK_JENJANG = jenjang.PK_JENJANG');
+		$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.PK_JENJANG');
     $query = $this->db->get();
   //	return $query->result();
       return $query->result();
@@ -29,7 +38,7 @@ class Event extends My_Model
 		$this->db->select('event.*,provinsi.Nama,jenjang.NAMA_JENJANG');
 		$this->db->from($this->_table);
 		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
-		$this->db->join('jenjang', 'event.FK_JENJANG = jenjang.KODE_DIKLAT');
+		$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 			 $this->db->where($condition);
 		$query = $this->db->get();
 
