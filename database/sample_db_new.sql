@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 15, 2018 at 10:41 AM
+-- Generation Time: Sep 16, 2018 at 03:36 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -93,7 +93,8 @@ CREATE TABLE `batch` (
 INSERT INTO `batch` (`PK_BATCH`, `FK_EVENT`, `KELAS`, `FK_JADWAL`, `REFF`, `CREATED_BY`, `CREATED_DATE`) VALUES
 (10, 9, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-08-29'),
 (11, 12, 'asd', 18, 'tester', 'Pusbin Budianto', '2018-09-09'),
-(12, 10, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-09-14');
+(12, 10, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-09-14'),
+(21, 24, 'Online', 18, 'Online', 'admin_bank', '2018-09-15');
 
 -- --------------------------------------------------------
 
@@ -420,7 +421,7 @@ INSERT INTO `dokumen_registrasi_ujian` (`PK_DOC_REGIS`, `FK_REGIS_UJIAN`, `DOCUM
 CREATE TABLE `event` (
   `PK_EVENT` int(11) NOT NULL,
   `KODE_EVENT` varchar(100) NOT NULL,
-  `FK_JENJANG` int(15) NOT NULL,
+  `KODE_DIKLAT` int(15) NOT NULL,
   `URAIAN` text NOT NULL,
   `FK_PROVINSI` int(11) NOT NULL,
   `PASS_GRADE` int(11) NOT NULL,
@@ -432,13 +433,14 @@ CREATE TABLE `event` (
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `FK_JENJANG`, `URAIAN`, `FK_PROVINSI`, `PASS_GRADE`, `CREATED_BY`, `CREATED_DATE`) VALUES
+INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `KODE_DIKLAT`, `URAIAN`, `FK_PROVINSI`, `PASS_GRADE`, `CREATED_BY`, `CREATED_DATE`) VALUES
 (9, '6122018', 6, 'tester', 11, 60, 'Pusbin Budianto', '2018-08-29'),
 (10, '20212', 2, 'qwe', 13, 60, 'Pusbin Budianto', '2018-09-03'),
 (11, '61212', 6, 'tester', 12, 60, 'Pusbin Budianto', '2018-09-09'),
 (12, '11212', 1, 'tester', 12, 60, 'Pusbin Budianto', '2018-09-09'),
 (14, '11111', 1, 'tester', 14, 60, 'Pusbin Budianto', '2018-09-09'),
-(15, '11212', 1, 'tester', 52, 60, 'Pusbin Budianto', '2018-09-12');
+(15, '11212', 1, 'tester', 52, 60, 'Pusbin Budianto', '2018-09-12'),
+(24, '20918', 2, 'Online', 12, 70, 'admin_bank', '2018-09-15');
 
 -- --------------------------------------------------------
 
@@ -620,10 +622,17 @@ CREATE TABLE `konfigurasi_ujian` (
   `END_TIME` time NOT NULL,
   `PIN` varchar(50) NOT NULL,
   `FK_MATA_AJAR` int(11) NOT NULL,
-  `FK_JADWAL_UJIAN` int(11) NOT NULL,
+  `FK_EVENT` int(11) NOT NULL,
   `CREATED_BY` varchar(100) NOT NULL,
-  `CREATED_AT` datetime NOT NULL
+  `CREATED_DATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `konfigurasi_ujian`
+--
+
+INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(6, '00:12:00', '20:12:00', '795984', 12, 24, 'admin_bank', '2018-09-15 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1501,7 +1510,7 @@ ALTER TABLE `dokumen_registrasi_ujian`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`PK_EVENT`),
-  ADD KEY `CN_KODE_DIKLAT` (`FK_JENJANG`);
+  ADD KEY `CN_KODE_DIKLAT` (`KODE_DIKLAT`);
 
 --
 -- Indexes for table `jadwal_ujian`
@@ -1527,6 +1536,7 @@ ALTER TABLE `jawaban_peserta_COPY`
 --
 ALTER TABLE `jenjang`
   ADD PRIMARY KEY (`PK_JENJANG`) USING BTREE,
+  ADD UNIQUE KEY `uniq1` (`KODE_DIKLAT`),
   ADD KEY `CN_GROUP_MATA_AJAR_LOOKUP` (`FK_LOOKUP_DIKLAT`),
   ADD KEY `CN_KODE_DIKLAT` (`KODE_DIKLAT`);
 
@@ -1542,7 +1552,8 @@ ALTER TABLE `kode_soal`
 -- Indexes for table `konfigurasi_ujian`
 --
 ALTER TABLE `konfigurasi_ujian`
-  ADD PRIMARY KEY (`PK_KONFIG_UJIAN`);
+  ADD PRIMARY KEY (`PK_KONFIG_UJIAN`),
+  ADD UNIQUE KEY `uniq1` (`PIN`);
 
 --
 -- Indexes for table `lookup`
@@ -1696,7 +1707,7 @@ ALTER TABLE `bab_mata_ajar`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
@@ -1738,7 +1749,7 @@ ALTER TABLE `dokumen_registrasi_ujian`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
@@ -1774,7 +1785,7 @@ ALTER TABLE `kode_soal`
 -- AUTO_INCREMENT for table `konfigurasi_ujian`
 --
 ALTER TABLE `konfigurasi_ujian`
-  MODIFY `PK_KONFIG_UJIAN` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `PK_KONFIG_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `lookup_ujian`
@@ -1898,7 +1909,7 @@ ALTER TABLE `dokumen_registrasi_ujian`
 -- Constraints for table `event`
 --
 ALTER TABLE `event`
-  ADD CONSTRAINT `CN_event1` FOREIGN KEY (`FK_JENJANG`) REFERENCES `jenjang` (`PK_JENJANG`);
+  ADD CONSTRAINT `event_cp1` FOREIGN KEY (`KODE_DIKLAT`) REFERENCES `jenjang` (`KODE_DIKLAT`);
 
 --
 -- Constraints for table `jenjang`
