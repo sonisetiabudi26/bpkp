@@ -105,6 +105,12 @@ class Registrasi extends CI_Controller {
 
 				 $nip=$this->input->post('nip');
 				 $dataCheckPeserta=$this->regis->loadbyNIP($nip,'0');
+				 $apiuser=$this->apiuser($nip);
+	 			if($apiuser->message=='get_data_success'){
+	 					$provinsiNama = $apiuser->data[0]->Provinsi;
+						$dataProvisi=$this->provinsi->getdataPK($provinsiNama);
+						$provinsiId=$dataProvisi->PK_PROVINSI;
+					}
 				 if(!$dataCheckPeserta){
 						 $folder='doc_registrasi/'.$nip.'_'.$date;
 						 $data_doc[0]='doc_ksp';
@@ -137,7 +143,7 @@ class Registrasi extends CI_Controller {
 					 			'PINDAH_BERKAS' => $pindah_berkas,
 					 			'CREATED_BY' => $this->session->userdata('logged_in'),
 								'CREATED_DATE' => $datex,
-								'PROVINSI' => 'unknown',
+								'PROVINSI' => $provinsiId,
 								'FLAG' => '0'
 					 		);
 							$insert=$this->regis->save($data);

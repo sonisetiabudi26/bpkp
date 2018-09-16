@@ -21,4 +21,12 @@ class Provinsi extends My_Model
 		$query = $this->db->get();
 	   return $query->result();
 	}
+	public function getdataPK($pk){
+		$condition = "NAMA = '" . $pk . "'";
+		$this->db->select('PK_PROVINSI');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->row();
+	}
 }
