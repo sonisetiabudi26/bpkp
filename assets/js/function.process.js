@@ -578,7 +578,7 @@ $(document).ready(function () {
     $("#wizard").aiiaWizard();
 });
 
-;(function ($, window, document, undefined) {
+(function ($, window, document, undefined) {
 
 	var settings;
 
@@ -801,7 +801,7 @@ $(document).ready(function () {
 	};
 
 	////////////////////////////////////////// Private functions
-
+ 
 	function resizeWizardStepsWrapper($this) {
 		var $wizardStepsWrapper = $this.find(".aiia-wizard-steps-wrapper");
 		var $activeStep = $wizardStepsWrapper.find(".active");
@@ -974,12 +974,12 @@ $(document).ready(function () {
 
 			if(pos==$number){
 				$progressButton = $("" +
-					"<li data-position='" + $step.attr('data-position') + "'><a href='#'><h4>" + $step.data('position') + "</h4></a></li><br>" +
+					"<li data-position='" + $step.attr('data-position') + "'><a href='#"+ $step.data('position') + "'><h4>" + $step.data('position') + "</h4></a></li><br>" +
 				"");
 				$number+=20;
 			}else{
 				$progressButton = $("" +
-					"<li data-position='" + $step.attr('data-position') + "'><a href='#'><h4>" + $step.data('position') + "</h4></a></li>" +
+					"<li data-position='" + $step.attr('data-position') + "'><a href='#"+ $step.data('position') + "'><h4>" + $step.data('position') + "</h4></a></li>" +
 				"");
 			}
 

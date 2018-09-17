@@ -167,7 +167,7 @@ class SoalUjian extends My_Model
 	}
 
 	public function _get_ready_soal_ujian($fk_bab_mata_ajar) {
-	    $condition = "soal_ujian.fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "' and soal_ujian.tampil_ujian='1'";
+	    $condition = "bab_mata_ajar.FK_MATA_AJAR = '" . $fk_bab_mata_ajar . "' and soal_ujian.tampil_ujian='1'";
 	    $this->db->select('*');
 	    $this->db->from($this->_table);
 		$this->db->join('bab_mata_ajar', 'soal_ujian.fk_bab_mata_ajar = bab_mata_ajar.pk_bab_mata_ajar');
@@ -175,6 +175,7 @@ class SoalUjian extends My_Model
 		$this->db->join('soal_kasus', 'soal_ujian.parent_soal = soal_kasus.pk_soal_kasus', 'left');
 		$this->db->where($condition);
 		$this->db->order_by('parent_soal, rand()');
+		$this->db->limit('30');
 	    $query = $this->db->get();
 	    return $query->result();
 	}

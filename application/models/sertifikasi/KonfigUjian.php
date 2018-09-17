@@ -23,6 +23,29 @@ class KonfigUjian extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function CheckPin($pin,$pk_event,$fk_mata_ajar){
+		$condition="PIN=" . "'" . $pin . "' and FK_EVENT=" . "'" . $pk_event . "' and FK_MATA_AJAR=" . "'" . $fk_mata_ajar . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+  	$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->num_rows();
+		} else {
+			return '0';
+		}
+
+		}
+		public function getConfig($pin){
+			$condition="PIN=" . "'" . $pin . "'";
+			$this->db->select('*');
+			$this->db->from($this->_table);
+			$this->db->where($condition);
+	  	$query = $this->db->get();
+
+				return $query->row();
+
+		}
   public function loadData(){
     $this->db->select('konfigurasi_ujian.*,mata_ajar.NAMA_MATA_AJAR,mata_ajar.PK_MATA_AJAR,provinsi.NAMA,jadwal_ujian.*');
     $this->db->from($this->_table);

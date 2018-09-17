@@ -55,6 +55,7 @@ $route['sertifikasi'] = 'sertifikasi/';
 $route['doc'] = 'uploads/';
 $route['login'] = 'login';
 $route['ujian-sertifikasi-jfa'] = 'ujian/home';
+$route['ujian'] = 'ujian';
 $route['ujian-sertifikasi-jfa/ujian'] = 'ujian/ujiansertifikasi';
 $route['ujian-sertifikasi-jfa/login'] = 'ujian/login';
 $route['404_override'] = '';

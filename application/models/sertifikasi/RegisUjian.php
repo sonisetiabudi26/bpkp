@@ -33,6 +33,14 @@ class RegisUjian extends My_Model
 		}
 
 	}
+	public function getdatakdDiklatandProvinsi($id){
+		$condition = "registrasi_ujian.PK_REGIS_UJIAN =" . "'" . $id . "' and flag=1";
+		$this->db->select('KODE_DIKLAT,PROVINSI');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->row();
+	}
 	public function getPKREGIS($pk){
 		$condition = "registrasi_ujian.GROUP_REGIS =" . "'" . $pk . "' and flag=1";
 		$this->db->select('PK_REGIS_UJIAN');

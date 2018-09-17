@@ -15,6 +15,38 @@ class JawabanPeserta extends My_Model
 			return 'failed';
 		}
 	}
+	public function checkpinujian($nip,$fk_event,$fk_mata_ajar){
+		$condition = "FK_EVENT =" . "'" . $fk_event . "' AND KODE_PESERTA =" . "'" . $nip . "' and PIN!=''";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->num_rows();
+		} else {
+			return "no data";
+		}
+	}
+	public function getPin($id){
+		$condition = "PK_JAWABAN_DETAIL =" . "'" . $id . "'  and PIN!=''";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->row();
+		} else {
+			return "no data";
+		}
+	}
+	public function save($data) {
+		$insert=$this->db->insert($this->_table, $data);
+		 if($insert){
+				return  'Data Inserted Successfully';
+		 }else{
+			 return 'Data Inserted Failed';
+		 }
+	}
 	public function addSoal($data){
 		$insert=$this->db->insert("jawaban_peserta", $data);
 		$insert_id = $this->db->insert_id();

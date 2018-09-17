@@ -70,90 +70,13 @@
     </nav>
   </div>
 </div>
-
-<div class="right_col" role="main">
-<div class="col-lg-12" id="countdown"></div>
-<div class="col-lg-12" id="ujian">
-<form>
-	<div class="outer-container">
-		<div class="col-lg-12" style="font-weight:1000;">
-	<b class="badge date-header" ><?php echo date("d M Y") ;?></b><hr>
-</div>
-		<div id="wizard" class="aiia-wizard" style="display: none;padding:5px;border-radius:3px;background: rgba(255, 255, 255, 0.7);">
-			<?php
-				foreach ($soal as $key=>$soal_ujian):
-			?>
-			<div class="aiia-wizard-step">
-				<div class="col-lg-12" style="display:none;" id="kasus">
-				<?php
-					if(isset($soal_ujian[6])){
-						echo "<h4 class='badge'>Type Soal : Soal Kasus</h4>";
-						echo "<h4 class='container bg-warning' style='border-radius:5px;padding:3px;padding-left:10px;'>".$soal_ujian[6]."</h4>";
-					}else{
-						echo "<h4 class='badge'>Type Soal : Soal Biasa</h4>";
-					}
-				?>
-				</div>
-				<h1><?php echo $soal_ujian[5];?></h1><hr>
-				<div class="step-content">
-					<p>
-						<input id="jawaban<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban" value="<?php echo $soal_ujian[0]['PILIHAN']['value'];?>" /> A. <?php echo $soal_ujian[0]['PILIHAN']['descr'];?>
-					</p>
-					<p>
-						<input id="jawaban<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban" value="<?php echo $soal_ujian[1]['PILIHAN']['value'];?>" /> B. <?php echo $soal_ujian[1]['PILIHAN']['descr'];?>
-					</p>
-					<p>
-						<input id="jawaban<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban" value="<?php echo $soal_ujian[2]['PILIHAN']['value'];?>" /> C. <?php echo $soal_ujian[2]['PILIHAN']['descr'];?>
-					</p>
-					<p>
-						<input id="jawaban<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" /> D. <?php echo $soal_ujian[3]['PILIHAN']['descr'];?>
-					</p>
-				</div>
-			</div>
-			<?php
-				endforeach;
-			?>
-</div>
-		</div>
-	</div>
-</form>
+<?php
+  $this->load->view('ujian/'.$content_page);
+  $this->load->view('ujian/content/modal-page.php');
+?>
 </div>
 </div>
-</div>
-<script>
-$('input[type=radio]').change( function() {
-   alert("test");
-});
-// Set the date we're counting down to
-var countDownDate = new Date("May 31, 2018 01:18:05").getTime();
 
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get todays date and time
-  var now = new Date().getTime();
-
-  // Find the distance between now an the count down date
-  var distance = countDownDate - now;
-
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the result in the element with id="countdown"
-  document.getElementById("countdown").innerHTML = hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  // If the count down is finished, write some text
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("countdown").innerHTML = "EXPIRED";
-	//document.getElementById("ujian").innerHTML = "";
-  }
-}, 1000);
-</script>
 <!-- add function ajax process -->
 <script src="<?php echo base_url('assets/js/function.process.js');?>"></script>
 <!-- INCLUDE JS -->

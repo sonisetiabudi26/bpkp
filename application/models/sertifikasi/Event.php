@@ -24,6 +24,16 @@ class Event extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function getDataPKEvent($kodediklat,$provinsi){
+		$condition = "KODE_DIKLAT =" . "'" . $kodediklat . "' and FK_PROVINSI =" . "'" . $provinsi . "' ";
+		$this->db->select('PK_EVENT');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+
+	//	return $query->result();
+			return $query->row();
+	}
   public function loadEvent(){
     $this->db->select('event.*,provinsi.Nama,jenjang.NAMA_JENJANG');
     $this->db->from($this->_table);
