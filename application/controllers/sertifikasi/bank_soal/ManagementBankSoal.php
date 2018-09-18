@@ -78,7 +78,7 @@ class ManagementBankSoal extends CI_Controller {
 			'fk_mata_ajar' => $this->input->post('fk_mata_ajar'),
 			'kode_soal' => $this->input->post('kode_soal'),
 			'kebutuhan_soal' => $this->input->post('jml_kode_soal'),
-			'created_by' => $this->session->userdata('logged_in'),
+			'created_by' => $this->session->userdata('nip'),
 			'created_date' =>$datex
 			);
 			if($this->kodesoal->save($data)=='Data Inserted Successfully'){

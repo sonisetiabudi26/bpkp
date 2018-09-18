@@ -132,7 +132,7 @@ class ManagementUjian extends CI_Controller {
 			 'URAIAN' => 'Online',
 			 'FK_PROVINSI' => $provinsi,
 			 'PASS_GRADE' => $pass_grade,
-			 'CREATED_BY' => $this->session->userdata('logged_in'),
+			 'CREATED_BY' => $this->session->userdata('nip'),
 			 'CREATED_DATE' => $datex
 		 );
 		 $insert=$this->event->saveByReturn($data);
@@ -142,7 +142,7 @@ class ManagementUjian extends CI_Controller {
 				'KELAS' => $kelas,
 				'FK_JADWAL' => $jadwal,
 				'REFF' => 'Online',
-				'CREATED_BY' => $this->session->userdata('logged_in'),
+				'CREATED_BY' => $this->session->userdata('nip'),
 				'CREATED_DATE' => $datex
 			);
 			$insertbatch=$this->batch->save($databatch);
@@ -153,7 +153,7 @@ class ManagementUjian extends CI_Controller {
  				'PIN' => $this->generatePIN(6),
  				'FK_MATA_AJAR' => $mata_ajar,
 				'FK_EVENT' => $insert,
- 				'CREATED_BY' => $this->session->userdata('logged_in'),
+ 				'CREATED_BY' => $this->session->userdata('nip'),
  				'CREATED_DATE' => $datex
  			);
 				$insertkonfig=$this->konfig->save($datakonfig);

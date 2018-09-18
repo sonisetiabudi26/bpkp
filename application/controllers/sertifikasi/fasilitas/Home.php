@@ -24,8 +24,8 @@ class Home extends CI_Controller {
 				$data['content_page']='fasilitas/homepage.php';
 				$data['username']=$username;
 
-				$data['validators']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),1);
-					$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('logged_in'),2);
+				$data['validators']=$this->pengusul->datalistValidator($this->session->userdata('nip'),1);
+					$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('nip'),2);
 				getMenuAccessPage($data, $fk_lookup_menu);
 			}else{
 				redirect('/');
@@ -74,7 +74,7 @@ class Home extends CI_Controller {
 		//  echo json_encode($output);
     // }
     public function loadData($obj,$type){
-		  	$username = $this->session->userdata('logged_in');
+		  	$username = $this->session->userdata('nip');
 
         $datas=$this->pengusul->loadValidasi($username,$type,$obj);
          $data = array();

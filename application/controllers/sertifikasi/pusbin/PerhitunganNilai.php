@@ -146,7 +146,7 @@ class PerhitunganNilai extends CI_Controller {
       				 			'URAIAN' => $uraian,
       				 			'FK_PROVINSI' => $provinsi,
 										'PASS_GRADE' => $pass_grade,
-      				 			'CREATED_BY' => $this->session->userdata('logged_in'),
+      				 			'CREATED_BY' => $this->session->userdata('nip'),
       							'CREATED_DATE' => $datex
       				 		);
       						$insert=$this->event->save($data);
@@ -176,7 +176,7 @@ class PerhitunganNilai extends CI_Controller {
                     'KELAS' => $kelas,
                     'FK_JADWAL' => $jadwal,
                     'REFF' => $reff,
-                    'CREATED_BY' => $this->session->userdata('logged_in'),
+                    'CREATED_BY' => $this->session->userdata('nip'),
                     'CREATED_DATE' => $datex
                   );
                   $insert=$this->batch->save($data);
@@ -702,7 +702,7 @@ class PerhitunganNilai extends CI_Controller {
 						'KODE_UNIT'=>$row[6],
 						'KODE_SOAL'=>$row[2],
 						'TGL_UJIAN'=>$row[3],
-						'CREATED_BY' =>  $this->session->userdata('logged_in'),
+						'CREATED_BY' =>  $this->session->userdata('nip'),
 						'CREATED_DATE' => $datex,
 					);
 					$insertmulti=$this->jawaban->addSoal($data);
