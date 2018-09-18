@@ -19,11 +19,13 @@ class Home extends CI_Controller {
     {
       $fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
       $username = $this->session->userdata('logged_in');
+			$nip = $this->session->userdata('nip');
 
       if(isset($fk_lookup_menu) && isset($username)){
         $data['title_page'] = 'BPKP Web Application';
         $data['content_page']='unit_apip/homepage.php';
         $data['username']=$username;
+				$data['nip']=$nip;
 
 				getMenuAccessPage($data, $fk_lookup_menu);
       }else{

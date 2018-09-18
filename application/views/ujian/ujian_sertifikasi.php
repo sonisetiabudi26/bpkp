@@ -2,7 +2,7 @@
 <div class="right_col" role="main">
 <div class="col-lg-12" id="countdown"></div>
 <div class="col-lg-12" id="ujian">
-<form>
+<form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/upload_submit"; ?>')"  enctype="multipart/form-data" method="POST" id="daftar_pengusulan">
 	<div class="outer-container" style="padding:10px 0px 0px 0px !important">
 		<div class="col-lg-12" style="font-weight:1000;">
 	<b class="badge date-header" >Waktu Mulai : <?php echo $start_time ;?></b>
@@ -60,7 +60,11 @@
 				endforeach;
 			?>
 </div>
+<div style="width: 100%;height:50px;padding:5px;background : rgba(255, 255, 255, 0.7);">
+	<button class="btn btn-primary" style="float:right;">Selesaikan Ujian</button>
+</div>
 		</div>
+
 		</form>
 	</div>
 

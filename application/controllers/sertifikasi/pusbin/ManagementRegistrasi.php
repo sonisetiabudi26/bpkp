@@ -192,13 +192,12 @@ class ManagementRegistrasi extends CI_Controller {
 			$CATEGORY=$this->input->post('category');
 			$START_DATE=$this->input->post('start_date');
 			$END_DATE=$this->input->post('end_date');
-			$PASS_GRADE=$this->input->post('pass_grade');
+			// $PASS_GRADE=$this->input->post('pass_grade');
 			if($PK_JADWAL_UJIAN!='' && $CATEGORY!=''){
 				$data_where = array('PK_JADWAL_UJIAN' =>$PK_JADWAL_UJIAN );
 				$data_update = array('CATEGORY' => $CATEGORY,
 			 										'START_DATE' => $START_DATE,
-													'END_DATE' => $END_DATE,
-												'PASS_GRADE' => $PASS_GRADE);
+													'END_DATE' => $END_DATE);
 				$update=$this->jadwal->updateData($data_where,$data_update);
 				if($update=='success'){
 					print json_encode(array("status"=>"success", "msg"=>"Data berhasil disimpan"));
@@ -211,12 +210,12 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 
 		public function tambah(){
-		if(!empty($this->input->post('category')) && !empty($this->input->post('pass_grade'))){
+		if(!empty($this->input->post('category')))){
 			$data = array(
 				'category' => $this->input->post('category'),
 				'start_date' => $this->input->post('start_date'),
 				'end_date' => $this->input->post('end_date'),
-				'pass_grade' => $this->input->post('pass_grade')
+
 			);
 			$insert=$this->jadwal->insert_multiple($data);
 			if($insert=='Data Inserted Successfully'){
@@ -225,7 +224,7 @@ class ManagementRegistrasi extends CI_Controller {
 				print json_encode(array("status"=>"error", "msg"=>$insert));
 			}
 		}else{
-			print json_encode(array("status"=>"error", "msg"=>"category dan Passing grade harus diisi"));
+			print json_encode(array("status"=>"error", "msg"=>"category harus diisi"));
 		}
 		}
 }

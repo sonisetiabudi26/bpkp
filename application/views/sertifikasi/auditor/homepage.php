@@ -131,9 +131,15 @@ function load(){
 			success : function(data){
 				if(!data.msg){
 						data.forEach(function(resp) {
-							var file_img="./uploads/"+resp.DOC_FOTO;
-							var image='<?php echo base_url("'+file_img+'")?>';
-							var img='<img src="'+image+'" class="img-circle profile_img">';
+							if(resp.DOC_NAMA=='doc_foto'){
+								var file_img="./uploads/"+resp.DOCUMENT;
+									var image='<?php echo base_url("'+file_img+'")?>';
+							}else{
+								var image='<?php echo base_url('assets/img/content/user.png') ?>';
+							}
+
+
+							var img='<img src="'+image+'" class="img-circle profile_img" style="height:100%;width:100%">';
 							var data='<div class="row">'+
 													'<h3>TERDAFTAR TANGGAL '+resp.START_DATE+' - '+resp.END_DATE+'</h3>'+
 													'<h3>Setelah di setujui dari UNIT APIP</h3>'+
@@ -175,6 +181,20 @@ function load(){
 
 	});
 	search();
+}
+function cetak(){
+var nip='<?php echo $nip ?>';
+	$.ajax({
+			type  : 'ajax',
+			url   :  "<?php echo base_url('sertifikasi/unit_apip/home/print_kartu/')?>"+nip,
+			async : false,
+			dataType : 'json',
+			success : function(data){
+
+			}
+
+	});
+	//swal('Under Maintenance','','warning');
 }
 </script>
 <!-- <div class="row">
