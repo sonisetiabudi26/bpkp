@@ -118,7 +118,7 @@ class RegisUjian extends My_Model
 	 return $query->result();
  }
 	public function load($userAdmin){
-		$condition = "CREATED_AT =" . "'" . $userAdmin . "' and flag=0";
+		$condition = "CREATED_BY =" . "'" . $userAdmin . "' and flag=0";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.PK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
@@ -178,10 +178,10 @@ class RegisUjian extends My_Model
 	}
 	public function loadDatabyNIP2($NIP){
 		$condition = "registrasi_ujian.CREATED_BY =" . "'" . $NIP . "' and flag=1";
-		$this->db->select('*');
+		$this->db->select('registrasi_ujian.*,jenjang.NAMA_JENJANG,jadwal_ujian.CATEGORY');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
-		$this->db->join('dokumen_registrasi_ujian', 'dokumen_registrasi_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
+		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 		$this->db->where($condition);
 		$query = $this->db->get();
 
