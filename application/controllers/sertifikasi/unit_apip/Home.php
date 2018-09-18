@@ -25,7 +25,7 @@ class Home extends CI_Controller {
         $data['title_page'] = 'BPKP Web Application';
         $data['content_page']='unit_apip/homepage.php';
         $data['username']=$username;
-			
+
 
 				getMenuAccessPage($data, $fk_lookup_menu);
       }else{
@@ -85,7 +85,8 @@ class Home extends CI_Controller {
       return $jsonResult;
     }
 		public function loadData(){
-			$datas=$this->regisujian->loadUjian();
+			$nip = $this->session->userdata('nip');
+			$datas=$this->regisujian->loadDatabyNIP($nip);
 			$data = array();
 			//$no = $_POST['start'];
 			$a=1;

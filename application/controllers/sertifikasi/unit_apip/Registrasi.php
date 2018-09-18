@@ -86,7 +86,7 @@ class Registrasi extends CI_Controller {
 
 		 public function loadData(){
 			 $dataRow=array();
-			  $userAdmin=$this->session->userdata('logged_in');
+			  $userAdmin=$this->session->userdata('nip');
 			 	$datas=$this->regis->loaddatabyuser($userAdmin);
 				foreach ($datas as $key ) {
 				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN);
@@ -102,7 +102,6 @@ class Registrasi extends CI_Controller {
 		 public function add_data(){
     	 $date = date('Ymd');
 			 $datex=date('Y-m-d');
-
 				 $nip=$this->input->post('nip');
 				 $dataCheckPeserta=$this->regis->loadbyNIP($nip,'0');
 				 $apiuser=$this->apiuser($nip);
@@ -141,7 +140,7 @@ class Registrasi extends CI_Controller {
 					 			'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
 					 			'NILAI_KSP' => $this->input->post('nilai_ksp'),
 					 			'PINDAH_BERKAS' => $pindah_berkas,
-					 			'CREATED_BY' => $this->session->userdata('logged_in'),
+					 			'CREATED_BY' => $this->session->userdata('nip'),
 								'CREATED_DATE' => $datex,
 								'PROVINSI' => $provinsiId,
 								'FLAG' => '0'
@@ -259,7 +258,7 @@ class Registrasi extends CI_Controller {
 						 $data = array(
 				 			'GROUP_REGIS' => $group_regis,
 						  'DOKUMEN' => $doc_persetujuan,
-				 			'CREATED_BY' => $this->session->userdata('logged_in'),
+				 			'CREATED_BY' => $this->session->userdata('nip'),
 							'CREATED_DATE' => $datex
 				 		);
 						$update=$this->regis->updateData($group_regis);
@@ -282,7 +281,7 @@ class Registrasi extends CI_Controller {
 									$data_insert = array('FK_REGIS_UJIAN' => $key->PK_REGIS_UJIAN,
 																				'FK_MATA_AJAR'=>$key->PK_MATA_AJAR,
 																				'NILAI_KSP'=>$key->NILAI_KSP,
-																				'CREATED_BY' => $this->session->userdata('logged_in'),
+																				'CREATED_BY' => $this->session->userdata('nip'),
 																				'CREATED_DATE' => $datex);
 										$inser_lookup=$this->lookup_ujian->save($data_insert);
 								}

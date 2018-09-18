@@ -15,7 +15,7 @@
 					<?php
 						foreach ($soal as $key=>$soal_ujian):
 					?>
-				  <button type="button" onclick="pindahPage('<?php echo $key+1;?>');" class="btn btn-primary col-lg-1"><?php echo $key+1;?> <i class="fa fa-check" id="check<?php echo $key+1;?>" style="visibility: hidden;color:yellow"></i></button>
+				  <button type="button" onclick="pindahPage('<?php echo $key+1;?>');" class="btn btn-primary col-lg-1"><?php echo $key+1;?> <i class="fa fa-check" id="check<?php echo $key+1;?>" style="visibility: hidden;color:yellow"></i><i class="fa fa-flag" id="flag<?php echo $key+1;?>" style="visibility: hidden;color:#fff"></i></button>
 					<?php
 						endforeach;
 					?>
@@ -36,6 +36,7 @@
 						echo "<h4 class='container bg-warning' style='border-radius:5px;padding:3px;padding-left:10px;'>".$soal_ujian[6]."</h4>";
 					}else{
 						echo "<h4 class='badge'>Type Soal : Soal Biasa</h4>";
+						echo "<h4>No ".($key+1)."</h4>";
 					}
 				?>
 				</div>
@@ -52,6 +53,10 @@
 					</p>
 					<p>
 						<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" /> D. <?php echo $soal_ujian[3]['PILIHAN']['descr'];?>
+					</p>
+					<br/>
+					<p>
+						<input id="<?php echo $key+1;?>" type="checkbox" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" />Tandai jika anda belum yakin
 					</p>
 				</div>
 			</div>
@@ -79,6 +84,10 @@ function pindahPage(obj){
 $('input[type=radio]').change( function() {
 	var id=$(this).attr('id');
 	$('#check'+id).css('visibility', 'visible');
+});
+$('input[type=checkbox]').change( function() {
+	var id=$(this).attr('id');
+	$('#flag'+id).css('visibility', 'visible');
 });
 // 	//alert($(this).data('id'));
 // 	var i = myarray.indexOf($(this).data('id'));
