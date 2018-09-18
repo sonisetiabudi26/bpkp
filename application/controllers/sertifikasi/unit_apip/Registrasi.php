@@ -244,7 +244,7 @@ class Registrasi extends CI_Controller {
 			 $timex= date('His');
 			 $datex=date('Y-m-d');
 
-					 $admin=$this->session->userdata('logged_in');
+					 $admin=$this->session->userdata('nip');
 					 $group_regis=$this->session->userdata('kodeunitkerja').'_'.$dates;
 					 $update=$this->regis->updateDataRegis($group_regis,$admin);
 
