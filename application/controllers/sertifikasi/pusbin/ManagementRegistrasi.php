@@ -210,7 +210,7 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 
 		public function tambah(){
-		if(!empty($this->input->post('category')))){
+		if(!empty($this->input->post('category'))){
 			$data = array(
 				'category' => $this->input->post('category'),
 				'start_date' => $this->input->post('start_date'),

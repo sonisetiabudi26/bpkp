@@ -15,18 +15,13 @@ class Home extends CI_Controller {
 	{
 		$fk_lookup_menu = $this->session->userdata('fk_lookup_menu');
 		$username = $this->session->userdata('logged_in');
+		$nip = $this->session->userdata('nip');
 		/** check session */
 		if(isset($fk_lookup_menu) && isset($username)){
 
 			$data['title_page'] = 'BPKP Web Application';
 			$data['content_page']='auditor/homepage.php';
-
-			// if($this->regis->loadDatabyNIP($NIP)!='no data'){
-			// 		$data['data_ujian']=$this->regis->loadDatabyNIP($NIP);
-			// }else{
-			// 	$data['data_ujian']='';
-			// }
-
+			$data['nip']=$nip;
 			$data['username']=$username;
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{

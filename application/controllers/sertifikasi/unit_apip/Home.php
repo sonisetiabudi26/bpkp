@@ -25,7 +25,7 @@ class Home extends CI_Controller {
         $data['title_page'] = 'BPKP Web Application';
         $data['content_page']='unit_apip/homepage.php';
         $data['username']=$username;
-				$data['nip']=$nip;
+			
 
 				getMenuAccessPage($data, $fk_lookup_menu);
       }else{

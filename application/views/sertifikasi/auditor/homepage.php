@@ -121,7 +121,6 @@ function search(){
 }
 load();
 function load(){
-
 	 //var nip=$( "#nip" ).val();
 	$.ajax({
 			type  : 'ajax',
@@ -145,7 +144,7 @@ function load(){
 													'<h3>Setelah di setujui dari UNIT APIP</h3>'+
 												'</div>'+
 												'<div class="row">'+
-													'<a><i class="fa fa-print"></i> Cetak kartu ujian</a>'+
+													'<a href="<?php echo base_url('sertifikasi')."/unit_apip/home/print_kartu/"?>'+resp.PK_REGIS_UJIAN+'"><i class="fa fa-print"></i> Cetak kartu ujian</a>'+
 												'</div>';
 							$('#kartu_auditor').html(data);
 							$('#foto').html(img);
