@@ -177,7 +177,7 @@ class RegisUjian extends My_Model
 
 	}
 	public function loadDatabyNIP2($NIP){
-		$condition = "NIP =" . "'" . $NIP . "' and flag=1";
+		$condition = "CREATED_BY =" . "'" . $NIP . "' and flag=1";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
@@ -186,7 +186,7 @@ class RegisUjian extends My_Model
 		$query = $this->db->get();
 
 			return $query->result();
-	
+
 
 	}
 	public function updateData($group_regis){
