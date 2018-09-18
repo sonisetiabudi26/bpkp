@@ -86,7 +86,7 @@ class Home extends CI_Controller {
     }
 		public function loadData(){
 			$nip = $this->session->userdata('nip');
-			$datas=$this->regisujian->loadDatabyNIP($nip);
+			$datas=$this->regisujian->loadDatabyNIP2($nip);
 			$data = array();
 			//$no = $_POST['start'];
 			$a=1;
