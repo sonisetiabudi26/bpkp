@@ -45,8 +45,9 @@ class UjianSertifikasi extends CI_Controller{
 			$dataconfig=$this->konfig->getConfig($datajawaban->PIN);
 			$data['start_time']=$dataconfig->START_TIME;
 			$data['end_time']=$dataconfig->END_TIME;
+			$data['jml_soal']=$dataconfig->JUMLAH_SOAL;
 		}
-		$data['soal'] = $this->random_distribusi_ujian($bab_mata_ajar);
+		$data['soal'] = $this->random_distribusi_ujian($bab_mata_ajar,$dataconfig->JUMLAH_SOAL);
 		$data['content_page']='ujian_sertifikasi';
 		$this->load->view('ujian/content', $data);
 		//var_dump($this->random_distribusi_ujian());
@@ -153,11 +154,11 @@ class UjianSertifikasi extends CI_Controller{
 	 }
 	 return $output;
  }
-	public function random_distribusi_ujian($fk_mata_ajar){
+	public function random_distribusi_ujian($fk_mata_ajar,$jml_soal){
 
 
 		$pilihan = 'PILIHAN_';
-		$list = $this->soalujian->_get_ready_soal_ujian($fk_mata_ajar);
+		$list = $this->soalujian->_get_ready_soal_ujian($fk_mata_ajar,$jml_soal);
         $data = array();
         foreach ($list as $soal) {
 			/** Create array untuk menampung data random */

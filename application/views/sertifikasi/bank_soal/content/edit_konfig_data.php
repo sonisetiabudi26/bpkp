@@ -84,6 +84,14 @@
     </div>
   </td>
   </tr>
+  <tr>
+    <td>
+      <div class="form-group">
+        <label>Jumlah Soal :</label>
+        <input type="number" class="form-control text-primary" id="jml_soal" value='<?php echo $jml_soal ?>' name="jml_soal" placeholder="Jumlah Soal" />
+      </div>
+    </td>
+  </tr>
 		<tr>
 			<td>
 				<input id="btn-save-detail" type="submit" value="Ubah Konfig Ujian" class="btn btn-primary"  />

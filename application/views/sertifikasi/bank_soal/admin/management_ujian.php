@@ -39,6 +39,7 @@
                       <th>Pin</th>
                       <th>Jadwal Ujian</th>
 											<th>Lokasi Ujian</th>
+											<th>Jumlah Soal</th>
                       <th>Tindakan</th>
                   </tr>
               </thead>
@@ -84,6 +85,7 @@
                         {"data": "5",width:100},
                         {"data": "6",width:100},
 												{"data": "7",width:100},
+												{"data": "8",width:100},
 			              ],
 
 			          });

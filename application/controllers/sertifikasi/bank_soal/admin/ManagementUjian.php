@@ -44,6 +44,7 @@ class ManagementUjian extends CI_Controller {
 							$rows[] = $row->PIN;
               $rows[] = $row->CATEGORY."(".$row->START_DATE." - ".$row->END_DATE.")";
 							$rows[] = $row->NAMA;
+							$rows[] = $row->JUMLAH_SOAL;
               $rows[] = '<div style="text-align:center;"><a data-var="pk_konfig_ujian" data-id='.$row->PK_KONFIG_UJIAN.' class="btn btn-sm btn-warning" onclick="getModalWithParam(this)" id="btn-edit-konfig"
         data-href="'. base_url('sertifikasi')."/bank_soal/admin/managementujian/vw_edit_konfig".'" data-toggle="modal" data-target="#modal-content"
         ><i class="glyphicon glyphicon-pencil"></i> Edit</a>
@@ -72,6 +73,7 @@ class ManagementUjian extends CI_Controller {
 				$data['jadwal_edit']=$key->PK_JADWAL_UJIAN;
 				$data['lokasi_edit']=$key->PK_PROVINSI;
 				$data['pk_konfig_ujian']=$key->PK_KONFIG_UJIAN;
+				$data['jml_soal']=$key->JUMLAH_SOAL;
 			}
 			$data['jadwal']	= $this->jadwal->_get_jadwal_information($datex);
     	$data['provinsi']	= $this->provinsi->_get_provinsi_information();
@@ -97,10 +99,12 @@ class ManagementUjian extends CI_Controller {
 	public function edit_konfig_ujian(){
 		$waktu_mulai=$this->input->post('waktu_mulai');
 		$waktu_selesai=$this->input->post('waktu_selesai');
+		$jml_soal=$this->input->post('jml_soal');
 		$pk_konfig_ujian=$this->input->post('pk_konfig_ujian');
 		$datakonfig = array(
 		'START_TIME' => $waktu_mulai,
 		'END_TIME' => $waktu_selesai,
+		'JUMLAH_SOAL' => $jml_soal,
 		);
 		$where = array('PK_KONFIG_UJIAN' => $pk_konfig_ujian,);
 		$update=$this->konfig->updateData($where,$datakonfig);
@@ -123,6 +127,7 @@ class ManagementUjian extends CI_Controller {
 			$pass_grade='70';
 			$kelas='Online';
 			$jadwal=$this->input->post('fk_jadwal_ujian');
+			$jml_soal=$this->input->post('jml_soal');
 			$waktu_mulai=$this->input->post('waktu_mulai');
 			$waktu_selesai=$this->input->post('waktu_selesai');
 			$mata_ajar=$this->input->post('fk_mata_ajar');
@@ -153,6 +158,7 @@ class ManagementUjian extends CI_Controller {
  				'PIN' => $this->generatePIN(6),
  				'FK_MATA_AJAR' => $mata_ajar,
 				'FK_EVENT' => $insert,
+				'JUMLAH_SOAL' => $jml_soal,
  				'CREATED_BY' => $this->session->userdata('nip'),
  				'CREATED_DATE' => $datex
  			);
@@ -184,8 +190,6 @@ class ManagementUjian extends CI_Controller {
 		}
 		public function delete($id)
 		{
-
-
 				$this->konfig->delete_by_id($id);
 
 				echo json_encode(array("status" => TRUE));

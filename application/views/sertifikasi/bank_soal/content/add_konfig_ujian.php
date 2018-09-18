@@ -63,7 +63,10 @@
 				?>
 			</select>
 		</div>
-
+    <div class="form-group">
+      <label>Jumlah Soal :</label>
+      <input type="number" class="form-control text-primary" id="jml_soal" name="jml_soal" placeholder="Jumlah Soal" />
+    </div>
 		<input id="btn-add-kode-soal" type="submit" value="Submit" class="btn btn-primary" />
 	</br>
 </form>
