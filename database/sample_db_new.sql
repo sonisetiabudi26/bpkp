@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 17, 2018 at 05:59 AM
+-- Generation Time: Sep 18, 2018 at 06:18 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -132,112 +132,6 @@ CREATE TABLE `detail_jawaban_peserta` (
   `JAWABAN` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_jawaban_peserta`
---
-
-INSERT INTO `detail_jawaban_peserta` (`FK_JAWABAN_DETAIL`, `FK_SOAL_UJIAN`, `NO_UJIAN`, `JAWABAN`) VALUES
-(733, 0, 1, 'B'),
-(733, 0, 2, 'C'),
-(733, 0, 3, 'B'),
-(733, 0, 4, 'C'),
-(733, 0, 5, 'B'),
-(733, 0, 6, 'B'),
-(733, 0, 7, 'D'),
-(733, 0, 8, 'B'),
-(733, 0, 9, 'D'),
-(733, 0, 10, 'A'),
-(733, 0, 11, 'C'),
-(733, 0, 12, 'B'),
-(733, 0, 13, 'B'),
-(733, 0, 14, 'C'),
-(733, 0, 15, 'A'),
-(733, 0, 16, 'B'),
-(733, 0, 17, 'B'),
-(733, 0, 18, 'C'),
-(733, 0, 19, 'A'),
-(733, 0, 20, 'B'),
-(733, 0, 21, 'C'),
-(733, 0, 22, 'C'),
-(733, 0, 23, 'B'),
-(733, 0, 24, 'A'),
-(733, 0, 25, 'A'),
-(733, 0, 26, 'B'),
-(733, 0, 27, 'C'),
-(733, 0, 28, 'A'),
-(733, 0, 29, 'C'),
-(733, 0, 30, 'A'),
-(733, 0, 31, ''),
-(733, 0, 32, ''),
-(733, 0, 33, ''),
-(733, 0, 34, ''),
-(733, 0, 35, ''),
-(733, 0, 36, ''),
-(733, 0, 37, ''),
-(733, 0, 38, ''),
-(733, 0, 39, ''),
-(733, 0, 40, ''),
-(733, 0, 41, ''),
-(733, 0, 42, ''),
-(733, 0, 43, ''),
-(733, 0, 44, ''),
-(733, 0, 45, ''),
-(733, 0, 46, ''),
-(733, 0, 47, ''),
-(733, 0, 48, ''),
-(733, 0, 49, ''),
-(733, 0, 50, ''),
-(734, 0, 1, 'C'),
-(734, 0, 2, 'A'),
-(734, 0, 3, 'A'),
-(734, 0, 4, 'A'),
-(734, 0, 5, 'D'),
-(734, 0, 6, 'C'),
-(734, 0, 7, 'B'),
-(734, 0, 8, 'A'),
-(734, 0, 9, 'B'),
-(734, 0, 10, 'A'),
-(734, 0, 11, 'D'),
-(734, 0, 12, 'A'),
-(734, 0, 13, 'D'),
-(734, 0, 14, 'C'),
-(734, 0, 15, 'C'),
-(734, 0, 16, 'B'),
-(734, 0, 17, 'A'),
-(734, 0, 18, 'A'),
-(734, 0, 19, 'B'),
-(734, 0, 20, 'B'),
-(734, 0, 21, 'C'),
-(734, 0, 22, 'C'),
-(734, 0, 23, 'D'),
-(734, 0, 24, 'A'),
-(734, 0, 25, 'C'),
-(734, 0, 26, 'D'),
-(734, 0, 27, 'D'),
-(734, 0, 28, 'B'),
-(734, 0, 29, 'A'),
-(734, 0, 30, 'A'),
-(734, 0, 31, ''),
-(734, 0, 32, ''),
-(734, 0, 33, ''),
-(734, 0, 34, ''),
-(734, 0, 35, ''),
-(734, 0, 36, ''),
-(734, 0, 37, ''),
-(734, 0, 38, ''),
-(734, 0, 39, ''),
-(734, 0, 40, ''),
-(734, 0, 41, ''),
-(734, 0, 42, ''),
-(734, 0, 43, ''),
-(734, 0, 44, ''),
-(734, 0, 45, ''),
-(734, 0, 46, ''),
-(734, 0, 47, ''),
-(734, 0, 48, ''),
-(734, 0, 49, ''),
-(734, 0, 50, '');
-
 -- --------------------------------------------------------
 
 --
@@ -246,20 +140,11 @@ INSERT INTO `detail_jawaban_peserta` (`FK_JAWABAN_DETAIL`, `FK_SOAL_UJIAN`, `NO_
 
 CREATE TABLE `detail_nilai_wi` (
   `PK_DETAIL_NILAI_WI` int(15) NOT NULL,
-  `FK_WIDYAISWARA_NILAI` varchar(150) NOT NULL,
+  `FK_WIDYAISWARA_NILAI` int(150) NOT NULL,
   `NILAI_1` int(11) NOT NULL,
   `NILAI_2` int(11) NOT NULL,
   `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_nilai_wi`
---
-
-INSERT INTO `detail_nilai_wi` (`PK_DETAIL_NILAI_WI`, `FK_WIDYAISWARA_NILAI`, `NILAI_1`, `NILAI_2`, `flag`) VALUES
-(29, '25', 99, 90, 1),
-(30, '26', 50, 30, 1),
-(31, '29', 90, 55, 1);
 
 -- --------------------------------------------------------
 
@@ -274,32 +159,6 @@ CREATE TABLE `detail_permintaan_soal` (
   `PETUGAS` varchar(100) NOT NULL,
   `COMMENT` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_permintaan_soal`
---
-
-INSERT INTO `detail_permintaan_soal` (`PK_DETAIL_PERMINTAAN_SOAL`, `FK_PERMINTAAN_SOAL`, `TUGAS`, `PETUGAS`, `COMMENT`) VALUES
-(37, 25, 'pembuat_soal', 'pembuat_soal', ''),
-(38, 25, 'review1', 'review2', ''),
-(39, 25, 'review2', 'review2', ''),
-(40, 25, 'review3', 'subid', 'aman'),
-(41, 25, 'review4', 'kapus', 'oke\r\n'),
-(42, 26, 'pembuat_soal', 'pembuat_soal', ''),
-(43, 26, 'review1', 'review2', ''),
-(44, 26, 'review2', 'review2', ''),
-(45, 26, 'review3', 'subid', ''),
-(46, 26, 'review4', 'kapus', ''),
-(47, 27, 'pembuat_soal', 'pembuat_soal', ''),
-(48, 27, 'review1', 'review1', ''),
-(49, 27, 'review2', 'review2', 'tjakep'),
-(50, 27, 'review3', 'subid', 'ke3'),
-(51, 27, 'review4', 'kapus', 'oke'),
-(52, 28, 'pembuat_soal', 'pembuat_soal', ''),
-(53, 28, 'review1', 'review1', 'nomor satu terlalu mudah'),
-(54, 28, 'review2', 'review2', 'iya nomer satu tolong dirubah'),
-(55, 28, 'review3', 'subid', 'lanjut'),
-(56, 28, 'review4', 'kapus', 'lanjutkan');
 
 -- --------------------------------------------------------
 
@@ -318,44 +177,6 @@ CREATE TABLE `document_pengusulan_pengangkatan` (
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `document_pengusulan_pengangkatan`
---
-
-INSERT INTO `document_pengusulan_pengangkatan` (`PK_DOC_PENGUSULAN_PENGANGKATAN`, `STATUS_DOC`, `CATEGORY_DOC`, `DOC_PENGUSULAN_PENGANGKATAN`, `DATA_DOC`, `FK_PENGUSUL_PENGANGKATAN`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(19, '', '1', 'doc_cpns', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(20, '', '1', 'doc_pns', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(21, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(22, '', '1', 'doc_prajab', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(23, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(24, '', '1', 'doc_skp', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(25, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(26, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_1110/pdf.pdf', 33, '1110', '2018-08-22'),
-(27, '', '1', 'doc_cpns', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(28, '', '1', 'doc_pns', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(29, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(30, '', '1', 'doc_prajab', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(31, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(32, '', '1', 'doc_skp', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(33, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(34, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_199909092009101025/pdf.pdf', 34, '1110', '2018-08-24'),
-(35, '', '1', 'doc_cpns', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(36, '', '1', 'doc_pns', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(37, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(38, '', '1', 'doc_prajab', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(39, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(40, '', '1', 'doc_skp', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(41, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(42, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_1110/pdf.pdf', 1, '1110', '2018-09-03'),
-(43, '', '1', 'doc_cpns', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(44, '', '1', 'doc_pns', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(45, '', '1', 'doc_ijazah', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(46, '', '1', 'doc_prajab', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(47, '', '1', 'doc_sk_diklat', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(48, '', '1', 'doc_skp', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(49, '', '1', 'doc_sk_lulus', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14'),
-(50, '', '1', 'doc_penugasan', 'doc_pengangkatan/1_196709271988031001/pdf (2).pdf', 2, '1110', '2018-09-14');
-
 -- --------------------------------------------------------
 
 --
@@ -370,27 +191,6 @@ CREATE TABLE `dokumen_persetujuan` (
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `dokumen_persetujuan`
---
-
-INSERT INTO `dokumen_persetujuan` (`PK_PERSETUJUAN`, `GROUP_REGIS`, `DOKUMEN`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(15, '07001500103500_180822203622', 'doc_setuju/07001500103500_180822203622_180822203622/pdf.pdf', 'Test Admin', '2018-08-22'),
-(16, '07001500103500_180829212038', 'doc_setuju/07001500103500_180829212038_180829212038/pdf.pdf', 'Test Admin', '2018-08-29'),
-(17, '07001500103500_180829212239', 'doc_setuju/07001500103500_180829212239_180829212239/pdf.pdf', 'Test Admin', '2018-08-29'),
-(18, '07001500103500_180829212359', 'doc_setuju/07001500103500_180829212359_180829212359/pdf.pdf', 'Test Admin', '2018-08-29'),
-(19, '07001500103500_180829233551', 'doc_setuju/07001500103500_180829233551_180829233551/kartu_ujian_22 (2).pdf', 'Test Admin', '2018-08-29'),
-(20, '07001500103500_180830175843', 'doc_setuju/07001500103500_180830175843_180830175843/kartu_ujian_22 (4).pdf', 'Test Admin', '2018-08-30'),
-(21, '07001500103500_180830180241', 'doc_setuju/07001500103500_180830180241_180830180241/kartu_ujian_22 (4).pdf', 'Test Admin', '2018-08-30'),
-(22, '07001500103500_180830180809', 'doc_setuju/07001500103500_180830180809_180830180809/kartu_ujian_22 (5).pdf', 'Test Admin', '2018-08-30'),
-(23, '07001500103500_180830180923', 'doc_setuju/07001500103500_180830180923_180830180923/kartu_ujian_22 (5).pdf', 'Test Admin', '2018-08-30'),
-(24, '07001500103500_180830181344', 'doc_setuju/07001500103500_180830181344_180830181344/kartu_ujian_22 (6).pdf', 'Test Admin', '2018-08-30'),
-(25, '07001500103500_180830190904', 'doc_setuju/07001500103500_180830190904_180830190904/pdf.pdf', 'Test Admin', '2018-08-30'),
-(26, '07001500103500_180830191555', 'doc_setuju/07001500103500_180830191555_180830191555/pdf.pdf', 'Test Admin', '2018-08-30'),
-(27, '07001500103500_180912144830', 'doc_setuju/07001500103500_180912144830_180912144830/soal_permintaan_26.pdf', 'Test Admin', '2018-09-12'),
-(28, '07001500103500_180914145419', 'doc_setuju/07001500103500_180914145419_180914145419/pdf (2).pdf', 'Test Admin', '2018-09-14'),
-(29, '07001500103500_180916145155', 'doc_setuju/07001500103500_180916145155_180916145155/pdf.pdf', 'Test Admin', '2018-09-16');
-
 -- --------------------------------------------------------
 
 --
@@ -403,18 +203,6 @@ CREATE TABLE `dokumen_registrasi_ujian` (
   `DOCUMENT` text NOT NULL,
   `DOC_NAMA` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `dokumen_registrasi_ujian`
---
-
-INSERT INTO `dokumen_registrasi_ujian` (`PK_DOC_REGIS`, `FK_REGIS_UJIAN`, `DOCUMENT`, `DOC_NAMA`) VALUES
-(11, 12, 'doc_registrasi/195301291982031001_20180912/soal_permintaan (22).pdf', 'doc_ksp'),
-(12, 12, 'doc_registrasi/195301291982031001_20180912/1.jpg', 'doc_foto'),
-(13, 13, 'doc_registrasi/195212211978031001_20180914/pdf (2).pdf', 'doc_ksp'),
-(14, 13, 'doc_registrasi/195212211978031001_20180914/357515.jpg', 'doc_foto'),
-(15, 14, 'doc_registrasi/195301291982031001_20180916/pdf.pdf', 'doc_ksp'),
-(16, 14, 'doc_registrasi/195301291982031001_20180916/184506.jpg', 'doc_foto');
 
 -- --------------------------------------------------------
 
@@ -476,7 +264,7 @@ INSERT INTO `jadwal_ujian` (`PK_JADWAL_UJIAN`, `CATEGORY`, `START_DATE`, `END_DA
 
 CREATE TABLE `jawaban_peserta` (
   `PK_JAWABAN_DETAIL` int(11) NOT NULL,
-  `FK_EVENT` varchar(100) NOT NULL,
+  `FK_EVENT` int(100) NOT NULL,
   `KODE_PESERTA` varchar(100) NOT NULL,
   `TGL_UJIAN` date NOT NULL,
   `KODE_SOAL` varchar(100) NOT NULL,
@@ -487,15 +275,6 @@ CREATE TABLE `jawaban_peserta` (
   `CREATED_BY` varchar(100) NOT NULL,
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jawaban_peserta`
---
-
-INSERT INTO `jawaban_peserta` (`PK_JAWABAN_DETAIL`, `FK_EVENT`, `KODE_PESERTA`, `TGL_UJIAN`, `KODE_SOAL`, `KODE_UNIT`, `KELAS`, `Nilai`, `PIN`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(733, '10', '199503252018011001', '2010-04-18', '14401', '0105120702', 'asd', '40', '', 'Pusbin Budianto', '2018-09-14'),
-(734, '10', '199510312018011001', '2010-04-18', '14401', '0105120702', 'asd', '10', '', 'Pusbin Budianto', '2018-09-14'),
-(737, '25', '195301291982031001', '2018-09-17', '', '07001500103500', 'Online', '', '118563', '195301291982031001', '2018-09-17');
 
 -- --------------------------------------------------------
 
@@ -601,7 +380,7 @@ INSERT INTO `jenjang` (`PK_JENJANG`, `KODE_DIKLAT`, `NAMA_JENJANG`, `KURIKULUM`,
 CREATE TABLE `kode_soal` (
   `PK_KODE_SOAL` int(11) NOT NULL,
   `KODE_SOAL` varchar(150) NOT NULL,
-  `FK_MATA_AJAR` varchar(100) NOT NULL,
+  `FK_MATA_AJAR` int(11) NOT NULL,
   `KEBUTUHAN_SOAL` int(11) NOT NULL,
   `PUBLISH` int(11) NOT NULL,
   `CREATED_BY` varchar(100) NOT NULL,
@@ -613,8 +392,8 @@ CREATE TABLE `kode_soal` (
 --
 
 INSERT INTO `kode_soal` (`PK_KODE_SOAL`, `KODE_SOAL`, `FK_MATA_AJAR`, `KEBUTUHAN_SOAL`, `PUBLISH`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(12, '14401', '13', 30, 1, 'admin_bank', '2018-09-14 00:00:00'),
-(17, '14402', '13', 60, 0, 'admin_bank', '2018-09-14 00:00:00');
+(12, '14401', 13, 30, 1, 'admin_bank', '2018-09-14 00:00:00'),
+(17, '14402', 13, 60, 0, 'admin_bank', '2018-09-14 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -629,6 +408,7 @@ CREATE TABLE `konfigurasi_ujian` (
   `PIN` varchar(50) NOT NULL,
   `FK_MATA_AJAR` int(11) NOT NULL,
   `FK_EVENT` int(11) NOT NULL,
+  `JUMLAH_SOAL` int(11) NOT NULL,
   `CREATED_BY` varchar(100) NOT NULL,
   `CREATED_DATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -637,9 +417,9 @@ CREATE TABLE `konfigurasi_ujian` (
 -- Dumping data for table `konfigurasi_ujian`
 --
 
-INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(6, '00:12:00', '20:12:00', '795984', 12, 24, 'admin_bank', '2018-09-15 00:00:00'),
-(7, '00:34:00', '07:11:00', '118563', 13, 25, 'admin_bank', '2018-09-16 00:00:00');
+INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `JUMLAH_SOAL`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(6, '00:12:00', '20:12:00', '795984', 12, 24, 60, 'admin_bank', '2018-09-15 00:00:00'),
+(7, '00:34:00', '07:11:00', '118563', 13, 25, 10, 'admin_bank', '2018-09-16 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -731,37 +511,12 @@ CREATE TABLE `lookup_ujian` (
   `FK_JAWABAN_DETAIL` int(11) NOT NULL,
   `HASIL_UJIAN` float NOT NULL,
   `NILAI_KSP` int(11) NOT NULL,
+  `NILAI_TOTAL` int(11) NOT NULL,
+  `STATUS` varchar(15) NOT NULL,
   `CREATED_BY` varchar(150) NOT NULL,
   `CREATED_DATE` date NOT NULL,
   `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `lookup_ujian`
---
-
-INSERT INTO `lookup_ujian` (`PK_LOOKUP_REGIS`, `FK_REGIS_UJIAN`, `FK_MATA_AJAR`, `FK_JAWABAN_DETAIL`, `HASIL_UJIAN`, `NILAI_KSP`, `CREATED_BY`, `CREATED_DATE`, `flag`) VALUES
-(31, 12, 17, 0, 0, 56, '', '0000-00-00', 0),
-(32, 13, 12, 0, 0, 90, '', '0000-00-00', 0),
-(33, 12, 18, 0, 0, 56, '', '0000-00-00', 0),
-(34, 12, 16, 0, 0, 56, '', '0000-00-00', 0),
-(35, 12, 13, 733, 40, 56, '', '0000-00-00', 1),
-(36, 12, 12, 0, 0, 56, '', '0000-00-00', 0),
-(37, 13, 13, 734, 10, 90, '', '0000-00-00', 1),
-(38, 13, 14, 0, 0, 90, '', '0000-00-00', 0),
-(39, 13, 15, 0, 0, 90, '', '0000-00-00', 0),
-(40, 13, 16, 0, 0, 90, '', '0000-00-00', 0),
-(41, 13, 17, 0, 0, 90, '', '0000-00-00', 0),
-(42, 13, 18, 0, 0, 90, '', '0000-00-00', 0),
-(43, 12, 14, 0, 0, 56, '', '0000-00-00', 0),
-(44, 12, 15, 0, 0, 56, '', '0000-00-00', 0),
-(45, 14, 12, 0, 0, 90, 'Test Admin', '2018-09-16', 0),
-(46, 14, 13, 737, 0, 90, 'Test Admin', '2018-09-16', 0),
-(47, 14, 14, 0, 0, 90, 'Test Admin', '2018-09-16', 0),
-(48, 14, 15, 0, 0, 90, 'Test Admin', '2018-09-16', 0),
-(49, 14, 16, 0, 0, 90, 'Test Admin', '2018-09-16', 0),
-(50, 14, 17, 0, 0, 90, 'Test Admin', '2018-09-16', 0),
-(51, 14, 18, 0, 0, 90, 'Test Admin', '2018-09-16', 0);
 
 -- --------------------------------------------------------
 
@@ -913,8 +668,7 @@ CREATE TABLE `pengusul_pengangkatan` (
 --
 
 INSERT INTO `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`, `NIP`, `DOC_SURAT_PENGUSULAN`, `NO_SURAT`, `FK_STATUS_PENGUSUL_PENGANGKATAN`, `FK_STATUS_DOC`, `RESULT`, `VALIDATOR`, `UNITKERJA`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(1, '1110', 'doc_surat_pengusulan/20180903/20180903_1110/pdf.pdf', '123456', 1, 2, '0', '1110', 'Perwakilan BPKP Provinsi Daerah Khusus Ibukota Jakarta', '1110', '2018-09-03'),
-(2, '196709271988031001', 'doc_surat_pengusulan/20180914/20180914_1110/pdf (2).pdf', '1233', 1, 2, '', '1110', 'Perwakilan BPKP Provinsi Daerah Khusus Ibukota Jakarta', '1110', '2018-09-14');
+(1, '1110', 'doc_surat_pengusulan/20180903/20180903_1110/pdf.pdf', '123456', 1, 2, '0', '1110', 'Perwakilan BPKP Provinsi Daerah Khusus Ibukota Jakarta', '1110', '2018-09-03');
 
 -- --------------------------------------------------------
 
@@ -929,7 +683,6 @@ CREATE TABLE `permintaan_soal` (
   `TANGGAL_PERMINTAAN` date NOT NULL,
   `JUMLAH_SOAL` int(11) NOT NULL,
   `STATUS` varchar(150) NOT NULL,
-  `FK_LOOKUP_STATUS_PERMINTAAN` int(11) NOT NULL,
   `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -937,9 +690,9 @@ CREATE TABLE `permintaan_soal` (
 -- Dumping data for table `permintaan_soal`
 --
 
-INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `STATUS`, `FK_LOOKUP_STATUS_PERMINTAAN`, `flag`) VALUES
-(27, 3, 'Pilihan Ganda', '2018-08-31', 2, 'selesai', 27, 2),
-(28, 3, 'Pilihan Ganda', '2018-09-14', 30, 'selesai', 27, 2);
+INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `STATUS`, `flag`) VALUES
+(27, 3, 'Pilihan Ganda', '2018-08-31', 2, 'selesai', 2),
+(28, 3, 'Pilihan Ganda', '2018-09-14', 30, 'selesai', 2);
 
 -- --------------------------------------------------------
 
@@ -962,14 +715,6 @@ CREATE TABLE `pertek` (
   `CREATED_BY` varchar(150) NOT NULL,
   `CREATED_DATE` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pertek`
---
-
-INSERT INTO `pertek` (`PK_PERTEK`, `NO_SURAT`, `DOC_ANGKA_KREDIT`, `NO_PERTEK`, `DOC_PERTEK`, `PERTEK_DATE`, `NO_RESI`, `YTH`, `TEMPAT`, `KEPALA`, `TEMBUSAN`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(2, '123456', '', '123', 'http://localhost/bpkp/uploads/doc_pertek/pertek_123456.pdf', '2018-09-03', '', 'Soni Setiabudi', 'Bandung', '123', 'nurman,icin', '1110', '2018-09-03 00:00:00'),
-(3, '1233', '', '', '', '0000-00-00', '', '', '', '', '', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1073,7 +818,7 @@ CREATE TABLE `registrasi_ujian` (
   `GROUP_REGIS` varchar(50) NOT NULL,
   `KODE_DIKLAT` int(11) NOT NULL,
   `NIP` varchar(150) NOT NULL,
-  `PROVINSI` varchar(100) NOT NULL,
+  `PROVINSI` int(100) NOT NULL,
   `PINDAH_BERKAS` int(5) NOT NULL,
   `LOKASI_UJIAN` int(10) NOT NULL,
   `FK_JADWAL_UJIAN` int(11) NOT NULL,
@@ -1083,15 +828,6 @@ CREATE TABLE `registrasi_ujian` (
   `CREATED_DATE` date NOT NULL,
   `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `registrasi_ujian`
---
-
-INSERT INTO `registrasi_ujian` (`PK_REGIS_UJIAN`, `GROUP_REGIS`, `KODE_DIKLAT`, `NIP`, `PROVINSI`, `PINDAH_BERKAS`, `LOKASI_UJIAN`, `FK_JADWAL_UJIAN`, `NO_SURAT_UJIAN`, `NILAI_KSP`, `CREATED_BY`, `CREATED_DATE`, `flag`) VALUES
-(12, '07001500103500_180912144830', 2, '199503252018011001', 'unknown', 0, 0, 18, '123', '56', 'Test Admin', '2018-09-12', 1),
-(13, '07001500103500_180914145419', 2, '199510312018011001', 'unknown', 0, 0, 18, '78h8', '90', 'Test Admin', '2018-09-14', 1),
-(14, '07001500103500_180916145155', 2, '195301291982031001', '31', 0, 0, 18, '12', '90', 'Test Admin', '2018-09-16', 1);
 
 -- --------------------------------------------------------
 
@@ -1414,26 +1150,6 @@ CREATE TABLE `widyaiswara_nilai` (
   `CREATED_DATE` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `widyaiswara_nilai`
---
-
-INSERT INTO `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`, `NIP`, `NAMA`, `TGL_RELEASE_MATA_AJAR`, `FK_MATA_AJAR`, `NILAI_1`, `NILAI_2`, `NIP_INSTRUKTUR`, `flag`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(25, '199503252018011001', 'Soni', '2018-09-13', 13, 0, 0, '3', 1, 'Pusbin Budianto', '2018-09-03'),
-(26, '199510312018011001', 'Nurman', '2018-09-13', 13, 0, 0, '3', 1, 'Pusbin Budianto', '2018-09-03'),
-(29, '195301291982031008', 'Icin', '2018-09-10', 28, 0, 0, '3', 1, 'Pusbin Budianto', '2018-09-03');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `wilayah`
---
-
-CREATE TABLE `wilayah` (
-  `PK_WILAYAH` int(11) NOT NULL,
-  `NAMA` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- --------------------------------------------------------
 
 --
@@ -1474,7 +1190,8 @@ ALTER TABLE `bab_mata_ajar`
 --
 ALTER TABLE `batch`
   ADD PRIMARY KEY (`PK_BATCH`),
-  ADD KEY `CN_FK_KODE_EVENT` (`FK_EVENT`) USING BTREE;
+  ADD KEY `CN_FK_KODE_EVENT` (`FK_EVENT`) USING BTREE,
+  ADD KEY `indexing1` (`FK_JADWAL`);
 
 --
 -- Indexes for table `bridge_lookup`
@@ -1486,25 +1203,29 @@ ALTER TABLE `bridge_lookup`
 -- Indexes for table `detail_jawaban_peserta`
 --
 ALTER TABLE `detail_jawaban_peserta`
-  ADD KEY `indexing1` (`FK_JAWABAN_DETAIL`);
+  ADD KEY `indexing1` (`FK_JAWABAN_DETAIL`),
+  ADD KEY `indexing2` (`FK_SOAL_UJIAN`);
 
 --
 -- Indexes for table `detail_nilai_wi`
 --
 ALTER TABLE `detail_nilai_wi`
-  ADD PRIMARY KEY (`PK_DETAIL_NILAI_WI`);
+  ADD PRIMARY KEY (`PK_DETAIL_NILAI_WI`),
+  ADD KEY `indexing1` (`FK_WIDYAISWARA_NILAI`);
 
 --
 -- Indexes for table `detail_permintaan_soal`
 --
 ALTER TABLE `detail_permintaan_soal`
-  ADD PRIMARY KEY (`PK_DETAIL_PERMINTAAN_SOAL`);
+  ADD PRIMARY KEY (`PK_DETAIL_PERMINTAAN_SOAL`),
+  ADD KEY `indexing1` (`FK_PERMINTAAN_SOAL`);
 
 --
 -- Indexes for table `document_pengusulan_pengangkatan`
 --
 ALTER TABLE `document_pengusulan_pengangkatan`
-  ADD PRIMARY KEY (`PK_DOC_PENGUSULAN_PENGANGKATAN`);
+  ADD PRIMARY KEY (`PK_DOC_PENGUSULAN_PENGANGKATAN`),
+  ADD KEY `indexing1` (`FK_PENGUSUL_PENGANGKATAN`);
 
 --
 -- Indexes for table `dokumen_persetujuan`
@@ -1525,13 +1246,15 @@ ALTER TABLE `dokumen_registrasi_ujian`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`PK_EVENT`),
-  ADD KEY `CN_KODE_DIKLAT` (`KODE_DIKLAT`);
+  ADD KEY `CN_KODE_DIKLAT` (`KODE_DIKLAT`),
+  ADD KEY `indexing1` (`FK_PROVINSI`);
 
 --
 -- Indexes for table `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
-  ADD PRIMARY KEY (`PK_JADWAL_UJIAN`);
+  ADD PRIMARY KEY (`PK_JADWAL_UJIAN`),
+  ADD KEY `indexing1` (`START_DATE`);
 
 --
 -- Indexes for table `jawaban_peserta`
@@ -1568,7 +1291,9 @@ ALTER TABLE `kode_soal`
 --
 ALTER TABLE `konfigurasi_ujian`
   ADD PRIMARY KEY (`PK_KONFIG_UJIAN`),
-  ADD UNIQUE KEY `uniq1` (`PIN`);
+  ADD UNIQUE KEY `uniq1` (`PIN`),
+  ADD KEY `indexing1` (`FK_MATA_AJAR`,`FK_EVENT`),
+  ADD KEY `fc_event_config` (`FK_EVENT`);
 
 --
 -- Indexes for table `lookup`
@@ -1580,7 +1305,10 @@ ALTER TABLE `lookup`
 -- Indexes for table `lookup_ujian`
 --
 ALTER TABLE `lookup_ujian`
-  ADD PRIMARY KEY (`PK_LOOKUP_REGIS`);
+  ADD PRIMARY KEY (`PK_LOOKUP_REGIS`),
+  ADD UNIQUE KEY `indexing1` (`FK_REGIS_UJIAN`,`FK_MATA_AJAR`,`FK_JAWABAN_DETAIL`),
+  ADD KEY `fc1` (`FK_JAWABAN_DETAIL`),
+  ADD KEY `fc2` (`FK_MATA_AJAR`);
 
 --
 -- Indexes for table `mata_ajar`
@@ -1607,19 +1335,24 @@ ALTER TABLE `menu_page_detail`
 -- Indexes for table `pengusul_pengangkatan`
 --
 ALTER TABLE `pengusul_pengangkatan`
-  ADD PRIMARY KEY (`PK_PENGUSUL_PENGANGKATAN`);
+  ADD PRIMARY KEY (`PK_PENGUSUL_PENGANGKATAN`),
+  ADD KEY `indexing1` (`FK_STATUS_PENGUSUL_PENGANGKATAN`,`FK_STATUS_DOC`),
+  ADD KEY `doc_status` (`FK_STATUS_DOC`),
+  ADD KEY `indexing2` (`NO_SURAT`);
 
 --
 -- Indexes for table `permintaan_soal`
 --
 ALTER TABLE `permintaan_soal`
-  ADD PRIMARY KEY (`PK_PERMINTAAN_SOAL`);
+  ADD PRIMARY KEY (`PK_PERMINTAAN_SOAL`),
+  ADD KEY `indexing1` (`FK_BAB_MATA_AJAR`);
 
 --
 -- Indexes for table `pertek`
 --
 ALTER TABLE `pertek`
-  ADD PRIMARY KEY (`PK_PERTEK`);
+  ADD PRIMARY KEY (`PK_PERTEK`),
+  ADD KEY `indexing1` (`NO_SURAT`);
 
 --
 -- Indexes for table `pilihan_soal`
@@ -1641,7 +1374,8 @@ ALTER TABLE `registrasi_ujian`
   ADD KEY `KODE_DIKLAT` (`KODE_DIKLAT`),
   ADD KEY `registrasi_ujian_ibfk_2` (`FK_JADWAL_UJIAN`),
   ADD KEY `CN_GROUP_REGIS` (`GROUP_REGIS`),
-  ADD KEY `CN_LOKASI_UJIAN` (`LOKASI_UJIAN`) USING BTREE;
+  ADD KEY `CN_LOKASI_UJIAN` (`LOKASI_UJIAN`) USING BTREE,
+  ADD KEY `provinsi` (`PROVINSI`);
 
 --
 -- Indexes for table `review_soal`
@@ -1694,13 +1428,8 @@ ALTER TABLE `users`
 -- Indexes for table `widyaiswara_nilai`
 --
 ALTER TABLE `widyaiswara_nilai`
-  ADD PRIMARY KEY (`PK_WIDYAISWARA_NILAI`);
-
---
--- Indexes for table `wilayah`
---
-ALTER TABLE `wilayah`
-  ADD PRIMARY KEY (`PK_WILAYAH`);
+  ADD PRIMARY KEY (`PK_WIDYAISWARA_NILAI`),
+  ADD KEY `indexing1` (`FK_MATA_AJAR`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1776,7 +1505,7 @@ ALTER TABLE `jadwal_ujian`
 -- AUTO_INCREMENT for table `jawaban_peserta`
 --
 ALTER TABLE `jawaban_peserta`
-  MODIFY `PK_JAWABAN_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=738;
+  MODIFY `PK_JAWABAN_DETAIL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=739;
 
 --
 -- AUTO_INCREMENT for table `jawaban_peserta_COPY`
@@ -1899,12 +1628,6 @@ ALTER TABLE `widyaiswara_nilai`
   MODIFY `PK_WIDYAISWARA_NILAI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT for table `wilayah`
---
-ALTER TABLE `wilayah`
-  MODIFY `PK_WILAYAH` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Constraints for dumped tables
 --
 
@@ -1912,7 +1635,38 @@ ALTER TABLE `wilayah`
 -- Constraints for table `batch`
 --
 ALTER TABLE `batch`
-  ADD CONSTRAINT `CN_event12` FOREIGN KEY (`FK_EVENT`) REFERENCES `event` (`PK_EVENT`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `CN_event12` FOREIGN KEY (`FK_EVENT`) REFERENCES `event` (`PK_EVENT`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `CN_jadwal` FOREIGN KEY (`FK_JADWAL`) REFERENCES `jadwal_ujian` (`PK_JADWAL_UJIAN`);
+
+--
+-- Constraints for table `detail_jawaban_peserta`
+--
+ALTER TABLE `detail_jawaban_peserta`
+  ADD CONSTRAINT `dc999` FOREIGN KEY (`FK_JAWABAN_DETAIL`) REFERENCES `jawaban_peserta` (`PK_JAWABAN_DETAIL`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `detail_nilai_wi`
+--
+ALTER TABLE `detail_nilai_wi`
+  ADD CONSTRAINT `wi_fc` FOREIGN KEY (`FK_WIDYAISWARA_NILAI`) REFERENCES `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `detail_permintaan_soal`
+--
+ALTER TABLE `detail_permintaan_soal`
+  ADD CONSTRAINT `permintaan_soal` FOREIGN KEY (`FK_PERMINTAAN_SOAL`) REFERENCES `permintaan_soal` (`PK_PERMINTAAN_SOAL`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `document_pengusulan_pengangkatan`
+--
+ALTER TABLE `document_pengusulan_pengangkatan`
+  ADD CONSTRAINT `doc_pengusul` FOREIGN KEY (`FK_PENGUSUL_PENGANGKATAN`) REFERENCES `pengusul_pengangkatan` (`PK_PENGUSUL_PENGANGKATAN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `dokumen_persetujuan`
+--
+ALTER TABLE `dokumen_persetujuan`
+  ADD CONSTRAINT `group_regis123` FOREIGN KEY (`GROUP_REGIS`) REFERENCES `registrasi_ujian` (`GROUP_REGIS`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `dokumen_registrasi_ujian`
@@ -1924,13 +1678,41 @@ ALTER TABLE `dokumen_registrasi_ujian`
 -- Constraints for table `event`
 --
 ALTER TABLE `event`
-  ADD CONSTRAINT `event_cp1` FOREIGN KEY (`KODE_DIKLAT`) REFERENCES `jenjang` (`KODE_DIKLAT`);
+  ADD CONSTRAINT `event_cp1` FOREIGN KEY (`KODE_DIKLAT`) REFERENCES `jenjang` (`KODE_DIKLAT`),
+  ADD CONSTRAINT `prov_cp2` FOREIGN KEY (`FK_PROVINSI`) REFERENCES `provinsi` (`PK_PROVINSI`);
+
+--
+-- Constraints for table `jawaban_peserta`
+--
+ALTER TABLE `jawaban_peserta`
+  ADD CONSTRAINT `CN_event1` FOREIGN KEY (`FK_EVENT`) REFERENCES `event` (`PK_EVENT`);
 
 --
 -- Constraints for table `jenjang`
 --
 ALTER TABLE `jenjang`
   ADD CONSTRAINT `CN_GROUP_MATA_AJAR_LOOKUP` FOREIGN KEY (`FK_LOOKUP_DIKLAT`) REFERENCES `lookup` (`PK_LOOKUP`);
+
+--
+-- Constraints for table `kode_soal`
+--
+ALTER TABLE `kode_soal`
+  ADD CONSTRAINT `CN_event122` FOREIGN KEY (`FK_MATA_AJAR`) REFERENCES `mata_ajar` (`PK_MATA_AJAR`);
+
+--
+-- Constraints for table `konfigurasi_ujian`
+--
+ALTER TABLE `konfigurasi_ujian`
+  ADD CONSTRAINT `fc_event_config` FOREIGN KEY (`FK_EVENT`) REFERENCES `event` (`PK_EVENT`),
+  ADD CONSTRAINT `fc_mata_ajar_config` FOREIGN KEY (`FK_MATA_AJAR`) REFERENCES `mata_ajar` (`PK_MATA_AJAR`);
+
+--
+-- Constraints for table `lookup_ujian`
+--
+ALTER TABLE `lookup_ujian`
+  ADD CONSTRAINT `fc1` FOREIGN KEY (`FK_JAWABAN_DETAIL`) REFERENCES `jadwal_ujian` (`PK_JADWAL_UJIAN`),
+  ADD CONSTRAINT `fc2` FOREIGN KEY (`FK_MATA_AJAR`) REFERENCES `mata_ajar` (`PK_MATA_AJAR`),
+  ADD CONSTRAINT `fc3` FOREIGN KEY (`FK_REGIS_UJIAN`) REFERENCES `registrasi_ujian` (`PK_REGIS_UJIAN`);
 
 --
 -- Constraints for table `mata_ajar`
@@ -1951,11 +1733,31 @@ ALTER TABLE `menu_page_detail`
   ADD CONSTRAINT `menu_page_relat` FOREIGN KEY (`FK_MENU_PAGE`) REFERENCES `menu_page` (`PK_MENU_PAGE`);
 
 --
+-- Constraints for table `pengusul_pengangkatan`
+--
+ALTER TABLE `pengusul_pengangkatan`
+  ADD CONSTRAINT `doc_status` FOREIGN KEY (`FK_STATUS_DOC`) REFERENCES `status_doc` (`PK_STATUS_DOC`),
+  ADD CONSTRAINT `status_pengusul` FOREIGN KEY (`FK_STATUS_PENGUSUL_PENGANGKATAN`) REFERENCES `status_pengusulan_pengangkatan` (`PK_STATUS_PENGUSUL_PENGANGKATAN`);
+
+--
+-- Constraints for table `permintaan_soal`
+--
+ALTER TABLE `permintaan_soal`
+  ADD CONSTRAINT `fc_bab_mata_ajar` FOREIGN KEY (`FK_BAB_MATA_AJAR`) REFERENCES `bab_mata_ajar` (`PK_BAB_MATA_AJAR`);
+
+--
+-- Constraints for table `pertek`
+--
+ALTER TABLE `pertek`
+  ADD CONSTRAINT `no_surat123` FOREIGN KEY (`NO_SURAT`) REFERENCES `pengusul_pengangkatan` (`NO_SURAT`);
+
+--
 -- Constraints for table `registrasi_ujian`
 --
 ALTER TABLE `registrasi_ujian`
   ADD CONSTRAINT `registrasi_ujian_ibfk_1` FOREIGN KEY (`KODE_DIKLAT`) REFERENCES `jenjang` (`KODE_DIKLAT`),
-  ADD CONSTRAINT `registrasi_ujian_ibfk_2` FOREIGN KEY (`FK_JADWAL_UJIAN`) REFERENCES `jadwal_ujian` (`PK_JADWAL_UJIAN`);
+  ADD CONSTRAINT `registrasi_ujian_ibfk_2` FOREIGN KEY (`FK_JADWAL_UJIAN`) REFERENCES `jadwal_ujian` (`PK_JADWAL_UJIAN`),
+  ADD CONSTRAINT `registrasi_ujian_ibfk_3` FOREIGN KEY (`PROVINSI`) REFERENCES `provinsi` (`PK_PROVINSI`);
 
 --
 -- Constraints for table `soal_ujian`
