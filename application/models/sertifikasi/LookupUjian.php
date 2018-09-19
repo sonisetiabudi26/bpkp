@@ -13,6 +13,22 @@ class LookupUjian extends My_Model
 	    $query = $this->db->get();
 	    return $query->row();
 	}
+	public function insert_multiple($data){
+		$insert=$this->db->insert_batch('lookup_ujian', $data);
+		if($insert){
+			return 'success';
+		}else{
+			return 'failed';
+		}
+	}
+	public function insert_multiple_sertifikat($data){
+		$insert=$this->db->insert_batch('detail_sertifikat', $data);
+		if($insert){
+			return 'success';
+		}else{
+			return 'failed';
+		}
+	}
 	public function save($data) {
 		$insert=$this->db->insert($this->_table, $data);
 		 if($insert){
@@ -20,6 +36,74 @@ class LookupUjian extends My_Model
 		 }else{
 			 return 'Data Inserted Failed';
 		 }
+	}
+	public function saveSertifikat($data){
+		$insert=$this->db->insert('sertifikat', $data);
+		$insert_id = $this->db->insert_id();
+		if($insert){
+			 return  $insert_id;
+		}else{
+			return 'Data Inserted Failed';
+		}
+	}
+	public function saveNilaiSertifikat(){
+		$insert=$this->db->insert($this->_table, $data);
+		 if($insert){
+			 	return  'Data Inserted Successfully';
+		 }else{
+			 return 'Data Inserted Failed';
+		 }
+	}
+	public function getDataNilaisertifikat($id){
+		$condition = "sertifikat.FK_REGIS_UJIAN ='" . $id . "'";
+		$this->db->select('detail_sertifikat.NILAI,mata_ajar.NAMA_MATA_AJAR');
+		$this->db->from('detail_sertifikat');
+		$this->db->join('sertifikat', 'detail_sertifikat.FK_SERTIFIKAT = sertifikat.PK_SERTIFIKAT');
+		$this->db->join('mata_ajar', 'detail_sertifikat.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getDataidentitasSertifikat($id){
+		$condition = "sertifikat.FK_REGIS_UJIAN ='" . $id . "'";
+		$this->db->select('sertifikat.*,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jenjang.NAMA_JENJANG,registrasi_ujian.NIP');
+		$this->db->from('sertifikat');
+		$this->db->join('registrasi_ujian', 'sertifikat.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
+		$this->db->join('dokumen_registrasi_ujian', 'sertifikat.FK_REGIS_UJIAN = dokumen_registrasi_ujian.FK_REGIS_UJIAN');
+		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getDataNilai($id){
+		$condition = "lookup_ujian.FK_REGIS_UJIAN ='" . $id . "' and lookup_ujian.flag=1";
+		$this->db->select('lookup_ujian.*,mata_ajar.NAMA_MATA_AJAR');
+		$this->db->from($this->_table);
+		$this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getdatasertifikat($id){
+		$this->db->select('MAX(FK_REGIS_UJIAN) as kodex');
+		$this->db->from('sertifikat');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return 'false';
+		}
+	}
+	public function checkdatasertifikat($id){
+		$condition = "FK_REGIS_UJIAN ='" . $id . "' ";
+		$this->db->select('MAX(FK_REGIS_UJIAN) as kodex');
+		$this->db->from('sertifikat');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return 'false';
+		}
 	}
 	public function checkpinujian($fk_regis,$fk_mata_ajar){
 		$condition = "FK_REGIS_UJIAN =" . "'" . $fk_regis . "' AND FK_MATA_AJAR =" . "'" . $fk_mata_ajar . "' and flag='0' and FK_JAWABAN_DETAIL!='0'";
@@ -29,6 +113,19 @@ class LookupUjian extends My_Model
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
 			return $query->row();
+		} else {
+			return "no data";
+		}
+	}
+	public function getdatastatus($id){
+		$condition = "registrasi_ujian.PK_REGIS_UJIAN ='" . $id . "'";
+		$this->db->select('jenjang.NAMA_JENJANG as nama');
+		$this->db->from('registrasi_ujian');
+		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
 		} else {
 			return "no data";
 		}
@@ -53,6 +150,14 @@ class LookupUjian extends My_Model
 		$this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
 		$this->db->join('widyaiswara_nilai','registrasi_ujian.NIP=widyaiswara_nilai.NIP');
 		$this->db->join('detail_nilai_wi','widyaiswara_nilai.PK_WIDYAISWARA_NILAI=detail_nilai_wi.FK_WIDYAISWARA_NILAI');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getStatus($id,$flag){
+		$condition = "FK_REGIS_UJIAN ='" . $id . "' and flag<='" . $flag . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
 		$this->db->where($condition);
 		$query = $this->db->get();
 		return $query->result();

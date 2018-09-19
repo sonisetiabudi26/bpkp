@@ -14,11 +14,14 @@ class NilaiAPI extends CI_Controller{
 				$draw=intval($this->input->get('draw'));
 				$start=intval($this->input->get('start'));
 				$length=intval($this->input->get('length'));
-				$nip = $this->session->userdata('logged_in');
+				$nip = '15009835';
 			  // $result_login=$check['token'];
 
-				$dataAll=$this->nilaiwi->getdatabynip($nip);
 
+				$dataAll=$this->nilaiwi->getdatabynip($nip);
+				if(empty($dataAll)){
+					$dataAll=$this->nilaiwi->getdatabynipifnull($nip);
+				}
 					$a=0;
 				 $data = array();
 					foreach ($dataAll as $key) {
@@ -26,12 +29,12 @@ class NilaiAPI extends CI_Controller{
 					 $row = array();
 						$nilai=0;
 						$row[] = $a+1;
-						$row[] = '<input readonly name="nip_'.$key->PK_DETAIL_NILAI_WI.'" value='.$key->NIP.' id="nip_"'.$key->NIP.'"" />';
+						$row[] = '<input readonly name="nip_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value='.$key->NIP.' id="nip_"'.$key->NIP.'"" />';
 					 $row[] = $key->NAMA;
 					 $row[] = $key->TGL_RELEASE_MATA_AJAR;
 						$row[] = $key->NAMA_MATA_AJAR;
-						$row[] = '<input type="number" name="nilai1_'.$key->PK_DETAIL_NILAI_WI.'" id="nilai1_'.$key->PK_DETAIL_NILAI_WI.'" value="'.$key->NILAI_1.'"/>';
-					 $row[] = '<input type="number" name="nilai2_'.$key->PK_DETAIL_NILAI_WI.'" id="nilai2_'.$key->PK_DETAIL_NILAI_WI.'" value="'.$key->NILAI_2.'"/>';
+						$row[] = '<input type="number" name="nilai1_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" id="nilai1_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value="'.$key->NILAI_1.'"/>';
+					 $row[] = '<input type="number" name="nilai2_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" id="nilai2_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value="'.$key->NILAI_2.'"/>';
 						$row[] = $key->USER_NAME;
 
 					 // $dataNIlaiEdit=$key->PK_WIDYAISWARA_NILAI.'~'.$key->NILAI_1.'~'.$key->NILAI_2;

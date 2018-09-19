@@ -64,7 +64,7 @@
 													<td>NO</td>
 													<td>NIP</td>
 													<td>Nama Jenjang</td>
-
+													<td>Status</td>
 													<td>Tindakan</td>
 												</tr>
 												</thead>
@@ -184,7 +184,7 @@ function loadDataNilaiPeserta(){
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
 	                  {"data": "3",width:100},
-
+										{"data": "4",width:100},
 
 	              ],
 

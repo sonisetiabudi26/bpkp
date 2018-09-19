@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require_once 'vendor/autoload.php';
+define('DOMPDF_ENABLE_AUTOLOAD', false);
 class PerhitunganNilai extends CI_Controller {
 
 	public function __construct(){
@@ -207,14 +208,35 @@ class PerhitunganNilai extends CI_Controller {
        $a=1;
 
          foreach ($dataAll as $field) {
+					 $no=0;
+					 $total_matkul=0;
              $row = array();
              $row[] = $a;
              $row[] = $field->NIP;
              $row[] = $field->NAMA_JENJANG;
+						 $data_status=$this->lookup_ujian->getStatus($field->FK_REGIS_UJIAN,1);
+						 foreach ($data_status as $key) {
+							 if($key->STATUS=='LULUS'){
+								 $no++;
+							 }
+							 $total_matkul++;
+						 }
+						 $row[] = $no.' / '.$total_matkul;
 
+						 $data_sert=$this->lookup_ujian->checkdatasertifikat($field->FK_REGIS_UJIAN);
+						 $enable=($data_sert=='false'? "style='display:none;'" : '');
+						 if($enable=='false'){
+							 $disable=($no==$total_matkul?"":"style='display:none;'");
+						 }else{
+							 $disable="style='display:none;'";
+						 }
+						 // href="'. base_url('sertifikasi')."/unit_apip/Home/print_kartu/".$field->PK_REGIS_UJIAN.'"
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_detail_nilai/".$field->FK_REGIS_UJIAN;
-             $row[] = '<td><a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail Nilai</a>
-						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Sertifikasi</a></td>';
+						 $url_create=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_create_sertifikat/".$field->FK_REGIS_UJIAN;
+						 $url_show=base_url('sertifikasi')."/pusbin/PerhitunganNilai/print_sertifikat/".$field->FK_REGIS_UJIAN;
+             $row[] = '<td><a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view-raport" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail Nilai</a>
+						 <a class="btn btn-sm btn-primary" '.$disable.' onclick="getModal(this)"  data-href="'.$url_create.'" id="btn-create-sertifikat" data-href="" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Sertifikasi</a>
+						 <a class="btn btn-sm btn-success" '.$enable.' href="'.$url_show.'" id="btn-show-sertifikat" ><i class="glyphicon glyphicon-print"></i> Cetak Sertifikasi</a></td>';
              $data[] = $row;
              $a++;
          }
@@ -225,6 +247,144 @@ class PerhitunganNilai extends CI_Controller {
 						 "data" => $data,
 				 );
        echo json_encode($output);
+		}
+		public function apiuser($param){
+			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
+			$check=file_get_contents($url);
+			$jsonResult=json_decode($check);
+			return $jsonResult;
+		}
+		public function print_sertifikat($pk){
+			$datex=date('Y-m-d');
+			// $id=$this->input->post('pk_permintaan_soal');
+			$namafile='sertifikat_'.$pk;
+			$dompdf_option = new \Dompdf\Options();
+	    $dompdf_option->setIsFontSubsettingEnabled(true);
+	    $dompdf_option->setIsRemoteEnabled(true);
+	    $dompdf_option->setIsHtml5ParserEnabled(true);
+	    // $dompdf->setOptions($dompdf_option);
+			$dompdf = new Dompdf\Dompdf($dompdf_option);
+
+			$data['data_detail']=$this->lookup_ujian->getDataNilaisertifikat($pk);
+
+			$data_identitas=$this->lookup_ujian->getDataidentitasSertifikat($pk);
+			foreach ($data_identitas as $key) {
+				$data['diklat']=$key->NAMA_JENJANG;
+				$data['nomor']=$key->NOMOR_SERTIFIKAT;
+				$data['nip']=$key->NIP;
+				$data['datex']=$datex;
+				$data['a_n']=$key->A_N;
+				$apiuser=$this->apiuser($key->NIP);
+				$data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+				$data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+				if($key->DOC_NAMA=='doc_foto'){
+					$data['foto']=$key->DOCUMENT;
+				}
+
+				$data['nama_kepala']=$key->NAMA_KEPALA;
+				$data['nip_kepala']=$key->NIP_KEPALA;
+				$data['nama_kepala_pusat']=$key->NAMA_KEPALA_PUSAT;
+				$data['nip_kepala_pusat']=$key->NIP_KEPALA_PUSAT;
+
+			}
+
+			$html = $this->load->view('sertifikasi/doc_pdf/sertifikat',$data,true);
+
+			 $dompdf->loadHtml($html);
+
+			 // (Optional) Setup the paper size and orientation
+			 $dompdf->setPaper('A4', 'landscape');
+
+			 // Render the HTML as PDF
+			 $dompdf->render();
+			 // echo $data['foto'];
+			 // Get the generated PDF file contents
+			 $pdf = $dompdf->output();
+			 $dompdf->stream($namafile);
+		}
+		public function listNilaiSertifikat($id){
+			$dataAll=$this->lookup_ujian->getDataNilai($id);
+			$a=1;
+			foreach ($dataAll as $key) {
+				$row = array();
+				$row[] = $a;
+				$row[] = $key->NAMA_MATA_AJAR;
+				$row[] = '<input name="nilai_'.$key->FK_MATA_AJAR.'" type="number" value="'.$key->NILAI_TOTAL.'"/>';
+
+				$data[] = $row;
+				$a++;
+			}
+			$output = array(
+					"draw" => 'data',
+					"recordsTotal" => $a,
+					"recordsFiltered" => $a,
+					"data" => $data,
+			);
+		echo json_encode($output);
+		}
+		public function CreateSertifikat(){
+			$datex=date('Y-m-d');
+			$id_regis=$this->input->get('id_regis');
+			$nomor=$this->input->get('nomor_val');
+			$a_n=$this->input->get('a_n_val');
+			$nama_kepala=$this->input->get('nama_kepala_val');
+			$nip_kepala=$this->input->get('nip_kepala_val');
+			$nama_kepala_pusat=$this->input->get('nama_kepala_pusat_val');
+			$nip_kepala_pusat=$this->input->get('nip_kepala_pusat_val');
+			$datasheet1=[];
+			$dataSertifikat = array('FK_REGIS_UJIAN' => $id_regis,
+															'NOMOR_SERTIFIKAT'=>$nomor,
+															'A_N'=>$a_n,
+															'NAMA_KEPALA'=>$nama_kepala,
+															'NIP_KEPALA'=>$nip_kepala,
+														  'NAMA_KEPALA_PUSAT'=>$nama_kepala_pusat,
+															'NIP_KEPALA_PUSAT'=>$nip_kepala_pusat,
+															'CREATED_BY'=>$this->session->userdata('nip'),
+															'CREATED_DATE'=>$datex);
+
+			$data=$this->lookup_ujian->saveSertifikat($dataSertifikat);
+			if($data!='Data Inserted Failed'){
+			$dataAll=$this->lookup_ujian->getDataNilai($id_regis);
+				foreach ($dataAll as $key) {
+					$nilai='nilai_'.$key->FK_MATA_AJAR;
+				array_push($datasheet1, [
+					'FK_SERTIFIKAT' => $data,
+					'FK_MATA_AJAR'=>$key->FK_MATA_AJAR,
+					'NILAI'=>$this->input->get($nilai),
+
+				]);
+
+				}
+				$insertmulti_nilai=$this->lookup_ujian->insert_multiple_sertifikat($datasheet1);
+				if($insertmulti_nilai=='success'){
+					print json_encode(array("status"=>"success", "data"=>'Data Berhasil disimpan'));
+				}else{
+					print json_encode(array("status"=>"error", "msg"=>'Data gagal disimpan'));
+				}
+			}
+		}
+		public function vw_create_sertifikat($id){
+			$datex=date('Y');
+			$data['id_regis']=$id;
+			$kode_urut=$this->lookup_ujian->getdatasertifikat();
+			$kodeurut=($kode_urut=='false'? '' : substr($kode_urut[0]->kodex, 4));
+			if($kodeurut!=''){
+				$kodeuruts=$kodeurut+1;
+			}else{
+				$kodeuruts=1;
+			}
+			$status=$this->lookup_ujian->getdatastatus($id);
+			$status_jfa=($status=='false'? '' : $status[0]->nama);
+			if($status_jfa=='Auditor Ahli'||$status_jfa=='Pindah Jalur'){
+				$status_jfa='AI';
+			}else if($status_jfa=='Auditor Terampil'){
+				$status_jfa='TR';
+			}else{
+				$status_jfa='AM';
+			}
+			$nomor_urut=str_pad($kodeuruts, 4, 0, STR_PAD_LEFT);;
+			$data['nomor']='SERT-'.$nomor_urut.'/JFA-'.$status_jfa.'/01'.'/'.'VII/'.$datex;
+			$this->load->view('sertifikasi/pusbin/content/create_sertifikat',$data);
 		}
     public function LoadDateEventbyid($id){
       $dataAll=$this->event->loadEventbyid($id);
@@ -274,7 +434,7 @@ class PerhitunganNilai extends CI_Controller {
              $row['nama'] = $field->Nama;
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
              $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
-						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-view" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
+						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-event1 data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
 
              $data[] = $row;
              $a++;
@@ -341,14 +501,21 @@ class PerhitunganNilai extends CI_Controller {
 					if($total_kelulusan>=$data_pass_grade[0]->PASS_GRADE){
 						$ket_lulus='LULUS';
 						$style='"color:blue"';
+
 					}else{
 						$ket_lulus='BELUM LULUS';
 						$style='"color:red"';
+
 					}
 			}else{
 				$ket_lulus='BELUM LULUS';
 				$style='"color:red"';
 			}
+				$dataupdate = array('NILAI_TOTAL' => $total_kelulusan,
+			 												'STATUS'=>$ket_lulus);
+				$datawhere = array('PK_LOOKUP_REGIS' => $key->PK_LOOKUP_REGIS, );
+
+				$updateNilai=$this->lookup_ujian->updateData($datawhere,'lookup_ujian',$dataupdate);
 				$data[]=$key->NAMA_MATA_AJAR;
 				$data[]=ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100);
 				$data[]=ceil($key->NILAI_1_WI*$perc_nilai_wi1/100);
@@ -598,7 +765,7 @@ class PerhitunganNilai extends CI_Controller {
 						//$row[] = $field->KELAS;
 						$id=$field->KODE_UNIT.'~'.$field->FK_EVENT;
 						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
-						$row[] = '<a class="btn btn-sm btn-success" id="btn-view-nilai" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>';
+						$row[] = '<a class="btn btn-sm btn-success" id="btn-view-nilai-unitapip2" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>';
 
 
 						$data[] = $row;
