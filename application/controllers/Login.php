@@ -45,6 +45,7 @@ class Login extends CI_Controller{
 				);
 				// tambah ke session
 				$this->session->set_userdata('logged_in', $result[0]->USER_NAME);
+				$this->session->set_userdata('nip', $username);
 				$this->session->set_userdata('fk_lookup_menu',$result[0]->FK_LOOKUP_ROLE);
 				$fk_lookup_menu=$result[0]->FK_LOOKUP_ROLE;
 				//redirect('sertifikasi/home');

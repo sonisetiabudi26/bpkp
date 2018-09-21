@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once 'vendor/autoload.php';
+define('DOMPDF_ENABLE_AUTOLOAD', false);
 
 class ManagementBankSoal extends CI_Controller {
 
@@ -17,6 +19,8 @@ class ManagementBankSoal extends CI_Controller {
 			$this->load->model('sertifikasi/babmataajar','babmataajar');
 			$this->load->model('sertifikasi/soaldistribusi','soaldistribusi');
 			$this->load->model('sertifikasi/SoalKasus','soalkasus');
+			$this->load->model('sertifikasi/permintaansoal','permintaansoal');
+
     }
 
     public function index(){
@@ -297,9 +301,12 @@ class ManagementBankSoal extends CI_Controller {
 						 $row[] = $num.'/'.$field->KEBUTUHAN_SOAL;
 						 $row[] =($field->PUBLISH=='1'?'Yes':'No');
 						 //$url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
-
+						 $disable=($field->PUBLISH=='0'?'style="display:none;"':"");
 						 $url_edit= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_edit_kode_soal";
 						 $row[] = '<td><a class="btn btn-sm btn-primary"  href="javascript:void(0)" title="update" onclick="publish('."'".$field->PK_KODE_SOAL."'".')"><i class="glyphicon glyphicon-pencil"></i> Tayangkan</a>
+						 <a class="btn btn-sm btn-success" '.$disable.' id="btn-print-soal"
+		 					href="'. base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_print_soal/".$field->PK_KODE_SOAL.'"
+		 					><i class="glyphicon glyphicon-plus"></i> Cetak Soal</a>
 						 </td>';
 
 						 $data[] = $row;
@@ -317,6 +324,28 @@ class ManagementBankSoal extends CI_Controller {
 			 //output dalam format JSON
 			 echo json_encode($output);
 			//echo json_encode($dataAll);
+		}
+		public function vw_print_soal($id){
+			// $id=$this->input->post('pk_permintaan_soal');
+			$namafile='soal_publish_'.$id;
+			$dompdf = new Dompdf\Dompdf();
+			$datasoal['data']=$this->permintaansoal->getdatasoalpublish($id);
+			// foreach ($datasoal as $key) {
+			//
+			// }
+			$html = $this->load->view('sertifikasi/doc_pdf/soal',$datasoal,true);
+
+			 $dompdf->loadHtml($html);
+
+			 // (Optional) Setup the paper size and orientation
+			 $dompdf->setPaper('A4', 'portrait');
+
+			 // Render the HTML as PDF
+			 $dompdf->render();
+
+			 // Get the generated PDF file contents
+			 $pdf = $dompdf->output();
+			 $dompdf->stream($namafile);
 		}
     public function vw_edit_soal(){
 	    $data['soal'] = $this->soalujian->_get_soal_ujian_from_pk($this->input->post('pk_soal_ujian'));

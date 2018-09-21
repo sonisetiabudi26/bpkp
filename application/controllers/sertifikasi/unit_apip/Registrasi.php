@@ -62,6 +62,8 @@ class Registrasi extends CI_Controller {
 				$output = array(
 											 "nip" => $apiuser->data[0]->Auditor_NIP,
 											 "nama" => $apiuser->data[0]->Auditor_NamaLengkap,
+											 "gelarDepan" => $apiuser->data[0]->Auditor_GelarDepan,
+											 "gelarBelakang" => $apiuser->data[0]->Auditor_GelarBelakang,
 											 "ttl" => $apiuser->data[0]->Auditor_TglLahir,
 											 "pendidikan" => $apiuser->data[0]->Pendidikan_Tingkat,
 											 "unit" => $apiuser->data[0]->UnitKerja_Nama,

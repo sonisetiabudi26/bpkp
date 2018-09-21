@@ -44,10 +44,7 @@
 
 
 	$(document).ready(function() {
-		// alert();
 		var tugas='pembuat_soal';
-
-
 
 	table=	$('#table').DataTable({
 			"processing": true,

@@ -44,6 +44,14 @@
 													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="Nama"></span></div>
 												</div>
 												<div class="row">
+													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span class="form-control">Gelar Depan</span></div>
+													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='gelarDepan' class="form-control" readonly id="gelarDepan"/></div>
+												</div>
+												<div class="row">
+													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span class="form-control">Gelar Belakang</span></div>
+													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='gelarBelakang' class="form-control" readonly id="gelarBelakang"/></div>
+												</div>
+												<div class="row">
 													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">NIP</div>
 													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="NIP"></span></div>
 												</div>
@@ -258,6 +266,8 @@ function search(){
 				if(data.status!='error'){
 				  document.getElementById("show_data").style.display = "block";
 					document.getElementById("Nama").innerHTML=': '+data.nama;
+					document.getElementById("gelarDepan").innerHTML=': '+data.gelarDepan;
+					document.getElementById("gelarBelakang").innerHTML=': '+data.gelarBelakang;
 					document.getElementById("NIP").innerHTML=': '+data.nip;
 					document.getElementById("ttl").innerHTML=': '+data.ttl;
 					document.getElementById("pendidikan").innerHTML=': '+data.pendidikan;
@@ -266,6 +276,8 @@ function search(){
 					$( "#daftar_ujian_btn" ).prop( "disabled", false );
 				}else{
 					document.getElementById("Nama").innerHTML=':';
+					document.getElementById("gelarDepan").innerHTML=':';
+					document.getElementById("gelarBelakang").innerHTML=':';
 					document.getElementById("NIP").innerHTML=':';
 					document.getElementById("ttl").innerHTML=':';
 					document.getElementById("pendidikan").innerHTML=':';

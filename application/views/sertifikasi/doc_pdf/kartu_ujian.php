@@ -52,6 +52,10 @@ table, th, td {
               <td class="isi"><b>: <?php echo $nip; ?></b></td>
             </tr>
             <tr>
+              <td class="subtitle"><b>Lokasi Ujian</b></td>
+              <td class="isi"><b>: <?php echo $lokasi; ?></b></td>
+            </tr>
+            <tr>
               <td class="subtitle"><b>Unit/Instansi</b></td>
               <td class="isi"><b>: <?php echo $unit; ?></b></td>
             </tr>
@@ -104,7 +108,7 @@ table, th, td {
         <!-- <table> -->
         <div height="472" width="354" style="border:1px solid #999">
            <!-- <td height="150" width="130"> -->
-          <img src="http://localhost/bpkp/uploads/doc_registrasi/195212211978031001_20180914/357515.jpg" width="130" height="150">
+          <img src="http://localhost/bpkp/uploads/<?php echo $foto; ?>" width="130" height="150">
         <!-- </td> -->
         </div>
       <!-- </table> -->

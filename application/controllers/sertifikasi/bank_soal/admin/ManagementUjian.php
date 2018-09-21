@@ -118,6 +118,7 @@ class ManagementUjian extends CI_Controller {
 		print json_encode($data);
 	}
 		public function tambah_konfig_ujian(){
+			$creator = $this->session->userdata('nip');
 			$month=date('m');
 			$years=substr(date('Y'),2,4);
 			$datex=date('Y-m-d');
@@ -137,7 +138,7 @@ class ManagementUjian extends CI_Controller {
 			 'URAIAN' => 'Online',
 			 'FK_PROVINSI' => $provinsi,
 			 'PASS_GRADE' => $pass_grade,
-			 'CREATED_BY' => $this->session->userdata('nip'),
+			 'CREATED_BY' => $creator,
 			 'CREATED_DATE' => $datex
 		 );
 		 $insert=$this->event->saveByReturn($data);
@@ -147,7 +148,7 @@ class ManagementUjian extends CI_Controller {
 				'KELAS' => $kelas,
 				'FK_JADWAL' => $jadwal,
 				'REFF' => 'Online',
-				'CREATED_BY' => $this->session->userdata('nip'),
+				'CREATED_BY' => $creator,
 				'CREATED_DATE' => $datex
 			);
 			$insertbatch=$this->batch->save($databatch);
@@ -159,7 +160,7 @@ class ManagementUjian extends CI_Controller {
  				'FK_MATA_AJAR' => $mata_ajar,
 				'FK_EVENT' => $insert,
 				'JUMLAH_SOAL' => $jml_soal,
- 				'CREATED_BY' => $this->session->userdata('nip'),
+ 				'CREATED_BY' => $creator,
  				'CREATED_DATE' => $datex
  			);
 				$insertkonfig=$this->konfig->save($datakonfig);

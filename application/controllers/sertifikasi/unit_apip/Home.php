@@ -44,6 +44,7 @@ class Home extends CI_Controller {
 			$data_identitas=$this->regisujian->getDatabypk($pk);
 			foreach ($data_identitas as $key) {
 				$data['nip']=$key->NIP;
+				$data['lokasi']=$key->NAMA
 				$data['kode_diklat']=$key->KODE_DIKLAT.' - '.$key->NAMA_JENJANG;
 				$apiuser=$this->apiuser($key->NIP);
 				$data['unit'] = $apiuser->data[0]->UnitKerja_Nama;

@@ -59,6 +59,16 @@ class PermintaanSoal extends My_Model
 		return $query->result();
 
 	}
+	public function getdatasoalpublish($param){
+		$condition = "soal_distribusi.FK_KODE_SOAL =" . "'" . $param . "' ";
+		$this->db->select('soal_distribusi.*,soal_ujian.PERTANYAAN');
+		$this->db->from('soal_distribusi');
+	  $this->db->join('soal_ujian','soal_distribusi.FK_SOAL_UJIAN = soal_ujian.PK_SOAL_UJIAN');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+
+	}
 	// public function getPilihansoal($param){
 	// 	$condition = "soal_ujian.JAWABAN =" . "'" . $param . "' ";
 	// 	$this->db->select('soal_ujian.*');
