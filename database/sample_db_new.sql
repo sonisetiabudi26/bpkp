@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 19, 2018 at 03:10 AM
+-- Generation Time: Sep 21, 2018 at 04:34 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -95,7 +95,8 @@ INSERT INTO `batch` (`PK_BATCH`, `FK_EVENT`, `KELAS`, `FK_JADWAL`, `REFF`, `CREA
 (11, 12, 'asd', 18, 'tester', 'Pusbin Budianto', '2018-09-09'),
 (12, 10, 'asd', 19, 'tester', 'Pusbin Budianto', '2018-09-14'),
 (21, 24, 'Online', 18, 'Online', 'admin_bank', '2018-09-15'),
-(22, 25, 'Online', 18, 'Online', 'admin_bank', '2018-09-16');
+(22, 25, 'Online', 18, 'Online', 'admin_bank', '2018-09-16'),
+(23, 27, 'Online', 18, 'Online', 'admin_bank', '2018-09-20');
 
 -- --------------------------------------------------------
 
@@ -223,6 +224,17 @@ CREATE TABLE `detail_permintaan_soal` (
   `COMMENT` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `detail_permintaan_soal`
+--
+
+INSERT INTO `detail_permintaan_soal` (`PK_DETAIL_PERMINTAAN_SOAL`, `FK_PERMINTAAN_SOAL`, `TUGAS`, `PETUGAS`, `COMMENT`) VALUES
+(1, 29, 'pembuat_soal', 'review2', ''),
+(2, 29, 'review1', 'review2', ''),
+(3, 29, 'review2', 'review1', ''),
+(4, 29, 'review3', 'review2', ''),
+(5, 29, 'review4', 'subid', '');
+
 -- --------------------------------------------------------
 
 --
@@ -312,7 +324,11 @@ CREATE TABLE `dokumen_registrasi_ujian` (
 
 INSERT INTO `dokumen_registrasi_ujian` (`PK_DOC_REGIS`, `FK_REGIS_UJIAN`, `DOCUMENT`, `DOC_NAMA`) VALUES
 (20, 19, 'doc_registrasi/195212211978031001_20180918/pdf (2).pdf', 'doc_ksp'),
-(21, 19, 'doc_registrasi/195212211978031001_20180918/5.jpg', 'doc_foto');
+(21, 19, 'doc_registrasi/195212211978031001_20180918/5.jpg', 'doc_foto'),
+(24, 21, 'doc_registrasi/195301291982031001_20180921/SAMA_MUDA.pdf', 'doc_ksp'),
+(25, 21, 'doc_registrasi/195301291982031001_20180921/1533121601.jpg', 'doc_foto'),
+(26, 22, 'doc_registrasi/195212211978031001_20180921/soal_permintaan_26.pdf', 'doc_ksp'),
+(27, 22, 'doc_registrasi/195212211978031001_20180921/357515.jpg', 'doc_foto');
 
 -- --------------------------------------------------------
 
@@ -343,7 +359,9 @@ INSERT INTO `event` (`PK_EVENT`, `KODE_EVENT`, `KODE_DIKLAT`, `URAIAN`, `FK_PROV
 (14, '11111', 1, 'tester', 14, 60, 'Pusbin Budianto', '2018-09-09'),
 (15, '11212', 1, 'tester', 52, 60, 'Pusbin Budianto', '2018-09-12'),
 (24, '20918', 2, 'Online', 12, 70, 'admin_bank', '2018-09-15'),
-(25, '20918', 2, 'Online', 31, 70, 'admin_bank', '2018-09-16');
+(25, '20918', 2, 'Online', 31, 70, 'admin_bank', '2018-09-16'),
+(26, '20918', 2, 'Online', 11, 70, 'admin_bank', '2018-09-20'),
+(27, '20918', 2, 'Online', 12, 70, 'admin_bank', '2018-09-20');
 
 -- --------------------------------------------------------
 
@@ -520,6 +538,7 @@ INSERT INTO `kode_soal` (`PK_KODE_SOAL`, `KODE_SOAL`, `FK_MATA_AJAR`, `KEBUTUHAN
 
 CREATE TABLE `konfigurasi_ujian` (
   `PK_KONFIG_UJIAN` int(11) NOT NULL,
+  `DATE_TIME` date NOT NULL,
   `START_TIME` time NOT NULL,
   `END_TIME` time NOT NULL,
   `PIN` varchar(50) NOT NULL,
@@ -534,9 +553,10 @@ CREATE TABLE `konfigurasi_ujian` (
 -- Dumping data for table `konfigurasi_ujian`
 --
 
-INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `JUMLAH_SOAL`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(6, '00:12:00', '20:12:00', '795984', 12, 24, 60, 'admin_bank', '2018-09-15 00:00:00'),
-(7, '00:34:00', '07:11:00', '118563', 13, 25, 10, 'admin_bank', '2018-09-16 00:00:00');
+INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `DATE_TIME`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `JUMLAH_SOAL`, `CREATED_BY`, `CREATED_DATE`) VALUES
+(6, '0000-00-00', '00:12:00', '20:12:00', '795984', 12, 24, 60, 'admin_bank', '2018-09-15 00:00:00'),
+(7, '0000-00-00', '00:34:00', '07:11:00', '118563', 13, 25, 10, 'admin_bank', '2018-09-16 00:00:00'),
+(8, '0000-00-00', '00:21:00', '12:21:00', '686836', 12, 27, 20, 'admin_bank', '2018-09-20 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -739,7 +759,7 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (27, 'Beranda', 'bank_soal', 'bank_soal/admin/home', 'admin', '2018-05-07', 'home', 1),
 (28, 'Monitoring Buat Soal', 'bank_soal', 'bank_soal/admin/AdminBankSoal', 'admin', '2018-05-07', 'key', 1),
 (29, 'Manajemen Soal', 'bank_soal', 'bank_soal/admin/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1),
-(30, 'Perhitungan Nilai', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', 'line-chart', 5),
+(30, 'Koreksi hasil Ujian', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', 'line-chart', 5),
 (31, 'Beranda', 'bank_soal', 'bank_soal/koreksi/home', 'admin', '2018-07-07', 'home', 18),
 (32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20),
 (33, 'Laporan', 'pusbin', 'pusbin/Report', 'admin', '2018-07-06', 'paperclip', 5),
@@ -812,6 +832,7 @@ CREATE TABLE `permintaan_soal` (
   `TIPE_SOAL` varchar(30) NOT NULL,
   `TANGGAL_PERMINTAAN` date NOT NULL,
   `JUMLAH_SOAL` int(11) NOT NULL,
+  `FK_LOOKUP_STATUS_PERMINTAAN` int(11) NOT NULL,
   `STATUS` varchar(150) NOT NULL,
   `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -820,9 +841,8 @@ CREATE TABLE `permintaan_soal` (
 -- Dumping data for table `permintaan_soal`
 --
 
-INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `STATUS`, `flag`) VALUES
-(27, 3, 'Pilihan Ganda', '2018-08-31', 2, 'selesai', 2),
-(28, 3, 'Pilihan Ganda', '2018-09-14', 30, 'selesai', 2);
+INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `FK_LOOKUP_STATUS_PERMINTAAN`, `STATUS`, `flag`) VALUES
+(29, 3, 'Pilihan Ganda', '2018-09-19', 2, 27, 'pembuat_soal', 0);
 
 -- --------------------------------------------------------
 
@@ -964,7 +984,9 @@ CREATE TABLE `registrasi_ujian` (
 --
 
 INSERT INTO `registrasi_ujian` (`PK_REGIS_UJIAN`, `GROUP_REGIS`, `KODE_DIKLAT`, `NIP`, `PROVINSI`, `PINDAH_BERKAS`, `LOKASI_UJIAN`, `FK_JADWAL_UJIAN`, `NO_SURAT_UJIAN`, `NILAI_KSP`, `CREATED_BY`, `CREATED_DATE`, `flag`) VALUES
-(19, '07001500103500_180918201247', 2, '195212211978031001', 31, 0, 0, 18, '12', '99', '1110', '2018-09-18', 1);
+(19, '07001500103500_180918201247', 2, '195212211978031001', 31, 0, 31, 18, '12', '99', '1110', '2018-09-18', 1),
+(21, '', 2, '195301291982031001', 31, 0, 31, 18, 'jnjnj', '99', '1110', '2018-09-21', 0),
+(22, '', 5, '195212211978031001', 31, 0, 31, 18, '78h8', '90', '1110', '2018-09-21', 0);
 
 -- --------------------------------------------------------
 
@@ -1628,7 +1650,7 @@ ALTER TABLE `bab_mata_ajar`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `PK_BATCH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `bridge_lookup`
@@ -1646,13 +1668,13 @@ ALTER TABLE `detail_nilai_wi`
 -- AUTO_INCREMENT for table `detail_permintaan_soal`
 --
 ALTER TABLE `detail_permintaan_soal`
-  MODIFY `PK_DETAIL_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `PK_DETAIL_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `document_pengusulan_pengangkatan`
 --
 ALTER TABLE `document_pengusulan_pengangkatan`
-  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `PK_DOC_PENGUSULAN_PENGANGKATAN` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dokumen_persetujuan`
@@ -1664,13 +1686,13 @@ ALTER TABLE `dokumen_persetujuan`
 -- AUTO_INCREMENT for table `dokumen_registrasi_ujian`
 --
 ALTER TABLE `dokumen_registrasi_ujian`
-  MODIFY `PK_DOC_REGIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `PK_DOC_REGIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `PK_EVENT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `jadwal_ujian`
@@ -1706,7 +1728,7 @@ ALTER TABLE `kode_soal`
 -- AUTO_INCREMENT for table `konfigurasi_ujian`
 --
 ALTER TABLE `konfigurasi_ujian`
-  MODIFY `PK_KONFIG_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `PK_KONFIG_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `lookup_ujian`
@@ -1730,19 +1752,19 @@ ALTER TABLE `menu_page_detail`
 -- AUTO_INCREMENT for table `pengusul_pengangkatan`
 --
 ALTER TABLE `pengusul_pengangkatan`
-  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PK_PENGUSUL_PENGANGKATAN` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `permintaan_soal`
 --
 ALTER TABLE `permintaan_soal`
-  MODIFY `PK_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `PK_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `pertek`
 --
 ALTER TABLE `pertek`
-  MODIFY `PK_PERTEK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `PK_PERTEK` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pilihan_soal`
@@ -1760,7 +1782,7 @@ ALTER TABLE `provinsi`
 -- AUTO_INCREMENT for table `registrasi_ujian`
 --
 ALTER TABLE `registrasi_ujian`
-  MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `sertifikat`
