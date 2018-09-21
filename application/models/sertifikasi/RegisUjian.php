@@ -18,8 +18,8 @@ class RegisUjian extends My_Model
 		 }
 	}
 
-	public function getdataHistory($id){
-		$condition = "lookup_ujian.FK_REGIS_UJIAN =" . "'" . $id . "'";
+	public function getdataHistory($id,$nip){
+		$condition = "lookup_ujian.FK_REGIS_UJIAN =" . "'" . $id . "' and registrasi_ujian.NIP=" . "'" . $nip . "' and lookup_ujian.STATUS='BELUM LULUS'";
 		$this->db->select('mata_ajar.NAMA_MATA_AJAR');
 		$this->db->from($this->_table);
 		$this->db->join('lookup_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = lookup_ujian.FK_REGIS_UJIAN');
@@ -33,6 +33,22 @@ class RegisUjian extends My_Model
 		}
 
 	}
+	public function getdataHistorybyNIP($nip,$kode_diklat){
+		$condition = "registrasi_ujian.NIP=" . "'" . $nip . "' and registrasi_ujian.KODE_DIKLAT=" . "'" . $kode_diklat . "'  and lookup_ujian.status='BELUM LULUS' ";
+		$this->db->select('mata_ajar.NAMA_MATA_AJAR');
+		$this->db->from($this->_table);
+		$this->db->join('lookup_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = lookup_ujian.FK_REGIS_UJIAN');
+		$this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();;
+		} else {
+			return 'empty';
+		}
+
+	}
+
 	public function getdatakdDiklatandProvinsi($id){
 		$condition = "registrasi_ujian.PK_REGIS_UJIAN =" . "'" . $id . "' and flag=1";
 		$this->db->select('KODE_DIKLAT,PROVINSI');
@@ -51,11 +67,12 @@ class RegisUjian extends My_Model
 	}
 	public function getDatabypk($pk){
 		$condition = "registrasi_ujian.PK_REGIS_UJIAN =" . "'" . $pk . "' and flag=1";
-		$this->db->select('registrasi_ujian.NIP,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
+		$this->db->select('registrasi_ujian.NIP,provinsi.NAMA,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 		$this->db->join('dokumen_registrasi_ujian', 'dokumen_registrasi_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
+		$this->db->join('provinsi', 'registrasi_ujian.LOKASI_UJIAN = provinsi.PK_PROVINSI');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		return $query->result();
@@ -146,11 +163,12 @@ class RegisUjian extends My_Model
 		return $query->result();
 	}
 
-	public function loadbyNIP($NIP,$flag){
-		$condition = "NIP =" . "'" . $NIP . "' and flag=" . "'" . $flag . "'";
+	public function loadbyNIP($NIP,$kode_diklat){
+		$condition = "registrasi_ujian.NIP =" . "'" . $NIP . "' and registrasi_ujian.KODE_DIKLAT=" . "'" . $kode_diklat . "'";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
+		$this->db->join('lookup_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = lookup_ujian.FK_REGIS_UJIAN');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {

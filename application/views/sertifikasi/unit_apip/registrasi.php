@@ -44,12 +44,12 @@
 													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="Nama"></span></div>
 												</div>
 												<div class="row">
-													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span class="form-control">Gelar Depan</span></div>
-													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='gelarDepan' class="form-control" readonly id="gelarDepan"/></div>
+													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>Gelar Depan</span></div>
+													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="gelarDepan"></span></div>
 												</div>
 												<div class="row">
-													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span class="form-control">Gelar Belakang</span></div>
-													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='gelarBelakang' class="form-control" readonly id="gelarBelakang"/></div>
+													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>Gelar Belakang</span></div>
+													<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span id="gelarBelakang"></span></div>
 												</div>
 												<div class="row">
 													<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">NIP</div>
@@ -313,11 +313,13 @@ function loadData(data){
       async : false,
       dataType : 'json',
       success : function(data){
+
 				var nip='';
 				data.forEach(function(resp) {
-
-           $("#dataResult").append("<tr><td>" + (resp.NIP != nip ? resp.NIP : '') + "</td><td>"+resp.NAMA_MATA_AJAR+"</td><td>" + (resp.NIP != nip ? resp.NO_SURAT_UJIAN : '') + "</td><td>" + (resp.NIP != nip ? resp.START_DATE + " - "+ resp.END_DATE  : '')+"</td></tr>");
-					 nip=resp.NIP;
+					for (var i = 0; i < resp.length; i++) {
+						$("#dataResult").append("<tr><td>" + (resp[i].NIP != nip ? resp[i].NIP : '') + "</td><td>"+resp[i].NAMA_MATA_AJAR+"</td><td>" + (resp[i].NIP != nip ? resp[i].NO_SURAT_UJIAN : '') + "</td><td>" + (resp[i].NIP != nip ? resp[i].START_DATE + " - "+ resp[i].END_DATE  : '')+"</td></tr>");
+						nip=resp[i].NIP;
+					}
 			  });
       }
 	});

@@ -128,6 +128,7 @@ class ManagementUjian extends CI_Controller {
 			$pass_grade='70';
 			$kelas='Online';
 			$jadwal=$this->input->post('fk_jadwal_ujian');
+			$tanggal=$this->input->post('tanggal');
 			$jml_soal=$this->input->post('jml_soal');
 			$waktu_mulai=$this->input->post('waktu_mulai');
 			$waktu_selesai=$this->input->post('waktu_selesai');
@@ -154,7 +155,8 @@ class ManagementUjian extends CI_Controller {
 			$insertbatch=$this->batch->save($databatch);
 			if($insertbatch=='Data Inserted Successfully'){
 				$datakonfig = array(
- 				'START_TIME' => $waktu_mulai,
+				'DATE_TIME' => $tanggal,
+				'START_TIME' => $waktu_mulai,
  				'END_TIME' => $waktu_selesai,
  				'PIN' => $this->generatePIN(6),
  				'FK_MATA_AJAR' => $mata_ajar,

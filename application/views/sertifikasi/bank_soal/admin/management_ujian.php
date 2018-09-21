@@ -33,6 +33,7 @@
               <thead>
                   <tr>
                       <th>No</th>
+											<th>Tanggal</th>
                       <th>Waktu Mulai</th>
                       <th>Waktu Berakhir</th>
                       <th>Mata Ajar</th>
@@ -86,6 +87,7 @@
                         {"data": "6",width:100},
 												{"data": "7",width:100},
 												{"data": "8",width:100},
+												{"data": "9",width:100},
 			              ],
 
 			          });

@@ -1,7 +1,10 @@
 <div class="col-md-12" id="response-text" ></div>
 <div class="col-md-12">
 <form onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/bank_soal/admin/managementujian/tambah_konfig_ujian"; ?>')" method="POST" id="konfig_form" >
-
+  <div class="form-group text-default">
+    <label for="tgl_permintaan" class="text-primary">Tgl Permintaan :</label>
+    <input type="date" class="form-control" name="tanggal" id="tanggal"  required />
+  </div>
   <div class="form-group">
     <label>Waktu Mulai :</label>
     <input type="time" class="form-control text-primary" id="waktu_mulai" name="waktu_mulai" step="2" placeholder="Waktu Mulai ex. 11:11:00" />

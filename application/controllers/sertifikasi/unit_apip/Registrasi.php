@@ -87,32 +87,42 @@ class Registrasi extends CI_Controller {
 		}
 
 		 public function loadData(){
-			 $dataRow=array();
+			 $dataRows=array();
 			  $userAdmin=$this->session->userdata('nip');
 			 	$datas=$this->regis->loaddatabyuser($userAdmin);
 				foreach ($datas as $key ) {
-				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN);
+				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
 				 if($dataRow=='empty'){
 					 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
-				 }else{
-					 $dataRow=$dataRow;
 				 }
+				 $dataRows[]=$dataRow;
 				}
 			 //output to json format
-			 echo json_encode($dataRow);
+			 echo json_encode($dataRows);
 		 }
 		 public function add_data(){
     	 $date = date('Ymd');
 			 $datex=date('Y-m-d');
 				 $nip=$this->input->post('nip');
-				 $dataCheckPeserta=$this->regis->loadbyNIP($nip,'0');
+				 $dataCheckPeserta=$this->regis->loadbyNIP($nip,$this->input->post('diklat'));
+				 if(!$dataCheckPeserta){
+				 		// $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$nip);
+						$dataCheckPeserta='empty';
+			 		}else{
+						$dataRow=$this->regis->getdataHistorybyNIP($nip,$this->input->post('diklat'));
+						if($dataRow!='empty'){
+							$dataCheckPeserta='empty';
+						}else{
+								$dataCheckPeserta='not empty';
+						}
+					}
 				 $apiuser=$this->apiuser($nip);
 	 			if($apiuser->message=='get_data_success'){
 	 					$provinsiNama = $apiuser->data[0]->Provinsi;
 						$dataProvisi=$this->provinsi->getdataPK($provinsiNama);
 						$provinsiId=$dataProvisi->PK_PROVINSI;
 					}
-				 if(!$dataCheckPeserta){
+				 if($dataCheckPeserta=='empty'){
 						 $folder='doc_registrasi/'.$nip.'_'.$date;
 						 $data_doc[0]='doc_ksp';
 						 $data_doc[1]='doc_foto';
@@ -124,7 +134,7 @@ class Registrasi extends CI_Controller {
 							 $data_doc[2]='doc_loc';
 							 $data_url_doc['doc_url_foto']=$folder.'/'.$_FILES['doc_loc']['name'];
 							 $pindah_berkas=1;
-							 $uploadpdf2 = $this->do_upload_pdf($folder,$data_doc['doc_nama_loc']);
+							 $uploadpdf2 = $this->do_upload_pdf($folder,'doc_loc');
 						 }else{
 							  $pindah_berkas=0;
 						 }
@@ -137,7 +147,7 @@ class Registrasi extends CI_Controller {
 					 			'NIP' => $this->input->post('nip'),
 								'GROUP_REGIS' => '',
 								'KODE_DIKLAT' => $this->input->post('diklat'),
-					 			'LOKASI_UJIAN' => $this->input->post('lokasi'),
+					 			'LOKASI_UJIAN' => ($this->input->post('lokasi')==''?$provinsiId:$this->input->post('lokasi')),
 					 			'FK_JADWAL_UJIAN' => $this->input->post('jadwal'),
 					 			'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
 					 			'NILAI_KSP' => $this->input->post('nilai_ksp'),

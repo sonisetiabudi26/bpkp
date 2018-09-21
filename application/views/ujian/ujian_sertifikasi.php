@@ -15,7 +15,7 @@
 					<?php
 						foreach ($soal as $key=>$soal_ujian):
 					?>
-				  <button type="button" onclick="pindahPage('<?php echo $key+1;?>');" class="btn btn-primary col-lg-1"><?php echo $key+1;?> <i class="fa fa-check" id="check<?php echo $key+1;?>" style="visibility: hidden;color:yellow"></i><i class="fa fa-flag" id="flag<?php echo $key+1;?>" style="visibility: hidden;color:#fff"></i></button>
+				  <button type="button" onclick="pindahPage('<?php echo $key+1;?>');" class="btn btn-primary col-lg-1"><?php echo $key+1;?> <i class="fa fa-check" id="check<?php echo $key+1;?>" style="visibility: hidden;color:#32CD32"></i><i class="fa fa-flag" id="flag<?php echo $key+1;?>" style="visibility: hidden;color:#fff"></i></button>
 					<?php
 						endforeach;
 					?>
