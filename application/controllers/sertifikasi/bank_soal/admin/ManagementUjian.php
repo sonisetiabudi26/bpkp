@@ -38,6 +38,7 @@ class ManagementUjian extends CI_Controller {
               $no++;
               $rows = array();
               $rows[] = $a;
+							$rows[] = $row->DATE_TIME;
               $rows[] = $row->START_TIME;
               $rows[] = $row->END_TIME;
               $rows[] = $row->NAMA_MATA_AJAR;
