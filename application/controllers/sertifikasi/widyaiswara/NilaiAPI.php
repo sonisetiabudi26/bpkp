@@ -14,7 +14,7 @@ class NilaiAPI extends CI_Controller{
 				$draw=intval($this->input->get('draw'));
 				$start=intval($this->input->get('start'));
 				$length=intval($this->input->get('length'));
-				$nip = '15009835';
+				$nip = $this->session->userdata('nip');
 			  // $result_login=$check['token'];
 
 

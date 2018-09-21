@@ -99,7 +99,7 @@ class Nilai extends CI_Controller{
 						'NAMA'=>$row['B'],
     				'FK_MATA_AJAR'=>$dataAll['fk_mata_ajar'],
 						'NIP_INSTRUKTUR'=> $dataAll['id'],
-            'CREATED_BY' =>  $this->session->userdata('logged_in'),
+            'CREATED_BY' =>  $this->session->userdata('nip'),
             'CREATED_DATE' => $datex,
     				]);
 
