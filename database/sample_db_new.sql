@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 21, 2018 at 04:34 AM
+-- Generation Time: Sep 22, 2018 at 02:55 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -68,7 +68,12 @@ CREATE TABLE `bab_mata_ajar` (
 --
 
 INSERT INTO `bab_mata_ajar` (`PK_BAB_MATA_AJAR`, `FK_MATA_AJAR`, `NAMA_BAB_MATA_AJAR`) VALUES
-(3, 13, 'bab 1');
+(6, 12, 'BAB 1'),
+(7, 28, 'BAB 1'),
+(8, 28, 'BAB 2'),
+(9, 12, 'BAB 2'),
+(10, 28, 'BAB 3'),
+(11, 12, 'BAB 3');
 
 -- --------------------------------------------------------
 
@@ -203,13 +208,6 @@ CREATE TABLE `detail_nilai_wi` (
   `flag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `detail_nilai_wi`
---
-
-INSERT INTO `detail_nilai_wi` (`PK_DETAIL_NILAI_WI`, `FK_WIDYAISWARA_NILAI`, `NILAI_1`, `NILAI_2`, `flag`) VALUES
-(33, 36, 90, 90, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -229,11 +227,36 @@ CREATE TABLE `detail_permintaan_soal` (
 --
 
 INSERT INTO `detail_permintaan_soal` (`PK_DETAIL_PERMINTAAN_SOAL`, `FK_PERMINTAAN_SOAL`, `TUGAS`, `PETUGAS`, `COMMENT`) VALUES
-(1, 29, 'pembuat_soal', 'review2', ''),
-(2, 29, 'review1', 'review2', ''),
-(3, 29, 'review2', 'review1', ''),
-(4, 29, 'review3', 'review2', ''),
-(5, 29, 'review4', 'subid', '');
+(11, 31, 'pembuat_soal', 'pembuat_soal', ''),
+(12, 31, 'review1', 'review1', ''),
+(13, 31, 'review2', 'review2', ''),
+(14, 31, 'review3', 'subid', ''),
+(15, 31, 'review4', 'kapus', ''),
+(16, 32, 'pembuat_soal', 'pembuat_soal', ''),
+(17, 32, 'review1', 'review1', ''),
+(18, 32, 'review2', 'review2', ''),
+(19, 32, 'review3', 'subid', ''),
+(20, 32, 'review4', 'kapus', ''),
+(26, 34, 'pembuat_soal', 'pembuat_soal', ''),
+(27, 34, 'review1', 'review1', ''),
+(28, 34, 'review2', 'review2', ''),
+(29, 34, 'review3', 'subid', ''),
+(30, 34, 'review4', 'kapus', ''),
+(31, 35, 'pembuat_soal', 'pembuat_soal', ''),
+(32, 35, 'review1', 'review1', ''),
+(33, 35, 'review2', 'review2', ''),
+(34, 35, 'review3', 'subid', ''),
+(35, 35, 'review4', 'kapus', ''),
+(36, 36, 'pembuat_soal', 'pembuat_soal', ''),
+(37, 36, 'review1', 'review1', ''),
+(38, 36, 'review2', 'review2', ''),
+(39, 36, 'review3', 'subid', ''),
+(40, 36, 'review4', 'kapus', ''),
+(41, 37, 'pembuat_soal', 'pembuat_soal', ''),
+(42, 37, 'review1', 'review1', ''),
+(43, 37, 'review2', 'review2', ''),
+(44, 37, 'review3', 'subid', ''),
+(45, 37, 'review4', 'kapus', '');
 
 -- --------------------------------------------------------
 
@@ -527,8 +550,8 @@ CREATE TABLE `kode_soal` (
 --
 
 INSERT INTO `kode_soal` (`PK_KODE_SOAL`, `KODE_SOAL`, `FK_MATA_AJAR`, `KEBUTUHAN_SOAL`, `PUBLISH`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(12, '14401', 13, 30, 1, 'admin_bank', '2018-09-14 00:00:00'),
-(17, '14402', 13, 60, 0, 'admin_bank', '2018-09-14 00:00:00');
+(21, '26101', 28, 6, 0, 'admin_bank', '2018-09-21 00:00:00'),
+(22, '14101', 12, 6, 0, 'admin_bank', '2018-09-21 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -554,9 +577,9 @@ CREATE TABLE `konfigurasi_ujian` (
 --
 
 INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `DATE_TIME`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `JUMLAH_SOAL`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(6, '0000-00-00', '00:12:00', '20:12:00', '795984', 12, 24, 60, 'admin_bank', '2018-09-15 00:00:00'),
-(7, '0000-00-00', '00:34:00', '07:11:00', '118563', 13, 25, 10, 'admin_bank', '2018-09-16 00:00:00'),
-(8, '0000-00-00', '00:21:00', '12:21:00', '686836', 12, 27, 20, 'admin_bank', '2018-09-20 00:00:00');
+(6, '2009-12-09', '00:12:00', '20:12:00', '795984', 12, 24, 60, 'admin_bank', '2018-09-15 00:00:00'),
+(7, '2017-02-06', '00:34:00', '07:11:00', '118563', 13, 25, 10, 'admin_bank', '2018-09-16 00:00:00'),
+(8, '2201-02-01', '00:21:00', '12:21:00', '686836', 12, 27, 20, 'admin_bank', '2018-09-20 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -842,7 +865,12 @@ CREATE TABLE `permintaan_soal` (
 --
 
 INSERT INTO `permintaan_soal` (`PK_PERMINTAAN_SOAL`, `FK_BAB_MATA_AJAR`, `TIPE_SOAL`, `TANGGAL_PERMINTAAN`, `JUMLAH_SOAL`, `FK_LOOKUP_STATUS_PERMINTAAN`, `STATUS`, `flag`) VALUES
-(29, 3, 'Pilihan Ganda', '2018-09-19', 2, 27, 'pembuat_soal', 0);
+(31, 6, 'Pilihan Ganda', '2018-09-21', 2, 27, 'selesai', 2),
+(32, 7, 'Pilihan Ganda', '2018-09-21', 2, 27, 'selesai', 2),
+(34, 8, 'Pilihan Ganda', '2018-09-21', 2, 27, 'selesai', 2),
+(35, 9, 'Pilihan Ganda', '2018-09-21', 2, 27, 'selesai', 2),
+(36, 10, 'Pilihan Ganda', '2018-09-21', 2, 27, 'selesai', 2),
+(37, 11, 'Pilihan Ganda', '2018-09-21', 2, 27, 'selesai', 2);
 
 -- --------------------------------------------------------
 
@@ -1066,68 +1094,12 @@ CREATE TABLE `soal_distribusi` (
 --
 
 INSERT INTO `soal_distribusi` (`PK_SOAL_DISTRIBUSI`, `FK_KODE_SOAL`, `FK_SOAL_UJIAN`, `NO_UJIAN`, `FLAG`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `JAWABAN`, `CREATED_AT`, `CREATED_DATE`) VALUES
-(158, '12', 297, 1, 0, '13', '17', '14', '15', '2', 'admin_bank', '2018-09-14'),
-(159, '12', 313, 2, 0, '13', '17', '12', '14', '3', 'admin_bank', '2018-09-14'),
-(160, '12', 305, 3, 0, '20', '70', '50', '40', '4', 'admin_bank', '2018-09-14'),
-(161, '12', 291, 4, 0, '2', '9', '6', '1', '2', 'admin_bank', '2018-09-14'),
-(162, '12', 303, 5, 0, '12', '18', '13', '15', '2', 'admin_bank', '2018-09-14'),
-(163, '12', 308, 6, 0, '80', '120', '100', '130', '2', 'admin_bank', '2018-09-14'),
-(164, '12', 296, 7, 0, '22', '20', '21', '24', '3', 'admin_bank', '2018-09-14'),
-(165, '12', 294, 8, 0, '18', '11', '15', '4', '2', 'admin_bank', '2018-09-14'),
-(166, '12', 287, 9, 0, '3', '7', '5', '6', '4', 'admin_bank', '2018-09-14'),
-(167, '12', 298, 10, 0, '6', '5', '3', '4', '1', 'admin_bank', '2018-09-14'),
-(168, '12', 311, 11, 0, '25', '21', '23', '28', '2', 'admin_bank', '2018-09-14'),
-(169, '12', 295, 12, 0, '23', '24', '15', '17', '2', 'admin_bank', '2018-09-14'),
-(170, '12', 300, 13, 0, '26', '32', '31', '34', '2', 'admin_bank', '2018-09-14'),
-(171, '12', 310, 14, 0, '12', '15', '14', '11', '4', 'admin_bank', '2018-09-14'),
-(172, '12', 299, 15, 0, '15', '14', '12', '16', '4', 'admin_bank', '2018-09-14'),
-(173, '12', 285, 16, 0, '8', '5', '1', '3', '4', 'admin_bank', '2018-09-14'),
-(174, '12', 307, 17, 0, '50', '30', '90', '100', '4', 'admin_bank', '2018-09-14'),
-(175, '12', 286, 18, 0, '6', '4', '9', '1', '2', 'admin_bank', '2018-09-14'),
-(176, '12', 314, 19, 0, '8', '5', '7', '2', '4', 'admin_bank', '2018-09-14'),
-(177, '12', 290, 20, 0, '4', '3', '7', '6', '2', 'admin_bank', '2018-09-14'),
-(178, '12', 309, 21, 0, '21', '22', '23', '26', '2', 'admin_bank', '2018-09-14'),
-(179, '12', 312, 22, 0, '26', '21', '20', '22', '3', 'admin_bank', '2018-09-14'),
-(180, '12', 302, 23, 0, '32', '33', '37', '30', '1', 'admin_bank', '2018-09-14'),
-(181, '12', 283, 24, 0, 'mangga', 'pepaya', 'kambing', 'nanas', '3', 'admin_bank', '2018-09-14'),
-(182, '12', 288, 25, 0, '8', '1', '7', '6', '1', 'admin_bank', '2018-09-14'),
-(183, '12', 306, 26, 0, '60', '30', '50', '70', '1', 'admin_bank', '2018-09-14'),
-(184, '12', 301, 27, 0, '60', '30', '20', '10', '1', 'admin_bank', '2018-09-14'),
-(185, '12', 292, 28, 0, '2', '7', '6', '1', '3', 'admin_bank', '2018-09-14'),
-(186, '12', 284, 29, 0, 'beringin', 'asdj', 'nanas', 'jakarta', '4', 'admin_bank', '2018-09-14'),
-(187, '12', 304, 30, 0, '14', '12', '11', '10', '4', 'admin_bank', '2018-09-14'),
-(188, '17', 302, 1, 0, '32', '31', '30', '34', '1', 'admin_bank', '2018-09-14'),
-(189, '17', 291, 2, 0, '9', '3', '6', '2', '1', 'admin_bank', '2018-09-14'),
-(190, '17', 313, 3, 0, '17', '15', '18', '12', '4', 'admin_bank', '2018-09-14'),
-(191, '17', 285, 4, 0, '8', '3', '2', '4', '2', 'admin_bank', '2018-09-14'),
-(192, '17', 310, 5, 0, '14', '12', '18', '11', '4', 'admin_bank', '2018-09-14'),
-(193, '17', 309, 6, 0, '22', '26', '24', '28', '1', 'admin_bank', '2018-09-14'),
-(194, '17', 287, 7, 0, '6', '5', '2', '4', '1', 'admin_bank', '2018-09-14'),
-(195, '17', 288, 8, 0, '7', '8', '3', '2', '2', 'admin_bank', '2018-09-14'),
-(196, '17', 296, 9, 0, '22', '25', '21', '19', '3', 'admin_bank', '2018-09-14'),
-(197, '17', 286, 10, 0, '7', '4', '9', '1', '2', 'admin_bank', '2018-09-14'),
-(198, '17', 314, 11, 0, '5', '8', '6', '2', '4', 'admin_bank', '2018-09-14'),
-(199, '17', 295, 12, 0, '24', '16', '17', '15', '1', 'admin_bank', '2018-09-14'),
-(200, '17', 311, 13, 0, '21', '25', '27', '28', '1', 'admin_bank', '2018-09-14'),
-(201, '17', 312, 14, 0, '25', '20', '22', '26', '2', 'admin_bank', '2018-09-14'),
-(202, '17', 305, 15, 0, '70', '90', '40', '50', '3', 'admin_bank', '2018-09-14'),
-(203, '17', 297, 16, 0, '13', '16', '15', '12', '1', 'admin_bank', '2018-09-14'),
-(204, '17', 307, 17, 0, '90', '100', '40', '80', '2', 'admin_bank', '2018-09-14'),
-(205, '17', 300, 18, 0, '35', '30', '25', '32', '4', 'admin_bank', '2018-09-14'),
-(206, '17', 306, 19, 0, '80', '60', '50', '90', '2', 'admin_bank', '2018-09-14'),
-(207, '17', 298, 20, 0, '5', '6', '8', '2', '2', 'admin_bank', '2018-09-14'),
-(208, '17', 290, 21, 0, '1', '5', '3', '8', '3', 'admin_bank', '2018-09-14'),
-(209, '17', 293, 22, 0, '11', '13', '17', '14', '1', 'admin_bank', '2018-09-14'),
-(210, '17', 299, 23, 0, '16', '14', '17', '13', '1', 'admin_bank', '2018-09-14'),
-(211, '17', 289, 24, 0, '3', '11', '6', '10', '4', 'admin_bank', '2018-09-14'),
-(212, '17', 301, 25, 0, '10', '40', '50', '60', '4', 'admin_bank', '2018-09-14'),
-(213, '17', 283, 26, 0, 'kambing', 'nanas', 'beringin', 'pepaya', '1', 'admin_bank', '2018-09-14'),
-(214, '17', 303, 27, 0, '18', '17', '14', '16', '1', 'admin_bank', '2018-09-14'),
-(215, '17', 292, 28, 0, '2', '5', '8', '6', '4', 'admin_bank', '2018-09-14'),
-(216, '17', 294, 29, 0, '18', '11', '15', '12', '2', 'admin_bank', '2018-09-14'),
-(217, '17', 284, 30, 0, 'apel', 'jakarta', 'pepaya', 'pisang', '2', 'admin_bank', '2018-09-14'),
-(218, '17', 304, 31, 0, '10', '11', '13', '14', '1', 'admin_bank', '2018-09-14'),
-(219, '17', 308, 32, 0, '60', '90', '120', '80', '3', 'admin_bank', '2018-09-14');
+(224, '21', 336, 1, 0, '', '4', '3', '1', '2', 'admin_bank', '2018-09-21'),
+(225, '21', 335, 2, 0, '42', '45', '', '43', '2', 'admin_bank', '2018-09-21'),
+(226, '21', 337, 3, 0, '3', '5', '', '4', '4', 'admin_bank', '2018-09-21'),
+(227, '21', 339, 4, 0, '', '3', '1', '4', '4', 'admin_bank', '2018-09-21'),
+(228, '21', 338, 5, 0, '1', '', '', '2', '4', 'admin_bank', '2018-09-21'),
+(229, '21', 340, 6, 0, '', '', '', '2', '4', 'admin_bank', '2018-09-21');
 
 -- --------------------------------------------------------
 
@@ -1178,38 +1150,20 @@ CREATE TABLE `soal_ujian` (
 --
 
 INSERT INTO `soal_ujian` (`PK_SOAL_UJIAN`, `FK_BAB_MATA_AJAR`, `FK_PERMINTAAN_SOAL`, `PARENT_SOAL`, `PERTANYAAN`, `JAWABAN`, `PILIHAN_1`, `PILIHAN_2`, `PILIHAN_3`, `PILIHAN_4`, `PILIHAN_5`, `PILIHAN_6`, `PILIHAN_7`, `PILIHAN_8`, `TAMPIL_UJIAN`) VALUES
-(283, 3, 27, NULL, 'nama hewan', '1', 'kambing', 'pepaya', 'pisang', 'nanas', 'apel', 'mangga', 'beringin', 'das', 1),
-(284, 3, 27, NULL, 'ibukota indonesia', '8', 'asdj', 'pepaya', 'pisang', 'nanas', 'apel', 'mangga', 'beringin', 'jakarta', 1),
-(285, 3, 28, NULL, '2+1 = ', '1', '3', '2', '4', '5', '6', '7', '8', '1', 1),
-(286, 3, 28, NULL, '2+2=', '4', '3', '5', '1', '4', '7', '6', '8', '9', 1),
-(287, 3, 28, NULL, '3+3=', '6', '1', '2', '3', '4', '5', '6', '7', '8', 1),
-(288, 3, 28, NULL, '4+4=', '8', '1', '2', '3', '4', '5', '6', '7', '8', 1),
-(289, 3, 28, NULL, '5+5=', '6', '2', '3', '4', '5', '6', '10', '8', '11', 1),
-(290, 3, 28, NULL, '1+2=', '4', '1', '2', '4', '3', '5', '6', '7', '8', 1),
-(291, 3, 28, NULL, '4+5=', '8', '1', '2', '3', '4', '5', '6', '8', '9', 1),
-(292, 3, 28, NULL, '5+1=', '4', '2', '4', '5', '6', '7', '8', '9', '1', 1),
-(293, 3, 28, NULL, '10+1=', '1', '11', '12', '13', '14', '15', '16', '17', '18', 1),
-(294, 3, 28, NULL, '9+2=', '3', '12', '13', '11', '4', '15', '18', '19', '10', 1),
-(295, 3, 28, NULL, '12+12=', '5', '15', '16', '17', '18', '24', '25', '26', '23', 1),
-(296, 3, 28, NULL, '10+11=', '7', '19', '20', '22', '23', '24', '25', '21', '26', 1),
-(297, 3, 28, NULL, '2+11=', '2', '12', '13', '14', '15', '16', '17', '18', '19', 1),
-(298, 3, 28, NULL, '2+4=', '6', '1', '2', '3', '4', '5', '6', '7', '8', 1),
-(299, 3, 28, NULL, '8+8=', '5', '12', '13', '14', '15', '16', '17', '18', '19', 1),
-(300, 3, 28, NULL, '20+12=', '5', '25', '26', '30', '31', '32', '33', '34', '35', 1),
-(301, 3, 28, NULL, '30+30=', '6', '10', '20', '30', '40', '50', '60', '70', '80', 1),
-(302, 3, 28, NULL, '32-2=', '3', '30', '31', '32', '33', '34', '35', '36', '37', 1),
-(303, 3, 28, NULL, '15+3=', '7', '12', '13', '14', '15', '16', '17', '18', '19', 1),
-(304, 3, 28, NULL, '20-10=', '1', '10', '11', '12', '13', '14', '15', '16', '17', 1),
-(305, 3, 28, NULL, '20+20=', '3', '20', '30', '40', '50', '60', '70', '80', '90', 1),
-(306, 3, 28, NULL, '30+30=', '5', '20', '30', '40', '50', '60', '70', '80', '90', 1),
-(307, 3, 28, NULL, '50+50=', '8', '30', '40', '50', '60', '70', '80', '90', '100', 1),
-(308, 3, 28, NULL, '60+60=', '7', '60', '70', '80', '90', '100', '110', '120', '130', 1),
-(309, 3, 28, NULL, '11+11=', '2', '21', '22', '23', '24', '25', '26', '27', '28', 1),
-(310, 3, 28, NULL, '21-10=', '1', '11', '12', '13', '14', '15', '16', '17', '18', 1),
-(311, 3, 28, NULL, '32-11=', '1', '21', '22', '23', '24', '25', '26', '27', '28', 1),
-(312, 3, 28, NULL, '17+3=', '4', '21', '22', '23', '20', '24', '25', '26', '27', 1),
-(313, 3, 28, NULL, '19-7=', '2', '11', '12', '13', '14', '15', '17', '16', '18', 1),
-(314, 3, 28, NULL, '12-10=', '1', '2', '3', '4', '5', '6', '7', '8', '9', 1);
+(333, 6, 31, NULL, '11+11=', '2', '21', '22', '23', '24', '', '', '', '', 1),
+(334, 6, 31, NULL, 'nama hewan', '1', 'kuda', 'laci', 'kunci', 'lemari', '', '', '', '', 1),
+(335, 7, 32, NULL, '22+23=', '4', '41', '42', '43', '45', '', '', '', '', 1),
+(336, 7, 32, NULL, 'kuda memiliki kaki', '4', '1', '3', '2', '4', '', '', '', '', 1),
+(337, 8, 33, NULL, 'kucing berkaki...', '3', '2', '3', '4', '5', '', '', '', '', 0),
+(338, 8, 33, NULL, 'ayam berkaki..', '2', '1', '2', '3', '4', '', '', '', '', 0),
+(339, 8, 34, NULL, 'kucing berkaki..', '4', '1', '2', '3', '4', '', '', '', '', 1),
+(340, 8, 34, NULL, 'ayam berkaki..', '2', '1', '2', '3', '4', '', '', '', '', 1),
+(341, 9, 35, NULL, 'mata ada..?', '2', '1', '2', '4', '3', '', '', '', '', 1),
+(342, 9, 35, NULL, 'kuping manusia ada ..?', '1', '2', '3', '4', '5', '', '', '', '', 1),
+(343, 10, 36, NULL, '5+5=', '4', '11', '12', '13', '10', '', '', '', '', 1),
+(344, 10, 36, NULL, '6+6=', '2', '11', '12', '13', '14', '', '', '', '', 1),
+(345, 11, 37, NULL, '12+13 =', '3', '23', '24', '25', '26', '', '', '', '', 1),
+(346, 11, 37, NULL, '8-1=', '2', '6', '7', '8', '9', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -1340,7 +1294,7 @@ CREATE TABLE `widyaiswara_nilai` (
 --
 
 INSERT INTO `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`, `NIP`, `NAMA`, `TGL_RELEASE_MATA_AJAR`, `FK_MATA_AJAR`, `NILAI_1`, `NILAI_2`, `NIP_INSTRUKTUR`, `flag`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(36, '195212211978031001', 'soni', '2018-09-19', 13, 0, 0, '90', 1, 'Pusbin Budianto', '2018-09-18');
+(37, '195212211978031008', 'alimudin', '2011-12-12', 13, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-21');
 
 -- --------------------------------------------------------
 
@@ -1644,7 +1598,7 @@ ALTER TABLE `angka_kredit`
 -- AUTO_INCREMENT for table `bab_mata_ajar`
 --
 ALTER TABLE `bab_mata_ajar`
-  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `PK_BAB_MATA_AJAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `batch`
@@ -1662,13 +1616,13 @@ ALTER TABLE `bridge_lookup`
 -- AUTO_INCREMENT for table `detail_nilai_wi`
 --
 ALTER TABLE `detail_nilai_wi`
-  MODIFY `PK_DETAIL_NILAI_WI` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `PK_DETAIL_NILAI_WI` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `detail_permintaan_soal`
 --
 ALTER TABLE `detail_permintaan_soal`
-  MODIFY `PK_DETAIL_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `PK_DETAIL_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `document_pengusulan_pengangkatan`
@@ -1722,7 +1676,7 @@ ALTER TABLE `jenjang`
 -- AUTO_INCREMENT for table `kode_soal`
 --
 ALTER TABLE `kode_soal`
-  MODIFY `PK_KODE_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `PK_KODE_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `konfigurasi_ujian`
@@ -1758,7 +1712,7 @@ ALTER TABLE `pengusul_pengangkatan`
 -- AUTO_INCREMENT for table `permintaan_soal`
 --
 ALTER TABLE `permintaan_soal`
-  MODIFY `PK_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `PK_PERMINTAAN_SOAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `pertek`
@@ -1794,7 +1748,7 @@ ALTER TABLE `sertifikat`
 -- AUTO_INCREMENT for table `soal_distribusi`
 --
 ALTER TABLE `soal_distribusi`
-  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `PK_SOAL_DISTRIBUSI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 
 --
 -- AUTO_INCREMENT for table `soal_kasus`
@@ -1806,7 +1760,7 @@ ALTER TABLE `soal_kasus`
 -- AUTO_INCREMENT for table `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=315;
+  MODIFY `PK_SOAL_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
 
 --
 -- AUTO_INCREMENT for table `status_doc`
@@ -1830,7 +1784,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `widyaiswara_nilai`
 --
 ALTER TABLE `widyaiswara_nilai`
-  MODIFY `PK_WIDYAISWARA_NILAI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `PK_WIDYAISWARA_NILAI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables
