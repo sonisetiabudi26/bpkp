@@ -24,7 +24,7 @@
 			<?php
 				foreach ($bab_mata_ajar as $key):
 			?>
-			<option value="<?php echo $key->PK_BAB_MATA_AJAR.'~'.intval($key->jml_soal - $num);?>"><?php echo $key->NAMA_BAB_MATA_AJAR.' ( jumlah soal '.intval($key->jml_soal - $num).')';?></option>
+			<option value="<?php echo $key->PK_BAB_MATA_AJAR.'~'.intval($key->jml_soal - ($fk_bab_mata_ajr==$key->PK_BAB_MATA_AJAR?$num:'0'));?>"><?php echo $key->NAMA_BAB_MATA_AJAR.' ( jumlah soal '.intval($key->jml_soal - ($fk_bab_mata_ajr==$key->PK_BAB_MATA_AJAR?$num:'0')).')';?></option>
 			<?php
 				endforeach;
 			?>

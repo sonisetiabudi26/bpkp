@@ -67,6 +67,7 @@ class ManagementUjian extends CI_Controller {
 			$datex=date('m/d/Y');
 			$dataAll = $this->konfig->get_data_all_by($this->input->post('pk_konfig_ujian'));
 			foreach ($dataAll as $key) {
+				$data['tanggal']=$key->DATE_TIME;
 				$data['waktu_mulai']=$key->START_TIME;
 				$data['waktu_selesai']=$key->END_TIME;
 				$data['nama_jenjang']=$key->NAMA_JENJANG;
@@ -98,11 +99,13 @@ class ManagementUjian extends CI_Controller {
     return $pin;
 }
 	public function edit_konfig_ujian(){
+		$tanggal=$this->input->post('tanggal');
 		$waktu_mulai=$this->input->post('waktu_mulai');
 		$waktu_selesai=$this->input->post('waktu_selesai');
 		$jml_soal=$this->input->post('jml_soal');
 		$pk_konfig_ujian=$this->input->post('pk_konfig_ujian');
 		$datakonfig = array(
+		'DATE_TIME' => $tanggal,
 		'START_TIME' => $waktu_mulai,
 		'END_TIME' => $waktu_selesai,
 		'JUMLAH_SOAL' => $jml_soal,

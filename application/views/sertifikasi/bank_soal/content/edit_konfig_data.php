@@ -9,6 +9,14 @@
 		</tr>
 	</thead>
 	<tbody>
+    <tr>
+      <td>
+        <div class="form-group">
+          <label for="select-mata-ajar">Tanggal Mulai :</label>
+          <input type="date" class="form-control" name="tanggal" value="<?php echo $tanggal;?>" id="tanggal" />
+        </div>
+      </td>
+    </tr>
 		<tr>
 			<td>
 				<div class="form-group">

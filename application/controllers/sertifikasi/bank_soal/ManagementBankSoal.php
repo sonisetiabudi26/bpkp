@@ -376,6 +376,7 @@ class ManagementBankSoal extends CI_Controller {
 			$data['mata_ajar'] =$data_kode_soal[0]->NAMA_MATA_AJAR;
 			$numrow=$this->kodesoal->total_soal($data_kode_soal[0]->KODE_SOAL);
 			if($numrow!='nodata'){
+				$data['fk_bab_mata_ajr']=$numrow[0]->FK_BAB_MATA_AJAR;
 				$data['num']=$numrow[0]->total_soal;
 			}else{
 				$data['num']=0;
