@@ -195,7 +195,7 @@ class RegisUjian extends My_Model
 
 	}
 	public function loadDatabyNIP2($NIP){
-		$condition = "registrasi_ujian.CREATED_BY =" . "'" . $NIP . "' and flag=1";
+		$condition = "registrasi_ujian.CREATED_BY =" . "'" . $NIP . "' and flag='1'";
 		$this->db->select('registrasi_ujian.*,jenjang.NAMA_JENJANG,jadwal_ujian.CATEGORY');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');

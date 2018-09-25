@@ -96,7 +96,7 @@ class Home extends CI_Controller {
 						$row = array();
 						$row[] = $a;
 						$row[] = $field->NIP;
-						$apiuser=$this->apiuser($field->NIP);
+						$apiuser=$this->apiuser($nip);
 		        $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
 		        //$dataRow['unitapip']=$kodeunitkerja;
 						$row[] = $apiuser->data[0]->Auditor_NamaLengkap;
