@@ -69,7 +69,8 @@ class ManagementRegistrasi extends CI_Controller {
 				$data = array();
 				$data[]=$no;
 				$data[]=$key->USER_NAME;
-
+				$dataSUM=$this->user->loaddataWidyaiswarauserSum($key->PK_USER);
+				$data[]=$dataSUM->total;
 				$url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_show_data_wi/".$key->PK_USER;
 				$url_detail=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_show_data_detail_wi/".$key->PK_USER;
 				$data[]='<a class="btn btn-sm btn-success" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="fa fa-upload"></i> Unggah Data WI </a>

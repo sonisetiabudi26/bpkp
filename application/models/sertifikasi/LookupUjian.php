@@ -64,6 +64,16 @@ class LookupUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function getDataNilaibyunitapip($id){
+		$condition = "lookup_ujian.CREATED_BY ='" . $id . "'";
+		$this->db->select('lookup_ujian.*,mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.NIP');
+		$this->db->from('lookup_ujian');
+		$this->db->join('registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN= lookup_ujian.FK_REGIS_UJIAN');
+		$this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 	public function getDataidentitasSertifikat($id){
 		$condition = "sertifikat.FK_REGIS_UJIAN ='" . $id . "'";
 		$this->db->select('sertifikat.*,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jenjang.NAMA_JENJANG,registrasi_ujian.NIP');

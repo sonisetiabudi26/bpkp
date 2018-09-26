@@ -15,13 +15,12 @@
             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 							<thead>
 							<tr>
-								<td>Nama</td>								
+								<td>NIP</td>
 								<td>Mata Pelajaran</td>
-								<td>Nilai</td>
 								<td>Status</td>
 							</tr>
 							</thead>
-							<tbody>
+							<tbody id="dataResult">
 							</tbody>
 							</table>
 					</div>
@@ -31,3 +30,28 @@
 		</div>
 	</div>
 </div>
+<script>
+$(document).ready(function() {
+
+
+
+	$.ajax({
+			type  : 'ajax',
+			url   :  "<?php echo base_url('sertifikasi/unit_apip/KomponenNilai/loadData/')?>",
+			async : false,
+			dataType : 'json',
+			success : function(data){
+
+				var nip='';
+				data.forEach(function(resp) {
+					for (var i = 0; i < resp.length; i++) {
+						$("#dataResult").append("<tr><td>" + resp[i].NIP + "</td><td>"+resp[i].NAMA_MATA_AJAR+"</td><td>" + resp[i].STATUS  + "</td></tr>");
+						nip=resp[i].NIP;
+					}
+				});
+			}
+	});
+
+
+});
+</script>

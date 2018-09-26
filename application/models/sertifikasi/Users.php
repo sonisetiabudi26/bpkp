@@ -44,6 +44,17 @@ public function loaddataWidyaiswarauser(){
 		return $query->result();
 
 }
+public function loaddataWidyaiswarauserSum($pk_user){
+	$condition = "users.PK_USER =" . "'" . $pk_user . "'";
+	$this->db->select('count(*) as total');
+	$this->db->from($this->_table);
+	$this->db->join('widyaiswara_nilai', 'users.PK_USER = widyaiswara_nilai.NIP_INSTRUKTUR');
+	$this->db->join('detail_nilai_wi', 'widyaiswara_nilai.PK_WIDYAISWARA_NILAI =  detail_nilai_wi.FK_WIDYAISWARA_NILAI');
+	$this->db->where($condition);
+	$query = $this->db->get();
+
+		return $query->row();
+}
 public function loaddataWidyaiswarauserbyid($id){
 	$condition = "users.PK_USER =" . "'" . $id . "'";
 	$this->db->select('widyaiswara_nilai.NIP,detail_nilai_wi.NILAI_1,detail_nilai_wi.NILAI_2,widyaiswara_nilai.NAMA,mata_ajar.NAMA_MATA_AJAR,widyaiswara_nilai.TGL_RELEASE_MATA_AJAR');

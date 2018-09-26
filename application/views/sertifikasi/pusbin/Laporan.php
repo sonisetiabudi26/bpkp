@@ -63,6 +63,7 @@
 												<tr>
 													<td>NO</td>
 													<td>NIP</td>
+													<td>NAMA</td>
 													<td>Nama Jenjang</td>
 													<td>Status</td>
 													<td>Tindakan</td>
@@ -91,6 +92,7 @@
 												<tr>
 													<td>NO</td>
 													<td>NIP</td>
+													<td>Total yang sudah dinilai</td>
 													<td>Tindakan</td>
 												</tr>
 												</thead>
@@ -185,6 +187,7 @@ function loadDataNilaiPeserta(){
 	                  {"data": "2",width:100},
 	                  {"data": "3",width:100},
 										{"data": "4",width:100},
+										{"data": "4",width:100},
 
 	              ],
 
@@ -233,6 +236,7 @@ var table;
                   {"data": "0",width:70},
                   {"data": "1",width:100},
                   {"data": "2",width:100},
+									{"data": "3",width:100},
 
               ],
 

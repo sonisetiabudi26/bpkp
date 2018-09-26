@@ -213,6 +213,14 @@ class PerhitunganNilai extends CI_Controller {
              $row = array();
              $row[] = $a;
              $row[] = $field->NIP;
+						 $apiuser=$this->apiuser($field->NIP);
+						 if($apiuser->message!='auditor_not_found' ){
+						 $data[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+						 // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+						 }else{
+							 $data[] ='unknown';
+							 // $data['kodeunitkerja']='empty';
+						 }
              $row[] = $field->NAMA_JENJANG;
 						 $data_status=$this->lookup_ujian->getStatus($field->FK_REGIS_UJIAN,1);
 						 foreach ($data_status as $key) {
@@ -249,9 +257,16 @@ class PerhitunganNilai extends CI_Controller {
        echo json_encode($output);
 		}
 		public function apiuser($param){
-			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
-			$check=file_get_contents($url);
-			$jsonResult=json_decode($check);
+			try {
+				$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
+				$check=file_get_contents($url);
+				$jsonResult=json_decode($check);
+			} catch (\Exception $e) {
+				$jsonResult = array(
+						"message" => 'auditor_not_found');
+			}
+
+
 			return $jsonResult;
 		}
 		public function print_sertifikat($pk){
@@ -275,8 +290,13 @@ class PerhitunganNilai extends CI_Controller {
 				$data['datex']=$datex;
 				$data['a_n']=$key->A_N;
 				$apiuser=$this->apiuser($key->NIP);
+				if($apiuser->message!='auditor_not_found'){
 				$data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 				$data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+				}else{
+					$data['nama'] ='unknown';
+					$data['kodeunitkerja']='empty';
+				}
 				if($key->DOC_NAMA=='doc_foto'){
 					$data['foto']=$key->DOCUMENT;
 				}
