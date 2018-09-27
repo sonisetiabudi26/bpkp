@@ -215,10 +215,10 @@ class PerhitunganNilai extends CI_Controller {
              $row[] = $field->NIP;
 						 $apiuser=$this->apiuser($field->NIP);
 						 if($apiuser->message!='auditor_not_found' ){
-						 $data[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+						 $row[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 						 // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
 						 }else{
-							 $data[] ='unknown';
+							 $row[] ='unknown';
 							 // $data['kodeunitkerja']='empty';
 						 }
              $row[] = $field->NAMA_JENJANG;
