@@ -47,13 +47,21 @@ class Home extends CI_Controller {
 				$data['lokasi']=$key->NAMA;
 				$data['kode_diklat']=$key->KODE_DIKLAT.' - '.$key->NAMA_JENJANG;
 				$apiuser=$this->apiuser($key->NIP);
-				$data['unit'] = $apiuser->data[0]->UnitKerja_Nama;
+				if($apiuser->message!='auditor_not_found' ){
+					$data['unit'] = $apiuser->data[0]->UnitKerja_Nama;
+					$data['nama'] = $apiuser->data[0]->Auditor_NamaLengkap;
+					$data['kode_unit'] = $apiuser->data[0]->UnitKerja_Kode;
+				}else{
+					$data['unit'] = 'unkonown';
+					$data['nama'] = 'unkonown';
+					$data['kode_unit'] = 'unkonown';
+				}
+				
 				//$dataRow['unitapip']=$kodeunitkerja;
 				if($key->DOC_NAMA=='doc_foto'){
 					$data['foto']=$key->DOCUMENT;
 				}
-				$data['nama'] = $apiuser->data[0]->Auditor_NamaLengkap;
-				$data['kode_unit'] = $apiuser->data[0]->UnitKerja_Kode;
+
 			}
 			$data_detail=$this->regisujian->data_detail_peserta('1',$pk);
 			if($data_detail[0]!='false'){
@@ -96,10 +104,15 @@ class Home extends CI_Controller {
 						$row = array();
 						$row[] = $a;
 						$row[] = $field->NIP;
-						$apiuser=$this->apiuser($nip);
+						$apiuser=$this->apiuser($field->NIP);
+						if($apiuser->message!='auditor_not_found' ){
 		        $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
 		        //$dataRow['unitapip']=$kodeunitkerja;
 						$row[] = $apiuser->data[0]->Auditor_NamaLengkap;
+						}else{
+						$kodeunitkerja='unknown';
+						$row[] ='unknown';
+						}
 						$row[] = $field->KODE_DIKLAT.' - '.$field->NAMA_JENJANG;
 						$row[] = $kodeunitkerja;
 

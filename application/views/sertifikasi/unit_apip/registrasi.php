@@ -184,17 +184,17 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="min-height:325px;">
 						<form enctype="multipart/form-data" onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/unit_apip/registrasi/add_persetujuan"; ?>')" method="POST" id="daftar_persetujuan">
 						<div class="row">
-              <table  class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+              <table id="dataResult" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
   							<thead>
   							<tr>
   								<td>NIP</td>
-  								<td>Mata Pelajaran</td>
+									<td>NAMA</td>
                   <td>Nomor Surat</td>
                   <td>Tanggal Ujian</td>
+								  <td>Tindakan</td>
   							</tr>
   							</thead>
-  							<tbody id="dataResult">
-  							</tbody>
+
   							</table>
 							</div>
 							<div class="row">
@@ -302,27 +302,48 @@ function search(){
 
 
 //load data
-loadData(1);
-
+// loadData(1);
 function loadData(data){
-	  document.getElementById("show_data").style.display = "none";
-		document.getElementById("dataResult").innerHTML='';
-  $.ajax({
-      type  : 'ajax',
-      url   :  "<?php echo base_url('sertifikasi/unit_apip/registrasi/loadData/')?>",
-      async : false,
-      dataType : 'json',
-      success : function(data){
-
-				var nip='';
-				data.forEach(function(resp) {
-					for (var i = 0; i < resp.length; i++) {
-						$("#dataResult").append("<tr><td>" + (resp[i].NIP != nip ? resp[i].NIP : '') + "</td><td>"+resp[i].NAMA_MATA_AJAR+"</td><td>" + (resp[i].NIP != nip ? resp[i].NO_SURAT_UJIAN : '') + "</td><td>" + (resp[i].NIP != nip ? resp[i].START_DATE + " - "+ resp[i].END_DATE  : '')+"</td></tr>");
-						nip=resp[i].NIP;
-					}
-			  });
-      }
-	});
+		$('#dataResult').DataTable().ajax.reload();
 }
+
+$(document).ready(function() {
+	  document.getElementById("show_data").style.display = "none";
+		// document.getElementById("dataResult").innerHTML='';
+		var example_table = $('#dataResult').DataTable({
+			'ajax': {
+				"type"   : "POST",
+				"url"    : '<?php echo base_url('sertifikasi/unit_apip/registrasi/loadData/')?>',
+				"dataSrc": ""
+			},
+			'columns': [
+				{"data" : "NIP"},
+				{"data" : "NAMA"},
+				{"data" : "NO_SURAT_UJIAN"},
+				{"data" : "JADWAL"},
+				{"data" : "ACTION"},
+
+			]
+			});
+
+
+
+  // $.ajax({
+  //     type  : 'ajax',
+  //     url   :  "<?php //echo base_url('sertifikasi/unit_apip/registrasi/loadData/')?>",
+  //     async : false,
+  //     dataType : 'json',
+  //     success : function(data){
+	//
+	// 			var nip='';
+	// 			data.forEach(function(resp) {
+	// 				for (var i = 0; i < resp.length; i++) {
+	// 					$("#dataResult").append("<tr><td>" + (resp[i].NIP != nip ? resp[i].NIP : '') + "</td><td>"+resp[i].NAMA_MATA_AJAR+"</td><td>" + (resp[i].NIP != nip ? resp[i].NO_SURAT_UJIAN : '') + "</td><td>" + (resp[i].NIP != nip ? resp[i].START_DATE + " - "+ resp[i].END_DATE  : '')+"</td></tr>");
+	// 					nip=resp[i].NIP;
+	// 				}
+	// 		  });
+  //     }
+	// });
+});
 
 </script>

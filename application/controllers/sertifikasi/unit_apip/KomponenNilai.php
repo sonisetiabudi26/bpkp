@@ -31,9 +31,36 @@ class KomponenNilai extends CI_Controller {
 			$dataRows = array();
 			$nip = $this->session->userdata('nip');
 			$dataAll=$this->lookup_ujian->getDataNilaibyunitapip($nip);
-			$dataRows[]=$dataAll;
+			foreach ($dataAll as $key) {
+				$data['NIP']=$key->NIP;
+				$apiuser=$this->apiuser($key->NIP);
+				if($apiuser->message!='auditor_not_found' ){
+				$data['NAMA'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+				// $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+				}else{
+					$data['NAMA'] ='unknown';
+					// $data['kodeunitkerja']='empty';
+				}
+				$data['NAMA_MATA_AJAR']=$key->NAMA_MATA_AJAR;
+				$data['STATUS']=$key->STATUS;
+				$dataRows[]=$data;
+			}
+
 
 		//output to json format
 		echo json_encode($dataRows);
+		}
+		public function apiuser($nip){
+			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$nip;
+			$check=file_get_contents($url);
+			if($check){
+				$output=json_decode($check);
+			}else{
+				$output = array(
+ 				 							"status" => "error",
+ 											"msg" => "NIP tidak ditemukan",
+ 							);
+			}
+			return $output;
 		}
 }

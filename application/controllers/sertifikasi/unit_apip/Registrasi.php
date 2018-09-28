@@ -90,16 +90,43 @@ class Registrasi extends CI_Controller {
 			 $dataRows=array();
 			  $userAdmin=$this->session->userdata('nip');
 			 	$datas=$this->regis->loaddatabyuser($userAdmin);
-				foreach ($datas as $key ) {
-				 $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
-				 if($dataRow=='empty'){
-					 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
+				// foreach ($datas as $key ) {
+				//  $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
+				//  if($dataRow=='empty'){
+				// 	 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
+				//  }
+				 foreach ($datas as $key) {
+					$row['NIP']=$key->NIP;
+
+					$apiuser=$this->apiuser($key->NIP);
+					if($apiuser->message!='auditor_not_found' ){
+					$row['NAMA'] = $apiuser->data[0]->Auditor_NamaLengkap;
+					}else{
+					$row['NAMA'] ='unknown';
+					}
+					$row['NO_SURAT_UJIAN']=$key->NO_SURAT_UJIAN;
+					$row['JADWAL']=$key->START_DATE.' - '.$key->END_DATE;
+					$url=base_url('sertifikasi')."/unit_apip/Registrasi/vw_detail_peserta/".$key->PK_REGIS_UJIAN;
+					$row['ACTION']="<td><a onclick='getModal(this)' id='data_detail' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
+		            <span>Lihat Data</span></a></td>";
+				  $dataRows[]=$row;
 				 }
-				 $dataRows[]=$dataRow;
-				}
+
+			//	}
 			 //output to json format
 			 echo json_encode($dataRows);
 		 }
+		 public function vw_detail_peserta($param){
+			  $userAdmin=$this->session->userdata('nip');
+				$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
+				foreach ($datas as $key ) {
+				 $dataRow['dataPeserta']=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
+				 if($dataRow['dataPeserta']=='empty'){
+					 $dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
+				 }
+		 }
+		 $this->load->view('sertifikasi/unit_apip/content/view_detail_peserta',$dataRow);
+	 }
 		 public function add_data(){
     	 $date = date('Ymd');
 			 $datex=date('Y-m-d');
