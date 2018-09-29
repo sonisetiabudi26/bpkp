@@ -269,7 +269,7 @@ class ManagementBankSoal extends CI_Controller {
 			}else{
 				$kodeuruts=1;
 			}
-			$kodesoal=$kode_mata_ajar.''.$kodeuruts;
+			$kodesoal=$kode_mata_ajar.''. sprintf("%02d",$kodeuruts);
 			$output = array('status' => 'success',
 		 										'msg'=>$kodesoal);
 			echo json_encode($output);
