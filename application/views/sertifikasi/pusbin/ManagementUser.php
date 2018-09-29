@@ -20,7 +20,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/1"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
+								<button class="btn btn-primary" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementUser/vw_add_user/20"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="glyphicon glyphicon-pencil"></i> Tambah data</button>
 
 								<div class="x_content">
 									<div class="row">
@@ -160,7 +160,7 @@ var table;
                   {"data": "1",width:100},
                   {"data": "2",width:100},
 
-									{"data": "4",width:100}
+									{"data": "4",width:50}
               ],
 
           });
@@ -264,5 +264,50 @@ function delete_user(id)
         });
 
     }
+}
+function cancelAdmin(id){
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi/pusbin/ManagementUser/cancelAdmin/')?>/"+id,
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+					//if success reload ajax table
+				//  $('#modal_form').modal('hide');
+				if(data.status=='success'){
+					swal("Success", "Data Inserted Successfully!", "success");
+				}else if(data.status=='error'){
+					swal("Failed!", "Data Inserted Failed!", "error");
+				}
+					loadData(1);
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+					alert('Error deleting data');
+			}
+	});
+}
+function makeAdmin(id){
+
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi/pusbin/ManagementUser/makeAdmin/')?>/"+id,
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+					//if success reload ajax table
+				//  $('#modal_form').modal('hide');
+				if(data.status=='success'){
+					swal("Success", "Data Inserted Successfully!", "success");
+				}else if(data.status=='error'){
+					swal("Failed!", "Data Inserted Failed!", "error");
+				}
+					loadData(1);
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+					alert('Error deleting data');
+			}
+	});
 }
 </script>

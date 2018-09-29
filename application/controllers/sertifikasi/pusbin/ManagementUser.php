@@ -28,8 +28,45 @@ class ManagementUser extends CI_Controller {
         redirect('/');
       }
     }
+		public function cancelAdmin($obj){
+			$where=array(
+				'PK_USER'=>$obj,
+
+			);
+			$data_update=array(
+				'FK_LOOKUP_ROLE'=>'20'
+			);
+
+
+
+			$update=$this->user->updateData($where,'users',$data_update);
+			if($update=='success'){
+				print json_encode(array("status"=>"success", "msg"=>'Data berhasil diubah'));
+			}else{
+				print json_encode(array("status"=>"error", "msg"=>'Data gagal diubah'));
+			}
+		}
+		public function makeAdmin($obj){
+			$where=array(
+				'PK_USER'=>$obj,
+
+			);
+			$data_update=array(
+				'FK_LOOKUP_ROLE'=>'1'
+			);
+
+
+
+			$update=$this->user->updateData($where,'users',$data_update);
+			if($update=='success'){
+				print json_encode(array("status"=>"success", "msg"=>'Data berhasil diubah'));
+			}else{
+				print json_encode(array("status"=>"error", "msg"=>'Data gagal diubah'));
+			}
+
+		}
 		public function LoadDateUserBank(){
-      $dataAll=$this->user->_get_user_bank_soal_join('1');
+      $dataAll=$this->user->_get_user_bank_soal_all();
        $data = array();
        //$no = $_POST['start'];
        $a=1;
@@ -40,8 +77,15 @@ class ManagementUser extends CI_Controller {
              $row[] = $field->USER_NAME;
              $row[] = $field->DESCR;
              $row[] = $field->USER_PASSWORD;
-             $row[] = '<a class="btn btn-sm btn-danger" style="width:100%" href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
+						 if($field->FK_LOOKUP_ROLE=='1'){
+							  $enable = "style='display:none'";
+								$cancel = "";
 
+						 }else{
+							  $cancel = "style='display:none'";
+							  $enable = "";
+						 }
+             $row[] = '<a class="btn btn-sm btn-warning" '.$cancel.'  href="javascript:void(0)"  onclick="cancelAdmin('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-pencil"></i> Batalkan Jadi Admin</a><a class="btn btn-sm btn-primary" '.$enable.'  href="javascript:void(0)"  onclick="makeAdmin('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-pencil"></i> Jadikan Admin</a><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_user('."'".$field->PK_USER."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
              $data[] = $row;
              $a++;
          }

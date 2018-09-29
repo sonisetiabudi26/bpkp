@@ -20,6 +20,15 @@ class Users extends MY_Model
 			return false;
 		}
 	}
+	public function updateData($where,$table,$data){
+		$this->db->where($where);
+		$update=$this->db->update($table,$data);
+		if($update){
+			return 'success';
+		}else{
+			return 'error';
+		}
+	}
 
 	public function _get_user_information($username) {
 		$condition = "user_name =" . "'" . $username . "'";
@@ -80,6 +89,16 @@ public function loaddataWidyaiswarauserbyid($id){
 			return false;
 		}
 	}
+	public function _get_user_bank_soal_all() {
+		$condition = "fk_lookup_role in (1,20)";
+		$this->db->select('users.*,lookup.DESCR');
+		$this->db->from($this->_table);
+		$this->db->join('lookup', 'users.FK_LOOKUP_ROLE = lookup.PK_LOOKUP');
+		$this->db->where($condition);
+		$query = $this->db->get();
+			return $query->result();
+	}
+
 	public function _get_user_bank_soal_join($role) {
 		$condition = "fk_lookup_role =" . "'" . $role . "'";
 		$this->db->select('users.*,lookup.DESCR');
