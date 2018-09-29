@@ -12,12 +12,12 @@
 				<?php
 					foreach ($group_mata_ajar as $groupmataajars):
 				?>
-					<option value="<?php echo $groupmataajars->PK_JENJANG;?>">
+					<option value="<?php echo $groupmataajars->KODE_DIKLAT;?>">
 				<?php echo $groupmataajars->NAMA_JENJANG;?> (<?php echo $groupmataajars->DESCR;?>)
 					</option>
 				<?php
 					endforeach;
-				?> 
+				?>
 			</select>
 		</div>
 		<div class="form-group" id="content-list-mata-ajar" style="display:none;">

@@ -96,9 +96,11 @@ class Soal extends CI_Controller {
 		$data = array('PK_PERMINTAAN_SOAL' => $id_permintaan,
 										'FK_BAB_MATA_AJAR' =>$fk_bab_mata_ajar);
 		if($upload['result'] == "success"){
+			$file=$upload['file'];
+			$filename=$file['file_name'];
 			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
 			$excelreader = new PHPExcel_Reader_Excel2007();
-			$loadexcel = $excelreader->load('uploads/'.$this->filename.'.xlsx');
+			$loadexcel = $excelreader->load('uploads/'.$filename);
 			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
 
 			$data['sheet'] = $this->import($sheet, $data);
