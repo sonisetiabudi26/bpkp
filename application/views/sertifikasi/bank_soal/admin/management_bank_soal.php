@@ -36,8 +36,7 @@
 				</li>
 				<li role="presentation" class=""><a href="#tab_content3" role="tab"  id="profile-tab2"  onclick="loadDatakodeSoalpublish()"data-toggle="tab" aria-expanded="false">Terbitkan Kode Soal</a>
 				</li>
-				<li role="presentation" class=""><a href="#tab_content4" role="tab"  id="profile-tab3"  onclick="loadsoalkasus()"data-toggle="tab" aria-expanded="false">Materi Soal Kasus</a>
-				</li>
+
 			</ul>
 			<div id="myTabContent" class="tab-content" style="background:#fff;">
 				<!-- <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -204,42 +203,7 @@
 </div>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane fade in" id="tab_content4" aria-labelledby="home-tab" >
-<div  class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<div class="x_panel">
-			<div style="float:right">
-				<button onclick="getModal(this)" id="btn-add-soal-kasus" data-href="<?php echo base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_add_soal_kasus"; ?>"
-						data-toggle="modal" data-target="#modal-content" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Buat Materi Soal Kasus</button>
-			 </div>
-			<div class="x_content">
-				<div class="row">
-					<div class="col-lg-12" id="response">
-						<h2 style="font-weight:1000;color:#000">Tabel Soal Kasus</h2>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-		<table id="tabelsoalkasus" class="table table-striped table-bordered" cellspacing="0" width="100%">
-				<thead>
-						<tr>
-								<th>No</th>
-								<th>Soal Kasus</th>
-								<th>Mata Ajar</th>
-								<th>Bab Mata Ajar</th>
-								<th>Kode Kasus</th>
-								<th>Tindakan</th>
-						</tr>
-				</thead>
-				<tbody></tbody>
-		</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 </div>
 </div>
 <script type="text/javascript">
@@ -306,7 +270,7 @@
 		table.ajax.reload(null,false);
 		loadDatakodeSoal();
 		loadDatakodeSoalpublish();
-		loadsoalkasus();
+		// loadsoalkasus();
 
 	}
 
@@ -332,30 +296,7 @@
 
 		          });
 	}
-	function loadsoalkasus(){
 
-		table = $('#tabelsoalkasus').DataTable({
-						"processing": false, //Feature control the processing indicator.
-						 "destroy": true,
-						"serverSide": true, //Feature control DataTables' server-side processing mode.
-						"order": [], //Initial no order.
-						// Load data for the table's content from an Ajax source
-						"ajax": {
-								"url": '<?php echo base_url('sertifikasi/bank_soal/managementbanksoal/loadSoalKasus/')?>',
-								"type": "POST"
-						},
-						//Set column definition initialisation properties.
-						"columns": [
-								{"data": "0",width:10},
-								{"data": "1",width:100},
-								{"data": "2",width:100},
-								{"data": "3",width:50},
-								{"data": "4",width:50},
-								{"data": "5",width:150},
-						],
-
-				});
-	}
 	function loadDatakodeSoalpublish(){
 					table = $('#tableKodeSoalpublish').DataTable({
 									"processing": false, //Feature control the processing indicator.
