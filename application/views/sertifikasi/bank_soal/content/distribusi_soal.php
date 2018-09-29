@@ -22,11 +22,12 @@
 		<select  name="fk_bab_mata_ajar" id="select-list-bab-soal" class="form-control input-sm">
 			<option value=''>Pilihan</option>
 			<?php
-				foreach ($bab_mata_ajar as $key):
+			$count=	count($materi);
+			for ($i=0; $i < $count ; $i++) {
 			?>
-			<option value="<?php echo $key->PK_BAB_MATA_AJAR.'~'.intval($key->jml_soal - ($fk_bab_mata_ajr==$key->PK_BAB_MATA_AJAR?$num:'0'));?>"><?php echo $key->NAMA_BAB_MATA_AJAR.' ( jumlah soal '.intval($key->jml_soal - ($fk_bab_mata_ajr==$key->PK_BAB_MATA_AJAR?$num:'0')).')';?></option>
+			<option value="<?php echo $materi[$i]['pk'].'~'.$materi[$i]['number'];?>"><?php echo $materi[$i]['nama'].' ( jumlah soal '.$materi[$i]['number'].')';?></option>
 			<?php
-				endforeach;
+				}
 			?>
 		</select>
 	</div>
@@ -97,11 +98,15 @@
 			dataType:"json",
 			timeout: 600000,
 			success : function(data) {
+				  $('.modal').modal('hide');
 				if(data.msg=='success'){
 	       	swal("Success", "Data Inserted Successfully!", "success");
+
 				}else if(data.msg=='error'){
 	        swal("Failed!", "Data Inserted Failed!", "error");
+
 				}
+				loadData(1);
 				$("#listDistribusiUjianForm")[0].reset();
 			}
 		});

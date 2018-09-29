@@ -46,10 +46,23 @@ class KodeSoal extends My_Model
 			return 'error';
 		}
 	}
-	public function total_soal($id){
+	public function total_soal($id,$bab_mata_ajar){
+			$condition = " kode_soal =" . "'" . $id . "' and FK_BAB_MATA_AJAR=" . "'" . $bab_mata_ajar . "' group by FK_BAB_MATA_AJAR";
 		$this->db->select('KODE_SOAL,sum(KEBUTUHAN_SOAL)as kebutuhan_soal,sum(total_soal)as total_soal,FK_BAB_MATA_AJAR');
 			$this->db->from('total_soal_distribusi');
-			$this->db->where('kode_soal', $id);
+			$this->db->where($condition);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "nodata";
+		}
+	}
+	public function total_soal_row($id){
+			$condition = " kode_soal =" . "'" . $id . "'";
+		$this->db->select('KODE_SOAL,sum(KEBUTUHAN_SOAL)as kebutuhan_soal,sum(total_soal)as total_soal,FK_BAB_MATA_AJAR');
+			$this->db->from('total_soal_distribusi');
+			$this->db->where($condition);
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {
 			return $query->result();

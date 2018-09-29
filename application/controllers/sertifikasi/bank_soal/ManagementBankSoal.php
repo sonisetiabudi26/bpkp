@@ -211,7 +211,7 @@ class ManagementBankSoal extends CI_Controller {
 						 $row[] = $a;
 						 $row[] = $field->KODE_SOAL;
 						 $row[] = $field->NAMA_MATA_AJAR;
-						 $numrow=$this->kodesoal->total_soal($field->KODE_SOAL);
+						 $numrow=$this->kodesoal->total_soal_row($field->KODE_SOAL);
 						 if($numrow!='nodata'){
 							 $num=$numrow[0]->total_soal;
 							 $num_kebutuhan_soal=$numrow[0]->kebutuhan_soal;
@@ -283,7 +283,7 @@ class ManagementBankSoal extends CI_Controller {
 
 				 foreach ($dataAll as $field) {
 					 	$id_soal=$field->KODE_SOAL;
-						$numrow=$this->kodesoal->total_soal($id_soal);
+						$numrow=$this->kodesoal->total_soal_row($id_soal);
 						if($numrow!='nodata'){
 							$num=$numrow[0]->total_soal;
 							$num_kebutuhan_soal=$numrow[0]->kebutuhan_soal;
@@ -369,19 +369,28 @@ class ManagementBankSoal extends CI_Controller {
     }
 
 	public function vw_distribusi_soal($id){
+		$dataRow = array();
 		$data_kode_soal=$this->kodesoal->get_data_by_id_soal($id);
 		if($data_kode_soal!='nodata'){
 			$data['kode_soal'] =$data_kode_soal[0]->KODE_SOAL;
 			$data['id_kode_soal']=$data_kode_soal[0]->PK_KODE_SOAL;
 			$data['mata_ajar'] =$data_kode_soal[0]->NAMA_MATA_AJAR;
-			$numrow=$this->kodesoal->total_soal($data_kode_soal[0]->KODE_SOAL);
-			if($numrow!='nodata'){
-				$data['fk_bab_mata_ajr']=$numrow[0]->FK_BAB_MATA_AJAR;
-				$data['num']=$numrow[0]->total_soal;
-			}else{
-				$data['num']=0;
+			$dataAll	= $this->babmataajar->_get_bab_from_fk_mata_ajar_value($data_kode_soal[0]->PK_MATA_AJAR);
+			$no=0;
+			foreach ($dataAll as $key) {
+				$numrow=$this->kodesoal->total_soal($data_kode_soal[0]->KODE_SOAL,$key->PK_BAB_MATA_AJAR);
+				if($numrow!='nodata'){
+					$dataNum=$numrow[0]->total_soal;
+				}else{
+					$dataNum=0;
+				}
+				$dataRow[] = array('pk' => $key->PK_BAB_MATA_AJAR,
+													'nama'=>$key->NAMA_BAB_MATA_AJAR,
+												'number'=>intval($key->jml_soal - $dataNum)	);
+			 	$data['materi']=$dataRow;
+				$no++;
 			}
-			$data['bab_mata_ajar']	= $this->babmataajar->_get_bab_from_fk_mata_ajar_value($data_kode_soal[0]->PK_MATA_AJAR);
+
 		}
 		$this->load->view('sertifikasi/bank_soal/content/distribusi_soal', $data);
 	}
