@@ -219,7 +219,7 @@ class ManagementBankSoal extends CI_Controller {
 							 $num=0;
 							 $num_kebutuhan_soal=0;
 						 }
-						 $disable=($num==$num_kebutuhan_soal ?'style="display:none"':'');
+						 $disable=($num==$field->KEBUTUHAN_SOAL ?'style="display:none"':'');
 						 $row[] = $num.'/'.$field->KEBUTUHAN_SOAL;
 						 $url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
 
@@ -291,13 +291,13 @@ class ManagementBankSoal extends CI_Controller {
 							$num=0;
 							$num_kebutuhan_soal=0;
 						}
-						if($num==$num_kebutuhan_soal){
+						if($num==$field->KEBUTUHAN_SOAL){
 						 $row = array();
 						 $row[] = $a;
 						 $row[] = $field->KODE_SOAL;
 						 $row[] = $field->NAMA_MATA_AJAR;
 
-						 $disable=($num==$num_kebutuhan_soal ?'disabled':'');
+						 $disable=($num==$field->KEBUTUHAN_SOAL ?'disabled':'');
 						 $row[] = $num.'/'.$field->KEBUTUHAN_SOAL;
 						 $row[] =($field->PUBLISH=='1'?'Yes':'No');
 						 //$url= base_url('sertifikasi')."/bank_soal/managementbanksoal/vw_distribusi_soal/".$field->PK_KODE_SOAL;
