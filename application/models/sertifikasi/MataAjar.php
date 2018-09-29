@@ -23,8 +23,12 @@ class MataAjar extends My_Model
 
 	public function _get_from_fk_group_mata_ajar($fk_mata_group_ajar)
 	{
-	    $query = $this->db->get_where($this->_table, array('KODE_DIKLAT' => $fk_mata_group_ajar));
-	    return $query->result();
+			$this->db->select('mata_ajar.*');
+			$this->db->from($this->_table);
+			$this->db->join('jenjang', 'jenjang.pk_jenjang = mata_ajar.fk_jenjang');
+			$this->db->where('jenjang.KODE_DIKLAT', $fk_mata_group_ajar);
+			$query = $this->db->get();
+			return $query->result();
 	}
 
 	public function getkode_mataajar($param){
