@@ -25,6 +25,11 @@
 							<hr/>
 						</div>
 						<div id="ujian_page">
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12">
+								<h5>List Soal Ujian</h5>
+							</div>
+							</div>
 						<div class="row">
 							<div class="col-lg-12 col-md-12 col-sm-12">
 								<?php
@@ -36,50 +41,65 @@
 								?>
 							</div>
 						</div>
+						<hr/>
 						<?php
 							foreach ($soal as $key=>$soal_ujian):
 						?>
 						<div class="row" >
-							<div class='pages' id="page<?php echo $key+1;?>" style="display:none">
-								<div class="col-lg-12 col-md-12 col-sm-12" id="kasus">
+							<div class='pages col-lg-12 col-md-12 col-sm-12' id="page<?php echo $key+1;?>" style="display:none">
+							  <!-- <div class="col-lg-12 col-md-12 col-sm-12" id="kasus">  -->
 								<?php
-									if(isset($soal_ujian[6])){
-										echo "<h4 class='badge'>Type Soal : Soal Kasus</h4>";
-										echo "<h4 class='container bg-warning' style='border-radius:5px;padding:3px;padding-left:10px;'>".$soal_ujian[6]."</h4>";
-									}else{
-										echo "<h4 class='badge'>Type Soal : Soal Biasa</h4>";
-										echo "<h4>No ".($key+1)."</h4>";
-									}
+									// if(isset($soal_ujian[6])){
+									// 	echo "<h4 class='badge'>Type Soal : Soal Kasus</h4>";
+									// 	echo "<h4 class='container bg-warning' style='border-radius:5px;padding:3px;padding-left:10px;'>".$soal_ujian[6]."</h4>";
+									// }else{
+									// 	echo "<h4 class='badge'>Type Soal : Soal Biasa</h4>";
+									// 	echo "<h4>No ".($key+1)."</h4>";
+									// }
+
 								?>
+									<!-- </div> -->
+								<div class="row">
+									<div class="col-lg-2 col-md-2 col-sm-2" style="position:absolute;color:#000;">
+										<label style="color:#000"><?php echo "No ".($key+1); ?></label>
+								 </div>
+							 </div>
+							 <div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12" style="border-bottom:0.1px solid #f3f3f3;text-align:center">
+									<label style="color:#000;padding:10px;font-size:36px;text-align:center"><?php echo $soal_ujian[5];?></label>
 								</div>
-								<h1 style="color:#000;"><?php echo $soal_ujian[5];?></h1><hr>
-								<div class="step-content" >
-									<p>
-										<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[0]['PILIHAN']['value'];?>" /> A. <?php echo $soal_ujian[0]['PILIHAN']['descr'];?>
-									</p>
-									<p>
-										<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[1]['PILIHAN']['value'];?>" /> B. <?php echo $soal_ujian[1]['PILIHAN']['descr'];?>
-									</p>
-									<p>
-										<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[2]['PILIHAN']['value'];?>" /> C. <?php echo $soal_ujian[2]['PILIHAN']['descr'];?>
-									</p>
-									<p>
-										<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" /> D. <?php echo $soal_ujian[3]['PILIHAN']['descr'];?>
-									</p>
-									<br/>
-									<p>
-										<input id="<?php echo $key+1;?>" type="checkbox" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" />Tandai jika anda belum yakin
-									</p>
-								</div>
+
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="step-content" >
+												<p>
+													<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[0]['PILIHAN']['value'];?>" /> A. <?php echo $soal_ujian[0]['PILIHAN']['descr'];?>
+												</p>
+												<p>
+													<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[1]['PILIHAN']['value'];?>" /> B. <?php echo $soal_ujian[1]['PILIHAN']['descr'];?>
+												</p>
+												<p>
+													<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[2]['PILIHAN']['value'];?>" /> C. <?php echo $soal_ujian[2]['PILIHAN']['descr'];?>
+												</p>
+												<p>
+													<input id="<?php echo $key+1;?>" type="radio" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" /> D. <?php echo $soal_ujian[3]['PILIHAN']['descr'];?>
+												</p>
+												<br/>
+												<p>
+													<input id="<?php echo $key+1;?>" type="checkbox" data-key="<?php echo $key+1;?>" data-id="<?php echo $soal_ujian[4];?>" name="jawaban<?php echo $key+1;?>" value="<?php echo $soal_ujian[3]['PILIHAN']['value'];?>" />Tandai jika anda belum yakin
+												</p>
+										</div>
+									</div>
 							</div>
+						</div>
 						</div>
 						<?php
 							endforeach;
 						?>
 					</div>
 					</div>
+					<hr/>
 						<div style="width: 100%;height:50px;padding:5px;background : rgba(255, 255, 255, 0.7);">
-							<button class="btn btn-primary" id="selesai" style="float:right;"><i class="fa fa-paper-plane"></i> Selesaikan Ujian</button>
+							<button class="btn btn-success" id="selesai" style="float:right;"><i class="fa fa-paper-plane"></i> Selesaikan Ujian</button>
 						</div>
 					</div>
 
@@ -110,8 +130,15 @@ var x = setInterval(function() {
 
 
 $(document).ready(function() {
+	document.getElementById("page1").style.display='block';
 	time_ujian();
 });
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
 
 function time_ujian(){
 	var dates='<?php echo $dates;?>';
@@ -129,16 +156,15 @@ function time_ujian(){
 	}
 	var datetime= dt.getFullYear() + "-" + mm + "-" + dd;
 
-	var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+	var time =  addZero(dt.getHours()) + ":" +  addZero(dt.getMinutes()) + ":" +  addZero(dt.getSeconds());
 	if(dates<datetime){
-
 		document.getElementById("countdown").innerHTML = "Waktu Ujian Habis";
 		document.getElementById("ujian_finished").style.display='block';
 		document.getElementById("ujian_not_ready").style.display='none';
 		document.getElementById("selesai").style.display='none';
 		document.getElementById("ujian_page").style.display='none';
+		//document.getElementById("page1").style.display='none';
 	}else if(dates==datetime){
-
 		validation(start_time,end_time,dt,time);
 	}else if(dates>datetime){
 
@@ -147,39 +173,40 @@ function time_ujian(){
 		document.getElementById("ujian_finished").style.display='none';
 		document.getElementById("selesai").style.display='none';
 		document.getElementById("ujian_page").style.display='none';
+		//document.getElementById("page1").style.display='none';
 	}
 }
 function validation(start_time,end_time,dt,time){
 	if(start_time>=time){
 		document.getElementById("countdown").innerHTML = "Belum Waktu Ujian";
+		//document.getElementById("page1").style.display='none';
 		document.getElementById("ujian_not_ready").style.display='block';
 		document.getElementById("ujian_finished").style.display='none';
 		document.getElementById("selesai").style.display='none';
 		document.getElementById("ujian_page").style.display='none';
 	 }else if(start_time<time){
-		if(end_time==time||end_time>=time){
-
+		if(end_time>=time){
 				document.getElementById("countdown").innerHTML = "Waktu Ujian";
-				document.getElementById("page1").style.display='block';
+				//document.getElementById("page1").style.display='block';
 				document.getElementById("ujian_not_ready").style.display='none';
 				document.getElementById("ujian_finished").style.display='none';
 				document.getElementById("selesai").style.display='block';
-		
+				document.getElementById("ujian_page").style.display='block';
 		}else{
-
 			document.getElementById("countdown").innerHTML = "Waktu Ujian Habis";
 			document.getElementById("ujian_not_ready").style.display='none';
 			document.getElementById("ujian_finished").style.display='block';
 			document.getElementById("selesai").style.display='none';
 			document.getElementById("ujian_page").style.display='none';
+		 //	document.getElementById("page1").style.display='none';
 		}
 	}else if(end_time<time){
-
 		document.getElementById("countdown").innerHTML = "Waktu Ujian Habis";
 		document.getElementById("ujian_finished").style.display='block';
 		document.getElementById("ujian_not_ready").style.display='none';
 		document.getElementById("selesai").style.display='none';
 		document.getElementById("ujian_page").style.display='none';
+		//document.getElementById("page1").style.display='none';
 	}
 }
 

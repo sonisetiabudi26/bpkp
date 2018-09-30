@@ -84,8 +84,11 @@ class UjianSertifikasi extends CI_Controller{
 						if($dataSoal->jml_soal!=0){
 							$soalData='style="display:none;color:#f00"';
 						}else{
-							$soalData='style="color:#f00"';
-							$enable='style="display:none;"';
+							if($disable=='style="display:none;"'){
+								$soalData='style="color:#f00"';
+							}else{
+								$soalData='style="display:none;color:#f00"';
+							}
 						}
             $row[] = '<div style="text-align:center;"><a data-var="pk_ujian_soal" '.$disable.' data-id='.$rows->PK_REGIS_UJIAN.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-ujian-soal"
 							data-href="'. base_url('ujian')."/ujiansertifikasi/vw_masukan_pin/".$rows->FK_MATA_AJAR.'" data-toggle="modal" data-target="#modal-content"

@@ -15,7 +15,7 @@
 </style>
 <div class="page-title">
 	<div class="title_left">
-		<h3>Dashboard UNIT APIP</h3>
+		<h3>Dashboard Petugas LO</h3>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -190,7 +190,7 @@ $(document).ready(function() {
 						"order": [], //Initial no order.
 						// Load data for the table's content from an Ajax source
 						"ajax": {
-								"url": '<?php echo base_url('sertifikasi/unit_apip/Home/loadData/')?>',
+								"url": '<?php echo base_url('sertifikasi/petugas_lo/Home/loadData/')?>',
 								"type": "POST"
 						},
 						//Set column definition initialisation properties.
@@ -212,7 +212,7 @@ function cetak(){
 
 	$.ajax({
 			type  : 'ajax',
-			url   :  "<?php echo base_url('sertifikasi/unit_apip/home/print_kartu/')?>",
+			url   :  "<?php echo base_url('sertifikasi/petugas_lo/home/print_kartu/')?>",
 			async : false,
 			dataType : 'json',
 			success : function(data){
