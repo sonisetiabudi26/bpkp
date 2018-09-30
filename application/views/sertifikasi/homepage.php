@@ -64,6 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url('assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')?>"></script>
 <!-- Custom Theme Scripts -->
 <script src="<?php echo base_url('assets/build/js/custom.min.js')?>"></script>
+<script src="<?php echo base_url('assets/ckeditor/ckeditor.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/echarts/dist/echarts.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net/js/jquery.dataTables.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')?>"></script>

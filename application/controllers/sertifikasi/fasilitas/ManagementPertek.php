@@ -53,6 +53,7 @@ class ManagementPertek extends CI_Controller {
 			$data['no_pertek']=$this->input->post('nopertek');
 			$data['id_pertek']=$this->input->post('id_pertek');
 		  $data['yth']=$this->input->post('yth');
+			$data['isi']=$this->input->post('body_pertek');
 			$data['tempat']=$this->input->post('tempat');
 			$data['kepala']=$this->input->post('kepala');
 			$data['tembusan']=$this->input->post('tembusan');
@@ -63,6 +64,7 @@ class ManagementPertek extends CI_Controller {
 			$data_update=array(
 				'NO_PERTEK'=>$data['no_pertek'],
 				'YTH'=>$data['yth'],
+				'ISI'=>$data['isi'],
 				'TEMPAT'=>$data['tempat'],
 				'KEPALA'=>$data['kepala'],
 				'TEMBUSAN'=>$data['tembusan'],

@@ -39,6 +39,16 @@
 
           </div>
     </div>
+
+    <div class="form-group">
+      <div class="col-lg-3">
+        <label for="startdate">Isi Pertek</label>
+      </div>
+        <div class="col-lg-9" id='pass'>
+            <textarea type="text" name='body_pertek' id='body_pertek' class="form-control" ></textarea>
+
+          </div>
+    </div>
     <div class="form-group">
       <div class="col-lg-3">
         <label for="startdate">Kepala </label>
@@ -63,6 +73,9 @@
 </form>
 </div>
 <script>
+var ckeditor=CKEDITOR.replace('body_pertek',{
+  height:'400px'
+});
 $(function () {
 $('form').on('submit', function (e) {
   e.preventDefault();
