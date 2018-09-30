@@ -10,17 +10,19 @@ class NilaiAPI extends CI_Controller{
 				$this->load->model('sertifikasi/widyaiswara','nilaiwi');
 				$this->load->model('sertifikasi/DetailWidyaiswara','detail_wi');
 		}
-		public function LoadDataKelasDiklat(){
+		public function LoadDataKelasDiklat($param){
 				$draw=intval($this->input->get('draw'));
 				$start=intval($this->input->get('start'));
 				$length=intval($this->input->get('length'));
 				$nip = $this->session->userdata('nip');
-			  // $result_login=$check['token'];
+			 	$parameter=explode('~',$param);
+				$tgl_release=$parameter[0];
+				$mataajar=$parameter[1];
 
 
-				$dataAll=$this->nilaiwi->getdatabynip($nip);
+				$dataAll=$this->nilaiwi->getdatabynip($nip,$tgl_release,$mataajar);
 				if(empty($dataAll)){
-					$dataAll=$this->nilaiwi->getdatabynipifnull($nip);
+					$dataAll=$this->nilaiwi->getdatabynipifnull($nip,$tgl_release,$mataajar);
 				}
 					$a=0;
 				 $data = array();
@@ -30,11 +32,11 @@ class NilaiAPI extends CI_Controller{
 						$nilai=0;
 						$row[] = $a+1;
 						$row[] = '<input readonly name="nip_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value='.$key->NIP.' id="nip_"'.$key->NIP.'"" />';
-					 $row[] = $key->NAMA;
-					 $row[] = $key->TGL_RELEASE_MATA_AJAR;
+					  $row[] = $key->NAMA;
+					  $row[] = $key->TGL_RELEASE_MATA_AJAR;
 						$row[] = $key->NAMA_MATA_AJAR;
 						$row[] = '<input type="number" name="nilai1_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" id="nilai1_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value="'.$key->NILAI_1.'"/>';
-					 $row[] = '<input type="number" name="nilai2_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" id="nilai2_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value="'.$key->NILAI_2.'"/>';
+					  $row[] = '<input type="number" name="nilai2_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" id="nilai2_'.(empty($key->PK_DETAIL_NILAI_WI)?'':$key->PK_DETAIL_NILAI_WI).'" value="'.$key->NILAI_2.'"/>';
 						$row[] = $key->USER_NAME;
 
 					 // $dataNIlaiEdit=$key->PK_WIDYAISWARA_NILAI.'~'.$key->NILAI_1.'~'.$key->NILAI_2;
@@ -74,9 +76,59 @@ class NilaiAPI extends CI_Controller{
 			 // }
 
 		}
-		public function updateDataNilai(){
-			$nip = $this->session->userdata('logged_in');
-			$dataAll=$this->nilaiwi->getdatabynip($nip);
+		public function LoadDataList(){
+			$draw=intval($this->input->get('draw'));
+			$start=intval($this->input->get('start'));
+			$length=intval($this->input->get('length'));
+				$nip = $this->session->userdata('nip');
+				$dataAll=$this->nilaiwi->getdatabynipGroupby($nip);
+				$a=0;
+			 $data = array();
+				foreach ($dataAll as $key) {
+
+				 $row = array();
+					$nilai=0;
+					$row[] = $a+1;
+				  $row[] = $key->TGL_RELEASE_MATA_AJAR;
+					$row[] = $key->NAMA_MATA_AJAR;
+					// $row[] = '';
+				  $dataNIlaiEdit=$key->TGL_RELEASE_MATA_AJAR.'~'.$key->FK_MATA_AJAR.'~'.$key->PK_WIDYAISWARA_NILAI;
+				 	$row[] = '<td><button onclick="ModalNilai('."'".$dataNIlaiEdit."'".')" id="detail-wi" class="btn btn-primary"><i class="fa fa-eye"></i> Detail</button></td>';
+
+					$data[] = $row;
+					$a++;
+				}
+
+			// if($dataAll=='nodata'){
+			// 	$nilai1='';
+			// 	$nilai2='';
+			// 	$id='';
+			// }else{
+			// 	$id=$dataAll[0]->PK_WIDYAISWARA_NILAI;
+			// 	$nilai1=$dataAll[0]->NILAI_1;
+			// 	$nilai2=$dataAll[0]->NILAI_2;
+			//
+			// }
+
+
+
+			$output = array(
+					"length" => $length,
+					"draw" => $draw,
+					"recordsTotal" => $a,
+					"recordsFiltered" => $a,
+					"data" => $data,
+			);
+			 //output to json format
+			 echo json_encode($output);
+
+		}
+		public function updateDataNilai($obj){
+			$nip = $this->session->userdata('nip');
+			$param=explode('~',$obj);
+			$tgl_release=$param[0];
+			$mata_ajar=$param[1];
+			$dataAll=$this->nilaiwi->getdatabynip($nip,$tgl_release,$mata_ajar);
 			foreach ($dataAll as $key) {
 				$nilai1='nilai1_'.$key->PK_DETAIL_NILAI_WI;
 				$nilai2='nilai2_'.$key->PK_DETAIL_NILAI_WI;

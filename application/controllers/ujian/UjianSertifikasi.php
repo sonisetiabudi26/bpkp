@@ -6,13 +6,13 @@ class UjianSertifikasi extends CI_Controller{
 	public function __construct(){
         parent::__construct();
         $this->load->library('session');
-		    	$this->load->helper(array('form', 'url'));
+		    $this->load->helper(array('form', 'url'));
 				$this->load->model('sertifikasi/soalujian','soalujian');
 				$this->load->model('sertifikasi/regisujian','regis');
 				$this->load->model('sertifikasi/lookupujian','lookup_ujian');
 				$this->load->model('sertifikasi/event','event');
 				$this->load->model('sertifikasi/konfigujian','konfig');
-					$this->load->model('sertifikasi/JawabanPeserta','jawaban');
+				$this->load->model('sertifikasi/JawabanPeserta','jawaban');
     }
 
     public function index()
@@ -22,10 +22,14 @@ class UjianSertifikasi extends CI_Controller{
 			$data['title_page'] = 'BPKP Web Application';
 			$data['nama_auditor'] = $this->session->userdata('logged_in');
 			$data['nip_auditor'] = $logged_nip;
-			// $data['soal'] = $this->random_distribusi_ujian();
 			$data['content_page']='list_ujian';
+			$dataProfile=$this->regis->get_profile($logged_nip);
+			foreach ($dataProfile as $key) {
+				if($key->DOC_NAMA=='doc_foto'){
+					$data['foto_profile']=$key->DOCUMENT;
+				}
+			}
 			$this->load->view('ujian/content', $data);
-			//var_dump($this->random_distribusi_ujian());
 		}else{
 			redirect('ujian-sertifikasi-jfa');
 		}
@@ -34,6 +38,12 @@ class UjianSertifikasi extends CI_Controller{
 	{
 	$logged_nip = $this->session->userdata('logged_nip');
 	if(isset($logged_nip)){
+		$dataProfile=$this->regis->get_profile($logged_nip);
+		foreach ($dataProfile as $key) {
+			if($key->DOC_NAMA=='doc_foto'){
+				$data['foto_profile']=$key->DOCUMENT;
+			}
+		}
 		$data['title_page'] = 'BPKP Web Application';
 		$data['nama_auditor'] = $this->session->userdata('logged_in');
 		$data['nip_auditor'] = $logged_nip;
@@ -46,6 +56,8 @@ class UjianSertifikasi extends CI_Controller{
 			$data['start_time']=$dataconfig->START_TIME;
 			$data['end_time']=$dataconfig->END_TIME;
 			$data['jml_soal']=$dataconfig->JUMLAH_SOAL;
+			$data['dates']=$dataconfig->DATE_TIME;
+
 		}
 		$data['soal'] = $this->random_distribusi_ujian($bab_mata_ajar,$dataconfig->JUMLAH_SOAL);
 		$data['content_page']='ujian_sertifikasi';
@@ -68,11 +80,18 @@ class UjianSertifikasi extends CI_Controller{
 						$checkpin=$this->lookup_ujian->checkpinujian($rows->FK_REGIS_UJIAN,$rows->FK_MATA_AJAR);
 						$disable=($checkpin!='no data'?'style="display:none;"':"");
 						$enable=($checkpin=='no data'?'style="display:none;"':"");
+						$dataSoal=$this->soalujian->checkSoalCount($rows->FK_MATA_AJAR);
+						if($dataSoal->jml_soal!=0){
+							$soalData='style="display:none;color:#f00"';
+						}else{
+							$soalData='style="color:#f00"';
+							$enable='style="display:none;"';
+						}
             $row[] = '<div style="text-align:center;"><a data-var="pk_ujian_soal" '.$disable.' data-id='.$rows->PK_REGIS_UJIAN.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-ujian-soal"
 							data-href="'. base_url('ujian')."/ujiansertifikasi/vw_masukan_pin/".$rows->FK_MATA_AJAR.'" data-toggle="modal" data-target="#modal-content"
 							><i class="fa fa-pencil"></i> Masukan Pin</a>
 							<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'"
-								><i class="fa fa-paper-plane"></i> Ikuti Ujian</a></div>';
+								><i class="fa fa-paper-plane"></i> Ikuti Ujian</a><span '.$soalData.'>Soal Ujian Belum Tersedia</span></div>';
 
             $data[] = $row;
         }

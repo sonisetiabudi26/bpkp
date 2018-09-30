@@ -30,7 +30,7 @@
 	<style>
 		body{
 			/* Location of the image */
-			background-image: url(<?php echo base_url('assets/img/content/book.jpg')?>);
+			/* background-image: url(<?php //echo base_url('assets/img/content/book.jpg')?>); */
 
 			/* Background image is centered vertically and horizontally at all times */
 			background-position: center center;
@@ -60,21 +60,21 @@
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container" >
-<?php $this->load->view('ujian/content/menu-page.php');?>
-<div class="top_nav">
-  <div class="nav_menu">
-    <nav>
-      <div class="nav toggle">
-        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-      </div>
-    </nav>
-  </div>
-</div>
-<?php
-  $this->load->view('ujian/'.$content_page);
-  $this->load->view('ujian/content/modal-page.php');
-?>
-</div>
+			<?php $this->load->view('ujian/content/menu-page.php');?>
+			<div class="top_nav">
+			  <div class="nav_menu">
+			    <nav>
+			      <div class="nav toggle">
+			        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+			      </div>
+			    </nav>
+			  </div>
+			</div>
+			<?php
+			  $this->load->view('ujian/'.$content_page);
+			  $this->load->view('ujian/content/modal-page.php');
+			?>
+		</div>
 </div>
 
 <!-- add function ajax process -->

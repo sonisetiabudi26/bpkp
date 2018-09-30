@@ -28,9 +28,11 @@ class JawabanPeserta extends My_Model
 		}
 	}
 	public function getPin($id){
-		$condition = "PK_JAWABAN_DETAIL =" . "'" . $id . "'  and PIN!=''";
-		$this->db->select('*');
+		$condition = "PK_JAWABAN_DETAIL =" . "'" . $id . "'  and PIN!='' and flag='1'";
+		$this->db->select('jawaban_peserta.*,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA');
 		$this->db->from($this->_table);
+		$this->db->join('registrasi_ujian', 'jawaban_peserta.KODE_PESERTA = registrasi_ujian.NIP');
+		$this->db->join('dokumen_registrasi_ujian', 'dokumen_registrasi_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		if ($query->num_rows() > 0) {

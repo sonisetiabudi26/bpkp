@@ -25,7 +25,19 @@ class SoalUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function checkSoalCount($fk_mata_ajar){
+		$condition = "mata_ajar.pk_mata_ajar = '" . $fk_mata_ajar . "'";
+		$this->db->select('count(*) as jml_soal');
+		$this->db->from($this->_table);
+		$this->db->join('bab_mata_ajar', 'soal_ujian.fk_bab_mata_ajar = bab_mata_ajar.pk_bab_mata_ajar');
+		$this->db->join('mata_ajar', 'bab_mata_ajar.fk_mata_ajar = mata_ajar.pk_mata_ajar');
+		$this->db->where($condition);
+		$query = $this->db->get();
 
+			return $query->row();
+
+
+	}
 	public function _get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar) {
 	    $condition = "fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
 	    $this->db->select('*');
@@ -38,7 +50,7 @@ class SoalUjian extends My_Model
 	    $condition = "FK_PERMINTAAN_SOAL = '" . $pk_soal . "' AND TAMPIL_UJIAN=0 AND permintaan_soal.flag='" . $flag . "'";
 	    $this->db->select('soal_ujian.*,permintaan_soal.STATUS');
 	    $this->db->from($this->_table);
-				$this->db->join('permintaan_soal', 'soal_ujian.FK_PERMINTAAN_SOAL = permintaan_soal.PK_PERMINTAAN_SOAL');
+			$this->db->join('permintaan_soal', 'soal_ujian.FK_PERMINTAAN_SOAL = permintaan_soal.PK_PERMINTAAN_SOAL');
 	    $this->db->where($condition);
 	    $query = $this->db->get();
 	    return $query->result();

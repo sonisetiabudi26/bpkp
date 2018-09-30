@@ -33,6 +33,15 @@ class RegisUjian extends My_Model
 		}
 
 	}
+	public function get_profile($nip){
+		$condition = "nip =" . "'" . $nip . "' and flag=1";
+		$this->db->select('dokumen_registrasi_ujian.*');
+		$this->db->from($this->_table);
+		$this->db->join('dokumen_registrasi_ujian', 'dokumen_registrasi_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 	public function getdataHistorybyNIP($nip,$kode_diklat){
 		$condition = "registrasi_ujian.NIP=" . "'" . $nip . "' and registrasi_ujian.KODE_DIKLAT=" . "'" . $kode_diklat . "'  and lookup_ujian.status='BELUM LULUS' ";
 		$this->db->select('mata_ajar.NAMA_MATA_AJAR');

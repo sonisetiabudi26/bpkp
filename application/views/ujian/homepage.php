@@ -60,7 +60,7 @@ ob_start("ob_gzhandler");
 		</div>
 	</div>
 		<footer class="footer">
-        <p class="text-muted" style="margin-left:10px;color:#ddd !important">© 2018 BPKP. All rights reserved</p>
+        <p class="text-muted" style="margin-left:10px;color:#ddd !important">ï¿½ 2018 BPKP. All rights reserved</p>
     </footer>
 <!-- INCLUDE JS -->
 <script src="<?php echo base_url('assets/js/jquery-2.1.4.js')?>"></script>

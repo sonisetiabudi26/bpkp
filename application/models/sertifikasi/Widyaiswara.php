@@ -41,13 +41,27 @@ class Widyaiswara extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
-	public function getdatabynip($nip){
-		$condition = "users.USER_NAME=" . "'" . $nip . "' and detail_nilai_wi.flag='0' group by widyaiswara_nilai.PK_WIDYAISWARA_NILAI";
+	public function getdatabynip($nip,$tgl_release,$mataajar){
+		$condition = "users.USER_NAME=" . "'" . $nip . "' and widyaiswara_nilai.TGL_RELEASE_MATA_AJAR=" . "'" . $tgl_release . "' and widyaiswara_nilai.FK_MATA_AJAR=" . "'" . $mataajar . "' and detail_nilai_wi.flag='0' group by widyaiswara_nilai.PK_WIDYAISWARA_NILAI";
 		$this->db->select('detail_nilai_wi.PK_DETAIL_NILAI_WI,widyaiswara_nilai.*,users.USER_NAME,mata_ajar.NAMA_MATA_AJAR,round(AVG(detail_nilai_wi.NILAI_1))as NILAI_1,round(AVG(detail_nilai_wi.NILAI_2))as NILAI_2');
 		$this->db->from($this->_table);
 		$this->db->join('users','widyaiswara_nilai.NIP_INSTRUKTUR=users.PK_USER');
 		$this->db->join('mata_ajar','widyaiswara_nilai.FK_MATA_AJAR=mata_ajar.PK_MATA_AJAR');
 		$this->db->join('detail_nilai_wi','widyaiswara_nilai.PK_WIDYAISWARA_NILAI=detail_nilai_wi.FK_WIDYAISWARA_NILAI');
+		$this->db->where($condition);
+		$query = $this->db->get();
+		// if ($query->num_rows() > 0) {
+			return $query->result();
+		// } else {
+		// 	return 'nodata';
+		// }
+	}
+	public function getdatabynipGroupby($nip){
+		$condition = "users.USER_NAME=" . "'" . $nip . "' group by mata_ajar.PK_MATA_AJAR,widyaiswara_nilai.TGL_RELEASE_MATA_AJAR";
+		$this->db->select('widyaiswara_nilai.*,users.USER_NAME,mata_ajar.NAMA_MATA_AJAR');
+		$this->db->from($this->_table);
+		$this->db->join('users','widyaiswara_nilai.NIP_INSTRUKTUR=users.PK_USER');
+		$this->db->join('mata_ajar','widyaiswara_nilai.FK_MATA_AJAR=mata_ajar.PK_MATA_AJAR');
 		$this->db->where($condition);
 		$query = $this->db->get();
 		// if ($query->num_rows() > 0) {
@@ -66,8 +80,8 @@ class Widyaiswara extends My_Model
 		}
 	}
 
-	public function getdatabynipifnull($nip){
-		$condition = "users.USER_NAME=" . "'" . $nip . "' and widyaiswara_nilai.flag='0' group by widyaiswara_nilai.PK_WIDYAISWARA_NILAI";
+	public function getdatabynipifnull($nip,$tgl_release,$mataajar){
+		$condition = "users.USER_NAME=" . "'" . $nip . "' and widyaiswara_nilai.TGL_RELEASE_MATA_AJAR=" . "'" . $tgl_release . "' and widyaiswara_nilai.FK_MATA_AJAR=" . "'" . $mataajar . "' and widyaiswara_nilai.flag='0' group by widyaiswara_nilai.PK_WIDYAISWARA_NILAI ";
 		$this->db->select('widyaiswara_nilai.*,users.USER_NAME,mata_ajar.NAMA_MATA_AJAR');
 		$this->db->from($this->_table);
 		$this->db->join('users','widyaiswara_nilai.NIP_INSTRUKTUR=users.PK_USER');

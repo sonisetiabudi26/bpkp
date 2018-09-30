@@ -1,81 +1,69 @@
+<style>
+	.card{
+		padding:10px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+	.card-title{
+		color:#fff;
+	}
+	.card-text{
+		color:#fff;
+	}
+	.card-body{
+		height:70px;
+	}
+</style>
 <div class="row">
-	<div class="col-lg-12 bg-warning" style="min-height:10px;">
-		<h4>Badan Pengawasan Keuangan dan Pembangunan</h4>
-		<small>Selamat datang dihalaman Management Soal,</small><hr>
-	</div>
-	<div class="col-lg-6">
-		<div class="container bg-info" style="border-radius:5px;padding:5px">
-			<span class="text-primary"><span class="glyphicon glyphicon-file"></span> List Soal / Bab Mata Ajar </span>
-		</div>
-		<br>
-		<div class="container">
-			<table class="table table-striped table-bordered nowrap" >
-				<thead style="color:#111;">
-					<tr>
-						<td>Nama Diklat</td>
-						<td>Group</td>
-						<td>Mata Ajar</td>
-						<td>Bab Mata Ajar</td>
-					</tr>
-				</thead>
-				<tbody style="color:#333;">
-				<?php
-					foreach ($bank_soal as $bank_soals):
-				?>
-					<tr>
-						<td>
-							<?php echo $bank_soals->DESCR; ?>
-						</td>
-						<td>
-							<?php echo $bank_soals->NAMA_JENJANG; ?>
-						</td>
-						<td>
-							<?php echo $bank_soals->NAMA_MATA_AJAR; ?>
-						</td>
-						<td>
-							<?php echo $bank_soals->NAMA_BAB_MATA_AJAR; ?>
-						</td>
-					</tr>
-				<?php
-					endforeach;
-				?>
-				</tbody>
-			</table>
+  <div class="col-sm-3">
+    <div class="card" style="background:#D7768F">
+      <div class="card-body">
+				<div class="col-lg-2">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-file-o"></i></label>
+				</div>
+				<div class="col-lg-10">
+	        <h5 class="card-title"><b>Total Soal Yang Ditayangkan</b></h5>
+	        <h2 class="card-text">6 SOAL</h2>
+				</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="card" style="background:#76B5D7">
+      <div class="card-body">
+				<div class="col-lg-2">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-list-alt"></i></label>
+				</div>
+				<div class="col-lg-10">
+				<h5 class="card-title"><b>Total Permintaan Buat Soal</b></h5>
+        <h2 class="card-text">12 SOAL</h2>
+			</div>
+      </div>
+    </div>
+  </div>
+	<div class="col-sm-3">
+		<div class="card" style="background:#60BF6B">
+			<div class="card-body">
+				<div class="col-lg-2">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-file-code-o"></i></label>
+				</div>
+				<div class="col-lg-10">
+				<h5 class="card-title"><b>Total Kode Soal</b></h5>
+				<h2 class="card-text">9 SOAL</h2>
+			</div>
+			</div>
 		</div>
 	</div>
-	<div class="col-lg-6">
-		<div class="container bg-info" style="border-radius:5px;padding:5px">
-			<span class="text-primary"><span class="glyphicon glyphicon-ok"></span> Approve Soal Ujian </span>
-		</div><br>
-		<div class="container" >
-			<table class="table table-striped table-bordered nowrap" >
-	<thead style="color:#111;">
-		<tr>
-			<td>Bab Mata Ajar</td>
-			<td>Status</td>
-			<td>Reviewer</td>
-		</tr>
-	</thead>
-	<tbody style="color:#333;">
-		<?php
-			foreach ($review_soal as $review_soals):
-		?>
-		<tr>
-			<td>
-				<?php echo $review_soals->NAMA_BAB_MATA_AJAR; ?>
-			</td>
-			<td>
-				<?php echo $review_soals->DESCR; ?>
-			</td>
-			<td>
-				<?php echo $review_soals->REVIEWER; ?>
-			</td>
-		</tr>
-	<?php
-		endforeach;
-	?>
-	</tbody>
-</table>
+	<div class="col-sm-3">
+		<div class="card" style="background:#59BBAE">
+			<div class="card-body">
+				<div class="col-lg-2">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-gear"></i></label>
+				</div>
+				<div class="col-lg-10">
+				<h5 class="card-title"><b>Total Konfigurasi Ujian</b></h5>
+        <h2 class="card-text">6 SOAL</h2>
+			</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -126,12 +126,15 @@ class Nilai extends CI_Controller{
 		public function add_nilai_default(){
 			$nilai1=$this->input->post('nilai_1');
 			$nilai2=$this->input->post('nilai_2');
+			$mata_ajar=$this->input->post('mata_ajar');
+			$tgl_release=$this->input->post('tgl_release');
 			$id_wi=$this->session->userdata('logged_in');
+
 			$datasheet1 = [];
 			if($nilai1!=''&&$nilai2!=''){
-				$data_all=$this->wi->getdatabynip($id_wi);
+				$data_all=$this->wi->getdatabynip($id_wi,$tgl_release,$mata_ajar);
 				if(empty($data_all)){
-						$data_all=$this->wi->getdatabynipifnull($id_wi);
+						$data_all=$this->wi->getdatabynipifnull($id_wi,$tgl_release,$mata_ajar);
 						if(empty($data_all)){
 								print json_encode(array("status"=>"error", "msg"=>'Data tidak boleh kosong'));
 						}
