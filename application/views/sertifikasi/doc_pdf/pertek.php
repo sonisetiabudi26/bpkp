@@ -60,27 +60,7 @@
   </div><br/><br/>
   <div class="row">
     <div class="full-width">
-      <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sehubungan dengan Surat <?php echo $unitapip ?> Nomor <?php echo $nosurat ?> tanggal <?php echo $datex ?>
-       perihal Usulan Pengangkatan PNS dalam Jabatan Fungsional Auditor melalui <?php echo $status_pengusulan ?>, dan setelah
-     dilakukan penelitian kelengkapan berkas persyaratan yang diterima, dapat disampaikan sebagai berikut: </p>
-     <!-- <table style="width:100%;border:none"> -->
-       <ul>
-         <li>Jumlah yang diusulkan untuk diangkat dalam JFA 3 Orang</li>
-         <li>Jumlah yang memenuhi syarat dan disetujui 3 orang</li>
-         <li>Jumlah yang Belum memenuhi persyarat 3 orang</li>
-
-    </ul>
-
-     <!-- </table> -->
-     <p align='justify'>Rician lebih lanjut Pegawai Negeri Sipil yang memenuhi syarat dan disetujui untuk diangkat dalam JFA di lingkungan
-     <?php echo $unitapip ?> dapat dilihat pada Lampiran Surat ini. Dua orang PNS belum disetujui atas nama Mudassir dan Elisma karena belum lulus
-   uji kompetensi.</p>
-     <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Penetapan Angka Kredit Awal pengangkatan dalam JFA agar didasarkan pada jumlah Angka Kredit sebagaimana terlampir dalam Lampiran Surat ini.</p>
-     <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pengangkatan dalam JFA agar memperhatikan formasi dan kecukupan beban kerja, sehingga para Auditor dapat memperoleh Angka Kredit yang cukup untuk
-     kenaikan jabatan/pangkat berikutnya sesuai dengan ketentuan yang berlaku.</p>
-     <p>Surat Keputusan Pengangkatan dalam JFA dan Penetapan Angka Kredit Awal sebagai tindak lanjut atas persetujuan ini agar disampaikan tembusannya kepada
-       kami c.q Kepala Pusat Pembinaan JFA</p>
-     <p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demikian kami sampaikan. Atas perhatian Bupati Aceh Barat, kami ucapkan terima kasih. </p>
+      <?php echo $isi;?>
     </div>
   </div><br/>
   <div class="row">

@@ -100,7 +100,7 @@ class ManagementPertek extends CI_Controller {
 					 }
 					 if ( ! write_file(FCPATH."/uploads/doc_pertek/".$namafile.".pdf", $pdf))
 					 {
-									 echo 'Unable to write the file';
+						 		 $output = array('msg' => 'error' , 'value'=>'Unable to write the file');
 					 }
 					 else
 					 {
@@ -110,15 +110,15 @@ class ManagementPertek extends CI_Controller {
 								 $data_update=array(
 									 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
 									 'PERTEK_DATE'=>$data['dates'],
+									 'ISI'=>$data['isi'],
 									 'NO_PERTEK'=>$data['no_pertek'],
 									 'CREATED_BY'=> $this->session->userdata('nip'),
 									 'CREATED_DATE'=> $data['dates']
 								 );
 								 $update=$this->pertek->updateData($where,'pertek',$data_update);
 					 }
+					  $output = array('msg' => 'success' , );
 				 }
-			// $dompdf->stream($namafile);
-			 $output = array('msg' => 'success' , );
 		 }else{
 			 $output = array('msg' => 'error' , );
 		 }
