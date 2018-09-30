@@ -14,6 +14,7 @@ class ManagementRegistrasi extends CI_Controller {
 				$this->load->model('sertifikasi/Users','user');
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
 				$this->load->model('sertifikasi/SoalUjian','soal');
+				$this->load->model('sertifikasi/lookupujian','lookupujian');
     }
 
     public function index()
@@ -43,9 +44,10 @@ class ManagementRegistrasi extends CI_Controller {
 					 $row[] = $a;
 					 $row[] = $field->KODE_MATA_AJAR;
 					 $row[] = $field->NAMA_MATA_AJAR;
-					 $row[] = '0';
-					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_edit_jadwal/".$field->PK_MATA_AJAR;
-					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Lihat Detail</a>
+					 $datajumlah=$this->lookupujian->getjumlahdata($field->PK_MATA_AJAR);
+					 $row[] = $datajumlah;
+					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_kebutuhan_soal/".$field->PK_MATA_AJAR;
+					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-kebutuhan-soal" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Lihat Detail</a>
                   ';
 
 					 $data[] = $row;
@@ -60,6 +62,11 @@ class ManagementRegistrasi extends CI_Controller {
 			 );
 			 //output dalam format JSON
 			 echo json_encode($output);
+		}
+		public function vw_kebutuhan_soal($obj){
+			$data['data_soal']=$this->lookupujian->getDataDetailKebutuhan($obj);
+
+			$this->load->view('sertifikasi/pusbin/content/view_kebutuhan_soal',$data);
 		}
 		public function loadDatawidyaiswara(){
 			$datas=$this->user->loaddataWidyaiswarauser();

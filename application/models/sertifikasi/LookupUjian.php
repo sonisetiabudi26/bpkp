@@ -29,6 +29,24 @@ class LookupUjian extends My_Model
 			return 'failed';
 		}
 	}
+	public function getDataDetailKebutuhan($pk){
+		$condition = "lookup_ujian.FK_MATA_AJAR ='" . $pk . "' and lookup_ujian.flag='0' group by provinsi.NAMA";
+		$this->db->select('provinsi.NAMA,count(lookup_ujian.PK_LOOKUP_REGIS)as jml_soal');
+		$this->db->from($this->_table);
+		$this->db->join('registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN= lookup_ujian.FK_REGIS_UJIAN');
+		$this->db->join('provinsi', 'registrasi_ujian.LOKASI_UJIAN= provinsi.PK_PROVINSI');
+		$this->db->where($condition);
+		$query = $this->db->get();
+			return $query->result();
+	}
+	public function getjumlahdata($pk){
+		$condition = "lookup_ujian.FK_MATA_AJAR ='" . $pk . "' and lookup_ujian.flag=0";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
 	public function save($data) {
 		$insert=$this->db->insert($this->_table, $data);
 		 if($insert){
