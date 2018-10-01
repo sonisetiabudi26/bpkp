@@ -128,10 +128,12 @@ class RegisUjian extends My_Model
 	}
  public function data_detail_peserta($flag,$id){
 	 $condition = "registrasi_ujian.flag=" . "'" . $flag . "' AND registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $id . "' AND lookup_ujian.flag='1'";
-	 $this->db->select('mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.PK_REGIS_UJIAN,mata_ajar.PK_MATA_AJAR');
+	 $this->db->select('mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.PK_REGIS_UJIAN,mata_ajar.PK_MATA_AJAR,dokumen_persetujuan.DOKUMEN,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA');
 	 $this->db->from($this->_table);
 	 $this->db->join('lookup_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = lookup_ujian.FK_REGIS_UJIAN');
 	 $this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+	 $this->db->join('dokumen_registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = dokumen_registrasi_ujian.FK_REGIS_UJIAN');
+	 $this->db->join('dokumen_persetujuan', 'registrasi_ujian.GROUP_REGIS = dokumen_persetujuan.GROUP_REGIS');
 	 $this->db->where($condition);
 	 $query = $this->db->get();
 	 if ($query->num_rows() > 0) {
@@ -141,13 +143,30 @@ class RegisUjian extends My_Model
 	 }
 
  }
+ public function data_detail_peserta_doc($flag,$id){
+	 $condition = "registrasi_ujian.flag=" . "'" . $flag . "' AND registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $id . "' AND registrasi_ujian.flag='1'";
+	 $this->db->select('dokumen_persetujuan.DOKUMEN,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA');
+	 $this->db->from($this->_table);
+	 $this->db->join('dokumen_registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = dokumen_registrasi_ujian.FK_REGIS_UJIAN');
+	 $this->db->join('dokumen_persetujuan', 'registrasi_ujian.GROUP_REGIS = dokumen_persetujuan.GROUP_REGIS');
+	 $this->db->where($condition);
+	 $query = $this->db->get();
+	 if ($query->num_rows() > 0) {
+		 return $query->row();
+	 }else {
+		 	return 'false';
+	 }
+
+ }
  public function data_detail_notnull($flag,$id){
-	 $condition = "registrasi_ujian.flag=" . "'" . $flag . "' AND registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $id . "'";
-	 $this->db->select('mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.PK_REGIS_UJIAN,mata_ajar.PK_MATA_AJAR,registrasi_ujian.NILAI_KSP');
+	 $condition = "registrasi_ujian.flag=" . "'" . $flag . "' AND registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $id . "' group by mata_ajar.PK_MATA_AJAR";
+	 $this->db->select('mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.PK_REGIS_UJIAN,mata_ajar.PK_MATA_AJAR,registrasi_ujian.NILAI_KSP,dokumen_persetujuan.DOKUMEN,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA');
 	 $this->db->from($this->_table);
 	 // $this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 	 $this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 	 $this->db->join('mata_ajar', 'mata_ajar.FK_JENJANG = jenjang.PK_JENJANG');
+	 $this->db->join('dokumen_registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN = dokumen_registrasi_ujian.FK_REGIS_UJIAN');
+	 $this->db->join('dokumen_persetujuan', 'registrasi_ujian.GROUP_REGIS = dokumen_persetujuan.GROUP_REGIS');
 	 $this->db->where($condition);
 	 $query = $this->db->get();
 	 return $query->result();

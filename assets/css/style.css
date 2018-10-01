@@ -9,7 +9,19 @@
 #head-line b {
 	color: #333;
 }
-
+.card,.x_panel{
+	padding:10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card-title{
+	color:#fff;
+}
+.card-text{
+	color:#fff;
+}
+.card-body{
+	height:70px;
+}
 .content {
 	margin-bottom: 100px;
 }

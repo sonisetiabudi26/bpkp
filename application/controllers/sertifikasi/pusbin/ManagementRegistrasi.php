@@ -65,7 +65,6 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 		public function vw_kebutuhan_soal($obj){
 			$data['data_soal']=$this->lookupujian->getDataDetailKebutuhan($obj);
-
 			$this->load->view('sertifikasi/pusbin/content/view_kebutuhan_soal',$data);
 		}
 		public function loadDatawidyaiswara(){
@@ -148,6 +147,9 @@ class ManagementRegistrasi extends CI_Controller {
 			}else{
 				$data['data_detail']=$data_detail;
 			}
+
+
+			$data['doc']=$this->regis->data_detail_peserta_doc('1',$id);
 			// return $data;
 			$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta',$data);
 		}
