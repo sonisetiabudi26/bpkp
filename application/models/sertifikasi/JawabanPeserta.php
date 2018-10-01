@@ -174,10 +174,12 @@ public function updateData($where,$table,$data){
 	$this->db->update($table,$data);
 }
 public function getUnit(){
-	// $condition = "";
+	$condition = "lookup_ujian.flag ='1' group by jawaban_peserta.KODE_UNIT";
 	$this->db->select('*');
 	$this->db->from($this->_table);
-	$this->db->group_by('KODE_UNIT');
+	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
+	$this->db->where($condition);
+	// $this->db->group_by('KODE_UNIT');
 	$query = $this->db->get();
 
 		return $query->result();

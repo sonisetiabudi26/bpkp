@@ -46,8 +46,10 @@ class ManagementRegistrasi extends CI_Controller {
 					 $row[] = $field->NAMA_MATA_AJAR;
 					 $datajumlah=$this->lookupujian->getjumlahdata($field->PK_MATA_AJAR);
 					 $row[] = $datajumlah;
+					 $enable=($datajumlah==0?'style="display:none;"':'');
 					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_kebutuhan_soal/".$field->PK_MATA_AJAR;
 					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-kebutuhan-soal" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Lihat Detail</a>
+					 <a class="btn btn-sm btn-success" '.$enable.'	href="'. base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_export_excel/".$field->PK_MATA_AJAR.'" ><i class="fa fa-excel-o"></i> Export Excel</a>
                   ';
 
 					 $data[] = $row;
@@ -133,12 +135,18 @@ class ManagementRegistrasi extends CI_Controller {
 							$data['unitkerja']=$jsonResult->data[0]->UnitKerja_Nama;
 							$data['nama_peserta']=$jsonResult->data[0]->Auditor_NamaLengkap;
 						}
+
 					$url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_show_detail/".$key->PK_REGIS_UJIAN;
-					$data['action']='<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail</a>';
+					$data['action']='<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-detail2" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail</a>';
 						$output[]=$data;
 
 				}
 			echo json_encode($output);
+		}
+		public function vw_export_excel($id){
+			  $data['data_soal']=$this->lookupujian->getDataDetailKebutuhan($id);
+				$data['title']='Laporan';
+				$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta_excel',$data);
 		}
 		public function vw_show_detail($id){
 			$data_detail=$this->regis->data_detail_peserta('1',$id);
