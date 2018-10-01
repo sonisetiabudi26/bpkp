@@ -575,9 +575,9 @@ class PerhitunganNilai extends CI_Controller {
 						 $row[] = $a+1;
 						 $row[] = $field->FK_EVENT;
 						 $row[] = $field->KODE_PESERTA;
-						 $row[] = $field->KODE_SOAL;
 						 $row[] = $field->KELAS;
-						 $row[] = $field->Nilai;
+						 $row[] = $field->nilai;
+						 $row[] = $field->STATUS;
 
 						 $data[] = $row;
 						 $a++;
@@ -778,14 +778,15 @@ class PerhitunganNilai extends CI_Controller {
 						$row = array();
 						$nilai=0;
 						$row[] = $a+1;
-						$row[] = $field->FK_EVENT;
+						$row[] = $field->NAMA_JENJANG;
 						$row[] = $field->KODE_UNIT;
 						$row[] = $dataTotal;
 						//$row[] = $field->KODE_SOAL;
 						//$row[] = $field->KELAS;
 						$id=$field->KODE_UNIT.'~'.$field->FK_EVENT;
 						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
-						$row[] = '<a class="btn btn-sm btn-success" id="btn-view-nilai-unitapip2" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>';
+						$row[] = '<a class="btn btn-sm btn-primary" id="btn-view-nilai-unitapip2" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>
+						<a class="btn btn-sm btn-success"	href="'. base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_export_excel/".$id.'" ><i class="fa fa-file-excel-o"></i> Export Excel</a>';
 
 
 						$data[] = $row;
@@ -801,6 +802,15 @@ class PerhitunganNilai extends CI_Controller {
 			);
 			//output dalam format JSON
 			echo json_encode($output);
+		}
+		public function vw_export_excel($id){
+			$parameter	= explode('~',$id);
+			$kodeevent=$parameter[1];
+			$kode_unit=$parameter[0];
+			$data['dataAll']= $this->jawaban->getALlbyUnit($kodeevent,$kode_unit);
+			$data['title']='Laporan_unit_apip';
+			$this->load->view('sertifikasi/pusbin/content/export_laporan_unit_apip',$data);
+
 		}
     public function importNilai(){
     //  $nilai = $this->input->post('file_nilai');

@@ -8,9 +8,9 @@
           <td>NO</td>
           <td>Kode Event</td>
           <td>Kode Peserta</td>
-          <td>Kode Soal</td>
           <td>Kelas</td>
           <td>Nilai</td>
+          <td>Status</td>
         </tr>
         </thead>
         <tbody>
@@ -53,7 +53,8 @@ var table;
                   {"data": "2",width:100},
                   {"data": "3",width:100},
 									{"data": "4",width:100},
-                  {"data": "5",width:100}
+                  {"data": "5",width:100},
+
 
               ],
 

@@ -49,7 +49,7 @@ class ManagementRegistrasi extends CI_Controller {
 					 $enable=($datajumlah==0?'style="display:none;"':'');
 					 $url=base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_kebutuhan_soal/".$field->PK_MATA_AJAR;
 					 $row[] = '<a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-kebutuhan-soal" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Lihat Detail</a>
-					 <a class="btn btn-sm btn-success" '.$enable.'	href="'. base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_export_excel/".$field->PK_MATA_AJAR.'" ><i class="fa fa-excel-o"></i> Export Excel</a>
+					 <a class="btn btn-sm btn-success" '.$enable.'	href="'. base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_export_excel/".$field->PK_MATA_AJAR.'" ><i class="fa fa-file-excel-o"></i> Export Excel</a>
                   ';
 
 					 $data[] = $row;

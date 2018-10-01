@@ -70,8 +70,9 @@ public function getALl($kodeevent,$kelas){
 }
 public function getALlbyUnit($kodeevent,$kode_unit){
   $condition = "FK_EVENT =" . "'" . $kodeevent . "' AND " . "KODE_UNIT =" . "'" . $kode_unit . "'";
-  $this->db->select('*');
+  $this->db->select('jawaban_peserta.*,lookup_ujian.NILAI_TOTAL as nilai,lookup_ujian.STATUS');
   $this->db->from($this->_table);
+	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
   $this->db->where($condition);
   $query = $this->db->get();
 	return $query->result();
@@ -174,15 +175,17 @@ public function updateData($where,$table,$data){
 	$this->db->update($table,$data);
 }
 public function getUnit(){
-	$condition = "lookup_ujian.flag ='1' group by jawaban_peserta.KODE_UNIT";
-	$this->db->select('*');
+	$condition = "lookup_ujian.flag ='0' group by jawaban_peserta.KODE_UNIT";
+	$this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG');
 	$this->db->from($this->_table);
 	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
+	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
+	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 	$this->db->where($condition);
 	// $this->db->group_by('KODE_UNIT');
 	$query = $this->db->get();
 
-		return $query->result();
+	return $query->result();
 
 }
 public function getPesertabyUnit($id_unit,$id_event){
