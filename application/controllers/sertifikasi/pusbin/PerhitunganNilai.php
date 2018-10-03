@@ -573,8 +573,10 @@ class PerhitunganNilai extends CI_Controller {
 						 $row = array();
 						 $nilai=0;
 						 $row[] = $a+1;
-						 $row[] = $field->FK_EVENT;
+						 $row[] = $field->NAMA_JENJANG;
 						 $row[] = $field->KODE_PESERTA;
+						 $row[] = $field->NAMA;
+
 						 $row[] = $field->KELAS;
 						 $row[] = $field->nilai;
 						 $row[] = $field->STATUS;
@@ -614,8 +616,16 @@ class PerhitunganNilai extends CI_Controller {
              $row = array();
              $nilai=0;
              $row[] = $a+1;
-             $row[] = $field->FK_EVENT;
+             $row[] = $field->NAMA_JENJANG;
              $row[] = $field->KODE_PESERTA;
+						 $apiuser=$this->apiuser($field->KODE_PESERTA);
+						 if($apiuser->message!='auditor_not_found' ){
+						 $row[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+						 // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+						 }else{
+							 $row[] ='unknown';
+							 // $data['kodeunitkerja']='empty';
+						 }
              $row[] = $field->KODE_SOAL;
              $row[] = $field->KELAS;
              $row[] = $nilai;
@@ -778,7 +788,7 @@ class PerhitunganNilai extends CI_Controller {
 						$row = array();
 						$nilai=0;
 						$row[] = $a+1;
-						$row[] = $field->NAMA_JENJANG;
+						// $row[] = $field->NAMA_JENJANG;
 						$row[] = $field->KODE_UNIT;
 						$row[] = $dataTotal;
 						//$row[] = $field->KODE_SOAL;
@@ -786,7 +796,7 @@ class PerhitunganNilai extends CI_Controller {
 						$id=$field->KODE_UNIT.'~'.$field->FK_EVENT;
 						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
 						$row[] = '<a class="btn btn-sm btn-primary" id="btn-view-nilai-unitapip2" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>
-						<a class="btn btn-sm btn-success"	href="'. base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_export_excel/".$id.'" ><i class="fa fa-file-excel-o"></i> Export Excel</a>';
+						<a class="btn btn-sm btn-success"	href="'. base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_export_excel/".$id.'" ><i class="fa fa-file-pdf-o"></i> Export pdf</a>';
 
 
 						$data[] = $row;

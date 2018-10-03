@@ -6,8 +6,9 @@
         <thead>
         <tr>
           <td>NO</td>
-          <td>Kode Event</td>
+          <td>Jenjang</td>
           <td>Kode Peserta</td>
+          <td>Nama</td>
           <td>Kelas</td>
           <td>Nilai</td>
           <td>Status</td>
@@ -54,6 +55,7 @@ var table;
                   {"data": "3",width:100},
 									{"data": "4",width:100},
                   {"data": "5",width:100},
+                  {"data": "6",width:100},
 
 
               ],

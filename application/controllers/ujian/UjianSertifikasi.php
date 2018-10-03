@@ -50,6 +50,7 @@ class UjianSertifikasi extends CI_Controller{
 		$parameter=explode('~',$fk_mata_ajar);
 		$bab_mata_ajar=$parameter[0];
 		$fk_jawaban_detail=$parameter[1];
+		$data['nama_mata_ajar']=$parameter[2];
 		$datajawaban=$this->jawaban->getPin($fk_jawaban_detail);
 		if($datajawaban!='no data'){
 			$dataconfig=$this->konfig->getConfig($datajawaban->PIN);
@@ -90,11 +91,14 @@ class UjianSertifikasi extends CI_Controller{
 								$soalData='style="display:none;color:#f00"';
 							}
 						}
-            $row[] = '<div style="text-align:center;"><a data-var="pk_ujian_soal" '.$disable.' data-id='.$rows->PK_REGIS_UJIAN.' class="btn btn-sm btn-success" onclick="getModalWithParam(this)" id="btn-ujian-soal"
-							data-href="'. base_url('ujian')."/ujiansertifikasi/vw_masukan_pin/".$rows->FK_MATA_AJAR.'" data-toggle="modal" data-target="#modal-content"
-							><i class="fa fa-pencil"></i> Masukan Pin</a>
-							<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'"
-								><i class="fa fa-paper-plane"></i> Ikuti Ujian</a><span '.$soalData.'>Soal Ujian Belum Tersedia</span></div>';
+            $row[] = '<div style="text-align:center;">
+						<a data-var="pk_ujian_soal" '.$disable.' data-id='.$rows->PK_REGIS_UJIAN.' class="btn btn-sm btn-success"
+						onclick="getModalWithParam(this)" id="btn-ujian-soal"
+						data-href="'. base_url('ujian')."/ujiansertifikasi/vw_masukan_pin/".$rows->FK_MATA_AJAR.'" data-toggle="modal" data-target="#modal-content">
+						<i class="fa fa-pencil"></i> Masukan Pin</a>
+						<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'~'.$rows->NAMA_MATA_AJAR.'">
+						<i class="fa fa-paper-plane"></i> Ikuti Ujian</a>
+						<span '.$soalData.'>Soal Ujian Belum Tersedia</span></div>';
 
             $data[] = $row;
         }

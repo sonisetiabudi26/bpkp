@@ -60,9 +60,10 @@ class JawabanPeserta extends My_Model
 	}
 public function getALl($kodeevent,$kelas){
   $condition = "event.KODE_EVENT =" . "'" . $kodeevent . "' AND jawaban_peserta.KELAS =" . "'" . $kelas . "'";
-  $this->db->select('*');
+  $this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG');
   $this->db->from($this->_table);
 	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
+	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
   $this->db->where($condition);
   $query = $this->db->get();
 	return $query->result();
@@ -70,9 +71,12 @@ public function getALl($kodeevent,$kelas){
 }
 public function getALlbyUnit($kodeevent,$kode_unit){
   $condition = "FK_EVENT =" . "'" . $kodeevent . "' AND " . "KODE_UNIT =" . "'" . $kode_unit . "'";
-  $this->db->select('jawaban_peserta.*,lookup_ujian.NILAI_TOTAL as nilai,lookup_ujian.STATUS');
+  $this->db->select('jawaban_peserta.*,lookup_ujian.NILAI_TOTAL as nilai,lookup_ujian.STATUS,jenjang.NAMA_JENJANG,registrasi_ujian.NAMA');
   $this->db->from($this->_table);
 	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
+	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
+	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+	$this->db->join('registrasi_ujian', 'jawaban_peserta.KODE_PESERTA = registrasi_ujian.NIP');
   $this->db->where($condition);
   $query = $this->db->get();
 	return $query->result();

@@ -98,12 +98,12 @@ class Registrasi extends CI_Controller {
 				 foreach ($datas as $key) {
 					$row['NIP']=$key->NIP;
 
-					$apiuser=$this->apiuser($key->NIP);
-					if($apiuser->message!='auditor_not_found' ){
-					$row['NAMA'] = $apiuser->data[0]->Auditor_NamaLengkap;
-					}else{
-					$row['NAMA'] ='unknown';
-					}
+					// $apiuser=$this->apiuser($key->NIP);
+					// if($apiuser->message!='auditor_not_found' ){
+					$row['NAMA'] = $key->NAMA;
+					// }else{
+					// $row['NAMA'] ='unknown';
+					// }
 					$row['NO_SURAT_UJIAN']=$key->NO_SURAT_UJIAN;
 					$row['JADWAL']=$key->START_DATE.' - '.$key->END_DATE;
 					$url=base_url('sertifikasi')."/unit_apip/Registrasi/vw_detail_peserta/".$key->PK_REGIS_UJIAN;
@@ -133,14 +133,13 @@ class Registrasi extends CI_Controller {
 				 $nip=$this->input->post('nip');
 				 $dataCheckPeserta=$this->regis->loadbyNIP($nip,$this->input->post('diklat'));
 				 if(!$dataCheckPeserta){
-				 		// $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$nip);
-						$dataCheckPeserta='empty';
+				 		$dataCheckPeserta='empty';
 			 		}else{
-						$dataRow=$this->regis->getdataHistorybyNIP($nip,$this->input->post('diklat'));
+							$dataRow=$this->regis->getdataHistorybyNIP($nip,$this->input->post('diklat'));
 						if($dataRow!='empty'){
 							$dataCheckPeserta='empty';
 						}else{
-								$dataCheckPeserta='not empty';
+							$dataCheckPeserta='not empty';
 						}
 					}
 				 $apiuser=$this->apiuser($nip);
@@ -148,6 +147,7 @@ class Registrasi extends CI_Controller {
 	 					$provinsiNama = $apiuser->data[0]->Provinsi;
 						$dataProvisi=$this->provinsi->getdataPK($provinsiNama);
 						$provinsiId=$dataProvisi->PK_PROVINSI;
+						$nama=$apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 					}
 				 if($dataCheckPeserta=='empty'){
 						 $folder='doc_registrasi/'.$nip.'_'.$date;
@@ -172,6 +172,7 @@ class Registrasi extends CI_Controller {
 
 							 $data = array(
 					 			'NIP' => $this->input->post('nip'),
+								'NAMA' => $nama,
 								'GROUP_REGIS' => '',
 								'KODE_DIKLAT' => $this->input->post('diklat'),
 					 			'LOKASI_UJIAN' => ($this->input->post('lokasi')==''?$provinsiId:$this->input->post('lokasi')),

@@ -48,7 +48,7 @@
 
 			/* Set a background color that will be displayed
 				while the background image is loading */
-			background-color: #fff;
+			background-color: #f2f3f8;
 		}
 		.date-header{
 			background: #3a7bd5;  /* fallback for old browsers */
@@ -59,7 +59,7 @@
 </head>
 <body class="nav-md">
 	<div class="container body">
-		<div class="main_container" >
+		<div class="main_container"  >
 			<?php $this->load->view('ujian/content/menu-page.php');?>
 			<div class="top_nav">
 			  <div class="nav_menu">

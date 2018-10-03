@@ -1102,8 +1102,8 @@ h2 {
     display: inline-block;
     /* background-color: rgba(0, 0, 0, 0.2); */
     background: #fff;
-
-    border: 1px solid #36a3f7;
+    	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    /* border: 1px solid #36a3f7; */
     color:#333;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;

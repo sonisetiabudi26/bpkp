@@ -181,7 +181,7 @@
 			</div>
 			<div class="x_content">
 				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="min-height:325px;">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="min-height:270px;">
 						<form enctype="multipart/form-data" onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/petugas_lo/registrasi/add_persetujuan"; ?>')" method="POST" id="daftar_persetujuan">
 						<div class="row">
               <table id="dataResult" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -197,7 +197,7 @@
 
   							</table>
 							</div>
-							<div class="row">
+							<!-- <div class="row">
 								<div class="form-group">
 									<div class="col-lg-4 col-md-4 col-xs-4">
 										<span class="btn btn-default btn-block btn-file" id="input_persetujuan"><i class="fa fa-file-pdf-o"></i>
@@ -209,7 +209,7 @@
 									 <span class="mandatory"><i>* Format dokumen harus .pdf</i></span>
 								 </div>
 							 </div>
-							</div>
+							</div> -->
 							<br/>
 						<div class="row">
 							<!-- <input class="btn btn-primary btn-block" disabled id="setuju_ujian_btn" value="Ajukan" type="submit"> -->

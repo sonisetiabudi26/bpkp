@@ -58,7 +58,7 @@ class Registrasi extends CI_Controller {
 			if($apiuser->message=='get_data_success'){
 			$namaunitkerja = $apiuser->data[0]->UnitKerja_Nama;
 			$kodeunitkerja = $this->session->userdata('kodeunitkerja');
-			if($apiuser->message=='get_data_success' && $apiuser->data[0]->UnitKerja_Kode==$kodeunitkerja && $apiuser->data[0]->IsAuditor=='true'){
+			if($apiuser->message=='get_data_success' && $apiuser->data[0]->IsAuditor=='true'){
 				$output = array(
 											 "nip" => $apiuser->data[0]->Auditor_NIP,
 											 "nama" => $apiuser->data[0]->Auditor_NamaLengkap,
@@ -287,17 +287,16 @@ class Registrasi extends CI_Controller {
 					 $group_regis=$this->session->userdata('kodeunitkerja').'_'.$dates;
 					 $update=$this->regis->updateDataRegis($group_regis,$admin);
 
-					 $folder='doc_setuju/'.$group_regis;
-					 $docpersetujuan='doc_persetujuan';
-					 $uploadpdf = $this->do_upload_pdf($folder,$docpersetujuan);
+					 // $folder='doc_setuju/'.$group_regis;
+					 // $docpersetujuan='doc_persetujuan';
+					 // $uploadpdf = $this->do_upload_pdf($folder,$docpersetujuan);
 
-					 if($uploadpdf['result_upload_pdf'] == "success"){
-						 $doc_persetujuan='doc_setuju/'.$group_regis.'_'.$dates.'/'.$_FILES['doc_persetujuan']['name'];
+					 // if($uploadpdf['result_upload_pdf'] == "success"){
+						 // $doc_persetujuan='doc_setuju/'.$group_regis.'_'.$dates.'/'.$_FILES['doc_persetujuan']['name'];
 						 // $doc_foto='doc_registrasi/'.$folder.'/'.$_FILES['doc_foto']['name'];
 						 $data = array(
 				 			'GROUP_REGIS' => $group_regis,
-						  'DOKUMEN' => $doc_persetujuan,
-				 			'CREATED_BY' => $this->session->userdata('nip'),
+						 	'CREATED_BY' => $this->session->userdata('nip'),
 							'CREATED_DATE' => $datex
 				 		);
 						$update=$this->regis->updateData($group_regis);
@@ -331,11 +330,11 @@ class Registrasi extends CI_Controller {
 						}else{
 							print json_encode(array("status"=>"error", "msg"=>'Gagal simpan data ke database'));
 						}
-					 }else{
-						 $data['upload_error1'] = $uploadpdf['error'];
-						 // $data['upload_error2'] = $uploadimg['error'];
-						 print json_encode(array("status"=>'error','msg'=>'gagal upload'));
-					 }
+					 // }else{
+						//  $data['upload_error1'] = $uploadpdf['error'];
+						//  // $data['upload_error2'] = $uploadimg['error'];
+						//  print json_encode(array("status"=>'error','msg'=>'gagal upload'));
+					 // }
 
 			 // }else{
 				//  echo json_encode(array("status"=>'gagal'));

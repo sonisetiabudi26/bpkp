@@ -30,7 +30,6 @@
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Kode Event</td>
 													<td>Kode Unit</td>
 													<td>Jumlah Peserta</td>
 													<td>Tindakan</td>
@@ -130,7 +129,7 @@ $(document).ready(function(){
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
 	                  {"data": "3",width:100},
-										{"data": "4",width:100},
+									
 	              ],
 
 	          });
