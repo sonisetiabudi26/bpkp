@@ -242,6 +242,7 @@ $('input[type=checkbox]').change( function() {
 
 var x = setInterval(function() {
 	var dates='<?php echo $dates;?>';
+
 	var start_time='<?php echo $start_time;?>';
 	var end_time='<?php echo $end_time;?>';
 	var dt = new Date();
@@ -257,23 +258,26 @@ var x = setInterval(function() {
 	var datetime= dt.getFullYear() + "-" + mm + "-" + dd;
 
 	var time =  addZero(dt.getHours()) + ":" +  addZero(dt.getMinutes()) + ":" +  addZero(dt.getSeconds());
-	var jam_first = parseInt(time.substring(0,2)) * 60;
-	var jam_second = parseInt(end_time.substring(0,2)) * 60;
-	var menit_first = parseInt(time.substring(3,5));
-	var menit_second = parseInt(end_time.substring(3,5));
-	var detik_first = parseInt(time.substring(6,8));
-	var detik_second = parseInt(end_time.substring(6,8));
-	var hasil_first = jam_first + menit_first + detik_first;
-	var hasil_second = jam_second + menit_second + detik_second;
-	var selisih = hasil_second - hasil_first;
+	var dates_all=dates+' '+end_time;
+
+
+	var selisih =   new Date(dates_all).getTime()-new Date().getTime();
 	// alert(selisih);
-	var jam = Math.floor(selisih / 60);
-	var menit = selisih - (jam * 60);
-	// var detik = menit / 3600;
+	var days = Math.floor(selisih / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((selisih % (1000 * 60)) / 1000);
+
 
 // Output the result in an element with id="demo"
-document.getElementById("demo").innerHTML =  jam + "h "
-+ menit + "m ";
+if (selisih < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+    }else{
+			document.getElementById("demo").innerHTML =  hours + "h "+ minutes + "m "+ seconds + "s";
+		}
+
+
  // + detik + "s ";
 	time_ujian();
 }, 1000);
