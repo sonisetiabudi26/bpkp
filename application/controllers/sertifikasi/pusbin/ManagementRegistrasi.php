@@ -145,20 +145,20 @@ class ManagementRegistrasi extends CI_Controller {
 		}
 		public function vw_export_excel(){
 
-					$dataprovinsi=$this->provinsi->_get_provinsi_information();
-					foreach ($dataprovinsi as $prov) {
+					$data['provinsi']=$this->provinsi->_get_provinsi_information();
+					foreach ($data['provinsi'] as $prov) {
 						$data['data_mata_ajar']=$this->soal->loadsoalkebutuhan();
 						foreach ($data['data_mata_ajar'] as $key) {
 						$dataAll=$this->lookupujian->getDataDetailKebutuhan($key->PK_MATA_AJAR,$prov->NAMA);
 						foreach ($dataAll as $value) {
-							$data[$prov->NAMA][$key->NAMA_MATA_AJAR]['data_soal']=$value->jml_soal;
+							$data['data_soal'][$prov->NAMA][$key->NAMA_MATA_AJAR]=$value->jml_soal;
 						}
 					}
 
 				}
 				$data['title']='Laporan';
-				print_r($data);
-			//	$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta_excel',$data);
+				// print_r($data);
+				$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta_excel',$data);
 		}
 		public function vw_show_detail($id){
 			$data_detail=$this->regis->data_detail_peserta('1',$id);

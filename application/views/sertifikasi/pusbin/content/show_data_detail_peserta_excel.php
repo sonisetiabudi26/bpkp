@@ -26,12 +26,14 @@
  <tbody>
    <?php
    $no=1;
-   foreach ($data_soal as $key):
+   foreach ($data_provinsi as $key):
      echo "<tr>
      <td>".$no++."</td>
-     <td>".$key->NAMA."</td>
-     <td>".$key->jml_soal."</td>
-     </tr>";
+     <td>".$key->NAMA."</td>";
+     foreach ($data_mata_ajar as $key):
+     echo "<td>".$key->jml_soal."</td>";
+     endforeach
+     echo "</tr>";
    endforeach
     ?>
  </tbody>

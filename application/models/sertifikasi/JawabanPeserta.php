@@ -60,7 +60,7 @@ class JawabanPeserta extends My_Model
 	}
 public function getALl($kodeevent,$kelas){
   $condition = "event.KODE_EVENT =" . "'" . $kodeevent . "' AND jawaban_peserta.KELAS =" . "'" . $kelas . "'";
-  $this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG');
+  $this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG,registrasi_ujian.NAMA');
   $this->db->from($this->_table);
 	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
 	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
