@@ -12,6 +12,7 @@ class ManagementRegistrasi extends CI_Controller {
 				$this->load->model('sertifikasi/RegisUjian','regis');
 				$this->load->model('sertifikasi/JadwalUjian','jadwal');
 				$this->load->model('sertifikasi/Users','user');
+				$this->load->model('sertifikasi/Provinsi','provinsi');
 				$this->load->model('sertifikasi/GroupMataAjar','groupmataajar');
 				$this->load->model('sertifikasi/SoalUjian','soal');
 				$this->load->model('sertifikasi/lookupujian','lookupujian');
@@ -143,12 +144,21 @@ class ManagementRegistrasi extends CI_Controller {
 			echo json_encode($output);
 		}
 		public function vw_export_excel(){
-		  	$data['data_mata_ajar']=$this->soal->loadsoalkebutuhan();
-				foreach ($data['data_mata_ajar'] as $key) {
-					$data['data_soal']=$this->lookupujian->getDataDetailKebutuhan($key->PK_MATA_AJAR);
+
+					$dataprovinsi=$this->provinsi->_get_provinsi_information();
+					foreach ($dataprovinsi as $prov) {
+						$data['data_mata_ajar']=$this->soal->loadsoalkebutuhan();
+						foreach ($data['data_mata_ajar'] as $key) {
+						$dataAll=$this->lookupujian->getDataDetailKebutuhan($key->PK_MATA_AJAR,$prov->NAMA);
+						foreach ($dataAll as $value) {
+							$data[$prov->NAMA][$key->NAMA_MATA_AJAR]['data_soal']=$value->jml_soal;
+						}
+					}
+
 				}
 				$data['title']='Laporan';
-				$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta_excel',$data);
+				print_r($data);
+			//	$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta_excel',$data);
 		}
 		public function vw_show_detail($id){
 			$data_detail=$this->regis->data_detail_peserta('1',$id);

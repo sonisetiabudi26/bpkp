@@ -81,7 +81,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-success" id="" onclick="getModal(this)" data-href="<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_export_excel"; ?>"   data-toggle="modal" data-target="#modal-content" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="fa fa-file-excel-o"></i> Export Excel</button>
+								<button class="btn btn-success" id="" onclick="getdata()" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="fa fa-file-excel-o"></i> Export Excel</button>
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -204,7 +204,18 @@ var table;
           });
 }
 
+function getdata(){
 
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_export_excel"; ?>",
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+				console.log(data);
+			}
+		});
+}
 function loadData(obj){
 	loadDataPeserta();
 	loadDatajadwal();
