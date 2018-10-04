@@ -118,13 +118,14 @@ class Registrasi extends CI_Controller {
 		 }
 		 public function vw_detail_peserta($param){
 			  $userAdmin=$this->session->userdata('nip');
-				$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
-				foreach ($datas as $key ) {
-				 $dataRow['dataPeserta']=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
-				 if($dataRow['dataPeserta']=='empty'){
-					 $dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
-				 }
-		 }
+				$dataRow['dataPeserta']=$this->regis->getdataHistory($param,$userAdmin);
+				if($dataRow['dataPeserta']=='empty'){
+					$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
+				 foreach ($datas as $key ) {
+					$dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
+				}
+				}
+		//}
 		 $this->load->view('sertifikasi/unit_apip/content/view_detail_peserta',$dataRow);
 	 }
 		 public function add_data(){
