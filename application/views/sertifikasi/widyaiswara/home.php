@@ -156,7 +156,7 @@ $(document).ready(function(){
                   ],
 
               });
-				 $('button').click( function() {
+				 $('#send').click( function() {
              var tgl_release=$('#tgl_release').val();
              var mata_ajar=$('#mata_ajar').val();
              var obj=tgl_release+'~'+mata_ajar;

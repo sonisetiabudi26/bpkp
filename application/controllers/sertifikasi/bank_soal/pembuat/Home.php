@@ -5,11 +5,11 @@ class Home extends CI_Controller {
 
 	private $filename = "soal";
 	public function __construct(){
-        parent::__construct();
-        $this->load->library('session');
-        $this->load->helper(array('form', 'url'));
+    parent::__construct();
+    $this->load->library('session');
+    $this->load->helper(array('form', 'url'));
 		$this->load->model('sertifikasi/menupage','menupage');
-    	$this->load->model('sertifikasi/babmataajar','babmataajar');
+    $this->load->model('sertifikasi/babmataajar','babmataajar');
 		$this->load->model('sertifikasi/reviewsoal','reviewsoal');
 		$this->load->model('sertifikasi/detailpermintaansoal','detailpermintaansoal');
     }
