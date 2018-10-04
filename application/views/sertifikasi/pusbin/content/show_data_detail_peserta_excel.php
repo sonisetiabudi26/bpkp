@@ -15,8 +15,12 @@
  <tr>
    <td>NO</td>
    <td>PROVINSI</td>
-   <td>JUMLAH</td>
-
+   <?php
+   $no=1;
+   foreach ($data_mata_ajar as $key):
+     echo '<td>'.$key->NAMA_MATA_AJAR.'</td>';
+   endforeach
+    ?>
  </tr>
  </thead>
  <tbody>
