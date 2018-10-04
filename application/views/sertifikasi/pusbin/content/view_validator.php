@@ -9,8 +9,8 @@
               <?php
                 foreach ($validator as $key):
               ?>
-              <option value="<?php echo $key?>">
-                <?php echo $key;?>
+              <option value="<?php echo $key->USER_NAME?>">
+                <?php echo $key->USER_NAME;?>
               </option>
               <?php
                 endforeach;

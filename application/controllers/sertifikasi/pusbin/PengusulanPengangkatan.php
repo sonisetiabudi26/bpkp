@@ -75,14 +75,14 @@ class PengusulanPengangkatan extends CI_Controller {
         $datas['no_surat']=$param;
         //$apiuser=$this->apiuser($param);
         //$kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
-        $validator=$this->user->check_validator();
-        foreach ($validator as $key ) {
-          //$apiuservalidator=$this->apiuser($key->USER_NAME);
-          //$kodeunitkerjavalidator = $apiuser->data[0]->UnitKerja_Nama;
-            $datas['validator'] = array('username' => $key->USER_NAME,
-					 															);
-
-  			}
+        $datas['validator']=$this->user->check_validator();
+        // foreach ($validator as $key ) {
+        //   //$apiuservalidator=$this->apiuser($key->USER_NAME);
+        //   //$kodeunitkerjavalidator = $apiuser->data[0]->UnitKerja_Nama;
+        //     $datas['validator'] = array('username' => $key->USER_NAME,
+				// 	 															);
+				//
+  			// }
         $this->load->view('sertifikasi/pusbin/content/view_validator',$datas);
 
     }
