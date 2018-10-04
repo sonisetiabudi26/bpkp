@@ -617,7 +617,7 @@ class PerhitunganNilai extends CI_Controller {
              $nilai=0;
              $row[] = $a+1;
              $row[] = $field->NAMA_JENJANG;
-             $row[] = $field->NIP;
+             $row[] = $field->KODE_PESERTA;
 						 $row[] = $field->NAMA;
 						 // $apiuser=$this->apiuser($field->KODE_PESERTA);
 						 // if($apiuser->message!='auditor_not_found' ){
