@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'vendor/autoload.php';
 define('DOMPDF_ENABLE_AUTOLOAD', false);
-ini_set('memory_limit','512M');
+ini_set('max_execution_time', 300);
 class PerhitunganNilai extends CI_Controller {
 
 	public function __construct(){
