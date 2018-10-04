@@ -165,7 +165,7 @@
 								 </div>
 							 </div><br/>
               </div>
-							<button class="btn btn-primary btn-block" disabled id="daftar_ujian_btn" type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
+							<button class="btn btn-primary btn-block" disabled onclick="OpenSetuju()" id="daftar_ujian_btn" type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
               <!-- <input class="btn btn-primary btn-block" disabled id="daftar_ujian_btn" type="submit" value="Ajukan"> -->
 						</form>
 						</div>
@@ -213,7 +213,7 @@
 							<br/>
 						<div class="row">
 							<!-- <input class="btn btn-primary btn-block" disabled id="setuju_ujian_btn" value="Ajukan" type="submit"> -->
-							<button class="btn btn-primary btn-block" disabled id="setuju_ujian_btn" type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
+							<button class="btn btn-primary btn-block" id="setuju_ujian_btn"  type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
 
 						</div>
 				</form>
@@ -230,12 +230,15 @@
 	});
 
 
-	$("#input_persetujuan").change(function (){
-
-		var fileName = document.getElementById("doc_persetujuan").value;
-		$("#text-persetujuan").val(fileName);
+	// $("#input_persetujuan").change(function (){
+	//
+	// 	var fileName = document.getElementById("doc_persetujuan").value;
+	// 	$("#text-persetujuan").val(fileName);
+	//
+	// });
+	function OpenSetuju(){
 			$( "#setuju_ujian_btn" ).prop( "disabled", false );
-	});
+	}
 
 	$("#input_ksp").change(function (){
 

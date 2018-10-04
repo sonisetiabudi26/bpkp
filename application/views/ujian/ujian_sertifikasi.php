@@ -287,7 +287,23 @@ if (selisih < 0) {
 	// for (var i = 0; i < jml_soal; i++) {
 	//
 	// }
-alert(JSON.stringify(keyPairArray[1]));
+	swal({
+    title: "Apakah Anda yakin?",
+    text: "Mengakhiri ujian maka data akan diproses di system",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+.then((willDelete) => {
+    if (willDelete) {
+        swal("Terima Kasih, anda telah mengakhiri ujian", {
+            icon: "success",
+        });
+    } else {
+        // swal("Y");
+    }
+});
+// alert(JSON.stringify(keyPairArray[1]));
 		// var jawaban=$('input[type=radio]').attr('value');
 }
 
