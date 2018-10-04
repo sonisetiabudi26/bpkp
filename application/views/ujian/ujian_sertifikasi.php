@@ -102,7 +102,12 @@
 																	</div>
 																</div>
 															</div>
-
+															<div class="row" style="float:right">
+																<div class="col-lg-12" >
+																	<button id="btnnavprev<?php echo $key+1;?>" onclick="previousPage(<?php echo $key+1;?>)" class="btn btn-default"><i class="fa fa-caret-left"></i> Sebelumnya</button>
+																	<button id="btnnavnext<?php echo $key+1;?>" onclick="nextPage(<?php echo $key+1;?>)" class="btn btn-default">Selanjutnya <i class="fa fa-caret-right"></i> </button>
+																</div>
+															</div>
 													</div>
 											<?php
 												endforeach;
@@ -193,6 +198,28 @@
 window.i=0;
 var keyPairArray=[];
 
+
+
+
+function previousPage(obj){
+	if(obj<=1){
+	}else{
+		var page=obj-1;
+		$('.pages').css('display','none');
+		$('#page'+page).css('display','block');
+		document.getElementById("soal_urut").innerHTML=page;
+	}
+}
+function nextPage(obj){
+	var jml_soal='<?php echo $jml_soal;?>';
+	if(obj>=jml_soal){
+	}else{
+		var page=obj+1;
+		$('.pages').css('display','none');
+		$('#page'+page).css('display','block');
+		document.getElementById("soal_urut").innerHTML=page;
+	}
+}
 function pindahPage(obj){
 	$('.pages').css('display','none');
 	$('#page'+obj).css('display','block');
