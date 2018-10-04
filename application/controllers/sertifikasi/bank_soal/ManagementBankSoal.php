@@ -94,6 +94,40 @@ class ManagementBankSoal extends CI_Controller {
 			print json_encode(array("status"=>"error", "msg"=>"Semua field harus diisi"));
 		}
 	}
+	public function loadSemuaSoal(){
+		$list = $this->soalujian->get_dataALL();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $soal) {
+            $no++;
+            $row = array();
+						$row[] = $no;
+					  $row[] = $soal->PERTANYAAN;
+            $row[] = $soal->PILIHAN_1;
+            $row[] = $soal->PILIHAN_2;
+            $row[] = $soal->PILIHAN_3;
+            $row[] = $soal->PILIHAN_4;
+						$row[] = $soal->PILIHAN_5;
+						$row[] = $soal->PILIHAN_6;
+						$row[] = $soal->PILIHAN_7;
+						$row[] = $soal->PILIHAN_8;
+						$row[] = $soal->JAWABAN;
+						// $row[] = $soal->PARENT_SOAL;
+
+            $row[] = '<div style="text-align:center;">
+			<a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$soal->PK_SOAL_UJIAN.'~soalujian'."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus Soal</a></div>';
+
+            $data[] = $row;
+        }
+
+        $output = array(
+					"draw" => $_POST['draw'],
+					"recordsTotal" => $no,
+					"recordsFiltered" => $no,
+					"data" => $data,
+                );
+        echo json_encode($output);
+	}
 
 	public function edit_kode_soal(){
 		$data = array(
@@ -468,6 +502,8 @@ class ManagementBankSoal extends CI_Controller {
 			}
 			else if($param[1]=='soalkasus'){
 					$this->soalkasus->delete_by_id($param[0]);
+			}else if($param[1]=='soalujian'){
+					$this->soalujian->delete_by_id($param[0]);
 			}
 			echo json_encode(array("status" => TRUE));
 	}

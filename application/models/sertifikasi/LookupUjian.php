@@ -94,7 +94,7 @@ class LookupUjian extends My_Model
 	}
 	public function getDataidentitasSertifikat($id){
 		$condition = "sertifikat.FK_REGIS_UJIAN ='" . $id . "'";
-		$this->db->select('sertifikat.*,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jenjang.NAMA_JENJANG,registrasi_ujian.NIP');
+		$this->db->select('sertifikat.*,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jenjang.NAMA_JENJANG,registrasi_ujian.NIP,registrasi_ujian.NAMA');
 		$this->db->from('sertifikat');
 		$this->db->join('registrasi_ujian', 'sertifikat.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->join('dokumen_registrasi_ujian', 'sertifikat.FK_REGIS_UJIAN = dokumen_registrasi_ujian.FK_REGIS_UJIAN');
@@ -201,7 +201,7 @@ class LookupUjian extends My_Model
 	}
 	public function loadNilai(){
 		$condition = "lookup_ujian.flag != '' group by lookup_ujian.FK_REGIS_UJIAN";
-		$this->db->select('lookup_ujian.*,registrasi_ujian.NIP,jenjang.NAMA_JENJANG');
+		$this->db->select('lookup_ujian.*,registrasi_ujian.NIP,registrasi_ujian.NAMA,jenjang.NAMA_JENJANG');
 		$this->db->from($this->_table);
 		$this->db->join('registrasi_ujian', 'lookup_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');

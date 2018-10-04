@@ -98,12 +98,13 @@ class Registrasi extends CI_Controller {
 				 foreach ($datas as $key) {
 					$row['NIP']=$key->NIP;
 
-					$apiuser=$this->apiuser($key->NIP);
-					if($apiuser->message!='auditor_not_found' ){
-					$row['NAMA'] = $apiuser->data[0]->Auditor_NamaLengkap;
-					}else{
-					$row['NAMA'] ='unknown';
-					}
+					// $apiuser=$this->apiuser($key->NIP);
+					// if($apiuser->message!='auditor_not_found' ){
+					// $row['NAMA'] = $apiuser->data[0]->Auditor_NamaLengkap;
+					// }else{
+					// $row['NAMA'] ='unknown';
+					// }
+					$row['NAMA']=$key->NAMA;
 					$row['NO_SURAT_UJIAN']=$key->NO_SURAT_UJIAN;
 					$row['JADWAL']=$key->START_DATE.' - '.$key->END_DATE;
 					$url=base_url('sertifikasi')."/petugas_lo/Registrasi/vw_detail_peserta/".$key->PK_REGIS_UJIAN;
@@ -118,13 +119,16 @@ class Registrasi extends CI_Controller {
 		 }
 		 public function vw_detail_peserta($param){
 			  $userAdmin=$this->session->userdata('nip');
-				$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
-				foreach ($datas as $key ) {
-				 $dataRow['dataPeserta']=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
+				//$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
+				//foreach ($datas as $key ) {
+				 $dataRow['dataPeserta']=$this->regis->getdataHistory($param,$userAdmin);
 				 if($dataRow['dataPeserta']=='empty'){
+					 $datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
+	 				foreach ($datas as $key ) {
 					 $dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
 				 }
-		 }
+				 }
+		 //}
 		 $this->load->view('sertifikasi/petugas_lo/content/view_detail_peserta',$dataRow);
 	 }
 		 public function add_data(){

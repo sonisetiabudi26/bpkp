@@ -49,7 +49,7 @@
 
 								<div class="col-lg-8">
 
-									<div class="row card" >
+									<div class="row x_panel" >
 										<div class="panel panel-default">
 											<div class="panel-heading">Soal ke - <span id='soal_urut'></span></div>
 												<div class="panel-body">
@@ -119,7 +119,7 @@
 								</div>
 								</div>
 								<div class="col-lg-4">
-									<div class="panel panel-default">
+									<div class="panel panel-default x_panel">
 										<div class="panel-heading">Navigasi Soal</div>
 											<div class="panel-body">
 									<div class="row">

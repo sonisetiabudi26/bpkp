@@ -53,7 +53,8 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="pertanyaan" class="text-primary">Pertanyaan :</label>
-					<input type="text" class="form-control  " name="pertanyaan" id="pertanyaan"  value="<?php echo $pertanyaan ?>" />
+					<!-- <input type="text" class="form-control  " name="pertanyaan" id="pertanyaan"  value="<?php echo $pertanyaan ?>" /> -->
+					<textarea type="text" name='pertanyaan' id='pertanyaan' class="form-control" ><?php echo $pertanyaan ?></textarea>
 				</div>
 			</td>
 		</tr>
@@ -169,6 +170,9 @@
 </form>
 </div>
 <script>
+var ckeditor=CKEDITOR.replace('pertanyaan',{
+	height:'400px'
+});
 	// $('#select-list-bab-popup').change(function(){
 	// 	var fk_bab_mata_ajar = $(this).val();
 	// 	if(fk_bab_mata_ajar==='Pilihan'){

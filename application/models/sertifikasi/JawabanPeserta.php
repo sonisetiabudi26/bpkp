@@ -64,6 +64,7 @@ public function getALl($kodeevent,$kelas){
   $this->db->from($this->_table);
 	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
 	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
+	$this->db->join('registrasi_ujian', 'jawaban_peserta.KODE_PESERTA = registrasi_ujian.KODE_PESERTA');
   $this->db->where($condition);
   $query = $this->db->get();
 	return $query->result();

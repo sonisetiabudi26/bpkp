@@ -53,7 +53,7 @@
 			<td>
 				<div class="form-group text-default">
 					<label for="pertanyaan" class="text-primary">Pertanyaan :</label>
-					<input type="text" class="form-control  " name="pertanyaan" id="pertanyaan"   />
+					  <textarea type="text" name='pertanyaan' id='pertanyaan' class="form-control" ></textarea>
 				</div>
 			</td>
 		</tr>
@@ -181,6 +181,10 @@
 	// 		$("#select-list-kasus").removeAttr(' ');
 	// 	}
 	// });
+	var ckeditor=CKEDITOR.replace('pertanyaan',{
+	  height:'400px'
+	});
+
 	$(function () {
   $('form').on('submit', function (e) {
 		e.preventDefault();

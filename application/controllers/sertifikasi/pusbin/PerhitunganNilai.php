@@ -213,14 +213,14 @@ class PerhitunganNilai extends CI_Controller {
              $row = array();
              $row[] = $a;
              $row[] = $field->NIP;
-						 $apiuser=$this->apiuser($field->NIP);
-						 if($apiuser->message!='auditor_not_found' ){
-						 $row[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
-						 // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
-						 }else{
-							 $row[] ='unknown';
+						 // $apiuser=$this->apiuser($field->NIP);
+						 // if($apiuser->message!='auditor_not_found' ){
+						 // $row[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+						 // // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+						 // }else{
+							 $row[] =$field->NAMA;
 							 // $data['kodeunitkerja']='empty';
-						 }
+						/// }
              $row[] = $field->NAMA_JENJANG;
 						 $data_status=$this->lookup_ujian->getStatus($field->FK_REGIS_UJIAN,1);
 						 foreach ($data_status as $key) {
@@ -289,12 +289,12 @@ class PerhitunganNilai extends CI_Controller {
 				$data['nip']=$key->NIP;
 				$data['datex']=$datex;
 				$data['a_n']=$key->A_N;
+				$data['nama'] =$key->NAMA;
 				$apiuser=$this->apiuser($key->NIP);
 				if($apiuser->message!='auditor_not_found'){
-				$data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+				// $data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 				$data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
 				}else{
-					$data['nama'] ='unknown';
 					$data['kodeunitkerja']='empty';
 				}
 				if($key->DOC_NAMA=='doc_foto'){
@@ -618,14 +618,15 @@ class PerhitunganNilai extends CI_Controller {
              $row[] = $a+1;
              $row[] = $field->NAMA_JENJANG;
              $row[] = $field->KODE_PESERTA;
-						 $apiuser=$this->apiuser($field->KODE_PESERTA);
-						 if($apiuser->message!='auditor_not_found' ){
-						 $row[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
-						 // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
-						 }else{
-							 $row[] ='unknown';
-							 // $data['kodeunitkerja']='empty';
-						 }
+						 $row[] = $field->NAMA;
+						 // $apiuser=$this->apiuser($field->KODE_PESERTA);
+						 // if($apiuser->message!='auditor_not_found' ){
+						 // $row[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+						 // // $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+						 // }else{
+							//  $row[] ='unknown';
+							//  // $data['kodeunitkerja']='empty';
+						 // }
              $row[] = $field->KODE_SOAL;
              $row[] = $field->KELAS;
              $row[] = $nilai;

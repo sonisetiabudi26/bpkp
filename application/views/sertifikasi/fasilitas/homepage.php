@@ -10,6 +10,10 @@
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" onclick="search(2)" data-toggle="tab" aria-expanded="false">Pengangkatan Perpindahan</a>
 		</li>
+		<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" onclick="search(3)" data-toggle="tab" aria-expanded="false">Pengangkatan Kembail</a>
+		</li>
+		<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab" onclick="search(4)" data-toggle="tab" aria-expanded="false">Pengangkatan Inpassing</a>
+		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -139,14 +143,44 @@
 
 								<div class="x_content">
 									<div class="row">
+										<label>Pilih Unit Kerja</label>
+									</div>
+									<div class="row">
+										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding:0;margin:0">
+											<div>
+													<select class="form-control" name='validator_kembali' id='validatorion_kembali'>
+
+														<?php
+															foreach ($validators_perpindahan as $key):
+														?>
+														<option value="<?php echo $key->CREATED_BY?>">
+															<?php echo $key->UNITKERJA;?>
+														</option>
+														<?php
+															endforeach;
+														?>
+													</select>
+												</div>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
+											<button class="btn btn-primary btn-block" onclick="search(2);">Cari</button>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<h4>Data List Pengusulan Pengangkatan <label id='titletabel_kembali'></label></h4>
+									</div>
+									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-											<table id="dataUserWidyaiswara" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+											<table id="dataUserKembali" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Username</td>
-													<td>Login As</td>
-													<td>Password</td>
+													<td>No Surat</td>
+													<td>NIP</td>
+
+													<td>Status Pengusulan Pengangkatan</td>
+													<td>Status</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -168,18 +202,48 @@
 
 								<div class="x_content">
 									<div class="row">
+										<label>Pilih Unit Kerja</label>
+									</div>
+									<div class="row">
+										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding:0;margin:0">
+											<div>
+													<select class="form-control" name='validator_inpassing' id='validatorion_inpassing'>
+
+														<?php
+															foreach ($validators_perpindahan as $key):
+														?>
+														<option value="<?php echo $key->CREATED_BY?>">
+															<?php echo $key->UNITKERJA;?>
+														</option>
+														<?php
+															endforeach;
+														?>
+													</select>
+												</div>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
+											<button class="btn btn-primary btn-block" onclick="search(2);">Cari</button>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<h4>Data List Pengusulan Pengangkatan <label id='titletabel_inpassing'></label></h4>
+									</div>
+									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-											<table id="dataUserFP" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+					            <table id="dataUserInpassing" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 												<thead>
 												<tr>
 													<td>NO</td>
-													<td>Username</td>
-													<td>Login As</td>
-													<td>Password</td>
+													<td>No Surat</td>
+													<td>NIP</td>
+
+													<td>Status Pengusulan Pengangkatan</td>
+													<td>Status</td>
 													<td>Action</td>
 												</tr>
 												</thead>
-												<tbody>
+                        <tbody>
 												</tbody>
 												</table>
 										</div>
@@ -199,11 +263,21 @@ if(obj==1){
 	var	msgvalidator=$("#validatorion :selected").text();
 	document.getElementById("titletabel").innerHTML=msgvalidator;
 	ajaxProccess(validator,1,dataUserpertama);
-}else{
+}else if(obj==2){
 	var	validator=$("#validatorion_perpindahan :selected").val();
 	var	msgvalidator=$("#validatorion_perpindahan :selected").text();
 	document.getElementById("titletabel_perpindahan").innerHTML=msgvalidator;
 	ajaxProccess(validator,2,dataUserPerpindahan);
+}else if(obj==3){
+	var	validator=$("#validatorion_kembali :selected").val();
+	var	msgvalidator=$("#validatorion_kembali :selected").text();
+	document.getElementById("titletabel_kembali").innerHTML=msgvalidator;
+	ajaxProccess(validator,3,dataUserKembali);
+}else if(obj==4){
+	var	validator=$("#validatorion_inpassing :selected").val();
+	var	msgvalidator=$("#validatorion_inpassing :selected").text();
+	document.getElementById("titletabel_inpassing").innerHTML=msgvalidator;
+	ajaxProccess(validator,4,dataUserInpassing);
 }
 }
 $(document).ready(function(){
@@ -239,6 +313,8 @@ function loadData(obj){
 	// $('#dataUserpertama').DataTable().ajax.reload();
 	search(1);
 	search(2);
+	search(3);
+	search(4);
 	//$('#dataUserPerpindahan').DataTable().ajax.reload();
 	// loadDataperpindahan();
 

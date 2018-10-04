@@ -38,6 +38,18 @@ class SoalUjian extends My_Model
 
 
 	}
+	public function delete_by_id($id){
+		$this->db->where($this->primary_key, $id);
+		$this->db->delete($this->_table);
+	}
+	public function get_dataALL(){
+		$condition = "tampil_ujian = '" . 1 . "'";
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		$this->db->where($condition);
+		$query = $this->db->get();
+		return $query->result();
+	}
 	public function _get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar) {
 	    $condition = "fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
 	    $this->db->select('*');
