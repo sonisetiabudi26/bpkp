@@ -154,6 +154,7 @@ class Registrasi extends CI_Controller {
 	 					$provinsiNama = $apiuser->data[0]->Provinsi;
 						$dataProvisi=$this->provinsi->getdataPK($provinsiNama);
 						$provinsiId=$dataProvisi->PK_PROVINSI;
+					  $nama=$apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 					}
 				 if($dataCheckPeserta=='empty'){
 						 $folder='doc_registrasi/'.$nip.'_'.$date;
@@ -179,6 +180,7 @@ class Registrasi extends CI_Controller {
 							 $data = array(
 					 			'NIP' => $this->input->post('nip'),
 								'GROUP_REGIS' => '',
+								'NAMA' => $nama,
 								'KODE_DIKLAT' => $this->input->post('diklat'),
 					 			'LOKASI_UJIAN' => ($this->input->post('lokasi')==''?$provinsiId:$this->input->post('lokasi')),
 					 			'FK_JADWAL_UJIAN' => $this->input->post('jadwal'),
