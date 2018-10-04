@@ -144,27 +144,28 @@ class ManagementRegistrasi extends CI_Controller {
 			echo json_encode($output);
 		}
 		public function vw_export_excel(){
-					$nob=1;
+
 					$data['provinsi']=$this->provinsi->_get_provinsi_information();
 					foreach ($data['provinsi'] as $prov) {
+						//$dataprov[]=$prov->NAMA;
 						$data['data_mata_ajar']=$this->soal->loadsoalkebutuhan();
-							$no=1;
+
 
 						foreach ($data['data_mata_ajar'] as $key) {
 						$dataAll=$this->lookupujian->getDataDetailKebutuhan($key->PK_MATA_AJAR,$prov->NAMA);
 
-						foreach ($dataAll as $value) {
-							$datas[$prov->NAMA][$no] = array(
-																'nilai'=>$value->jml_soal);
+						//foreach ($dataAll as $value) {
+							$datanilai[]=$dataAll[0]->jml_soal;
+						//}
 
-
-								$no++;
-						}
-
-					}$nob++;
+					}
+					$datas[] = array( 'provinsi'=>$prov->NAMA,
+														'nilai'=>$datanilai);
+					unset($datanilai);
 
 				}
-				$data['data_soal']=$datas;
+					$data['data_soal']=$datas;
+
 				$data['title']='Laporan';
 				// print_r($data);
 				$this->load->view('sertifikasi/pusbin/content/show_data_detail_peserta_excel',$data);

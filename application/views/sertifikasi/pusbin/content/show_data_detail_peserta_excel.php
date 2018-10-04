@@ -1,12 +1,12 @@
 <?php
- //
- // header("Content-type: application/vnd-ms-excel");
- //
- // header("Content-Disposition: attachment; filename=$title.xls");
- //
- // header("Pragma: no-cache");
- //
- // header("Expires: 0");
+
+ header("Content-type: application/vnd-ms-excel");
+
+ header("Content-Disposition: attachment; filename=$title.xls");
+
+ header("Pragma: no-cache");
+
+ header("Expires: 0");
 
  ?>
 
@@ -27,18 +27,15 @@
    <?php
    $no=1;
    $nama='';
-   foreach ($provinsi as $prov){
     foreach ($data_soal as $key){
-      echo '<tr><td>'.$key[$prov->NAMA].'</td>';
-     foreach ($key as $keys){
-
-       echo '<td>'.$keys['nilai'].'</td>';
-
+      echo '<tr><td>'.$key['provinsi'].'</td>';
+     foreach ($key['nilai'] as $keys=>$value){
+         echo '<td>'.$value.'</td>';
      }
-echo '</tr>';
+     echo '</tr>';
 
  }
-}
+
     ?>
  </tbody>
  </table>
