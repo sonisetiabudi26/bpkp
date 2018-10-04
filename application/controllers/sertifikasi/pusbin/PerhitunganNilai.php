@@ -814,13 +814,37 @@ class PerhitunganNilai extends CI_Controller {
 			echo json_encode($output);
 		}
 		public function vw_export_excel($id){
+
+			//$this->load->view('sertifikasi/pusbin/content/export_laporan_unit_apip',$data);
+
+
+			$namafile='laporan_hasil'.$id;
+			$dompdf_option = new \Dompdf\Options();
+			$dompdf_option->setIsFontSubsettingEnabled(true);
+			$dompdf_option->setIsRemoteEnabled(true);
+			$dompdf_option->setIsHtml5ParserEnabled(true);
+			// $dompdf->setOptions($dompdf_option);
+			$dompdf = new Dompdf\Dompdf($dompdf_option);
+
 			$parameter	= explode('~',$id);
 			$kodeevent=$parameter[1];
 			$kode_unit=$parameter[0];
 			$data['dataAll']= $this->jawaban->getALlbyUnit($kodeevent,$kode_unit);
 			$data['title']='Laporan_unit_apip';
-			$this->load->view('sertifikasi/pusbin/content/export_laporan_unit_apip',$data);
 
+			$html = $this->load->view('sertifikasi/pusbin/content/export_laporan_unit_apip',$data,true);
+
+			 $dompdf->loadHtml($html);
+
+			 // (Optional) Setup the paper size and orientation
+			 $dompdf->setPaper('A4', 'portrait');
+
+			 // Render the HTML as PDF
+			 $dompdf->render();
+			 // echo $data['foto'];
+			 // Get the generated PDF file contents
+			 $pdf = $dompdf->output();
+			 $dompdf->stream($namafile);
 		}
     public function importNilai(){
     //  $nilai = $this->input->post('file_nilai');

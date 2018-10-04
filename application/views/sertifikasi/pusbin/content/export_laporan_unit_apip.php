@@ -1,21 +1,11 @@
-<?php
-
- header("Content-type: application/vnd-ms-excel");
-
- header("Content-Disposition: attachment; filename=$title.xls");
-
- header("Pragma: no-cache");
-
- header("Expires: 0");
-
- ?>
 <table id="data_peserta">
   <thead>
   <tr>
     <td>NO</td>
     <td>Kode Event</td>
     <td>Kode Peserta</td>
-    <td>Kelas</td>
+    <td>Nama Peserta</td>
+    <td>Nama Mata Ajar</td>
     <td>Status</td>
   </tr>
   </thead>
@@ -27,7 +17,8 @@
       <td>".$no++."</td>
       <td>".$key->FK_EVENT."</td>
       <td>".$key->KODE_PESERTA."</td>
-      <td>".$key->KELAS."</td>
+      <td>".$key->NAMA."</td>
+      <td>".$key->NAMA_MATA_AJAR."</td>
       <td>".$key->STATUS."</td>
       </tr>";
     endforeach
