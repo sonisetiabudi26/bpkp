@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 03 Okt 2018 pada 03.53
+-- Waktu pembuatan: 04 Okt 2018 pada 12.28
 -- Versi server: 10.1.35-MariaDB
 -- Versi PHP: 7.2.9
 
@@ -141,7 +141,7 @@ CREATE TABLE `detail_nilai_wi` (
 --
 
 INSERT INTO `detail_nilai_wi` (`PK_DETAIL_NILAI_WI`, `FK_WIDYAISWARA_NILAI`, `NILAI_1`, `NILAI_2`, `flag`) VALUES
-(1, 38, 85, 80, 1);
+(5, 38, 70, 70, 0);
 
 -- --------------------------------------------------------
 
@@ -467,7 +467,7 @@ CREATE TABLE `konfigurasi_ujian` (
 --
 
 INSERT INTO `konfigurasi_ujian` (`PK_KONFIG_UJIAN`, `DATE_TIME`, `START_TIME`, `END_TIME`, `PIN`, `FK_MATA_AJAR`, `FK_EVENT`, `JUMLAH_SOAL`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(12, '2018-10-03', '03:20:00', '23:30:00', '392112', 12, 31, 10, 'admin_bank', '2018-09-30 00:00:00');
+(12, '2018-10-04', '10:00:00', '23:30:00', '392112', 12, 31, 10, 'admin_bank', '2018-09-30 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -662,7 +662,7 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (16, 'Beranda', 'pusbin', 'pusbin/home', 'admin', '2018-03-29', 'home', 5),
 (17, 'Manajemen Registrasi', 'pusbin', 'pusbin/ManagementRegistrasi', 'admin', '2018-03-29', 'registered', 5),
 (20, 'Manajemen Pengguna', 'pusbin', 'pusbin/ManagementUser', 'admin', '2018-03-29', 'users', 5),
-(21, 'Nilai WI', 'widyaiswara', 'widyaiswara/Nilai', 'admin', '2018-03-29', 'file-text-o', 4),
+(21, 'Nilai WI', 'widyaiswara', 'widyaiswara/Home', 'admin', '2018-03-29', 'file-text-o', 4),
 (22, 'Beranda', 'bpkp', 'bpkp/home', 'admin', '2018-03-29', 'home', 11),
 (24, 'bpkp', 'bpkp', 'sertifikasi/bpkp', 'admin', '2018-03-29', '', 11),
 (25, 'Daftar Unit Apip', 'bpkp', 'bpkp/registrasi', 'admin', '2018-03-29', 'registered', 11),
@@ -672,7 +672,7 @@ INSERT INTO `menu_page` (`PK_MENU_PAGE`, `MENU_NAME`, `MENU_MAIN`, `MENU_URL`, `
 (29, 'Manajemen Soal', 'bank_soal', 'bank_soal/admin/ManagementBankSoal', 'admin', '2018-05-12', 'dashboard', 1),
 (30, 'Koreksi hasil Ujian', 'pusbin', 'pusbin/PerhitunganNilai', 'admin', '2018-07-06', 'line-chart', 5),
 (31, 'Beranda', 'bank_soal', 'bank_soal/koreksi/home', 'admin', '2018-07-07', 'home', 18),
-(32, 'Home', 'bank_soal', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20),
+(32, 'Home', 'bank_soal/pembuat', 'bank_soal/pembuat/home', 'admin', '2018-07-09', 'home', 20),
 (33, 'Laporan', 'pusbin', 'pusbin/Report', 'admin', '2018-07-06', 'paperclip', 5),
 (38, 'Pengusulan Pengangkatan', 'pusbin', 'pusbin/PengusulanPengangkatan', 'admin', '2018-07-06', 'user', 5),
 (55, 'petugas_lo', 'petugas_lo', 'sertifikasi/petugas_lo', 'admin', '2018-03-29', '', 17),
@@ -1225,7 +1225,7 @@ INSERT INTO `users` (`PK_USER`, `USER_NAME`, `USER_PASSWORD`, `FK_LOOKUP_ROLE`) 
 (89, '1110', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 28),
 (90, '15009835', '83d43e63e3dede73d9ac6fcc9af8619336c871cfbdadf4375f7dfbe62da04e27b12043130ee146c26efdb45fe354792faaadb8981d6ce37ad405948ffe95b012nDjtXZxgldfdOW4VimPPwl6l6QM9kPsfEEyIWbkFe1w=', 4),
 (91, 'seharusnya', 'f1c1038d381068a1fc668f35472b58a1861d11034b8236e1928c6fe3ce914d7a56a340857ca5c2cfd01327e0ebb663cf4c48739ac548592e669da8925be2d8155pqvDo2OE3Zm4IWaJDfDekp6Fd5it7+Yomkv4Bnw4cc=', 28),
-(92, '090909', '403e71ba1a5bf473845286a843c651092dd8d1dad60c43f4c06b88e8be1adf7619263b04b48ceb4c3b2747404df5105b100cafb515e171d3437be0939739482bRldmkirLne2mEW/IWSz5hQOT9AqZnCLX5cF71Ma5RIQ=', 17);
+(92, '090909', '6fd2e40333fb23f04d2d43d909ff7099ecb8673250dc4b2160c2351db6ff7e13a983620165000c58bd4b35212b31310cb72a8ad468a35d480769e644806de7df+TZxJfbeTZF8obcGO9E/v0Pv3ZGW47l0Hdfs7erljd8=', 17);
 
 -- --------------------------------------------------------
 
@@ -1252,8 +1252,7 @@ CREATE TABLE `widyaiswara_nilai` (
 --
 
 INSERT INTO `widyaiswara_nilai` (`PK_WIDYAISWARA_NILAI`, `NIP`, `NAMA`, `TGL_RELEASE_MATA_AJAR`, `FK_MATA_AJAR`, `NILAI_1`, `NILAI_2`, `NIP_INSTRUKTUR`, `flag`, `CREATED_BY`, `CREATED_DATE`) VALUES
-(37, '195212211978031008', 'alimudin', '2011-12-12', 13, 0, 0, '3', 0, 'Pusbin Budianto', '2018-09-21'),
-(38, '195808081985031008', 'Alimuddin', '2018-09-30', 6, 0, 0, '3', 1, '01', '2018-09-30');
+(38, '195808081985031008', 'Alimuddin', '2018-09-30', 6, 0, 0, '3', 0, '01', '2018-09-30');
 
 -- --------------------------------------------------------
 
@@ -1575,7 +1574,7 @@ ALTER TABLE `bridge_lookup`
 -- AUTO_INCREMENT untuk tabel `detail_nilai_wi`
 --
 ALTER TABLE `detail_nilai_wi`
-  MODIFY `PK_DETAIL_NILAI_WI` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `PK_DETAIL_NILAI_WI` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_permintaan_soal`
@@ -1593,13 +1592,13 @@ ALTER TABLE `document_pengusulan_pengangkatan`
 -- AUTO_INCREMENT untuk tabel `dokumen_persetujuan`
 --
 ALTER TABLE `dokumen_persetujuan`
-  MODIFY `PK_PERSETUJUAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `PK_PERSETUJUAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT untuk tabel `dokumen_registrasi_ujian`
 --
 ALTER TABLE `dokumen_registrasi_ujian`
-  MODIFY `PK_DOC_REGIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `PK_DOC_REGIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `event`
@@ -1647,7 +1646,7 @@ ALTER TABLE `konfigurasi_ujian`
 -- AUTO_INCREMENT untuk tabel `lookup_ujian`
 --
 ALTER TABLE `lookup_ujian`
-  MODIFY `PK_LOOKUP_REGIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `PK_LOOKUP_REGIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT untuk tabel `mata_ajar`
@@ -1695,7 +1694,7 @@ ALTER TABLE `provinsi`
 -- AUTO_INCREMENT untuk tabel `registrasi_ujian`
 --
 ALTER TABLE `registrasi_ujian`
-  MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `PK_REGIS_UJIAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `sertifikat`
