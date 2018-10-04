@@ -81,7 +81,7 @@
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
-								<button class="btn btn-success" id="" onclick="getdata()" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="fa fa-file-excel-o"></i> Export Excel</button>
+								<a class="btn btn-success" id="" href="<?php echo base_url('sertifikasi')."/pusbin/ManagementRegistrasi/vw_export_excel"; ?>" class="btn btn-primary oval-box oval-box-circle" style="float:right;"><i class="fa fa-file-excel-o"></i> Export Excel</a>
 								<div class="x_content">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -212,7 +212,7 @@ function getdata(){
 			dataType: "JSON",
 			success: function(data)
 			{
-				console.log(data);
+
 			}
 		});
 }
