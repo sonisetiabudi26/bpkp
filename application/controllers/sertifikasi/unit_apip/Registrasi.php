@@ -121,9 +121,9 @@ class Registrasi extends CI_Controller {
 				$dataRow['dataPeserta']=$this->regis->getdataHistory($param,$userAdmin);
 				if($dataRow['dataPeserta']=='empty'){
 					$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
-				 foreach ($datas as $key ) {
-					$dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
-				}
+				 //foreach ($datas as $key ) {
+					$dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($datas[0]->KODE_DIKLAT,$datas[0]->CREATED_BY,0,$param);
+				//}
 				}
 		//}
 		 $this->load->view('sertifikasi/unit_apip/content/view_detail_peserta',$dataRow);

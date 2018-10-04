@@ -121,13 +121,15 @@ class Registrasi extends CI_Controller {
 			  $userAdmin=$this->session->userdata('nip');
 				//$datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
 				//foreach ($datas as $key ) {
-				 $dataRow['dataPeserta']=$this->regis->getdataHistory($param,$userAdmin);
-				 if($dataRow['dataPeserta']=='empty'){
+				 $dataPeserta_All=$this->regis->getdataHistory($param,$userAdmin);
+				 if($dataPeserta_All=='empty'){
 					 $datas=$this->regis->loaddatabyuserpk($userAdmin,$param);
-	 				foreach ($datas as $key ) {
-					 $dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
-				 }
-				 }
+	 				// foreach ($datas as $key ) {
+					 $dataRow['dataPeserta']=$this->regis->loaddatabyuseranddiklat($datas[0]->KODE_DIKLAT,$datas[0]->CREATED_BY,0,$param);
+				 // }
+			 }else{
+				 $dataRow['dataPeserta']=$dataPeserta_All;
+			 }
 		 //}
 		 $this->load->view('sertifikasi/petugas_lo/content/view_detail_peserta',$dataRow);
 	 }
