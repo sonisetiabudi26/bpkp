@@ -619,6 +619,7 @@ class PerhitunganNilai extends CI_Controller {
              $nilai=0;
              $row[] = $a+1;
              $row[] = $field->NAMA_JENJANG;
+						 $row[] = $field->NAMA_MATA_AJAR;
              $row[] = $field->KODE_PESERTA;
 						 $row[] = $field->NAMA;
 						 // $apiuser=$this->apiuser($field->KODE_PESERTA);
@@ -657,7 +658,7 @@ class PerhitunganNilai extends CI_Controller {
 
          foreach ($dataAll as $field) {
              $row = array();
-						 $numrowpeserta=$this->jawaban->NumrowPeserta($field->FK_EVENT,$field->KELAS);
+						 $numrowpeserta=$this->jawaban->NumrowPeserta($field->KODE_EVENT,$field->KELAS);
 						 if($numrowpeserta=='no data'){
 							 $numrowpeserta=0;
 						 }
