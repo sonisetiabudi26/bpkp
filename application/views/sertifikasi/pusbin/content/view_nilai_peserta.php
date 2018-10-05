@@ -9,7 +9,7 @@
           <td>Jenjang</td>
           <td>Mata Ajar</td>
           <td>Kode Peserta</td>
-          <td>Kode Soal</td>
+          <td>Nama</td>
           <td>Kelas</td>
           <!-- <td>Nilai</td> -->
         </tr>
