@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'vendor/autoload.php';
 define('DOMPDF_ENABLE_AUTOLOAD', false);
 ini_set('max_execution_time', 300);
+ini_set('memory_limit','512M');
 class PerhitunganNilai extends CI_Controller {
 
 	public function __construct(){
@@ -628,9 +629,9 @@ class PerhitunganNilai extends CI_Controller {
 							//  $row[] ='unknown';
 							//  // $data['kodeunitkerja']='empty';
 						 // }
-             $row[] = $field->KODE_SOAL;
+             // $row[] = $field->KODE_SOAL;
              $row[] = $field->KELAS;
-             $row[] = $nilai;
+             // $row[] = $nilai;
 
              $data[] = $row;
              $a++;
@@ -667,11 +668,12 @@ class PerhitunganNilai extends CI_Controller {
              $row[] = $field->CATEGORY.' ('.$field->START_DATE.' - '.$field->END_DATE.')';
              $row[] = $field->REFF;
 						 $row[] = $numrowpeserta;
+						 $enabled=($field->KELAS=='Online'?"style='display:none'":'');
              $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
              $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
 
-             $row[] = '<a class="btn btn-sm btn-success" onclick="calculate('."'".$field->FK_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Kalkulasi</a>
-						 <a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-import" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
+             $row[] = '<a class="btn btn-sm btn-success" '.$enabled.' onclick="calculate('."'".$field->FK_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Kalkulasi</a>
+						 <a class="btn btn-sm btn-warning" '.$enabled.' onclick="getModal(this)" id="btn-import" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>
              <a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_batch('."'".$field->PK_BATCH."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
 						 <a class="btn btn-sm btn-primary" onclick="getModal(this)" id="btn-view-calc" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>';
 
@@ -736,19 +738,19 @@ class PerhitunganNilai extends CI_Controller {
 				}else{
 					$data['nilai']='0';
 				}
-				$where=array(
-					'PK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
-					// 'KODE_SOAL'=>$data['kode_soal'],
-					// 'FK_EVENT'=>$kode_event
-				);
-				$data_update=array(
-					'Nilai'=>$data['nilai']
-				);
-
-
+				// $where=array(
+				// 	'PK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
+				// 	// 'KODE_SOAL'=>$data['kode_soal'],
+				// 	// 'FK_EVENT'=>$kode_event
+				// );
+				// $data_update=array(
+				// 	'Nilai'=>$data['nilai']
+				// );
+				//
+				//
 				$dataall[]=$data;
-				// $a++;
-				$update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
+				// // $a++;
+				// $update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
 				// if($update){
 					$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
 					// $nilai=ceil($data['nilai']*35/100);
