@@ -7,7 +7,6 @@
         <tr>
           <td>NO</td>
           <td>Jenjang</td>
-          <td>Mata Ajar</td>
           <td>Kode Peserta</td>
           <td>Nama</td>
           <td>Kelas</td>
@@ -54,7 +53,7 @@ var table;
                   {"data": "2",width:100},
                   {"data": "3",width:100},
 									{"data": "4",width:100},
-                  {"data": "5",width:100},
+                  // {"data": "5",width:100},
                   // {"data": "5",width:100}
 
               ],

@@ -91,7 +91,7 @@ class Nilai extends CI_Controller{
     //  $dataAll=$this->batch->get_batch_by_id($id_batch);
   		foreach($sheet as $row){
         if($numrow > 1 ){
-
+					if($row['A']!=''||$row['B']!=''){
             $indexbatch=$indexbatch+1;
     				array_push($datasheet1, [
     				'TGL_RELEASE_MATA_AJAR'=>$dataAll['tanggal_release'],
@@ -103,7 +103,7 @@ class Nilai extends CI_Controller{
             'CREATED_DATE' => $datex,
     				]);
 
-
+					}
       }
       $numrow++;
   		}

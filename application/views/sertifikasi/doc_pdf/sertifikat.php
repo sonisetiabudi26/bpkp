@@ -30,6 +30,7 @@ table, th, td {
     padding:5px;
 }
 </style>
+<link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
 <div class="full-width">
   <div class="row">
     <div class="col-lg-12" style="text-align:center;">
@@ -74,18 +75,25 @@ table, th, td {
       </div>
       <div class="row">
         <div style="margin:0px auto;width:70%">
-          <div style="width:30%">
-            <h4>Nama</h4>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Nama</label>
+            <div class="col-sm-8">
+            <?php echo $nama ?>
+            </div>
           </div>
-          <div style="width:70%">: <?php echo $nama ?></div>
-          <div style="width:30%">
-            <h4>NIP </h4>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">NIP</label>
+            <div class="col-sm-8">
+            <?php echo $nip ?>
+            </div>
           </div>
-          <div style="width:70%">: <?php echo $nip ?></div>
-          <div style="width:30%">
-            <h4>Unit Organisasi </h4>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Unit Organisasi</label>
+            <div class="col-sm-8">
+            <?php echo $kodeunitkerja ?>
+            </div>
           </div>
-          <div style="width:70%">: <?php echo $kodeunitkerja ?></div>
+
       </div>
       </div>
 

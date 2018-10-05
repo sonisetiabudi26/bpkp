@@ -112,7 +112,7 @@ class LookupUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
-	public function getdatasertifikat($id){
+	public function getdatasertifikat(){
 		$this->db->select('MAX(FK_REGIS_UJIAN) as kodex');
 		$this->db->from('sertifikat');
 		$query = $this->db->get();
@@ -126,12 +126,9 @@ class LookupUjian extends My_Model
 		$condition = "FK_REGIS_UJIAN ='" . $id . "' ";
 		$this->db->select('MAX(FK_REGIS_UJIAN) as kodex');
 		$this->db->from('sertifikat');
+		$this->db->where($condition);
 		$query = $this->db->get();
-		if ($query->num_rows() > 0) {
 			return $query->result();
-		} else {
-			return 'false';
-		}
 	}
 	public function checkpinujian($fk_regis,$fk_mata_ajar){
 		$condition = "FK_REGIS_UJIAN =" . "'" . $fk_regis . "' AND FK_MATA_AJAR =" . "'" . $fk_mata_ajar . "' and flag='0' and FK_JAWABAN_DETAIL!='0'";

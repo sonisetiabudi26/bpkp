@@ -163,6 +163,7 @@ $(document).on('click', '.send', function () {
 
 					if(resp.status=='success'){
 					 $('.modal').modal('hide');
+					 location.reload();
 						swal("Berhasil", "Data berhasil disimpan!", "success");
 						//$("#"+formTarget.id)[0].reset();
 

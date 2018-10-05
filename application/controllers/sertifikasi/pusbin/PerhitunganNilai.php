@@ -234,16 +234,25 @@ class PerhitunganNilai extends CI_Controller {
 						 $row[] = $no.' / '.$total_matkul;
 
 						 $data_sert=$this->lookup_ujian->checkdatasertifikat($field->FK_REGIS_UJIAN);
-						 $enable=($data_sert=='false'? "style='display:none;'" : '');
-						 if($enable=='false'){
+						 // $enable=($data_sert!='no data'? "":"style='display:none;'");
+						 if($data_sert[0]->kodex==''){
+							 $enable="style='display:none;";
 							 $disable=($no==$total_matkul?"":"style='display:none;'");
 						 }else{
+							 $enable='';
 							 $disable="style='display:none;'";
 						 }
+
+						 // if($enable=='false'){
+						 //
+						 // }else{
+							//  $disable="style='display:none;'";
+						 // }
 						 // href="'. base_url('sertifikasi')."/unit_apip/Home/print_kartu/".$field->PK_REGIS_UJIAN.'"
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_detail_nilai/".$field->FK_REGIS_UJIAN;
 						 $url_create=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_create_sertifikat/".$field->FK_REGIS_UJIAN;
 						 $url_show=base_url('sertifikasi')."/pusbin/PerhitunganNilai/print_sertifikat/".$field->FK_REGIS_UJIAN;
+
              $row[] = '<td><a class="btn btn-sm btn-warning" onclick="getModal(this)" id="btn-view-raport" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Detail Nilai</a>
 						 <a class="btn btn-sm btn-primary" '.$disable.' onclick="getModal(this)"  data-href="'.$url_create.'" id="btn-create-sertifikat" data-href="" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Sertifikasi</a>
 						 <a class="btn btn-sm btn-success" '.$enable.' href="'.$url_show.'" id="btn-show-sertifikat" ><i class="glyphicon glyphicon-print"></i> Cetak Sertifikasi</a></td>';
@@ -482,7 +491,7 @@ class PerhitunganNilai extends CI_Controller {
 			$this->load->view('sertifikasi/pusbin/content/view_nilai_detail',$data);
 		}
 		public function getdatanilai($id){
-			$datas=$this->lookup_ujian->getDetailNilai($id);
+			$datas=$this->lookup_ujian->getDetailNilai('37');
 			$a=1;
 			$datarow = array();
 			foreach ($datas as $key) {
@@ -576,6 +585,7 @@ class PerhitunganNilai extends CI_Controller {
 						 $nilai=0;
 						 $row[] = $a+1;
 						 $row[] = $field->NAMA_JENJANG;
+						 $row[] = $field->NAMA_MATA_AJAR;
 						 $row[] = $field->KODE_PESERTA;
 						 $row[] = $field->NAMA;
 
@@ -619,7 +629,7 @@ class PerhitunganNilai extends CI_Controller {
              $nilai=0;
              $row[] = $a+1;
              $row[] = $field->NAMA_JENJANG;
-						 $row[] = $field->NAMA_MATA_AJAR;
+						 // $row[] = $field->NAMA_MATA_AJAR;
              $row[] = $field->KODE_PESERTA;
 						 $row[] = $field->NAMA;
 						 // $apiuser=$this->apiuser($field->KODE_PESERTA);
@@ -739,22 +749,10 @@ class PerhitunganNilai extends CI_Controller {
 				}else{
 					$data['nilai']='0';
 				}
-				// $where=array(
-				// 	'PK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
-				// 	// 'KODE_SOAL'=>$data['kode_soal'],
-				// 	// 'FK_EVENT'=>$kode_event
-				// );
-				// $data_update=array(
-				// 	'Nilai'=>$data['nilai']
-				// );
-				//
-				//
+
 				$dataall[]=$data;
-				// // $a++;
-				// $update=$this->jawaban->updateData($where,'jawaban_peserta',$data_update);
-				// if($update){
+
 					$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
-					// $nilai=ceil($data['nilai']*35/100);
 					foreach ($data_lookup as $keys) {
 						$where=array(
 							'FK_REGIS_UJIAN'=>$keys->PK_REGIS_UJIAN,

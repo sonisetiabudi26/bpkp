@@ -64,7 +64,7 @@
 													<td>NIP</td>
 													<td>NAMA</td>
 													<td>Nama Jenjang</td>
-													<td>Status</td>
+													<td>Status Kelulusan</td>
 													<td>Tindakan</td>
 												</tr>
 												</thead>
@@ -129,39 +129,13 @@ $(document).ready(function(){
 	                  {"data": "1",width:100},
 	                  {"data": "2",width:100},
 	                  {"data": "3",width:100},
-									
+
 	              ],
 
 	          });
 
 });
 
-function loadDatabatch(){
-	var table;
-				table = $('#dataBatchAll').DataTable({
-	              "processing": false, //Feature control the processing indicator.
-								 "destroy": true,
-	              "serverSide": true, //Feature control DataTables' server-side processing mode.
-	              "order": [], //Initial no order.
-	              // Load data for the table's content from an Ajax source
-	              "ajax": {
-	                  "url": '<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/LoadBatch/')?>',
-	                  "type": "POST"
-	              },
-	              //Set column definition initialisation properties.
-	              "columns": [
-	                  {"data": "0",width:50},
-	                  {"data": "1",width:100},
-	                  {"data": "2",width:100},
-	                  {"data": "3",width:100},
-										{"data": "4",width:100},
-										{"data": "5",width:100},
-										{"data": "6",width:100},
-										{"data": "7",width:100}
-	              ],
-
-	          });
-}
 function loadDatalist(){
 	//var kodeevent=$('#kodeevent').val();
 
