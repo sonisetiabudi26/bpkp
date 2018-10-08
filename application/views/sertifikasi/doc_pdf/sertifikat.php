@@ -63,7 +63,10 @@ table, th, td {
   }elseif($nilai>70 || $nilai<75){
     return 'Cukup';
   }
-} ?>
+}
+$foto_identitas=base_url('uploads')."/".$foto;
+
+ ?>
 <!-- <link href="<?php //echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet"> -->
 <div class="full-width">
   <div class="row">
@@ -85,7 +88,7 @@ table, th, td {
             <!-- <table> -->
             <div height="472" width="354" style="float:left;padding-left:20px">
                <!-- <td height="150" width="130"> -->
-              <img src="http://localhost/bpkp/assets/other/media/img/logo/bpkp.png" width="130" height="150">
+              <img src="<?php echo $foto_identitas ?>" width="130" height="150">
             <!-- </td> -->
             </div>
           <!-- </table> -->
