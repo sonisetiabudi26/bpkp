@@ -304,7 +304,7 @@ class PerhitunganNilai extends CI_Controller {
 				$apiuser=$this->apiuser($key->NIP);
 				if($apiuser->message!='auditor_not_found'){
 				// $data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
-				$data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
+				$data['kodeunitkerja']=$apiuser->data[0]->UnitKerja_Nama;
 				}else{
 					$data['kodeunitkerja']='empty';
 				}
