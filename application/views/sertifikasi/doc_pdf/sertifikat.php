@@ -5,7 +5,16 @@
     font-size: 18px;
     font-weight: bolder;
   }
+  .container {
+      border-radius: 5px;
+      margin:0px auto;
+      width: 60%;
+  }
+  .box{
+    width: 60%;
+    margin:0px auto;
 
+  }
   .subtitle{
     width:40%;
     border:none;
@@ -24,13 +33,38 @@
   table {
     border-collapse: collapse;
 }
+.col-25 {
+    float: left;
+    width: 30%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: right;
+    width: 70%;
+    margin-top: 6px;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
 table, th, td {
     border: 1px solid black;
     padding:5px;
 }
 </style>
-<link href="<?php echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
+<?php function nilaiStatus($nilai){
+  if($nilai>80){
+    return 'Memuaskan';
+  }elseif($nilai>75 || $nilai<80){
+    return 'Baik';
+  }elseif($nilai>70 || $nilai<75){
+    return 'Cukup';
+  }
+} ?>
+<!-- <link href="<?php //echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet"> -->
 <div class="full-width">
   <div class="row">
     <div class="col-lg-12" style="text-align:center;">
@@ -49,7 +83,7 @@ table, th, td {
         <div class="col-lg-6" style="float:left">
           <div class="row">
             <!-- <table> -->
-            <div height="472" width="354" style="float:left">
+            <div height="472" width="354" style="float:left;padding-left:20px">
                <!-- <td height="150" width="130"> -->
               <img src="http://localhost/bpkp/assets/other/media/img/logo/bpkp.png" width="130" height="150">
             <!-- </td> -->
@@ -57,7 +91,7 @@ table, th, td {
           <!-- </table> -->
           </div>
         </div>
-        <div class="col-lg-6" style="float:right">
+        <div class="col-lg-6" style="float:right;padding-right:20px;">
           <label>Jakarta, <?php echo $datex;?></label><br/>
           <label>a.n. <?php echo $a_n;?></label><br/><br/><br/><br/><br/>
           <label><?php echo $nama_kepala ?></label><br/>
@@ -66,36 +100,43 @@ table, th, td {
       </div>
     </div>
   </div><br/>
-  <br/>  <br/>  <br/>  <br/>  <br/>  <br/>  <br/>  <br/>  <br/>
+  <br/>
   <div class="row">
     <div class="col-lg-12">
       <div class="row" style="text-align:center">
         <h3>DAFTAR MATERI UJIAN</h3>
         <h3>SERTIFIKAT <?php echo strtoupper($diklat);?></h3>
       </div>
-      <div class="row">
-        <div style="margin:0px auto;width:70%">
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Nama</label>
-            <div class="col-sm-8">
-            <?php echo $nama ?>
+      <div class="container">
+          <div class="box">
+            <div class="row">
+            <div class="col-25">
+              <label for="fname">Nama</label>
+            </div>
+            <div class="col-75">
+              : <label><?php echo $nama ?></label>
             </div>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">NIP</label>
-            <div class="col-sm-8">
-            <?php echo $nip ?>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">NIP</label>
+            </div>
+            <div class="col-75">
+              : <label><?php echo $nip ?></label>
             </div>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Unit Organisasi</label>
-            <div class="col-sm-8">
-            <?php echo $kodeunitkerja ?>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">Unit Organisasi</label>
+            </div>
+            <div class="col-75">
+              : <label><?php echo $kodeunitkerja ?></label>
             </div>
           </div>
+        </div>
+    </div>
 
-      </div>
-      </div>
+
 
       <div class="row">
         <table style="width:100%;">
@@ -113,37 +154,23 @@ table, th, td {
             $no=1;
             $nilaitotal=0;
             foreach ($data_detail as $key ) {
-              if($key->NILAI>80){
-                $predikat='Memuaskan';
-              }elseif($key->NILAI>75){
-                $predikat='Baik';
-              }elseif($key->NILAI>70){
-                $predikat='Cukup';
-              }
+
               $nilaitotal=$nilaitotal+$key->NILAI;
               echo '  <tr>';
               echo '<td style="text-align:center">'.$no.'</td>';
               echo '<td>'.$key->NAMA_MATA_AJAR.'</td>';
               echo '<td>'.$key->NILAI.'</td>';
-              echo '<td>'.$predikat.'</td>';
+              echo '<td><b>'.nilaiStatus($key->NILAI).'</b></td>';
               echo '  </tr>';
               $no++;
             }
-            if($nilaitotal>80){
-              $predikat_total='Memuaskan';
-            }elseif($nilaitotal>75){
-              $predikat_total='Baik';
-            }elseif($$nilaitotal>70){
-              $predikat_total='Cukup';
-            }
-
             ?>
             <tr>
-              <td colspan="2">
+              <td colspan="2" style="text-align:center">
                 RATA-RATA
                 </td>
-                <td><?php echo ceil($nilaitotal/$no);?></td>
-                <td><?php echo $predikat_total?></td>
+                <td><b><?php echo ceil($nilaitotal/$no);?></b></td>
+                <td><b><?php echo nilaiStatus(ceil($nilaitotal/$no))?></b></td>
             </tr>
 
         </tbody>
