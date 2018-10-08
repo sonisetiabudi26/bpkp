@@ -491,7 +491,7 @@ class PerhitunganNilai extends CI_Controller {
 			$this->load->view('sertifikasi/pusbin/content/view_nilai_detail',$data);
 		}
 		public function getdatanilai($id){
-			$datas=$this->lookup_ujian->getDetailNilai('37');
+			$datas=$this->lookup_ujian->getDetailNilai($id);
 			$a=1;
 			$datarow = array();
 			foreach ($datas as $key) {
@@ -719,19 +719,23 @@ class PerhitunganNilai extends CI_Controller {
 			$parameter	= explode('~',$kode);
 			$kode_event=$parameter[0];
 			$kelas=$parameter[1];
-
+			// get data peserta and jawaban
 			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
 			if($dataAll!='no data'){
 
-			$nomor1=1;
+			$nomor1=0;
+			$nomor2=0;
 			foreach ($dataAll as $key) {
 				$fk_jawaban_detail=$key->PK_JAWABAN_DETAIL;
 				$totalJawaban=0;
 				$data = array();
+
 				$data['nip']=$key->KODE_PESERTA;
 				$data['kode_soal']=$key->KODE_SOAL;
+				//get data soal distribusi by kode soal
 				$datanum=$this->jawaban->get_data_all_by_numrows($key->KODE_SOAL,$key->KELAS);
 				$data['totalSoal']=$datanum;
+				//get data jawaban by kode_soal
 				$dataJawaban=$this->jawaban->getDataJawaban($fk_jawaban_detail);
 				foreach ($dataJawaban as $row) {
 					$dataCalc=$this->jawaban->calculate($key->KODE_SOAL,$row->JAWABAN,$row->NO_UJIAN);
@@ -740,7 +744,7 @@ class PerhitunganNilai extends CI_Controller {
 						$totalJawaban++;
 					}
 					$data[$jawaban]=$dataCalc;
-					$nomor1++;
+
 				}
 
 				$data['totalJawaban']=$totalJawaban;
@@ -752,10 +756,10 @@ class PerhitunganNilai extends CI_Controller {
 
 				$dataall[]=$data;
 
-					$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
-					foreach ($data_lookup as $keys) {
+				//	$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
+				//	foreach ($data_lookup as $keys) {
 						$where=array(
-							'FK_REGIS_UJIAN'=>$keys->PK_REGIS_UJIAN,
+							'FK_REGIS_UJIAN'=>$key->FK_REGIS_UJIAN,
 							'FK_MATA_AJAR'=>$key->FK_MATA_AJAR
 						);
 						$data_update=array(
@@ -764,16 +768,23 @@ class PerhitunganNilai extends CI_Controller {
 							'flag'=>1
 						);
 					$update_lookup=$this->lookup_ujian->updateData($where,'lookup_ujian',$data_update);
+				//	}
+				if($update_lookup=='berhasil'){
+						$data['resultberhasilupdate']=$nomor1++;
+						$data['resultgagalupdate']=$nomor2;
+					}else{
+						$data['resultberhasilupdate']=$nomor1;
+						$data['resultgagalupdate']=$nomor2++;
 					}
-					$output  = array('status' =>'success' ,
-				 										'msg'=>'Data berhasil dikalkulasi','data'=>$datanum);
+
 			//	}
 				// else{
 				// 	$output  = array('status' =>'error' ,
 				//  										'msg'=>'Data gagal dikalkulasi');
 				//}
 			}
-
+			$output  = array('status' =>'success' ,
+												'msg'=>'Data berhasil dikalkulasi '.$data['resultberhasilupdate'].' & gagal dikalkulasi '.$data['resultgagalupdate'],'data'=>$datanum);
 		 }else{
 			 $output = array('status' =>'error' ,
 		  									'msg'=>'Data peserta tidak ada');
