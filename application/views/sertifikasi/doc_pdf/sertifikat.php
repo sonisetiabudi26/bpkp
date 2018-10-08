@@ -64,7 +64,7 @@ table, th, td {
     return 'Cukup';
   }
 }
-$foto_identitas=base_url('uploads')."/".$foto;
+$foto_identitas=base_url('uploads').'/'.$foto;
 
  ?>
 <!-- <link href="<?php //echo base_url('assets/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet"> -->
