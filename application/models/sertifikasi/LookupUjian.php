@@ -217,6 +217,11 @@ class LookupUjian extends My_Model
 	}
 	public function updateData($where,$table,$data){
 		$this->db->where($where);
-		$this->db->update($table,$data);
+		$update=$this->db->update($table,$data);
+		if($update){
+			return 'berhasil';
+		}else{
+			return 'gagal';
+		}
 	}
 }

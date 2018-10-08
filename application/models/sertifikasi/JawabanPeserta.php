@@ -59,14 +59,14 @@ class JawabanPeserta extends My_Model
 		 }
 	}
 public function getALl($kodeevent,$kelas){
-  $condition = "event.KODE_EVENT =" . "'" . $kodeevent . "' AND jawaban_peserta.KELAS =" . "'" . $kelas . "' group by registrasi_ujian.PK_REGIS_UJIAN";
-  $this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG,registrasi_ujian.NAMA');
+  $condition = "event.KODE_EVENT =" . "'" . $kodeevent . "' AND jawaban_peserta.KELAS =" . "'" . $kelas . "' group by registrasi_ujian.PK_REGIS_UJIAN,lookup_ujian.FK_MATA_AJAR";
+  $this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG,registrasi_ujian.NAMA,mata_ajar.NAMA_MATA_AJAR,lookup_ujian.HASIL_UJIAN');
   $this->db->from($this->_table);
 	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
 	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 	$this->db->join('registrasi_ujian', 'jawaban_peserta.KODE_PESERTA = registrasi_ujian.NIP');
-	// $this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
-	// $this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
+	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
+	$this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
   $this->db->where($condition);
   $query = $this->db->get();
 	return $query->result();
@@ -105,10 +105,10 @@ public function NumrowPeserta($kodeevent,$kelas){
 }
 public function get_data_all_by_event($kodeevent,$kelas){
 	$condition = "jawaban_peserta.FK_EVENT =" . "'" . $kodeevent . "' AND " . "jawaban_peserta.KELAS =" . "'" . $kelas . "'";
-	$this->db->select('jawaban_peserta.*,kode_soal.FK_MATA_AJAR,detail_jawaban_peserta.*');
+	$this->db->select('jawaban_peserta.*,kode_soal.FK_MATA_AJAR,lookup_ujian.FK_REGIS_UJIAN');
 	$this->db->from($this->_table);
 	$this->db->join('kode_soal', 'jawaban_peserta.KODE_SOAL = kode_soal.KODE_SOAL');
-	$this->db->join('detail_jawaban_peserta', 'jawaban_peserta.PK_JAWABAN_DETAIL = detail_jawaban_peserta.FK_JAWABAN_DETAIL');
+	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
 	$this->db->where($condition);
 	$query = $this->db->get();
 	if ($query->num_rows() > 0) {
