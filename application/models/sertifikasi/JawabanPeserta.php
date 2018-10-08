@@ -105,10 +105,10 @@ public function NumrowPeserta($kodeevent,$kelas){
 }
 public function get_data_all_by_event($kodeevent,$kelas){
 	$condition = "jawaban_peserta.FK_EVENT =" . "'" . $kodeevent . "' AND " . "jawaban_peserta.KELAS =" . "'" . $kelas . "'";
-	$this->db->select('jawaban_peserta.*,kode_soal.FK_MATA_AJAR,lookup_ujian.FK_REGIS_UJIAN');
+	$this->db->select('jawaban_peserta.*,kode_soal.FK_MATA_AJAR');
 	$this->db->from($this->_table);
 	$this->db->join('kode_soal', 'jawaban_peserta.KODE_SOAL = kode_soal.KODE_SOAL');
-	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
+	// $this->db->join('registrasi_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
 	$this->db->where($condition);
 	$query = $this->db->get();
 	if ($query->num_rows() > 0) {

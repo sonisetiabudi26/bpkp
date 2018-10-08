@@ -208,7 +208,7 @@ class LookupUjian extends My_Model
 	}
 	public function getdata_lookup($pk,$mata_ajar){
 		$condition = "registrasi_ujian.NIP = '" . $pk . "' and lookup_ujian.FK_MATA_AJAR = '" . $mata_ajar . "'";
-		$this->db->select('registrasi_ujian.*');
+		$this->db->select('registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->from($this->_table);
 		$this->db->join('registrasi_ujian', 'lookup_ujian.FK_REGIS_UJIAN = registrasi_ujian.PK_REGIS_UJIAN');
 		$this->db->where($condition);
