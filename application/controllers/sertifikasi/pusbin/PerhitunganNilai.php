@@ -716,8 +716,8 @@ class PerhitunganNilai extends CI_Controller {
 			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
 			if($dataAll!='no data'){
 
-			$nomor1=0;
-			$nomor2=0;
+			$nomor1=1;
+			$nomor2=1;
 			foreach ($dataAll as $key) {
 				$fk_jawaban_detail=$key->PK_JAWABAN_DETAIL;
 				$totalJawaban=0;
@@ -749,10 +749,10 @@ class PerhitunganNilai extends CI_Controller {
 
 				$dataall[]=$data;
 
-				//	$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
+					$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
 				//	foreach ($data_lookup as $keys) {
 						$where=array(
-							'FK_REGIS_UJIAN'=>$key->FK_REGIS_UJIAN,
+							'FK_REGIS_UJIAN'=>$data_lookup[0]->PK_REGIS_UJIAN,
 							'FK_MATA_AJAR'=>$key->FK_MATA_AJAR
 						);
 						$data_update=array(
@@ -944,6 +944,7 @@ class PerhitunganNilai extends CI_Controller {
 						'CREATED_DATE' => $datex,
 					);
 					$insertmulti=$this->jawaban->addSoal($data);
+
 					if($insertmulti!='Data Inserted Failed'){
 						$no_ujian=1;
 						for ($i=8; $i < $no ; $i++) {
@@ -951,7 +952,6 @@ class PerhitunganNilai extends CI_Controller {
 							'FK_JAWABAN_DETAIL'=>$insertmulti,//kode event ambil dr data selected
 							'NO_UJIAN'=>$no_ujian,//kelas ambil dr data selected
 							'JAWABAN'=>$row[$i],
-
     				]);
 						$no_ujian++;
 						}
