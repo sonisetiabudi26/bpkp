@@ -346,8 +346,8 @@
 			},
 			],
 		});
-	}
-);
+
+});
 function loaddataPembuatSoal(){
 	var tugas='pembuat_soal';
 
@@ -371,7 +371,7 @@ table=	$('#table').DataTable({
 		],
 	});
 }
-}
+
 	function loadData(obj)
 	{
 		loaddataPembuatSoal();

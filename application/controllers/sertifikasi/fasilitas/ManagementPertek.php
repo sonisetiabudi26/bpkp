@@ -55,10 +55,10 @@ class ManagementPertek extends CI_Controller {
 			$datas=$this->pertek->getdatabyid($param);
 			foreach ($datas as $key) {
 				$data['id_pertek']=$key->PK_PERTEK;
-				//$data['nosurat']=$key->NO_SURAT;
-				// $data['data_doc']=($key->DOC_PERTEK==''?'0':'1');
+				$data['nosurat']=$key->NO_SURAT;
+				$data['data_doc']=($key->DOC_ANGKER==''?'0':'1');
 			}
-			$this->load->view('sertifikasi/fasilitas/content/modal_view_angker',$data);
+			$this->load->view('sertifikasi/fasilitas/content/modal_angker',$data);
 
 		}
 		public function create_pertek(){
@@ -164,62 +164,88 @@ class ManagementPertek extends CI_Controller {
 
 			 $data['datex']=date('Y F d');
 			 $data['dates']=date('Y-m-d');
+			 $data['year']=date('Y');
 
-			 $data['no_pertek']=$this->input->post('nopertek');
 			 $data['id_pertek']=$this->input->post('id_pertek');
-			 $data['yth']=$this->input->post('yth');
-			 $data['isi']=$this->input->post('body_pertek');
-			 $data['tempat']=$this->input->post('tempat');
+
 			 $data['kepala']=$this->input->post('kepala');
-			 $data['tembusan']=$this->input->post('tembusan');
+			 $data['jabatan']=$this->input->post('jabatan');
 			 $data['nosurat']=$this->input->post('no_surat');
-			 $apiuser=$this->apiuser($this->input->post('kepala'));
+			 // $data['tanggal']=
 			 $jadwal_mulai = explode('-',$data['dates']);
 			 $months = array(1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember');
 			 for ($i=1; $i < 13 ; $i++) {
 				 if($i==$jadwal_mulai[1]){
-					 $data['periode']=$months[$i].' '.$jadwal_mulai[0];
+					 $data['tanggal']=$months[$i].' '.$jadwal_mulai[0];
 				 }
 			 }
-
+			 $data_isi=$this->pertek->loadAngker($data['id_pertek']);
+			 foreach ($data_isi as $keys) {
+				  $apiuser=$this->apiuser($keys->NIP);
+				 if($apiuser->message!='auditor_not_found'){
+					$tmtkepangkatan = $apiuser->data[0]->Pangkat_TglMulaiTugas;
+					$pangkat= $apiuser->data[0]->Pangkat_TglMulaiTugas;
+					$golongan= $apiuser->data[0]->Golongan_Kode;
+					$jabatan= $apiuser->data[0]->Jabatan_Nama;
+					$nama= $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+				}else{
+					$tmtkepangkatan='-';
+					$pangkat='-';
+					$golongan='-';
+					$jabatan='-';
+					$nama='-';
+				}
+			 	$datarow[] = array('nama' => $nama,
+			 											'nip' =>$keys->NIP,
+														'pangkat'=>$pangkat,
+														'golongan'=>$golongan,
+														'tmtkepangkatan'=>$tmtkepangkatan,
+														'jabatan'=>$jabatan,
+														'pendidikan_sekolah'=>$keys->PENDIDIKAN_SEKOLAH,
+														'diklat'=>$keys->DIKLAT,
+														'pengawasan'=>$keys->PENGAWASAN,
+														'pengembangan'=>$keys->PENGEMBANGAN_PROFESI,
+														'penunjang'=>$keys->PENUNJANG,
+														'jumlah'=>$keys->JUMLAH
+														);
+			 }
+			 $data['isi']=$datarow;
+			 $apiuser=$this->apiuser($this->input->post('kepala'));
 			 if($apiuser->message!='auditor_not_found'){
 				 $data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 			 }else{
 				 $data['nama']='unnamed';
 			 }
-			 $data['tembusan_surat']=explode(',',$data['tembusan']);
+			// $data['tembusan_surat']=explode(',',$data['tembusan']);
 			 // $where=array(
 			 // 	'PK_PERTEK'=>$data['id_pertek'],
 			 // );
 			 $data_insert=array(
 				 'FK_PERTEK'=>$data['id_pertek'],
-				 'NO_PERTEK'=>$data['no_pertek'],
-				 'YTH'=>$data['yth'],
-				 'ISI'=>$data['isi'],
-				 'TEMPAT'=>$data['tempat'],
-				 'KEPALA'=>$data['kepala'],
-				 'TEMBUSAN'=>$data['tembusan'],
-
+				 'SURAT_NOMOR'=>$data['nosurat'],
+				 'TANGGAL'=>$data['datex'],
+				 'KEPALA'=>$data['jabatan'],
+				 'NIP_KEPALA'=>$data['kepala'],
 			 );
-			 $insert_detail_pertek=$this->pertek->save_pertek_detail($data_insert,'detail_pertek');
+			 $insert_detail_pertek=$this->pertek->save_pertek_detail($data_insert,'detail_angka_kredit');
 			 if($insert_detail_pertek=='Data Inserted Successfully'){
 
 			 $data_pengusul=$this->pengusul->total_pengusul_by_id($data['id_pertek']);
 			 if($data_pengusul->qualified==$data_pengusul->total){
-			 $data_auditor=$this->pengusul->detail_data($data['nosurat']);
+			 $data_auditor=$this->pengusul->detail_data($this->input->post('nosurat'));
 
 				 $data['status_pengusulan']=$data_auditor[0]->DESC;
 				 $data['unitapip']=$data_auditor[0]->UNITKERJA;
-				 $no_file=str_replace('/','',$this->input->post('no_surat'));
-				 $namafile='pertek_'.$no_file;
+				// $no_file=str_replace('/','',$this->input->post('no_surat'));
+				 $namafile='angker'.$data['id_pertek'];
 				 $dompdf = new Dompdf\Dompdf();
 				 //$datapertek['data']=$this->pertek->datapertek();
-				 $html = $this->load->view('sertifikasi/doc_pdf/pertek',$data,true);
+				 $html = $this->load->view('sertifikasi/doc_pdf/angker',$data,true);
 
 					$dompdf->loadHtml($html);
 
 					// (Optional) Setup the paper size and orientation
-					$dompdf->setPaper('A4', 'portrait');
+					$dompdf->setPaper('A4', 'landscape');
 
 					// Render the HTML as PDF
 					$dompdf->render();
@@ -227,10 +253,10 @@ class ManagementPertek extends CI_Controller {
 					// Get the generated PDF file contents
 					$pdf = $dompdf->output();
 					if($this->input->post('doc')=='0'){
-							if (!is_dir('uploads/doc_pertek/')) {
-								 mkdir('./uploads/doc_pertek/', 0777, TRUE);
+							if (!is_dir('uploads/doc_angker/')) {
+								 mkdir('./uploads/doc_angker/', 0777, TRUE);
 							}
-							if ( ! write_file(FCPATH."/uploads/doc_pertek/".$namafile.".pdf", $pdf))
+							if ( ! write_file(FCPATH."/uploads/doc_angker/".$namafile.".pdf", $pdf))
 							{
 										$output = array('msg' => 'error' , 'value'=>'Unable to write the file');
 							}
@@ -240,14 +266,11 @@ class ManagementPertek extends CI_Controller {
 											'FK_PERTEK'=>$data['id_pertek'],
 										);
 										$data_update=array(
-											'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
-											'PERTEK_DATE'=>$data['dates'],
-											'ISI'=>$data['isi'],
-											'NO_PERTEK'=>$data['no_pertek'],
+											'DOC_ANGKER'=>base_url()."uploads/doc_angker/".$namafile.".pdf",
 											// 'CREATED_BY'=> $this->session->userdata('nip'),
 											// 'CREATED_DATE'=> $data['dates']
 										);
-										$update=$this->pertek->updateData($where,'detail_pertek',$data_update);
+										$update=$this->pertek->updateData($where,'detail_angka_kredit',$data_update);
 							}
 							$output = array('status' => 'success' , 'msg' => "Data berhasil disimpan");
 						}
@@ -275,7 +298,7 @@ class ManagementPertek extends CI_Controller {
           $dataRow[]=$a;
           $dataRow[]=$key->NO_SURAT;
           $dataRow[]=$key->DOC_PERTEK;
-          $dataRow[]=$key->DOC_ANGKA_KREDIT;
+          $dataRow[]=$key->DOC_ANGKER;
           $dataRow[]=$key->NO_RESI;
 					$dataRow[]=$data_pengusul->qualified.'/'.$data_pengusul->total;
 
@@ -285,20 +308,26 @@ class ManagementPertek extends CI_Controller {
 	         $url_angker=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_show_angker/".$key->PK_PERTEK;
 					 $url_create=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_create_pertek/".$param;
 					 $url_view=$key->DOC_PERTEK;
+					 $url_view_angker=$key->DOC_ANGKER;
 					 $create="id='btn-pertek-doc' onclick='getModal(this)' data-href='".$url_create."' data-toggle='modal' data-target='#modal-content' class='btn btn-sm btn-primary'";
 					 $view="id='btn-pertek_view-doc'  href='".$url_view."' target='_blank' class='btn btn-sm btn-primary'";
 
+					 $create_angker="id='btn-angker-doc' onclick='getModal(this)' data-href='".$url_angker."' data-toggle='modal' data-target='#modal-content' class='btn btn-sm btn-success'";
+				   $view_angker="id='btn-angker_view-doc'  href='".$url_view_angker."' target='_blank' class='btn btn-sm btn-success'";
+
 					 $url= ($key->DOC_PERTEK==""? $create:$view);
+					 $url2= ($key->DOC_ANGKER==""? $create_angker:$view_angker);
+
 	         $namapertek=($key->DOC_PERTEK==''?'Create DOC PERTEK':'View DOC PERTEK');
-	         $namaangker=($key->DOC_ANGKA_KREDIT==''?'Create DOC Angka Kredit':'View DOC Angka Kredit');
+	         $namaangker=($key->DOC_ANGKER==''?'Create DOC Angka Kredit':'View DOC Angka Kredit');
 	         $resi=($key->NO_RESI==''?'Input No Resi':'Update No Resi');
 					 $styledisable='style="display:none"';
-					 $disable=($key->DOC_ANGKA_KREDIT==''||$key->DOC_PERTEK==''?$styledisable:"");
+					 $disable=($key->DOC_ANGKER==''||$key->DOC_PERTEK==''?$styledisable:"");
 
 	         $dataRow[]='<td><a '.$url.' >
              '.$namapertek.'</a>
-             <a onclick="getModal(this)" id="btn-angker-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-success">
-                 '.$namaangker.'</a>
+						 <a '.$url2.' >
+               '.$namaangker.'</a>
              <a onclick="getModal(this)" id="btn-resi-doc" '.$disable.' data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
                  '.$resi.'</a></td>';
          $data[]=$dataRow;

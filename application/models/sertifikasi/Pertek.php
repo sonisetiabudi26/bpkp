@@ -16,11 +16,21 @@ class Pertek extends My_Model
 	   return $query->result();
 
 	}
+	public function loadAngker($id_pertek){
+		$condition = "pertek.PK_PERTEK =" . "'" . $id_pertek . "'";
+		$this->db->select('pertek.*,angka_kredit.PENDIDIKAN_SEKOLAH,angka_kredit.DIKLAT,angka_kredit.PENGAWASAN,angka_kredit.PENGEMBANGAN_PROFESI,angka_kredit.PENUNJANG,angka_kredit.JUMLAH,pengusul_pengangkatan.NIP');
+		$this->db->from($this->_table);
+		$this->db->join('pengusul_pengangkatan','pertek.NO_SURAT = pengusul_pengangkatan.NO_SURAT','Left');
+		$this->db->join('angka_kredit','pengusul_pengangkatan.PK_PENGUSUL_PENGANGKATAN = angka_kredit.FK_PENGUSUL_PENGANGKATAN','Left');
+		$query = $this->db->get();
+		 return $query->result();
+	}
 	public function getdatabyid($id){
 
     $this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->join('detail_pertek','pertek.PK_PERTEK = detail_pertek.FK_PERTEK','Left');
+		$this->db->join('detail_angka_kredit','pertek.PK_PERTEK = detail_angka_kredit.FK_PERTEK','Left');
 		$this->db->where('PK_PERTEK',$id);
 		$query = $this->db->get();
 	   return $query->result();
