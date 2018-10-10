@@ -38,10 +38,10 @@ class PengusulanPengangkatan extends CI_Controller {
       foreach ($datas as $key) {
         $dataRow['no']=$a;
         $dataRow['nipunitapip']=$key->CREATED_BY;
-        $apiuser=$this->apiuser($key->CREATED_BY);
-
-        $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
-        $dataRow['unitapip']=$kodeunitkerja;
+        // $apiuser=$this->apiuser($key->CREATED_BY);
+				//
+        // $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
+        $dataRow['unitapip']=$key->UNITKERJA;
         $datarow=$this->pengusul->numrowcategory($key->CREATED_BY);
 
         if($datarow=='no data'){

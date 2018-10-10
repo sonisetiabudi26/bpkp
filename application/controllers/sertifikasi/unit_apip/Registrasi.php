@@ -254,7 +254,7 @@ class Registrasi extends CI_Controller {
 				 mkdir('./uploads/'.$folder, 0777, TRUE);
 			 }
 			 $config2['upload_path']          = './uploads/'.$folder.'/';
-			 $config2['allowed_types']        = 'JPG|JPEG|jpg|jpeg';
+			 $config2['allowed_types']        = 'JPG|JPEG|jpg|jpeg|png|PNG';
 			 $config2['max_size'] 						= '0';
        $config2['max_filename']					= '255';
 			 $config2['overwrite'] 						= TRUE;
@@ -271,8 +271,8 @@ class Registrasi extends CI_Controller {
 					 $config3['image_library'] = 'gd2';
 					 $config3['source_image'] = $image_data['full_path']; //get original image
 					 $config3['maintain_ratio'] = TRUE;
-					 $config3['width'] = 100;
-					 $config3['height'] = 150;
+					 $config3['width'] = 354;
+					 $config3['height'] = 472;
 					 $this->load->library('image_lib', $config3);
 					 if (!$this->image_lib->resize()) {
 							 $this->handle_error($this->image_lib->display_errors());

@@ -392,6 +392,8 @@ class PerhitunganNilai extends CI_Controller {
 				}else{
 					print json_encode(array("status"=>"error", "msg"=>'Data gagal disimpan'));
 				}
+			}else{
+					print json_encode(array("status"=>"error", "msg"=>'Data gagal disimpan'));
 			}
 		}
 		public function vw_create_sertifikat($id){

@@ -33,6 +33,12 @@ class ManagementPertek extends CI_Controller {
         redirect('/');
       }
     }
+		public function apiuser($param){
+			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$param;
+			$check=file_get_contents($url);
+			$jsonResult=json_decode($check);
+			return $jsonResult;
+		}
 		public function vw_create_pertek($param){
 
 			$datas=$this->pertek->getdatabyid($param);
@@ -44,7 +50,17 @@ class ManagementPertek extends CI_Controller {
 			$this->load->view('sertifikasi/fasilitas/content/modal_view_pertek',$data);
 
 		}
+		public function vw_show_angker($param){
 
+			$datas=$this->pertek->getdatabyid($param);
+			foreach ($datas as $key) {
+				$data['id_pertek']=$key->PK_PERTEK;
+				$data['nosurat']=$key->NO_SURAT;
+				$data['data_doc']=($key->DOC_PERTEK==''?'0':'1');
+			}
+			$this->load->view('sertifikasi/fasilitas/content/modal_view_pertek',$data);
+
+		}
 		public function create_pertek(){
 
 			$data['datex']=date('Y F d');
@@ -58,6 +74,13 @@ class ManagementPertek extends CI_Controller {
 			$data['kepala']=$this->input->post('kepala');
 			$data['tembusan']=$this->input->post('tembusan');
 			$data['nosurat']=$this->input->post('no_surat');
+			$apiuser=$this->apiuser($this->input->post('kepala'));
+			if($apiuser->message!='auditor_not_found'){
+				$data['nama'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+			}else{
+				$data['nama']='unnamed';
+			}
+			$data['tembusan_surat']=explode(',',$data['tembusan']);
 			$where=array(
 				'PK_PERTEK'=>$data['id_pertek'],
 			);
@@ -72,61 +95,62 @@ class ManagementPertek extends CI_Controller {
 			);
 			$update=$this->pertek->updateData($where,'pertek',$data_update);
 			if($update=='success'){
+
 			$data_pengusul=$this->pengusul->total_pengusul_by_id($data['id_pertek']);
 			if($data_pengusul->qualified==$data_pengusul->total){
 			$data_auditor=$this->pengusul->detail_data($data['nosurat']);
 
 				$data['status_pengusulan']=$data_auditor[0]->DESC;
 				$data['unitapip']=$data_auditor[0]->UNITKERJA;
-			$no_file=str_replace('/','',$this->input->post('no_surat'));
-			$namafile='pertek_'.$no_file;
-			$dompdf = new Dompdf\Dompdf();
-			//$datapertek['data']=$this->pertek->datapertek();
-	  	$html = $this->load->view('sertifikasi/doc_pdf/pertek',$data,true);
+				$no_file=str_replace('/','',$this->input->post('no_surat'));
+				$namafile='pertek_'.$no_file;
+				$dompdf = new Dompdf\Dompdf();
+				//$datapertek['data']=$this->pertek->datapertek();
+		  	$html = $this->load->view('sertifikasi/doc_pdf/pertek',$data,true);
 
-			 $dompdf->loadHtml($html);
+				 $dompdf->loadHtml($html);
 
-			 // (Optional) Setup the paper size and orientation
-			 $dompdf->setPaper('A4', 'portrait');
+				 // (Optional) Setup the paper size and orientation
+				 $dompdf->setPaper('A4', 'portrait');
 
-			 // Render the HTML as PDF
-			 $dompdf->render();
+				 // Render the HTML as PDF
+				 $dompdf->render();
 
-			 // Get the generated PDF file contents
-			 $pdf = $dompdf->output();
-			 if($this->input->post('doc')=='0'){
-					 if (!is_dir('uploads/doc_pertek/')) {
-						 	mkdir('./uploads/doc_pertek/', 0777, TRUE);
+				 // Get the generated PDF file contents
+				 $pdf = $dompdf->output();
+				 if($this->input->post('doc')=='0'){
+						 if (!is_dir('uploads/doc_pertek/')) {
+							 	mkdir('./uploads/doc_pertek/', 0777, TRUE);
+						 }
+						 if ( ! write_file(FCPATH."/uploads/doc_pertek/".$namafile.".pdf", $pdf))
+						 {
+							 		 $output = array('msg' => 'error' , 'value'=>'Unable to write the file');
+						 }
+						 else
+						 {
+									 $where=array(
+										 'PK_PERTEK'=>$data['id_pertek'],
+									 );
+									 $data_update=array(
+										 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
+										 'PERTEK_DATE'=>$data['dates'],
+										 'ISI'=>$data['isi'],
+										 'NO_PERTEK'=>$data['no_pertek'],
+										 'CREATED_BY'=> $this->session->userdata('nip'),
+										 'CREATED_DATE'=> $data['dates']
+									 );
+									 $update=$this->pertek->updateData($where,'pertek',$data_update);
+						 }
+						  $output = array('msg' => 'success' , );
 					 }
-					 if ( ! write_file(FCPATH."/uploads/doc_pertek/".$namafile.".pdf", $pdf))
-					 {
-						 		 $output = array('msg' => 'error' , 'value'=>'Unable to write the file');
-					 }
-					 else
-					 {
-								 $where=array(
-									 'PK_PERTEK'=>$data['id_pertek'],
-								 );
-								 $data_update=array(
-									 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
-									 'PERTEK_DATE'=>$data['dates'],
-									 'ISI'=>$data['isi'],
-									 'NO_PERTEK'=>$data['no_pertek'],
-									 'CREATED_BY'=> $this->session->userdata('nip'),
-									 'CREATED_DATE'=> $data['dates']
-								 );
-								 $update=$this->pertek->updateData($where,'pertek',$data_update);
-					 }
-					  $output = array('msg' => 'success' , );
-				 }
+			 }else{
+				 $output = array('msg' => 'error' , );
+			 }
 		 }else{
-			 $output = array('msg' => 'error' , );
+			  $output = array('msg' => 'error' , );
 		 }
-	 }else{
-		  $output = array('msg' => 'error' , );
-	 }
-	 print json_encode($output);
-	 }
+		 print json_encode($output);
+		 }
 
     public function delete(){
         $data=$this->pusbin->delete_product();
@@ -149,11 +173,11 @@ class ManagementPertek extends CI_Controller {
 					$viewpertek=($key->DOC_PERTEK!=''?'1':'0');
 					$param=$key->PK_PERTEK;
         //  $url=base_url('sertifikasi')."/fasilitas/ManagementPertek/create_pertek/".$param;
-	         $url_angker=base_url('sertifikasi')."/fasilitas/home/vw_show_angker/".$key->PK_PERTEK;
+	         $url_angker=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_show_angker/".$key->PK_PERTEK;
 					 $url_create=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_create_pertek/".$param;
 					 $url_view=$key->DOC_PERTEK;
-					 $create="id='btn-upload-doc' onclick='getModal(this)' data-href='".$url_create."' data-toggle='modal' data-target='#modal-content' class='btn btn-sm btn-primary'";
-					 $view="id='btn-upload-doc'  href='".$url_view."' target='_blank' class='btn btn-sm btn-primary'";
+					 $create="id='btn-pertek-doc' onclick='getModal(this)' data-href='".$url_create."' data-toggle='modal' data-target='#modal-content' class='btn btn-sm btn-primary'";
+					 $view="id='btn-pertek_view-doc'  href='".$url_view."' target='_blank' class='btn btn-sm btn-primary'";
 
 					 $url= ($key->DOC_PERTEK==""? $create:$view);
 	         $namapertek=($key->DOC_PERTEK==''?'Create DOC PERTEK':'View DOC PERTEK');
@@ -164,9 +188,9 @@ class ManagementPertek extends CI_Controller {
 
 	         $dataRow[]='<td><a '.$url.' >
              '.$namapertek.'</a>
-             <a onclick="getModal(this)" id="btn-upload-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-success">
+             <a onclick="getModal(this)" id="btn-angker-doc" data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-success">
                  '.$namaangker.'</a>
-             <a onclick="getModal(this)" id="btn-upload-doc" '.$disable.' data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
+             <a onclick="getModal(this)" id="btn-resi-doc" '.$disable.' data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
                  '.$resi.'</a></td>';
          $data[]=$dataRow;
          $a++;

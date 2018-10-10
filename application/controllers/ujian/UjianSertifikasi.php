@@ -125,7 +125,7 @@ class UjianSertifikasi extends CI_Controller{
 	 $dataRegis=$this->regis->getdatakdDiklatandProvinsi($pk_regis);
 	 $dataEvent=$this->event->getDataPKEvent($dataRegis->KODE_DIKLAT,$dataRegis->PROVINSI);
 	 $dataKonfig=$this->konfig->CheckPin($pin,$dataEvent->PK_EVENT,$fk_mata_ajar);
-	 if($dataKonfig=='1'){
+	 if($dataKonfig>'0'){
 		 $apiuser=$this->apiuser($this->session->userdata('logged_nip'));
 		 if($apiuser->message=='get_data_success'){
 		 $kodeunitkerja = $apiuser->data[0]->UnitKerja_Kode;

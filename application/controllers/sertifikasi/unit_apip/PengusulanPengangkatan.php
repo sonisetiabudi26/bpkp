@@ -43,10 +43,12 @@ class PengusulanPengangkatan extends CI_Controller {
 				//$nama=$this->input->post('nama');
 				$status=$this->input->post('status');
 				if($nip!='' && $status!=''){
-				$apiuser=$this->apiuser($this->session->userdata('nip'));
+				$apiuser=$this->apiuser($this->input->post('nip'));
         $kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
+				$nama = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 				$data = array(
 				 'NIP' => $nip,
+				 'NAMA' => $nama,
 				 'FK_STATUS_PENGUSUL_PENGANGKATAN' => $status,
 				 'FK_STATUS_DOC' => '1',
 				 'UNITKERJA' => $kodeunitkerja,
@@ -76,8 +78,8 @@ class PengusulanPengangkatan extends CI_Controller {
 			if($datas!='no data'){
 			foreach ($datas as $key) {
 				$dataRow['no']=$a;
-				$nama=$this->apiuser($key->NIP);
-				$dataRow['nama']=$nama->data[0]->Auditor_NamaLengkap;
+				//$nama=$this->apiuser($key->NIP);
+				$dataRow['nama']=$key->NAMA;
 				$dataRow['nip']=$key->NIP;
 				$dataRow['desc']=$key->DESC;
 				$dataRow['desc_status']=$key->DESC_STATUS;
