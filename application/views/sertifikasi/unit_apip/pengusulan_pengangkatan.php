@@ -286,24 +286,40 @@ $(document).ready(function() {
 		{"data" : "action"}
   ]
 });
+var databelumlengkap = $('#document_belum_lengkap').DataTable({
+	'ajax': {
+		"type"   : "POST",
+		"url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDatabelumlengkap/')?>',
+		"dataSrc": ""
+	},
+	'columns': [
+		{"data" : "no"},
+		{"data" : "nama"},
+		{"data" : "nip"},
+		{"data" : "desc"},
+		{"data" : "desc_status"},
+		{"data" : "action"}
+	]
+	});
 
 });
 function databelumlengkap(){
-	var databelumlengkap = $('#document_belum_lengkap').DataTable({
-		'ajax': {
-			"type"   : "POST",
-			"url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDatabelumlengkap/')?>',
-			"dataSrc": ""
-		},
-		'columns': [
-			{"data" : "no"},
-			{"data" : "nama"},
-			{"data" : "nip"},
-			{"data" : "desc"},
-			{"data" : "desc_status"},
-			{"data" : "action"}
-		]
-		});
+	// var databelumlengkap = $('#document_belum_lengkap').DataTable({
+	// 	'ajax': {
+	// 		"type"   : "POST",
+	// 		"url"    : '<?php //echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDatabelumlengkap/')?>',
+	// 		"dataSrc": ""
+	// 	},
+	// 	'columns': [
+	// 		{"data" : "no"},
+	// 		{"data" : "nama"},
+	// 		{"data" : "nip"},
+	// 		{"data" : "desc"},
+	// 		{"data" : "desc_status"},
+	// 		{"data" : "action"}
+	// 	]
+	// 	});
+	$('#databelumlengkap').DataTable().ajax.reload();
 }
 function loadData(obj){
 	document.getElementById("show_data").style.display = "none";

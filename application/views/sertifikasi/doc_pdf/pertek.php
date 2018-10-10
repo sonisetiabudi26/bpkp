@@ -23,7 +23,7 @@
 <div class="full-width">
   <div class="row">
     <div class="col-lg-12" style="text-align:right">
-      <label>Jakarta, Februari 2018</label>
+      <label>Jakarta, <?php echo $periode;?></label>
     </div>
   </div>
   <div class="row">
@@ -71,15 +71,19 @@
   <br/><br/><br/><br/><br/>
   <div class="row">
     <div style="width:30%;float:right">
-      <label><?php echo '' ?></label><br/>
+      <label><?php echo $nama ?></label><br/>
       <label><?php echo $kepala ?></label>
     </div>
   </div><br/><br/>
   <div class="row">
     <div style="width:100%;float:left">
       <label>Tembusan :</label><br/>
-      <label>1. </label><br/>
-      <label>2. </label><br/>
+      <?php
+      $no=1;
+      foreach ($tembusan_surat as $key => $value) {
+        echo "<label>".$no++.". ".$value."</label><br/>";
+      }
+       ?>
     </div>
   </div>
 </div>

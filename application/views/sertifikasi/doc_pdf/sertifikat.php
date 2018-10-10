@@ -56,13 +56,13 @@ table, th, td {
 }
 </style>
 <?php function nilaiStatus($nilai){
-  if($nilai>80){
+  if($nilai>=80){
     return 'Memuaskan';
-  }elseif($nilai>75 && $nilai<80){
+  }elseif($nilai>=75 && $nilai<=80){
     return 'Baik';
-  }elseif($nilai>70 && $nilai<75){
+  }elseif($nilai>=70 && $nilai<=75){
     return 'Cukup';
-  }elseif($nilai<70){
+  }elseif($nilai<=70){
     return 'Kurang';
   }
 }
