@@ -50,8 +50,8 @@ class Home extends CI_Controller {
 				$jadwal_mulai = explode('/',$key->START_DATE);
 				$months = array(1 => 'Januari.', 2 => 'Februari.', 3 => 'Maret.', 4 => 'April.', 5 => 'Mei', 6 => 'Juni.', 7 => 'Juli.', 8 => 'Agustus.', 9 => 'September.', 10 => 'Oktober.', 11 => 'November.', 12 => 'Desember.');
 				for ($i=1; $i < 13 ; $i++) {
-					if($moth[$i]==$jadwal_mulai[0]){
-						$data['periode']=$month[$i].' '.$jadwal_mulai[2];
+					if($i==$jadwal_mulai[0]){
+						$data['periode']=$months[$i].' '.$jadwal_mulai[2];
 					}
 				}
 				$apiuser=$this->apiuser($key->NIP);
