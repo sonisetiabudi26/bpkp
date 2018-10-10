@@ -120,7 +120,7 @@ class PengusulPengangkatan extends My_Model
 			return $query->row();
 	}
 	public function loadValidasi($userAdmin,$doc,$unit){
-		$condition = " pengusul_pengangkatan.CREATED_BY=" . "'" . $unit . "' and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+		$condition = " pengusul_pengangkatan.CREATED_BY=" . "'" . $unit . "' and pengusul_pengangkatan.FK_STATUS_DOC='2'  and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
@@ -147,6 +147,21 @@ class PengusulPengangkatan extends My_Model
 	}
 
 
+	}
+	public function loadbelumlengkap($userAdmin){
+		$condition = "pengusul_pengangkatan.FK_STATUS_DOC!=2 and pengusul_pengangkatan.NO_SURAT!='' and pengusul_pengangkatan.CREATED_BY =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
+		$this->db->from($this->_table);
+		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
+		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');
+		$this->db->where($condition);
+		$query = $this->db->get();
+	//	return $query->result();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return "no data";
+		}
 	}
 	public function loadData(){
 		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' and pengusul_pengangkatan.validator='' group by pengusul_pengangkatan.CREATED_BY";

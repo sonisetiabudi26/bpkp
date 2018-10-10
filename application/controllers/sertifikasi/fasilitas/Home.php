@@ -148,11 +148,11 @@ class Home extends CI_Controller {
 			$data_update=array(
 				'FK_STATUS_DOC'=>'1'
 			);
-			if($parameter[1]=='1'){
-				if($no<7){
+			// if($parameter[1]=='1'){
+			// 	if($no<6){
 					 $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
-				}
-			}
+			// 	}
+			// }
 			echo json_encode(array("status" => $no));
 		}
 		public function vw_show_angker($param){

@@ -37,6 +37,34 @@ class PengusulanPengangkatan extends CI_Controller {
 
 
 		}
+		public function loadDatabelumlengkap(){
+			$userAdmin=$this->session->userdata('nip');
+			$datas=$this->pengusul->loadbelumlengkap($userAdmin);
+			$a=1;
+			if($datas!='no data'){
+			foreach ($datas as $key) {
+				$dataRow['no']=$a;
+				//$nama=$this->apiuser($key->NIP);
+				$dataRow['nama']=$key->NAMA;
+				$dataRow['nip']=$key->NIP;
+				$dataRow['desc']=$key->DESC;
+				$dataRow['desc_status']=$key->DESC_STATUS;
+				$disable=($key->FK_STATUS_DOC=='2'?'style="display:none"':'');
+				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
+				$dataRow['action']="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
+						<span>Unggah Dokumen</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Hapus</button></td>";
+				$data[]=$dataRow;
+				$a++;
+			}
+		}else{
+			$data = array(
+										 "msg" => "Data tidak ada",
+						 );
+		}
+		 //output to json format
+		 echo json_encode($data);
+			// $data['provinsi']=$this->provinsi->_get_provinsi_information();
+		}
 		public function submit(){
 				$datex=date('Y-m-d');
 				$nip=$this->input->post('nip');

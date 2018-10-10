@@ -262,22 +262,22 @@ if(obj==1){
 	var	validator=$("#validatorion :selected").val();
 	var	msgvalidator=$("#validatorion :selected").text();
 	document.getElementById("titletabel").innerHTML=msgvalidator;
-	ajaxProccess(validator,1,dataUserpertama);
+	ajaxProccess(validator,1,'dataUserpertama');
 }else if(obj==2){
 	var	validator=$("#validatorion_perpindahan :selected").val();
 	var	msgvalidator=$("#validatorion_perpindahan :selected").text();
 	document.getElementById("titletabel_perpindahan").innerHTML=msgvalidator;
-	ajaxProccess(validator,2,dataUserPerpindahan);
+	ajaxProccess(validator,2,'dataUserPerpindahan');
 }else if(obj==3){
 	var	validator=$("#validatorion_kembali :selected").val();
 	var	msgvalidator=$("#validatorion_kembali :selected").text();
 	document.getElementById("titletabel_kembali").innerHTML=msgvalidator;
-	ajaxProccess(validator,3,dataUserKembali);
+	ajaxProccess(validator,3,'dataUserKembali');
 }else if(obj==4){
 	var	validator=$("#validatorion_inpassing :selected").val();
 	var	msgvalidator=$("#validatorion_inpassing :selected").text();
 	document.getElementById("titletabel_inpassing").innerHTML=msgvalidator;
-	ajaxProccess(validator,4,dataUserInpassing);
+	ajaxProccess(validator,4,'dataUserInpassing');
 }
 }
 $(document).ready(function(){
@@ -286,7 +286,7 @@ $(document).ready(function(){
 
 function ajaxProccess(obj,type,table_dt){
 	var table;
-	      table = $(table_dt).DataTable({
+	      table = $('#'+table_dt).DataTable({
 	              "processing": false, //Feature control the processing indicator.
 	               "destroy": true,
 	              "serverSide": true, //Feature control DataTables' server-side processing mode.
