@@ -1,4 +1,6 @@
-<?php error_reporting(0);?>
+<?php error_reporting(0);
+$foto_identitas=base_url('uploads').'/'.$foto;
+?>
 <style>
   .full-width{width:100%}
   .title{
@@ -108,7 +110,7 @@ table, th, td {
         <!-- <table> -->
         <div height="472" width="354" style="border:1px solid #999">
            <!-- <td height="150" width="130"> -->
-          <img src="http://localhost/bpkp/uploads/<?php echo $foto; ?>" width="130" height="150">
+          <img src="<?php echo $foto_identitas; ?>" width="130" height="150">
         <!-- </td> -->
         </div>
       <!-- </table> -->

@@ -190,7 +190,7 @@ class Registrasi extends CI_Controller {
 							if($insert!='Data Inserted Failed'){
 								$count=count($data_doc);
 								for ($i=0; $i < $count ; $i++) {
-									$data_insert = array('DOCUMENT' => $data_url_doc[$i],
+									$data_insert = array('DOCUMENT' => str_replace(' ', '_', $data_url_doc[$i]),
 								 												'DOC_NAMA'=> $data_doc[$i],
 																				'FK_REGIS_UJIAN' => $insert);
 									$insertdoc=$this->doc_regis->save($data_insert);

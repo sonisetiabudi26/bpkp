@@ -16,7 +16,7 @@
 			<div class="x_content">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="image_photo" id="foto"><img src="<?php echo base_url('assets/img/content/user.png') ?>" class="img-circle profile_img"></div>
+						<div class="image_photo" ><div id="foto"></div></div>
 						<div class="clearfix"></div>
 						<div class="panel panel-default" style="padding:5px;margin:0;">
 							<div class="panel-heading" style="margin:0;">Identitas</div>
@@ -131,8 +131,9 @@ function load(){
 				if(!data.msg){
 						data.forEach(function(resp) {
 							if(resp.DOC_NAMA=='doc_foto'){
-								var file_img="./uploads/"+resp.DOCUMENT;
+								  var file_img="uploads/"+resp.DOCUMENT;
 									var image='<?php echo base_url("'+file_img+'")?>';
+							
 							}else{
 								var image='<?php echo base_url('assets/img/content/user.png') ?>';
 							}
