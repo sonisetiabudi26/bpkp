@@ -55,7 +55,8 @@ class PengusulanPengangkatan extends CI_Controller {
         $dataRow['jml_category']=$datarow;
         $dataRow['jml_peserta']=$datarowpeserta;
         $dataRow['validator']=($key->validator!='0'?$key->validator:'');
-        $url=base_url('sertifikasi')."/pusbin/PengusulanPengangkatan/vw_validator/".$key->NO_SURAT;
+				$nosurat=str_replace('/','~',$key->NO_SURAT);
+        $url=base_url('sertifikasi')."/pusbin/PengusulanPengangkatan/vw_validator/".$nosurat;
         $dataRow['action']="<td><button onclick='getModal(this)' id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
             <span>Tentukan Validator</span></button></td>";
         $data[]=$dataRow;
@@ -72,7 +73,7 @@ class PengusulanPengangkatan extends CI_Controller {
     }
     public function vw_validator($param){
         // $data['id_unitapip']=$param;
-        $datas['no_surat']=$param;
+        $datas['no_surat']=str_replace('~','/',$param);
         //$apiuser=$this->apiuser($param);
         //$kodeunitkerja = $apiuser->data[0]->UnitKerja_Nama;
         $datas['validator']=$this->user->check_validator();

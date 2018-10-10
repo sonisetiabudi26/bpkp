@@ -58,10 +58,12 @@ table, th, td {
 <?php function nilaiStatus($nilai){
   if($nilai>80){
     return 'Memuaskan';
-  }elseif($nilai>75 || $nilai<80){
+  }elseif($nilai>75 && $nilai<80){
     return 'Baik';
-  }elseif($nilai>70 || $nilai<75){
+  }elseif($nilai>70 && $nilai<75){
     return 'Cukup';
+  }elseif($nilai<70){
+    return 'Kurang';
   }
 }
 $foto_identitas=base_url('uploads').'/'.$foto;
@@ -72,7 +74,7 @@ $foto_identitas=base_url('uploads').'/'.$foto;
   <div class="row">
     <div class="col-lg-12" style="text-align:center;">
       <div class="row title" style="text-align:center">
-        <img src="http://localhost/bpkp/assets/other/media/img/logo/bpkp.png" width="130" height="100"><br/>
+        <img src="<?php echo base_url('assets').'/other/media/img/logo/bpkp.png' ?>" width="130" height="100"><br/>
         <label style="font-size:16px"><b>KARTU PESERTA UJIAN SERTIFIKASI AUDITOR</b></label><br/>
         <h2>SERTIFIKAT <?php echo $diklat ?></h2>
         <label style="font-size:14px"><b>Nomor : <?php echo $nomor?></b></label><br/>
@@ -154,7 +156,7 @@ $foto_identitas=base_url('uploads').'/'.$foto;
         <tbody>
 
             <?php
-            $no=1;
+            $no=0;
             $nilaitotal=0;
             foreach ($data_detail as $key ) {
 
