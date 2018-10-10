@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-			<form onsubmit="uploadFile(this, 'label-file')" action="<?php echo base_url('sertifikasi')."/bank_soal/soal/upload_soal"; ?>" method="POST" enctype="multipart/form-data" id="fileUploadForm">
+			<form  onsubmit="procesFormandUpload(this, '<?php echo base_url('sertifikasi')."/bank_soal/soal/upload_soal"; ?>')"  method="POST" enctype="multipart/form-data" id="fileUploadForm">
 				<div class="row">
 					<label id="label-file"></label>
 					</div>

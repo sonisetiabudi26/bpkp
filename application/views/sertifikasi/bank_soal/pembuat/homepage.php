@@ -354,6 +354,7 @@
 
 		table.ajax.reload(null,false);
 		loadDatareview('review','tablereview');
+		loadDatareview('reviewResult','tablereviewsoal');
 		loadsoalkasus();
 	}
 	function loadsoalkasus(){
