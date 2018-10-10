@@ -48,7 +48,7 @@ class Home extends CI_Controller {
 				$data['kode_diklat']=$key->KODE_DIKLAT.' - '.$key->NAMA_JENJANG;
 				$data['nama'] = $key->NAMA;
 				$jadwal_mulai = explode('/',$key->START_DATE);
-				$months = array(1 => 'Januari.', 2 => 'Februari.', 3 => 'Maret.', 4 => 'April.', 5 => 'Mei', 6 => 'Juni.', 7 => 'Juli.', 8 => 'Agustus.', 9 => 'September.', 10 => 'Oktober.', 11 => 'November.', 12 => 'Desember.');
+				$months = array(1 => 'JANUARI', 2 => 'FEBRUARI', 3 => 'MARET', 4 => 'APRIL', 5 => 'MEI', 6 => 'JUNI', 7 => 'JULI', 8 => 'AGUSTUS', 9 => 'SEPTEMBER', 10 => 'OKTOBER', 11 => 'NOVEMBER', 12 => 'DESEMBER');
 				for ($i=1; $i < 13 ; $i++) {
 					if($i==$jadwal_mulai[0]){
 						$data['periode']=$months[$i].' '.$jadwal_mulai[2];

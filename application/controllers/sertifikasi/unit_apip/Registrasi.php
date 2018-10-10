@@ -294,7 +294,7 @@ class Registrasi extends CI_Controller {
 					 $uploadpdf = $this->do_upload_pdf($folder,$docpersetujuan);
 
 					 if($uploadpdf['result_upload_pdf'] == "success"){
-						 $doc_persetujuan='doc_setuju/'.$group_regis.'_'.$dates.'/'.$_FILES['doc_persetujuan']['name'];
+						 $doc_persetujuan='doc_setuju/'.$group_regis.'/'.$_FILES['doc_persetujuan']['name'];
 						 // $doc_foto='doc_registrasi/'.$folder.'/'.$_FILES['doc_foto']['name'];
 						 $data = array(
 				 			'GROUP_REGIS' => $group_regis,
