@@ -133,6 +133,13 @@ class PengusulanPengangkatan extends CI_Controller {
 			$data['desc']=$parameter[0];
 			$data['id_pengusul']=$parameter[1];
 			$data['nip']=$parameter[2];
+			$dataAll=$this->pengusul->getFormatDocument($parameter[0]);
+			if($dataAll!='error_sql'){
+				foreach ($dataAll as $key) {
+					$datarow[]=$key->FILE_NAMA_DOC;
+				}
+				$data['file_format']=$datarow;
+			}
 			$this->load->view('sertifikasi/unit_apip/content/modal_upload_pengusulan',$data);
 			// echo 'asd';
 		}

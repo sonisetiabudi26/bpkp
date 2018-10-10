@@ -18,6 +18,18 @@ class PengusulPengangkatan extends My_Model
 			return false;
 		}
 	}
+
+	public function getFormatDocument($id){
+		$this->db->select('detail_pengusul_pengangkatan.*');
+		$this->db->from('detail_pengusul_pengangkatan');
+		$this->db->where('detail_pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN',$id);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return 'error_sql';
+		}
+	}
 	public function detail_data($nosurat){
 		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC');
 		$this->db->from('pengusul_pengangkatan');
