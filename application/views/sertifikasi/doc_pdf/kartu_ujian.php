@@ -36,7 +36,7 @@ table, th, td {
     <div class="col-lg-12" style="text-align:center;border:2px solid #000;">
       <div class="row title">
         <label>KARTU PESERTA UJIAN SERTIFIKASI AUDITOR</label><br/>
-        <label>PERIODE JULI 2018</label>
+        <label>PERIODE <?php echo $periode ?></label>
       </div>
     </div>
   </div><br/>

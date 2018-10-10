@@ -46,17 +46,23 @@ class Home extends CI_Controller {
 				$data['nip']=$key->NIP;
 				$data['lokasi']=$key->NAMA;
 				$data['kode_diklat']=$key->KODE_DIKLAT.' - '.$key->NAMA_JENJANG;
+				$data['nama'] = $key->NAMA;
+				$jadwal_mulai = explode('/',$key->START_DATE);
+				$months = array(1 => 'Januari.', 2 => 'Februari.', 3 => 'Maret.', 4 => 'April.', 5 => 'Mei', 6 => 'Juni.', 7 => 'Juli.', 8 => 'Agustus.', 9 => 'September.', 10 => 'Oktober.', 11 => 'November.', 12 => 'Desember.');
+				for ($i=1; $i < 13 ; $i++) {
+					if($moth[$i]==$jadwal_mulai[0]){
+						$data['periode']=$month[$i].' '.$jadwal_mulai[2];
+					}
+				}
 				$apiuser=$this->apiuser($key->NIP);
 				if($apiuser->message!='auditor_not_found' ){
 					$data['unit'] = $apiuser->data[0]->UnitKerja_Nama;
-					$data['nama'] = $apiuser->data[0]->Auditor_NamaLengkap;
 					$data['kode_unit'] = $apiuser->data[0]->UnitKerja_Kode;
 				}else{
 					$data['unit'] = 'unkonown';
-					$data['nama'] = 'unkonown';
 					$data['kode_unit'] = 'unkonown';
 				}
-				
+
 				//$dataRow['unitapip']=$kodeunitkerja;
 				if($key->DOC_NAMA=='doc_foto'){
 					$data['foto']=$key->DOCUMENT;
