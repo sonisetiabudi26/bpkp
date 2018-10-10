@@ -253,7 +253,8 @@
 </div>
 <script type="text/javascript">
 	var save_method;
-	var table;
+	var table1;
+	var table2;
 	<?php
 		if(isset($_POST['fk_bab_mata_ajar'])){
 	?>
@@ -268,7 +269,7 @@
 
 	$(document).ready(function() {
 
-						table = $('#tableBabMataAjar').DataTable({
+						table1 = $('#tableBabMataAjar').DataTable({
 			              "processing": false, //Feature control the processing indicator.
 										 "destroy": true,
 			              "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -292,7 +293,7 @@
 	});
 
 	function showDatatable(urlPar){
-		table = $('#table').DataTable({
+		table2 = $('#table').DataTable({
 			"processing": true,
 			"serverSide": true,
 			"order": [],
@@ -312,7 +313,7 @@
 	function loadData(obj)
 	{
 
-		table.ajax.reload(null,false);
+	 table1.ajax.reload(null,false);
 		loadDatakodeSoal();
 		loadDatakodeSoalpublish();
 		loadDataSemuaSoal();

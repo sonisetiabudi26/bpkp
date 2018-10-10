@@ -348,10 +348,33 @@
 		});
 	}
 );
+function loaddataPembuatSoal(){
+	var tugas='pembuat_soal';
 
+
+
+table=	$('#table').DataTable({
+		"processing": true,
+		"serverSide": true,
+		 "destroy": true,
+		"order": [],
+		"ajax": {
+			"url": '<?php echo base_url('sertifikasi')."/bank_soal/permintaan/loadPermintaan/"; ?>',
+			"type": "POST",
+			"data": { tugas: tugas },
+		},
+		"columnDefs": [
+		{
+			"targets": [ -1 ],
+			"orderable": false
+		},
+		],
+	});
+}
+}
 	function loadData(obj)
 	{
-
+		loaddataPembuatSoal();
 		table.ajax.reload(null,false);
 		loadDatareview('review','tablereview');
 		loadDatareview('reviewResult','tablereviewsoal');
