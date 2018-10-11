@@ -2,11 +2,11 @@
 <div class="col-md-12">
   <div class="row">
     <?php
-      foreach ($data as $key):
+      foreach ($dataAll as $key):
     ?>
     <div class="form-group">
         <div class="col-md-6">
-          <label class="form-control"><i class="glyphicon glyphicon-ok"></i> <?php echo $key->DOC_PENGUSULAN_PENGANGKATAN ?></label>
+          <label class="form-control"><i class="glyphicon glyphicon-ok"></i> <?php echo $key->FILE_NAMA_DOC ?></label>
           </div>
         <div class="col-md-6">
           <div class="col-lg-4">

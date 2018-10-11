@@ -23,10 +23,11 @@ class DocPengusulanPengangkatan extends My_Model
 		$this->db->where($where);
 		$this->db->update($table,$data);
 	}
-	public function loaddoc($param){
-		$condition = " fk_pengusul_pengangkatan =" . "'" . $param . "'";
+	public function loaddoc($param,$cat){
+		$condition = "document_pengusulan_pengangkatan.fk_pengusul_pengangkatan =" . "'" . $param . "' and detail_pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $cat . "'";
 		$this->db->select('*');
 		$this->db->from($this->_table);
+		$this->db->join('detail_pengusul_pengangkatan', 'document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN = detail_pengusul_pengangkatan.FILE_URUT');
 		$this->db->where($condition);
 		$query = $this->db->get();
 	//	return $query->result();

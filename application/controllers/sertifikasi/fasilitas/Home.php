@@ -99,7 +99,7 @@ class Home extends CI_Controller {
 					$dataRow[]=$key->DESC_STATUS;
 
 					$disabled=($key->FK_STATUS_DOC=='1'?'disabled':'');
-          $url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN;
+          $url=base_url('sertifikasi')."/fasilitas/home/vw_show_doc/".$key->PK_PENGUSUL_PENGANGKATAN."~".$type;
 					$url_angker=base_url('sertifikasi')."/fasilitas/home/vw_show_angker/".$key->PK_PENGUSUL_PENGANGKATAN;
 					$accept=$key->PK_PENGUSUL_PENGANGKATAN."~0";
 					$reject=$key->PK_PENGUSUL_PENGANGKATAN."~1";
@@ -132,7 +132,9 @@ class Home extends CI_Controller {
 			redirect("sertifikasi/fasilitas");
 		}
 		public function vw_show_doc($param){
-			$data['data']=$this->doc_pengusul->loaddoc($param);
+			$parameter=explode('~',$param);
+			$data['dataAll']=$this->doc_pengusul->loaddoc($parameter[0],$parameter[1]);
+
 			$result=$this->pengusul->loadResultDatabyID($param);
 			if($result!='no data'){
 				$data['result']=$result[0]->RESULT;
