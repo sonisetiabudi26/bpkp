@@ -8,11 +8,11 @@
 	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Pengangkatan Pertama</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" onclick="search(2)" data-toggle="tab" aria-expanded="false">Pengangkatan Perpindahan</a>
+		<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" onclick="searchData(2)" data-toggle="tab" aria-expanded="false">Pengangkatan Perpindahan</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" onclick="search(3)" data-toggle="tab" aria-expanded="false">Pengangkatan Kembail</a>
+		<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab" onclick="searchData(4)" data-toggle="tab" aria-expanded="false">Pengangkatan Kembail</a>
 		</li>
-		<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab" onclick="search(4)" data-toggle="tab" aria-expanded="false">Pengangkatan Inpassing</a>
+		<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab" onclick="searchData(3)" data-toggle="tab" aria-expanded="false">Pengangkatan Inpassing</a>
 		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
@@ -122,6 +122,7 @@
 
 													<td>Status Pengusulan Pengangkatan</td>
 													<td>Status</td>
+													<td>Status Doc</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -151,7 +152,7 @@
 													<select class="form-control" name='validator_kembali' id='validatorion_kembali'>
 
 														<?php
-															foreach ($validators_perpindahan as $key):
+															foreach ($validators_kembali as $key):
 														?>
 														<option value="<?php echo $key->CREATED_BY?>">
 															<?php echo $key->UNITKERJA;?>
@@ -181,6 +182,7 @@
 
 													<td>Status Pengusulan Pengangkatan</td>
 													<td>Status</td>
+													<td>Status Doc</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -210,7 +212,7 @@
 													<select class="form-control" name='validator_inpassing' id='validatorion_inpassing'>
 
 														<?php
-															foreach ($validators_perpindahan as $key):
+															foreach ($validators_inpassing as $key):
 														?>
 														<option value="<?php echo $key->CREATED_BY?>">
 															<?php echo $key->UNITKERJA;?>
@@ -240,6 +242,7 @@
 
 													<td>Status Pengusulan Pengangkatan</td>
 													<td>Status</td>
+													<td>Status Doc</td>
 													<td>Action</td>
 												</tr>
 												</thead>
@@ -257,7 +260,7 @@
 	</div>
 </div>
 <script>
-function search(obj){
+function searchData(obj){
 if(obj==1){
 	var	validator=$("#validatorion :selected").val();
 	var	msgvalidator=$("#validatorion :selected").text();
@@ -268,20 +271,20 @@ if(obj==1){
 	var	msgvalidator=$("#validatorion_perpindahan :selected").text();
 	document.getElementById("titletabel_perpindahan").innerHTML=msgvalidator;
 	ajaxProccess(validator,2,'dataUserPerpindahan');
-}else if(obj==3){
+}else if(obj==4){
 	var	validator=$("#validatorion_kembali :selected").val();
 	var	msgvalidator=$("#validatorion_kembali :selected").text();
 	document.getElementById("titletabel_kembali").innerHTML=msgvalidator;
-	ajaxProccess(validator,3,'dataUserKembali');
-}else if(obj==4){
+	ajaxProccess(validator,4,'dataUserKembali');
+}else if(obj==3){
 	var	validator=$("#validatorion_inpassing :selected").val();
 	var	msgvalidator=$("#validatorion_inpassing :selected").text();
 	document.getElementById("titletabel_inpassing").innerHTML=msgvalidator;
-	ajaxProccess(validator,4,'dataUserInpassing');
+	ajaxProccess(validator,3,'dataUserInpassing');
 }
 }
 $(document).ready(function(){
-	search(1);
+	searchData(1);
 });
 
 function ajaxProccess(obj,type,table_dt){
@@ -311,10 +314,10 @@ function ajaxProccess(obj,type,table_dt){
 }
 function loadData(obj){
 	// $('#dataUserpertama').DataTable().ajax.reload();
-	search(1);
-	search(2);
-	search(3);
-	search(4);
+	searchData(1);
+	searchData(2);
+	searchData(3);
+	searchData(4);
 	//$('#dataUserPerpindahan').DataTable().ajax.reload();
 	// loadDataperpindahan();
 

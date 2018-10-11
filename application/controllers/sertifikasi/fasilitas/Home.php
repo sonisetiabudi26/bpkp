@@ -25,7 +25,9 @@ class Home extends CI_Controller {
 				$data['username']=$username;
 
 				$data['validators']=$this->pengusul->datalistValidator($this->session->userdata('nip'),1);
-					$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('nip'),2);
+				$data['validators_perpindahan']=$this->pengusul->datalistValidator($this->session->userdata('nip'),2);
+				$data['validators_inpassing']=$this->pengusul->datalistValidator($this->session->userdata('nip'),3);
+				$data['validators_kembali']=$this->pengusul->datalistValidator($this->session->userdata('nip'),4);
 				getMenuAccessPage($data, $fk_lookup_menu);
 			}else{
 				redirect('/');
