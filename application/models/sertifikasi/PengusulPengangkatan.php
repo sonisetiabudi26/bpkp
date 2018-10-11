@@ -133,10 +133,12 @@ class PengusulPengangkatan extends My_Model
 	}
 	public function loadValidasi($userAdmin,$doc,$unit){
 		$condition = " pengusul_pengangkatan.CREATED_BY=" . "'" . $unit . "' and pengusul_pengangkatan.FK_STATUS_DOC='2'  and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $doc . "' and pengusul_pengangkatan.VALIDATOR =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
-		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS');
+		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS,detail_pertek.DOC_PERTEK');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
 		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');
+		$this->db->join('pertek', 'pengusul_pengangkatan.NO_SURAT = pertek.NO_SURAT');
+		$this->db->join('detail_pertek', 'pertek.PK_PERTEK = detail_pertek.FK_PERTEK','left');
 		$this->db->where($condition);
 		$query = $this->db->get();
 	//	return $query->result();

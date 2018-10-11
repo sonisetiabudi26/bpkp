@@ -82,6 +82,7 @@ class Home extends CI_Controller {
          $data = array();
           $a=1;
   			foreach ($datas as $key) {
+					if(!$key->DOC_PERTEK){
 					if($key->RESULT==''){
 						$result='';
 					}elseif($key->RESULT==1){
@@ -110,7 +111,9 @@ class Home extends CI_Controller {
 									Input Angka Kredit</a></td>';
 					$data[]=$dataRow;
   				$a++;
-  			}
+
+			}
+			}
         $output = array(
             "draw" => 'dataEvent',
             "recordsTotal" => $a,

@@ -44,7 +44,7 @@
 												</div>
 										</div>
 										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
-											<button class="btn btn-primary btn-block" onclick="search(1);">Cari</button>
+											<button class="btn btn-primary btn-block" onclick="searchData(1);">Cari</button>
 										</div>
 									</div>
 									<hr>
@@ -104,7 +104,7 @@
 												</div>
 										</div>
 										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
-											<button class="btn btn-primary btn-block" onclick="search(2);">Cari</button>
+											<button class="btn btn-primary btn-block" onclick="searchData(2);">Cari</button>
 										</div>
 									</div>
 									<hr>
@@ -164,7 +164,7 @@
 												</div>
 										</div>
 										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
-											<button class="btn btn-primary btn-block" onclick="search(2);">Cari</button>
+											<button class="btn btn-primary btn-block" onclick="searchData(4);">Cari</button>
 										</div>
 									</div>
 									<hr>
@@ -224,7 +224,7 @@
 												</div>
 										</div>
 										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding:0;margin:0">
-											<button class="btn btn-primary btn-block" onclick="search(2);">Cari</button>
+											<button class="btn btn-primary btn-block" onclick="searchData(3);">Cari</button>
 										</div>
 									</div>
 									<hr>
