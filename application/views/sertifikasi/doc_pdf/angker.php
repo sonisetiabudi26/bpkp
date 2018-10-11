@@ -55,8 +55,10 @@ table, th, td {
     </div>
     </div>
 </div>
+</div>
   <br/>
   <br/>
+  <div class="full-width">
   <div class="row" style="width:100%;position:relative">
     <div class="full-width" style="text-align:center;">
       DAFTAR NAMA PEGAWAI NEGERI SIPIL YANG DISETUJUI UNTUK DIANGKAT DALAM JABATAN FUNGSIONAL AUDITOR MELALUI <?php echo $status_pengusulan;?> TAHUN <?php echo $year ?> PADA <?php echo $unitapip ?>

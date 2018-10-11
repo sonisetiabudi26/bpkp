@@ -257,7 +257,7 @@ class PengusulanPengangkatan extends CI_Controller {
 								'NO_SURAT'=>''
 							);
 							$data_update=array(
-								'DOC_SURAT_PENGUSULAN'=>$doc_loc,
+								'DOC_SURAT_PENGUSULAN'=>str_replace(' ','_',$doc_loc),
 								'NO_SURAT'=>$no
 							);
 							$update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
@@ -295,7 +295,7 @@ class PengusulanPengangkatan extends CI_Controller {
 							 'STATUS_DOC' => '',
 							 'CATEGORY_DOC' => $data['category'],
 							 'DOC_PENGUSULAN_PENGANGKATAN' => $dokumen,
-							 'DATA_DOC' => $doc_loc,
+							 'DATA_DOC' => str_replace(' ','_',$doc_loc),
 							 'FK_PENGUSUL_PENGANGKATAN' => $data['id_pengusul'],
 							 'CREATED_BY' => $data['created_by'],
 							 'CREATED_DATE' => $data['created_date'],

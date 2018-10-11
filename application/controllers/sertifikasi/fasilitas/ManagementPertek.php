@@ -131,7 +131,7 @@ class ManagementPertek extends CI_Controller {
 						 if (!is_dir('uploads/doc_pertek/')) {
 							 	mkdir('./uploads/doc_pertek/', 0777, TRUE);
 						 }
-						 if ( ! write_file(FCPATH."/uploads/doc_pertek/".$namafile.".pdf", $pdf))
+						 if ( ! write_file(FCPATH."/uploads/doc_pertek/".str_replace(' ','_',$namafile).".pdf", $pdf))
 						 {
 							 		 $output = array('msg' => 'error' , 'value'=>'Unable to write the file');
 						 }
@@ -141,7 +141,7 @@ class ManagementPertek extends CI_Controller {
 										 'FK_PERTEK'=>$data['id_pertek'],
 									 );
 									 $data_update=array(
-										 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".$namafile.".pdf",
+										 'DOC_PERTEK'=>base_url()."uploads/doc_pertek/".str_replace(' ','_',$namafile).".pdf",
 										 'PERTEK_DATE'=>$data['dates'],
 										 'ISI'=>$data['isi'],
 										 'NO_PERTEK'=>$data['no_pertek'],
@@ -256,7 +256,7 @@ class ManagementPertek extends CI_Controller {
 							if (!is_dir('uploads/doc_angker/')) {
 								 mkdir('./uploads/doc_angker/', 0777, TRUE);
 							}
-							if ( ! write_file(FCPATH."/uploads/doc_angker/".$namafile.".pdf", $pdf))
+							if ( ! write_file(FCPATH."/uploads/doc_angker/".str_replace(' ','_',$namafile).".pdf", $pdf))
 							{
 										$output = array('msg' => 'error' , 'value'=>'Unable to write the file');
 							}
@@ -266,7 +266,7 @@ class ManagementPertek extends CI_Controller {
 											'FK_PERTEK'=>$data['id_pertek'],
 										);
 										$data_update=array(
-											'DOC_ANGKER'=>base_url()."uploads/doc_angker/".$namafile.".pdf",
+											'DOC_ANGKER'=>base_url()."uploads/doc_angker/".str_replace(' ','_',$namafile).".pdf",
 											// 'CREATED_BY'=> $this->session->userdata('nip'),
 											// 'CREATED_DATE'=> $data['dates']
 										);
@@ -287,6 +287,31 @@ class ManagementPertek extends CI_Controller {
         $data=$this->pusbin->delete_product();
         echo json_encode($data);
     }
+		public function vw_create_resi($param){
+			$datas=$this->pertek->getdatabyid($param);
+			foreach ($datas as $key) {
+				$data['id_pertek']=$key->PK_PERTEK;
+				$data['nosurat']=$key->NO_SURAT;
+				// $data['data_doc']=($key->DOC_ANGKER==''?'0':'1');
+			}
+			$this->load->view('sertifikasi/fasilitas/content/noresi',$data);
+		}
+		public function create_resi(){
+			$data['id_pertek']=$this->input->post('id_pertek');
+			$data['noresi']=$this->input->post('no_resi');
+			$data['nosurat']=$this->input->post('no_surat');
+			$where=array(
+				'PK_PERTEK'=>$data['id_pertek'],
+			);
+			$data_update=array(
+				'NO_RESI'=>$data['noresi'],
+				// 'CREATED_BY'=> $this->session->userdata('nip'),
+				// 'CREATED_DATE'=> $data['dates']
+			);
+			$update=$this->pertek->updateData($where,'pertek',$data_update);
+			$output = array('status' => 'success' , 'msg' => "Data berhasil disimpan");
+			echo json_encode($output);
+		}
     public function loadData(){
 			 $nip = $this->session->userdata('logged_nip');
        $datas=$this->pertek->view($nip);
@@ -307,6 +332,7 @@ class ManagementPertek extends CI_Controller {
         //  $url=base_url('sertifikasi')."/fasilitas/ManagementPertek/create_pertek/".$param;
 	         $url_angker=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_show_angker/".$key->PK_PERTEK;
 					 $url_create=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_create_pertek/".$param;
+					 $url_resi=base_url('sertifikasi')."/fasilitas/ManagementPertek/vw_create_resi/".$param;
 					 $url_view=$key->DOC_PERTEK;
 					 $url_view_angker=$key->DOC_ANGKER;
 					 $create="id='btn-pertek-doc' onclick='getModal(this)' data-href='".$url_create."' data-toggle='modal' data-target='#modal-content' class='btn btn-sm btn-primary'";
@@ -328,7 +354,7 @@ class ManagementPertek extends CI_Controller {
              '.$namapertek.'</a>
 						 <a '.$url2.' >
                '.$namaangker.'</a>
-             <a onclick="getModal(this)" id="btn-resi-doc" '.$disable.' data-href="'.$url_angker.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
+             <a onclick="getModal(this)" id="btn-resi-doc" '.$disable.' data-href="'.$url_resi.'" data-toggle="modal" data-target="#modal-content" class="btn btn-sm btn-warning">
                  '.$resi.'</a></td>';
          $data[]=$dataRow;
          $a++;

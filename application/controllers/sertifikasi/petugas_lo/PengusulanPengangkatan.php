@@ -159,6 +159,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$desc = $this->input->post('desc');
 				$id_pengusul = $this->input->post('id_pengusul');
 				$nip = $this->input->post('nip');
+				$total = $this->input->post('count_format');
 				$datex=date('Y-m-d');
 				$folder='doc_pengangkatan/'.$desc.'_'.$nip;
 				$data = array('category' => $desc,
@@ -166,44 +167,38 @@ class PengusulanPengangkatan extends CI_Controller {
 							'created_by' => $this->session->userdata('nip'),
 							'created_date' => $datex
 							);
-				if($desc=='1'){
-					$data_upload = array(
-						'0' => 'doc_cpns',
-						'1' => 'doc_pns',
-						'2' => 'doc_ijazah',
-						'3' => 'doc_prajab',
-						'4' => 'doc_sk_diklat',
-						'5' => 'doc_skp',
-						'6' => 'doc_sk_lulus',
-						'7' => 'doc_penugasan'
-				 );
 
-				}elseif($desc=='2'){
-					$data_upload = array(
-						'0' => 'doc_cpns',
-						'1' => 'doc_pns',
-						'2' => 'doc_ijazah',
-						'3' => 'doc_prajab',
-						'4' => 'doc_sk_diklat',
-						'5' => 'doc_skp',
-						'6' => 'doc_sk_lulus',
-						'7' => 'doc_penugasan',
-						'8' => 'doc_pangkat_terakhir'
-				 );
-				}elseif($desc=='3'){
 
-				}elseif($desc=='4'){
-
-				}
-				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data,$desc);
+				$uploadpdf = $this->do_upload_pdf($folder,$total,$data,$desc);
 				if($uploadpdf=='success'){
 						$output = array('status' =>'success' ,'msg'=>'Berhasil');
 				}else{
-					 $output = array('status' =>'error' ,'msg'=>'Gagal upload');
+					 $output = array('status' =>'error' ,'msg'=>$uploadpdf);
 				}
 				print json_encode($output);
 		}
 
+		public function submit_nosurat(){
+			$datex=date('Ymd');
+			$no_surat = $this->input->post('no_surat');
+			$nip_unitapip= $this->session->userdata('nip');
+			$data_pengusul=$this->pengusul->numrowpeserta($nip_unitapip);
+
+			if($no_surat!='' && $_FILES['doc_surat']['name']!=''){
+				if($data_pengusul!='no data'){
+				$folder='doc_surat_pengusulan/'.$datex.'/'.$datex.'_'.$nip_unitapip;
+				$doc='doc_surat';
+				$uploadpdf = $this->do_upload_pdf_surat($folder,$doc,$nip_unitapip,$no_surat);
+				print json_encode(array('status'=>'success','msg'=>'Data berhasil disimpan ke database'));
+			}else{
+				print json_encode(array('status'=>'error','msg'=>'Tidak ada/kurang lengkap dokumen calon peserta'));
+			}
+			}else{
+				print json_encode(array('status'=>'error','msg'=>'Data gagal disimpan ke database'));
+			}
+
+
+		}
 		public function submit_nosurat(){
 			$datex=date('Ymd');
 			$no_surat = $this->input->post('no_surat');

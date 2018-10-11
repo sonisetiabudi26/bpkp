@@ -298,7 +298,7 @@ class Registrasi extends CI_Controller {
 						 // $doc_foto='doc_registrasi/'.$folder.'/'.$_FILES['doc_foto']['name'];
 						 $data = array(
 				 			'GROUP_REGIS' => $group_regis,
-						  'DOKUMEN' => $doc_persetujuan,
+						  'DOKUMEN' => str_replace(' ','_',$doc_persetujuan),
 				 			'CREATED_BY' => $this->session->userdata('nip'),
 							'CREATED_DATE' => $datex
 				 		);
