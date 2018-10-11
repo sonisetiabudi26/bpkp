@@ -196,6 +196,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$desc = $this->input->post('desc');
 				$id_pengusul = $this->input->post('id_pengusul');
 				$nip = $this->input->post('nip');
+				$total = $this->input->post('count_format');
 				$datex=date('Y-m-d');
 				$folder='doc_pengangkatan/'.$desc.'_'.$nip;
 				$data = array('category' => $desc,
@@ -203,40 +204,13 @@ class PengusulanPengangkatan extends CI_Controller {
 							'created_by' => $this->session->userdata('nip'),
 							'created_date' => $datex
 							);
-				if($desc=='1'){
-					$data_upload = array(
-						'0' => 'doc_cpns',
-						'1' => 'doc_pns',
-						'2' => 'doc_ijazah',
-						'3' => 'doc_prajab',
-						'4' => 'doc_sk_diklat',
-						'5' => 'doc_skp',
-						'6' => 'doc_sk_lulus',
-						'7' => 'doc_penugasan'
-				 );
 
-				}elseif($desc=='2'){
-					$data_upload = array(
-						'0' => 'doc_cpns',
-						'1' => 'doc_pns',
-						'2' => 'doc_ijazah',
-						'3' => 'doc_prajab',
-						'4' => 'doc_sk_diklat',
-						'5' => 'doc_skp',
-						'6' => 'doc_sk_lulus',
-						'7' => 'doc_penugasan',
-						'8' => 'doc_pangkat_terakhir'
-				 );
-				}elseif($desc=='3'){
 
-				}elseif($desc=='4'){
-
-				}
-				$uploadpdf = $this->do_upload_pdf($folder,$data_upload,$data,$desc);
+				$uploadpdf = $this->do_upload_pdf($folder,$total,$data,$desc);
 				if($uploadpdf=='success'){
 						$output = array('status' =>'success' ,'msg'=>'Berhasil');
 				}else{
-					 $output = array('status' =>'error' ,'msg'=>'Gagal upload');
+					 $output = array('status' =>'error' ,'msg'=>$uploadpdf);
 				}
 				print json_encode($output);
 		}
@@ -300,9 +274,9 @@ class PengusulanPengangkatan extends CI_Controller {
 		}
 
 		public function do_upload_pdf($folder,$doc,$data,$desc){
-			$array_length = count($doc);
-			$no=1;
-			for ($i=0; $i < $array_length; $i++) {
+			//$array_length = count($doc);
+			$no=0;
+			for ($i=1; $i <= $doc; $i++) {
 					if (!is_dir('uploads/'.$folder)) {
 						mkdir('./uploads/'.$folder, 0777, TRUE);
 					}
@@ -312,15 +286,15 @@ class PengusulanPengangkatan extends CI_Controller {
 					$config['max_width']            = 2048;
 					$config['max_height']           = 768;
 					$this->load->library('upload', $config);
-
-						if (! $this->upload->do_upload($doc[$i])){
-							$outout= array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
+					$dokumen='file_'.$i;
+						if (! $this->upload->do_upload($dokumen)){
+							$output= array('result_upload_pdf' => $this->upload->display_errors(), 'file' => '', 'error' => $this->upload->display_errors());
 						}else{
-							$doc_loc=$folder.'/'.$_FILES[$doc[$i]]['name'];
+							$doc_loc=$folder.'/'.$_FILES[$dokumen]['name'];
 							$datas = array(
 							 'STATUS_DOC' => '',
 							 'CATEGORY_DOC' => $data['category'],
-							 'DOC_PENGUSULAN_PENGANGKATAN' => $doc[$i],
+							 'DOC_PENGUSULAN_PENGANGKATAN' => $dokumen,
 							 'DATA_DOC' => $doc_loc,
 							 'FK_PENGUSUL_PENGANGKATAN' => $data['id_pengusul'],
 							 'CREATED_BY' => $data['created_by'],
@@ -333,6 +307,7 @@ class PengusulanPengangkatan extends CI_Controller {
 
 						}
 				}
+				if($doc==$no){
 				$where=array(
 					'PK_PENGUSUL_PENGANGKATAN'=>$data['id_pengusul'],
 
@@ -340,25 +315,11 @@ class PengusulanPengangkatan extends CI_Controller {
 				$data_update=array(
 					'FK_STATUS_DOC'=>'2'
 				);
-				if($desc=='1'){
-					if($no>6){
+
 						 $update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
 						 return 'success';
-					}
-				}elseif($desc='2'){
-					if($no>7){
-						$update=$this->pengusul->updateData($where,'pengusul_pengangkatan',$data_update);
-						return 'success';
-					}
-				}elseif($desc='3'){
-					if($no<7){
 
-					}
-				}elseif($desc='4'){
-					if($no<7){
-
-					}
-				}
+			}
 		}
 
 
