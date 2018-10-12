@@ -9,7 +9,7 @@
       	<label for="category">Nama Kurir/Ekspedisi</label>
       </div>
           <div class="col-lg-9" id='user'>
-        	<input type="text" class="form-control text-primary" id="expedisi" name="expedisi" placeholder="Nama Ekspedisi"  />
+        	<input type="text" class="form-control text-primary" id="ekspedisi" name="ekspedisi" placeholder="Nama Ekspedisi"  />
 
         </div>
     </div>

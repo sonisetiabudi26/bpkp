@@ -37,6 +37,27 @@ class PengusulanPengangkatan extends CI_Controller {
 
 
 		}
+		public function loadDataResi(){
+			$userAdmin=$this->session->userdata('nip');
+			$datas=$this->pengusul->loaddataResi($userAdmin);
+			$a=1;
+			if($datas!='no data'){
+			foreach ($datas as $key) {
+				$dataRow['no']=$a;
+				//$nama=$this->apiuser($key->NIP);
+				$dataRow['ekspedisi']=$key->EKSPEDISI;
+				$dataRow['no_resi']=$key->NO_RESI;
+				$data[]=$dataRow;
+				$a++;
+			}
+		}else{
+			$data = array(
+										 "msg" => "Data tidak ada",
+						 );
+		}
+		 //output to json format
+		 echo json_encode($data);
+		}
 		public function loadDatabelumlengkap(){
 			$userAdmin=$this->session->userdata('nip');
 			$datas=$this->pengusul->loadbelumlengkap($userAdmin);

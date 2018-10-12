@@ -17,8 +17,8 @@
 		</li>
 		<li role="presentation" class=""><a href="#tab_content2" role="tab" onclick="databelumlengkap()" id="profile-tab" data-toggle="tab" aria-expanded="false">Daftar Dokumen belum Lengkap</a>
 		</li>
-		<!-- <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
-		</li> -->
+		<li role="presentation" class=""><a href="#tab_content3" role="tab" onclick="resi()" id="profile-tab2" data-toggle="tab" aria-expanded="false">Resi Pertek</a>
+		</li>
 	</ul>
 	<div id="myTabContent" class="tab-content" style="background:#fff;">
 		<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab" >
@@ -179,7 +179,7 @@
 						</div>
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+		<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="belumlengkap-tab">
 			<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
@@ -196,6 +196,33 @@
 												<td>Status</td>
 												<td>Status Dokumen</td>
 												<td>Tindakan</td>
+											</tr>
+											</thead>
+											<!-- <tbody id="dataAuditor">
+											</tbody> -->
+											</table>
+
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="resi-tab">
+			<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+
+								<div class="x_content">
+									<div class="row">
+										<h2 style="color:#000;">Daftar Pengusulan Pengangkatan</h2><br/>
+										<table id="resi" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+											<thead>
+											<tr>
+												<td>No</td>
+												<td>Ekspedisi</td>
+												<td>No Resi</td>
+
 											</tr>
 											</thead>
 											<!-- <tbody id="dataAuditor">
@@ -301,24 +328,27 @@ var databelumlengkap = $('#document_belum_lengkap').DataTable({
 		{"data" : "action"}
 	]
 	});
+	var resi = $('#resi').DataTable({
+		'ajax': {
+			"type"   : "POST",
+			"url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDataResi/')?>',
+			"dataSrc": ""
+		},
+		'columns': [
+			{"data" : "no"},
+			{"data" : "ekspedisi"},
+			{"data" : "no_resi"},
+		]
+		});
+
 
 });
+
+
+function resi(){
+		$('#resi').DataTable().ajax.reload();
+}
 function databelumlengkap(){
-	// var databelumlengkap = $('#document_belum_lengkap').DataTable({
-	// 	'ajax': {
-	// 		"type"   : "POST",
-	// 		"url"    : '<?php //echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDatabelumlengkap/')?>',
-	// 		"dataSrc": ""
-	// 	},
-	// 	'columns': [
-	// 		{"data" : "no"},
-	// 		{"data" : "nama"},
-	// 		{"data" : "nip"},
-	// 		{"data" : "desc"},
-	// 		{"data" : "desc_status"},
-	// 		{"data" : "action"}
-	// 	]
-	// 	});
 	$('#databelumlengkap').DataTable().ajax.reload();
 }
 function loadData(obj){
