@@ -528,7 +528,7 @@ class PerhitunganNilai extends CI_Controller {
 						$perc_nilai_wi1=30;
 						break;
 				}
-				$total_kelulusan=ceil(ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100)+ceil($key->NILAI_KSP*20/100));
+				$total_kelulusan=ceil(ceil((ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100)+ceil($key->NILAI_1_WI*$perc_nilai_wi1/100)+ceil($key->NILAI_2_WI*20/100))*80/100)+ceil($key->NILAI_KSP*20/100));
 				$data_pass_grade=$this->lookup_ujian->getdataPassGrade($key->FK_JAWABAN_DETAIL);
 				if(!empty($data_pass_grade)){
 					if($total_kelulusan>=$data_pass_grade[0]->PASS_GRADE){
@@ -553,8 +553,8 @@ class PerhitunganNilai extends CI_Controller {
 				$data[]=ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100);
 				$data[]=ceil($key->NILAI_1_WI*$perc_nilai_wi1/100);
 				$data[]=ceil($key->NILAI_2_WI*20/100);
-				$data[]=ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100);
-				$data[]=ceil((ceil($key->HASIL_UJIAN*50/100)+ceil($key->NILAI_1_WI*30/100)+ceil($key->NILAI_2_WI*20/100))*80/100);
+				$data[]=ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100)+ceil($key->NILAI_1_WI*$perc_nilai_wi1/100)+ceil($key->NILAI_2_WI*20/100);
+				$data[]=ceil((ceil($key->HASIL_UJIAN*$perc_ujian_tertulis/100)+ceil($key->NILAI_1_WI*$perc_nilai_wi1/100)+ceil($key->NILAI_2_WI*20/100))*80/100);
 				$data[]=ceil($key->NILAI_KSP*20/100);
 				$data[]='<b style='.$style.' >'.$total_kelulusan.' ('.$ket_lulus.')'.'</b>';
 				$datarow[]=$data;
@@ -619,7 +619,7 @@ class PerhitunganNilai extends CI_Controller {
     }
     public function LoadDatePeserta($kodeevent){
       $parameter	= explode('~',$kodeevent);
-      $kodeevent=$parameter[0];
+      $kodebatch=$parameter[0];
       $kelas=$parameter[1];
        $dataAll= $this->jawaban->getALl($kodeevent,$kelas);
        $data = array();
@@ -676,7 +676,7 @@ class PerhitunganNilai extends CI_Controller {
 						 $row[] = $numrowpeserta;
 						 $enabled=($field->KELAS=='Online'?"style='display:none'":'');
              $url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_upload_doc/".$field->PK_BATCH;
-             $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->KODE_EVENT.'~'.$field->KELAS;
+             $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_view_nilai/".$field->PK_BATCH.'~'.$field->KELAS;
 
              $row[] = '<a class="btn btn-sm btn-success" '.$enabled.' onclick="calculate('."'".$field->FK_EVENT."'".','."'".$field->KELAS."'".')" id="btn-calc" ><i class="glyphicon glyphicon-dashboard"></i> Kalkulasi</a>
 						 <a class="btn btn-sm btn-warning" '.$enabled.' onclick="getModal(this)" id="btn-import" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-import"></i> Import Data</a>

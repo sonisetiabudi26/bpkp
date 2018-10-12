@@ -4,7 +4,16 @@
   <input value='<?php echo $id_pertek?>' name='id_pertek' style="display:none;"/>
     <!-- <input value='<?php ///echo $data_doc?>' name='doc' style="display:none;"/> -->
     <input value='<?php echo $nosurat?>' name='nosurat' style="display:none;"/>
-		<div class="form-group">
+    <div class="form-group">
+      <div class="col-lg-3">
+      	<label for="category">Nama Kurir/Ekspedisi</label>
+      </div>
+          <div class="col-lg-9" id='user'>
+        	<input type="text" class="form-control text-primary" id="expedisi" name="expedisi" placeholder="Nama Ekspedisi"  />
+
+        </div>
+    </div>
+    <div class="form-group">
       <div class="col-lg-3">
       	<label for="category">No Resi</label>
       </div>

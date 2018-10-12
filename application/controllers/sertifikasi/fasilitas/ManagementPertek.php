@@ -299,12 +299,14 @@ class ManagementPertek extends CI_Controller {
 		public function create_resi(){
 			$data['id_pertek']=$this->input->post('id_pertek');
 			$data['noresi']=$this->input->post('no_resi');
+			$data['ekspedisi']=$this->input->post('ekspedisi');
 			$data['nosurat']=$this->input->post('no_surat');
 			$where=array(
 				'PK_PERTEK'=>$data['id_pertek'],
 			);
 			$data_update=array(
 				'NO_RESI'=>$data['noresi'],
+				'EKSPEDISI' =>$data['ekspedisi']
 				// 'CREATED_BY'=> $this->session->userdata('nip'),
 				// 'CREATED_DATE'=> $data['dates']
 			);

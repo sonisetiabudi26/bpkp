@@ -6,13 +6,13 @@
         <thead>
         <tr>
           <td>MATA AJAR</td>
-          <td>Bobot Nilai Total Kelulusan</td>
+          <td>Nilai Total Kelulusan</td>
           <td>Nilai Tertulis</td>
           <td>Simulasi Kegiatan Pengawasan</td>
           <td>Aktivitas Pada Saat Mengikuti Diklat</td>
           <td>Jumlah Nilai Hasil Diklat</td>
-          <td>Bobot Nilai Diklat</td>
-          <td>Bobot Nilai KSP</td>
+          <td>Nilai Diklat</td>
+          <td>Nilai KSP</td>
 
         </tr>
         </thead>
