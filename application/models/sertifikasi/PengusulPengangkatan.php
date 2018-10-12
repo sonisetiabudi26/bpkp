@@ -18,7 +18,19 @@ class PengusulPengangkatan extends My_Model
 			return false;
 		}
 	}
-
+ public function getFormatDocument_belumlengkap($id){
+	 $condition = "detail_pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $id . "' and document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN is null ";
+	 $this->db->select('detail_pengusul_pengangkatan.*');
+	 $this->db->from('detail_pengusul_pengangkatan');
+	 $this->db->join('document_pengusulan_pengangkatan', 'detail_pengusul_pengangkatan.FILE_URUT = document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN','left');
+	 $this->db->where($condition);
+	 $query = $this->db->get();
+	 if ($query->num_rows() > 0) {
+		 return $query->result();
+	 } else {
+		 return 'error_sql';
+	 }
+ }
 	public function getFormatDocument($id){
 		$this->db->select('detail_pengusul_pengangkatan.*');
 		$this->db->from('detail_pengusul_pengangkatan');

@@ -324,7 +324,7 @@ function databelumlengkap(){
 function loadData(obj){
 	document.getElementById("show_data").style.display = "none";
 	$('#example_table').DataTable().ajax.reload();
-	$('#databelumlengkap').DataTable().ajax.reload();
+	$('#document_belum_lengkap').DataTable().ajax.reload();
 }
 function remove(obj){
 	if(confirm('Are you sure delete this data?'))

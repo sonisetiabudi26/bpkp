@@ -50,7 +50,7 @@ class PengusulanPengangkatan extends CI_Controller {
 				$dataRow['desc']=$key->DESC;
 				$dataRow['desc_status']=$key->DESC_STATUS;
 				$disable=($key->FK_STATUS_DOC=='2'?'style="display:none"':'');
-				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
+				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc_belum_lengkap/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
 				$dataRow['action']="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
 						<span>Unggah Dokumen</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Hapus</button></td>";
 				$data[]=$dataRow;
@@ -141,6 +141,23 @@ class PengusulanPengangkatan extends CI_Controller {
 				$data['file_format']=$datarow;
 			}
 			$this->load->view('sertifikasi/unit_apip/content/modal_upload_pengusulan',$data);
+			// echo 'asd';
+		}
+		public function vw_upload_doc_belum_lengkap($param){
+
+			$parameter=explode('~',$param);
+			$data['desc']=$parameter[0];
+			$data['id_pengusul']=$parameter[1];
+			$data['nip']=$parameter[2];
+
+			$dataAll=$this->pengusul->getFormatDocument_belumlengkap($parameter[0]);
+			if($dataAll!='error_sql'){
+				foreach ($dataAll as $key) {
+					$datarow[]=$key->FILE_NAMA_DOC;
+				}
+				$data['file_format']=$datarow;
+			}
+			$this->load->view('sertifikasi/unit_apip/content/modal_upload_pengusulan_data_belum_lengkap',$data);
 			// echo 'asd';
 		}
 		// public function add_data(){
