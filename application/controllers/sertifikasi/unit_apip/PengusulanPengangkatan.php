@@ -170,8 +170,14 @@ class PengusulanPengangkatan extends CI_Controller {
 			$data['desc']=$parameter[0];
 			$data['id_pengusul']=$parameter[1];
 			$data['nip']=$parameter[2];
-
-			$dataAll=$this->pengusul->getFormatDocument_belumlengkap($parameter[0]);
+			// $data_doc = array();
+			// $ignores=$this->pengusul->getFormatbynip($parameter[1]);
+			// foreach ($ignores as $key) {
+			// 	$data_doc[]=$key->DOC_PENGUSULAN_PENGANGKATAN;
+			// }
+			// $convertData = implode(",",$data_doc);
+      // $ignore = explode(",", $convertData);
+			$dataAll=$this->pengusul->getFormatDocument_belumlengkap($parameter[1],$parameter[0],$parameter[2]);
 			if($dataAll!='error_sql'){
 				foreach ($dataAll as $key) {
 					$datarow[]=$key->FILE_NAMA_DOC;

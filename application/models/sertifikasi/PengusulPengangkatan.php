@@ -18,12 +18,31 @@ class PengusulPengangkatan extends My_Model
 			return false;
 		}
 	}
- public function getFormatDocument_belumlengkap($id){
-	 $condition = "detail_pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $id . "' and document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN is null ";
+	public function getFormatbynip($nip){
+
+	}
+ public function getFormatDocument_belumlengkap($desc,$id,$nip){
+	 $this->db->select('document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN');
+	 $this->db->from('document_pengusulan_pengangkatan');
+	 $this->db->where('document_pengusulan_pengangkatan.FK_PENGUSUL_PENGANGKATAN',$desc);
+	 $query = $this->db->get();
+
+	 $ignore=$query->result();
+	 $ignores= array();
+	  foreach($ignore as $row){
+	     $ignores[] = $row->DOC_PENGUSULAN_PENGANGKATAN;
+	   }
+	 $convert_data = implode(",",$ignores);
+   $ignore_data = explode(",", $convert_data);
+
+	 $condition = "detail_pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $id . "' ";
 	 $this->db->select('detail_pengusul_pengangkatan.*');
 	 $this->db->from('detail_pengusul_pengangkatan');
 	 $this->db->join('document_pengusulan_pengangkatan', 'detail_pengusul_pengangkatan.FILE_URUT = document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN','left');
+	 $this->db->join('pengusul_pengangkatan', 'document_pengusulan_pengangkatan.FK_PENGUSUL_PENGANGKATAN = pengusul_pengangkatan.PK_PENGUSUL_PENGANGKATAN');
 	 $this->db->where($condition);
+	 $this->db->where_not_in('document_pengusulan_pengangkatan.DOC_PENGUSULAN_PENGANGKATAN', $ignore_data);
+
 	 $query = $this->db->get();
 	 if ($query->num_rows() > 0) {
 		 return $query->result();
@@ -190,11 +209,10 @@ class PengusulPengangkatan extends My_Model
 		}
 	}
 	public function loaddataResi($userAdmin){
-		$condition = "pengusul_pengangkatan.FK_STATUS_DOC!=2 and pengusul_pengangkatan.NO_SURAT!='' and pengusul_pengangkatan.CREATED_BY =" . "'" . $userAdmin . "' group by pengusul_pengangkatan.NIP";
+		$condition = "pertek.NO_RESI!='' and pertek.NO_SURAT!='' and pengusul_pengangkatan.CREATED_BY =" . "'" . $userAdmin . "' group by pertek.NO_SURAT";
 		$this->db->select('pertek.*');
 		$this->db->from($this->_table);
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
-		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');
 		$this->db->join('pertek', 'pengusul_pengangkatan.NO_SURAT = pertek.NO_SURAT');
 		$this->db->where($condition);
 		$query = $this->db->get();
