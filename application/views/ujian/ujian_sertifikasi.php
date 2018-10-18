@@ -30,7 +30,7 @@
 							<h1 style="color:#888">UJIAN TELAH SELESAI</h1>
 							<h3 style="color:#888">SILAKAN MENGIKUTI SESI UJIAN BERIKUTNYA</h3><br/>
 							<h4 style="color:#888">Terima Kasih telah mengikuti ujian yang diselenggarakan oleh panitia</h4><br/>
-							<a href="<?php echo base_url('ujian')."/ujiansertifikasi/index/"?>" class="btn btn-default">Selesai</a>
+							<a onclick="sending()" class="btn btn-default">Selesai</a>
 							<hr/>
 						</div>
 						<div class="col-lg-12 col-md-12 col-sm-12" id="ujian_not_ready" style="display:none;text-align:center">
@@ -235,7 +235,6 @@ $('input[type=radio]').change( function() {
   $("#navi"+id).css('background','green');
 		var item = { 'no_urut':id,'jawaban': jawaban,'no_soal': no_soal };
 		var index = Object.keys(keyPairArray).indexOf(id);
-		alert(index);
 		var flag=id-1;
 		if (index == -1) {
 		    keyPairArray.push(item);
@@ -316,17 +315,38 @@ if (selisih < 0) {
 	var fk_jawaban_detail='<?php echo $fk_jawaban_detail ?>';
 	var fk_regis_ujian='<?php echo $fk_regis_ujian ?>';
 	var fk_mata_ajar='<?php echo $fk_mata_ajar ?>';
-	$.ajax({
-      url:"<?php echo base_url('ujian')."/ujiansertifikasi/CalculateUjian/"; ?>",
-      method:'post',
-      data:{data:keyPairArray,pk_jawaban_detail:fk_jawaban_detail,jml_soal:jml_soal,fk_regis_ujian:fk_regis_ujian},
-      dataType:'json',
-      success:function(data)
-      {
-				console.log(data.msg);
+	swal({
+		title: "Apakah Anda yakin?",
+		text: "Mengakhiri ujian maka data akan diproses di system",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+})
+.then((willDelete) => {
+		if (willDelete) {
+				swal("Terima Kasih, anda telah mengakhiri ujian", {
+						icon: "success",
+				});
+				$.ajax({
+						url:"<?php echo base_url('ujian')."/ujiansertifikasi/CalculateUjian/"; ?>",
+						method:'post',
+						data:{data:keyPairArray,pk_jawaban_detail:fk_jawaban_detail,jml_soal:jml_soal,fk_regis_ujian:fk_regis_ujian,fk_mata_ajar:fk_mata_ajar},
+						dataType:'json',
+						success:function(data)
+						{
+							if(data.status=='success'){
+								setTimeout(function () {
+						       window.location.href = "<?php echo base_url('ujian')."/ujiansertifikasi"; ?>"; //will redirect to your blog page (an ex: blog.html)
+						    }, 2000);
+							}
 
-			}
-		});
+						}
+					});
+
+		} else {
+				// swal("Y");
+		}
+});
 
 	// var itemPush=[];
 	// var itemPush = { };
@@ -340,22 +360,7 @@ if (selisih < 0) {
 	// }
 
 	//console.log(keyPairArray);
-	swal({
-    title: "Apakah Anda yakin?",
-    text: "Mengakhiri ujian maka data akan diproses di system",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-})
-.then((willDelete) => {
-    if (willDelete) {
-        swal("Terima Kasih, anda telah mengakhiri ujian", {
-            icon: "success",
-        });
-    } else {
-        // swal("Y");
-    }
-});
+
 // alert(JSON.stringify(keyPairArray[1]));
 		// var jawaban=$('input[type=radio]').attr('value');
 }

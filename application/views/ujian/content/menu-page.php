@@ -5,6 +5,7 @@
 		background: linear-gradient(to right, #3a6073, #3a7bd5);
 	}
 </style>
+<?php $foto_identitas=base_url('uploads').'/'.$foto_profile;?>
 <div class="col-md-3 left_col menu_fixed ">
   <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;padding-top:10px">
@@ -16,7 +17,7 @@
     <!-- menu profile quick info -->
     <div class="profile clearfix ">
       <div class="profile_pic">
-        <img src="http://localhost/bpkp/uploads/<?php echo $foto_profile;?>" style="height:55px;" class="img-circle profile_img">
+        <img src="<?php echo $foto_identitas;?>" style="height:55px;" class="img-circle profile_img">
       </div>
       <div class="profile_info">
         <span>Selamat Datang,</span>

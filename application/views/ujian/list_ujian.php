@@ -64,5 +64,7 @@
 			],
 		});
 	});
-
+loadData(obj){
+  $('#table').DataTable().ajax.reload();
+}
 </script>

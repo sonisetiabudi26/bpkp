@@ -718,8 +718,8 @@ class PerhitunganNilai extends CI_Controller {
 			$dataAll=$this->jawaban->get_data_all_by_event($kode_event,$kelas);
 			if($dataAll!='no data'){
 
-			$nomor1=1;
-			$nomor2=1;
+			$nomor1=0;
+			$nomor2=0;
 			foreach ($dataAll as $key) {
 				$fk_jawaban_detail=$key->PK_JAWABAN_DETAIL;
 				$totalJawaban=0;

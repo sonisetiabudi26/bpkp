@@ -50,6 +50,7 @@ class UjianSertifikasi extends CI_Controller{
 		$parameter=explode('~',$fk_mata_ajar);
 		$data['fk_mata_ajar']=$parameter[0];
 		$fk_jawaban_detail=$parameter[1];
+		$data['nama_mata_ajar']=$parameter[3];
 		$data['fk_regis_ujian']=$parameter[2];
 		$datajawaban=$this->jawaban->getPin($fk_jawaban_detail);
 		$data['fk_jawaban_detail']=$fk_jawaban_detail;
@@ -97,7 +98,7 @@ class UjianSertifikasi extends CI_Controller{
 						onclick="getModalWithParam(this)" id="btn-ujian-soal"
 						data-href="'. base_url('ujian')."/ujiansertifikasi/vw_masukan_pin/".$rows->FK_MATA_AJAR.'" data-toggle="modal" data-target="#modal-content">
 						<i class="fa fa-pencil"></i> Masukan Pin</a>
-						<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'~'.$rows->FK_REGIS_UJIAN.'">
+						<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'~'.$rows->FK_REGIS_UJIAN.'~'.$rows->NAMA_MATA_AJAR.'">
 						<i class="fa fa-paper-plane"></i> Ikuti Ujian</a>
 						<span '.$soalData.'>Soal Ujian Belum Tersedia</span></div>';
 
@@ -231,8 +232,11 @@ class UjianSertifikasi extends CI_Controller{
 		$jml_soal=$_POST['jml_soal'];
 		$fk_jawaban_detail=$_POST['pk_jawaban_detail'];
 		$fk_regis_ujian=$_POST['fk_regis_ujian'];
+		$fk_mata_ajar=$_POST['fk_mata_ajar'];
 		$datasheet = [];
 		$numrow = 1;
+		$nomor1=0;
+		$nomor2=0;
 		$totalJawaban=0;
 		foreach ($jawaban as $key) {
 
@@ -248,7 +252,7 @@ class UjianSertifikasi extends CI_Controller{
 					if($dataCalc=='benar'){
 						$totalJawaban++;
 						}
-						$data[$jawaban]=$dataCalc;
+						// $data[$jawaban]=$dataCalc;
 					}
 					$data['totalJawaban']=$totalJawaban;
 					if($jml_soal!=0){
@@ -320,7 +324,7 @@ class UjianSertifikasi extends CI_Controller{
 				$insertmulti_jawaban=$this->jawaban->insert_multiple($datasheet);
 					if($insertmulti_jawaban=='success'){
 					$output  = array('status' =>'success' ,
-														'msg'=>'Data berhasil dikalkulasi '.$data['resultberhasilupdate'].' & gagal dikalkulasi '.$data['resultgagalupdate'],'data'=>$datanum);
+														'msg'=>'Data berhasil dikalkulasi '.$data['resultberhasilupdate'].' & gagal dikalkulasi '.$data['resultgagalupdate']);
 				 }else{
 					 $output = array('status' =>'error' ,
 				  									'msg'=>'Data peserta tidak ada');

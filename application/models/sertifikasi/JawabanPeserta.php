@@ -203,7 +203,7 @@ public function calculateOnline($jawaban,$pk_soal_ujian){
 	}elseif($jawaban=='H'){
 		$jawaban="8";
 	}
-	$condition = "soal_ujian.JAWABAN =" . "'" . $jawaban . "' AND soal_ujian.PK_SOAL_UJIAN=" . "'" . $no_soal . "'  ";
+	$condition = "soal_ujian.JAWABAN =" . "'" . $jawaban . "' AND soal_ujian.PK_SOAL_UJIAN=" . "'" . $pk_soal_ujian . "'  ";
 	$this->db->select('*');
 	$this->db->from("soal_ujian");
 	$this->db->where($condition);
