@@ -48,10 +48,11 @@ class UjianSertifikasi extends CI_Controller{
 		$data['nama_auditor'] = $this->session->userdata('logged_in');
 		$data['nip_auditor'] = $logged_nip;
 		$parameter=explode('~',$fk_mata_ajar);
-		$bab_mata_ajar=$parameter[0];
+		$data['fk_mata_ajar']=$parameter[0];
 		$fk_jawaban_detail=$parameter[1];
-		$data['nama_mata_ajar']=$parameter[2];
+		$data['fk_regis_ujian']=$parameter[2];
 		$datajawaban=$this->jawaban->getPin($fk_jawaban_detail);
+		$data['fk_jawaban_detail']=$fk_jawaban_detail;
 		if($datajawaban!='no data'){
 			$dataconfig=$this->konfig->getConfig($datajawaban->PIN);
 			$data['start_time']=$dataconfig->START_TIME;
@@ -60,7 +61,7 @@ class UjianSertifikasi extends CI_Controller{
 			$data['dates']=$dataconfig->DATE_TIME;
 
 		}
-		$data['soal'] = $this->random_distribusi_ujian($bab_mata_ajar,$dataconfig->JUMLAH_SOAL);
+		$data['soal'] = $this->random_distribusi_ujian($data['fk_mata_ajar'],$dataconfig->JUMLAH_SOAL);
 		$data['content_page']='ujian_sertifikasi';
 		$this->load->view('ujian/content', $data);
 		//var_dump($this->random_distribusi_ujian());
@@ -96,7 +97,7 @@ class UjianSertifikasi extends CI_Controller{
 						onclick="getModalWithParam(this)" id="btn-ujian-soal"
 						data-href="'. base_url('ujian')."/ujiansertifikasi/vw_masukan_pin/".$rows->FK_MATA_AJAR.'" data-toggle="modal" data-target="#modal-content">
 						<i class="fa fa-pencil"></i> Masukan Pin</a>
-						<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'~'.$rows->NAMA_MATA_AJAR.'">
+						<a '.$enable.' class="btn btn-sm btn-primary" href="'. base_url('ujian')."/ujiansertifikasi/indexUjian/".$rows->FK_MATA_AJAR.'~'.($checkpin=='no data'?'':$checkpin->FK_JAWABAN_DETAIL).'~'.$rows->FK_REGIS_UJIAN.'">
 						<i class="fa fa-paper-plane"></i> Ikuti Ujian</a>
 						<span '.$soalData.'>Soal Ujian Belum Tersedia</span></div>';
 
@@ -224,5 +225,108 @@ class UjianSertifikasi extends CI_Controller{
 		}
 		// array_push($data,$datakonfig);
 		return $data;
+	}
+	public function CalculateUjian(){
+		$jawaban=$_POST['data'];
+		$jml_soal=$_POST['jml_soal'];
+		$fk_jawaban_detail=$_POST['pk_jawaban_detail'];
+		$fk_regis_ujian=$_POST['fk_regis_ujian'];
+		$datasheet = [];
+		$numrow = 1;
+		$totalJawaban=0;
+		foreach ($jawaban as $key) {
+
+
+					array_push($datasheet, [
+					'FK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
+					'FK_SOAL_UJIAN'=>$key['no_urut'],
+					'NO_UJIAN'=>$key['no_soal'],
+					'JAWABAN'=>$key['jawaban'],
+					]);
+
+					$dataCalc=$this->jawaban->calculateOnline($key['jawaban'],$key['no_soal']);
+					if($dataCalc=='benar'){
+						$totalJawaban++;
+						}
+						$data[$jawaban]=$dataCalc;
+					}
+					$data['totalJawaban']=$totalJawaban;
+					if($jml_soal!=0){
+						$data['nilai']=ceil(($totalJawaban/$jml_soal)*100);
+					}else{
+						$data['nilai']='0';
+					}
+					$dataall[]=$data;
+
+			// $data_lookup=$this->lookup_ujian->getdata_lookupOnline($fk_jawaban_detail);
+		//	foreach ($data_lookup as $keys) {
+				$where=array(
+					'FK_REGIS_UJIAN'=>$fk_regis_ujian,
+					'FK_MATA_AJAR'=>$fk_mata_ajar
+				);
+				$data_update=array(
+					'FK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
+					'HASIL_UJIAN'=>$data['nilai'],
+					'flag'=>1
+				);
+			$update_lookup=$this->lookup_ujian->updateData($where,'lookup_ujian',$data_update);
+		//	}
+		if($update_lookup=='berhasil'){
+				$data['resultberhasilupdate']=$nomor1++;
+				$data['resultgagalupdate']=$nomor2;
+			}else{
+				$data['resultberhasilupdate']=$nomor1;
+				$data['resultgagalupdate']=$nomor2++;
+			}
+
+				//
+				//
+				// $data['totalJawaban']=$totalJawaban;
+				// if($datanum!=0){
+				// 	$data['nilai']=ceil(($totalJawaban/$datanum)*100);
+				// }else{
+				// 	$data['nilai']='0';
+				// }
+				//
+				// $dataall[]=$data;
+				//
+				// 	$data_lookup=$this->lookup_ujian->getdata_lookup($key->KODE_PESERTA,$key->FK_MATA_AJAR);
+				// //	foreach ($data_lookup as $keys) {
+				// 		$where=array(
+				// 			'FK_REGIS_UJIAN'=>$data_lookup[0]->PK_REGIS_UJIAN,
+				// 			'FK_MATA_AJAR'=>$key->FK_MATA_AJAR
+				// 		);
+				// 		$data_update=array(
+				// 			'FK_JAWABAN_DETAIL'=>$fk_jawaban_detail,
+				// 			'HASIL_UJIAN'=>$data['nilai'],
+				// 			'flag'=>1
+				// 		);
+				// 	$update_lookup=$this->lookup_ujian->updateData($where,'lookup_ujian',$data_update);
+				// 		//	}
+				// 		if($update_lookup=='berhasil'){
+				// 				$data['resultberhasilupdate']=$nomor1++;
+				// 				$data['resultgagalupdate']=$nomor2;
+				// 			}else{
+				// 				$data['resultberhasilupdate']=$nomor1;
+				// 				$data['resultgagalupdate']=$nomor2++;
+				// 			}
+				//
+				// 	//	}
+				// 		// else{
+				// 		// 	$output  = array('status' =>'error' ,
+				// 		//  										'msg'=>'Data gagal dikalkulasi');
+				// 		//}
+				// 	}
+				$insertmulti_jawaban=$this->jawaban->insert_multiple($datasheet);
+					if($insertmulti_jawaban=='success'){
+					$output  = array('status' =>'success' ,
+														'msg'=>'Data berhasil dikalkulasi '.$data['resultberhasilupdate'].' & gagal dikalkulasi '.$data['resultgagalupdate'],'data'=>$datanum);
+				 }else{
+					 $output = array('status' =>'error' ,
+				  									'msg'=>'Data peserta tidak ada');
+				 }
+						  print json_encode($output);
+				//
+
 	}
 }

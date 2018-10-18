@@ -235,10 +235,12 @@ $('input[type=radio]').change( function() {
   $("#navi"+id).css('background','green');
 		var item = { 'no_urut':id,'jawaban': jawaban,'no_soal': no_soal };
 		var index = Object.keys(keyPairArray).indexOf(id);
-		if (index === 1) {
+		alert(index);
+		var flag=id-1;
+		if (index == -1) {
 		    keyPairArray.push(item);
 		} else {
-		    keyPairArray[id] = item;
+		    keyPairArray[flag] = item;
 		}
 		console.log(keyPairArray);
 	// if(x==''){
@@ -310,10 +312,34 @@ if (selisih < 0) {
 }, 1000);
 
  function sending(){
-	// var jml_soal='<?php echo $jml_soal;?>';
+	var jml_soal='<?php echo $jml_soal;?>';
+	var fk_jawaban_detail='<?php echo $fk_jawaban_detail ?>';
+	var fk_regis_ujian='<?php echo $fk_regis_ujian ?>';
+	var fk_mata_ajar='<?php echo $fk_mata_ajar ?>';
+	$.ajax({
+      url:"<?php echo base_url('ujian')."/ujiansertifikasi/CalculateUjian/"; ?>",
+      method:'post',
+      data:{data:keyPairArray,pk_jawaban_detail:fk_jawaban_detail,jml_soal:jml_soal,fk_regis_ujian:fk_regis_ujian},
+      dataType:'json',
+      success:function(data)
+      {
+				console.log(data.msg);
+
+			}
+		});
+
+	// var itemPush=[];
+	// var itemPush = { };
+	// var itemPushing=[];
 	// for (var i = 0; i < jml_soal; i++) {
 	//
+	// 	itemPush["nourut"] = $('#'+i).attr('id');;
+	// 	itemPush["jawaban"] = $('#'+i).attr('value');
+	// 	itemPush["no_soal"] = $('#'+i).attr('data-id');
+	// 	itemPushing.push(itemPush);
 	// }
+
+	//console.log(keyPairArray);
 	swal({
     title: "Apakah Anda yakin?",
     text: "Mengakhiri ujian maka data akan diproses di system",

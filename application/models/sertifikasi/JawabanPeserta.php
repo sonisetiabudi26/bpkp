@@ -184,6 +184,36 @@ public function calculate($kodesoal,$jawaban,$no_soal){
 		return "salah";
 	}
 }
+public function calculateOnline($jawaban,$pk_soal_ujian){
+	// soal_distribusi b on a.KODE_SOAL=b.KODE_SOAL inner join soal_ujian c on b.FK_SOAL_UJIAN=c.PK_SOAL_UJIAN
+	if($jawaban=='A'){
+		$jawaban="1";
+	}elseif($jawaban=='B'){
+		$jawaban="2";
+	}elseif($jawaban=='C'){
+		$jawaban="3";
+	}elseif($jawaban=='D'){
+		$jawaban="4";
+	}elseif($jawaban=='E'){
+		$jawaban="5";
+	}elseif($jawaban=='F'){
+		$jawaban="6";
+	}elseif($jawaban=='G'){
+		$jawaban="7";
+	}elseif($jawaban=='H'){
+		$jawaban="8";
+	}
+	$condition = "soal_ujian.JAWABAN =" . "'" . $jawaban . "' AND soal_ujian.PK_SOAL_UJIAN=" . "'" . $no_soal . "'  ";
+	$this->db->select('*');
+	$this->db->from("soal_ujian");
+	$this->db->where($condition);
+	$query = $this->db->get();
+	if ($query->num_rows() > 0) {
+		return "benar";
+	} else {
+		return "salah";
+	}
+}
 public function updateData($where,$table,$data){
 	$this->db->where($where);
 	$this->db->update($table,$data);

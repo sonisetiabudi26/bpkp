@@ -215,6 +215,7 @@ class LookupUjian extends My_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+
 	public function updateData($where,$table,$data){
 		$this->db->where($where);
 		$update=$this->db->update($table,$data);
