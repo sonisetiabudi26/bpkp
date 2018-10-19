@@ -422,21 +422,24 @@ class PerhitunganNilai extends CI_Controller {
 			$this->load->view('sertifikasi/pusbin/content/create_sertifikat',$data);
 		}
     public function LoadDateEventbyid($id){
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
       $dataAll=$this->event->loadEventbyid($id);
        $data = array();
        //$no = $_POST['start'];
        $a=1;
 
-         foreach ($dataAll as $field) {
+         foreach ($dataAll->result() as $field) {
              $row = array();
-             $row['no'] = $a;
-             $row['kodeevent'] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_batch/".$field->KODE_EVENT.'">'.$field->KODE_EVENT.'</a>';
-             $row['namadiklat'] = $field->NAMA_JENJANG;
-             $row['uraian'] = $field->URAIAN;
-             $row['nama'] = $field->Nama;
-						 $row['pass_grade'] = $field->PASS_GRADE;
+             $row[] = $a;
+             $row[] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_batch/".$field->KODE_EVENT.'">'.$field->KODE_EVENT.'</a>';
+             $row[] = $field->NAMA_JENJANG;
+             $row[] = $field->URAIAN;
+             $row[] = $field->Nama;
+						 $row[] = $field->PASS_GRADE;
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
-             $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
+             $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
 						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-create-batch" data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
 
              $data[] = $row;
@@ -444,14 +447,14 @@ class PerhitunganNilai extends CI_Controller {
          }
 
 
-       // $output = array(
-       //     "draw" => 'dataEvent',
-       //     "recordsTotal" => $a,
-       //     "recordsFiltered" => $a,
-       //     "data" => $data,
-       // );
+       $output = array(
+           "draw" => $draw,
+           "recordsTotal" => $dataAll->num_rows(),
+           "recordsFiltered" => $dataAll->num_rows(),
+           "data" => $data,
+       );
        //output dalam format JSON
-       echo json_encode($data);
+       echo json_encode($output);
       //echo json_encode($dataAll);
     }
 		public function LoadDateEvent(){
@@ -462,13 +465,13 @@ class PerhitunganNilai extends CI_Controller {
 
          foreach ($dataAll as $field) {
              $row = array();
-             $row['no'] = $a;
-             $row['kodeevent'] = $field->KODE_EVENT;
-             $row['namadiklat'] = $field->NAMA_JENJANG;
-             $row['uraian'] = $field->URAIAN;
-             $row['nama'] = $field->Nama;
+             $row[] = $a;
+             $row[] = $field->KODE_EVENT;
+             $row[] = $field->NAMA_JENJANG;
+             $row[] = $field->URAIAN;
+             $row[] = $field->Nama;
 						 $url=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vv_add_batch/".$field->PK_EVENT.'~'.$field->KODE_EVENT;
-             $row['action'] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
+             $row[] = '<td><a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_event('."'".$field->PK_EVENT."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>
 						 <a class="btn btn-sm btn-primary"  onclick="getModal(this)" id="btn-event1 data-href="'.$url.'" data-toggle="modal" data-target="#modal-content"><i class="glyphicon glyphicon-pencil"></i> Buat Batch</a></td>';
 
              $data[] = $row;
@@ -657,13 +660,16 @@ class PerhitunganNilai extends CI_Controller {
       //echo json_encode($dataAll);
     }
     public function LoadBatch($id){
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
       $dataAll=$this->batch->loadBatchbyid($id);
        $data = array();
        //$no = $_POST['start'];
 
        $a=1;
 
-         foreach ($dataAll as $field) {
+         foreach ($dataAll->result() as $field) {
              $row = array();
 						 $numrowpeserta=$this->jawaban->NumrowPeserta($field->KODE_EVENT,$field->KELAS);
 						 if($numrowpeserta=='no data'){
@@ -691,9 +697,9 @@ class PerhitunganNilai extends CI_Controller {
 
 
        $output = array(
-           "draw" => 'dataEvent',
-           "recordsTotal" => $a,
-           "recordsFiltered" => $a,
+           "draw" => $draw,
+           "recordsTotal" => $dataAll->num_rows(),
+           "recordsFiltered" => $dataAll->num_rows(),
            "data" => $data,
        );
        //output dalam format JSON

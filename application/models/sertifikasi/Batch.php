@@ -33,9 +33,8 @@ class Batch extends My_Model
     $this->db->join('event', 'batch.FK_EVENT = event.PK_EVENT');
 		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
 		$this->db->where($condition);
-    $query = $this->db->get();
-  //	return $query->result();
-      return $query->result();
+    return $query = $this->db->get();
+
   }
   public function remove($id){
     $this->db->where('PK_BATCH', $id);

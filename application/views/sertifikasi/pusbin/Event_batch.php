@@ -37,6 +37,7 @@
   													<td>Tindakan</td>
   												</tr>
   												</thead>
+													<tbody></tbody>
   												</table>
   										</div>
 
@@ -102,13 +103,13 @@ $(document).ready(function(){
                 },
                 //Set column definition initialisation properties.
                 "columns": [
-                    {"data": "no"},
-                    {"data": "kodeevent"},
-                    {"data": "namadiklat"},
-                    {"data": "uraian"},
-                    {"data": "nama"},
-										{"data": "pass_grade"},
-                    {"data": "action"}
+									{"data": "0",width:50},
+									{"data": "1",width:100},
+									{"data": "2",width:100},
+									{"data": "3",width:100},
+									{"data": "4",width:100},
+									{"data": "5",width:100},
+									{"data": "6",width:100},
                 ],
 
             });

@@ -49,11 +49,9 @@ class Event extends My_Model
 		$this->db->from($this->_table);
 		$this->db->join('provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
 		$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
-			 $this->db->where($condition);
-		$query = $this->db->get();
+		$this->db->where($condition);
+		return $query = $this->db->get();
 
-	//	return $query->result();
-			return $query->result();
 	}
 
   public function remove($id){
