@@ -6,12 +6,14 @@ class Home extends CI_Controller {
 	private $filename = "soal";
 	public function __construct(){
         parent::__construct();
-        $this->load->library('session');
-        $this->load->helper(array('form', 'url'));
+    $this->load->library('session');
+    $this->load->helper(array('form', 'url'));
 		$this->load->model('sertifikasi/menupage','menupage');
-    	$this->load->model('sertifikasi/babmataajar','babmataajar');
+    $this->load->model('sertifikasi/babmataajar','babmataajar');
 		$this->load->model('sertifikasi/mataajar','mataajar');
 		$this->load->model('sertifikasi/reviewsoal','reviewsoal');
+		$this->load->model('sertifikasi/KonfigUjian','konfig');
+		$this->load->model('sertifikasi/kodesoal','kodesoal');
     }
 
     public function index(){
@@ -23,13 +25,17 @@ class Home extends CI_Controller {
 			$data['username']=$username;
 			$data['bank_soal']	= $this->babmataajar->_detail_bab_mata_ajar();
 			$data['review_soal']	= $this->reviewsoal->_get_all_review_ujian();
+			$datakonfig=$this->konfig->loadData();
+			$datakodesoal=$this->kodesoal->view();
+			$data['konfig']=$datakonfig->num_rows();
+			$data['kode_soal']=$datakodesoal->num_rows();
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');
 		}
     }
-	
+
 	public function set_admin_role(){
-		
+
 	}
 }

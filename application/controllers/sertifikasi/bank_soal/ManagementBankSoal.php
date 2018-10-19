@@ -95,7 +95,11 @@ class ManagementBankSoal extends CI_Controller {
 		}
 	}
 	public function loadSemuaSoal(){
-		$list = $this->soalujian->get_dataALL();
+		$draw = $_REQUEST['draw'];
+		$start =$_REQUEST['start'];
+		$length =$_REQUEST['length'];
+		$list = $this->soalujian->get_datatables_soal_semua();
+
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $soal) {
@@ -114,16 +118,16 @@ class ManagementBankSoal extends CI_Controller {
 						$row[] = $soal->JAWABAN;
 						// $row[] = $soal->PARENT_SOAL;
 
-            $row[] = '<div style="text-align:center;">
-			<a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$soal->PK_SOAL_UJIAN.'~soalujian'."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus Soal</a></div>';
+          //  $row[] = '<div style="text-align:center;">
+			//<a class="btn btn-sm btn-danger"  href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$soal->PK_SOAL_UJIAN.'~soalujian'."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus Soal</a></div>';
 
             $data[] = $row;
         }
 
         $output = array(
-					"draw" => $_POST['draw'],
-					"recordsTotal" => $no,
-					"recordsFiltered" => $no,
+					"draw" => $draw,
+					"recordsTotal" => $this->soalujian->count_all_semua_soal(),
+					"recordsFiltered" =>$this->soalujian->count_filtered_semua_soal(),
 					"data" => $data,
                 );
         echo json_encode($output);
@@ -235,12 +239,14 @@ class ManagementBankSoal extends CI_Controller {
 		$this->load->view('sertifikasi/bank_soal/content/add_permintaan_soal', $data);
 		}
 		public function loadKodeSoal(){
-			$dataAll=$this->kodesoal->view();
+			$draw = $_REQUEST['draw'];
+			$start =$_REQUEST['start'];
+			$length =$_REQUEST['length'];
+			$dataAll=$this->kodesoal->get_datatables_kode_soal();
 			 $data = array();
-			 //$no = $_POST['start'];
 			 $a=1;
 
-				 foreach ($dataAll as $field) {
+				 foreach ($dataAll->result() as $field) {
 						 $row = array();
 						 $row[] = $a;
 						 $row[] = $field->KODE_SOAL;
@@ -270,9 +276,9 @@ class ManagementBankSoal extends CI_Controller {
 
 
 			 $output = array(
-					 "draw" => 'dataEvent',
-					 "recordsTotal" => $a,
-					 "recordsFiltered" => $a,
+					 "draw" => $draw,
+					 "recordsTotal" => $this->kodesoal->count_all_kode_soal(),
+					 "recordsFiltered" => $dataAll->num_rows(),
 					 "data" => $data,
 			 );
 			 //output dalam format JSON

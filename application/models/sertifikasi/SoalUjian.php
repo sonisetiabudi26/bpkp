@@ -6,8 +6,8 @@ class SoalUjian extends My_Model
 	public $_table = 'soal_ujian';
 	public $primary_key = 'PK_SOAL_UJIAN';
 	var $column_order = array('PERTANYAAN','PILIHAN_1','PILIHAN_2','PILIHAN_3', 'PILIHAN_4', 'JAWABAN', 'PARENT_SOAL', null);
-    var $column_search = array('PERTANYAAN','JAWABAN','PARENT_SOAL');
-    var $order = array('PK_SOAL_UJIAN' => 'desc'); // default order
+  var $column_search = array('PERTANYAAN','JAWABAN','PARENT_SOAL');
+  var $order = array('PK_SOAL_UJIAN' => 'desc'); // default order
 
 	public function view(){
 		return $this->db->get($this->_table)->result();
@@ -42,13 +42,14 @@ class SoalUjian extends My_Model
 		$this->db->where($this->primary_key, $id);
 		$this->db->delete($this->_table);
 	}
-	public function get_dataALL(){
+	public function get_dataALL($length,$start){
 		$condition = "tampil_ujian = '" . 1 . "'";
 		$this->db->select('*');
 		$this->db->from($this->_table);
 		$this->db->where($condition);
-		$query = $this->db->get();
-		return $query->result();
+		$this->db->limit($length,$start);
+		return $query = $this->db->get();
+
 	}
 	public function _get_soal_ujian_from_bab_mata_ajar($fk_bab_mata_ajar) {
 	    $condition = "fk_bab_mata_ajar = '" . $fk_bab_mata_ajar . "'";
@@ -203,4 +204,73 @@ class SoalUjian extends My_Model
 	    $query = $this->db->get();
 	    return $query->result();
 	}
+
+	//function get datatable
+	private function _get_datatables_query_soal()
+    {
+			// $condition = "tampil_ujian = '" . 1 . "'";
+			$this->db->from($this->_table);
+
+
+        $i = 0;
+
+        foreach ($this->column_search as $item) // looping awal
+        {
+            if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+            {
+
+                if($i===0) // looping awal
+                {
+                    $this->db->group_start();
+                    $this->db->like($item, $_POST['search']['value']);
+                }
+                else
+                {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if(count($this->column_search) - 1 == $i)
+                    $this->db->group_end();
+            }
+            $i++;
+        }
+
+        if(isset($_POST['order']))
+        {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        }
+        else if(isset($this->order))
+        {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function get_datatables_soal_semua()
+    {
+			  $condition = "tampil_ujian = '" . 1 . "'";
+        $this->_get_datatables_query_soal();
+				$this->db->where($condition);
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function count_filtered_semua_soal()
+    {
+			  $condition = "tampil_ujian = '" . 1 . "'";
+        $this->_get_datatables_query_soal();
+				$this->db->where($condition);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all_semua_soal()
+    {
+				$condition = "tampil_ujian = '" . 1 . "'";
+        $this->db->from($this->_table);
+				$this->db->where($condition);
+        return $this->db->count_all_results();
+    }
 }

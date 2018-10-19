@@ -54,8 +54,8 @@ class KonfigUjian extends My_Model
 		$this->db->join('Provinsi', 'event.FK_PROVINSI = provinsi.PK_PROVINSI');
 		$this->db->join('batch', 'event.PK_EVENT = batch.FK_EVENT');
 		$this->db->join('jadwal_ujian', 'batch.FK_JADWAL = jadwal_ujian.PK_JADWAL_UJIAN');
-  	$query = $this->db->get();
-  	return $query->result();
+  	return $query = $this->db->get();
+  
   }
 	public function updateData($where,$data){
 		$this->db->where($where);

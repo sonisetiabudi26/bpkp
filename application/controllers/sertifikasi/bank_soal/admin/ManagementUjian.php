@@ -34,7 +34,7 @@ class ManagementUjian extends CI_Controller {
           $data = array();
           $no = $_POST['start'];
           $a=1;
-          foreach ($list as $row) {
+          foreach ($list-result() as $row) {
               $no++;
               $rows = array();
               $rows[] = $a;
@@ -58,7 +58,7 @@ class ManagementUjian extends CI_Controller {
           $output = array(
             "draw" => $_POST['draw'],
             "recordsTotal" => $a,
-            "recordsFiltered" => $a,
+            "recordsFiltered" => $list->num_rows(),
             "data" => $data,
                   );
           echo json_encode($output);

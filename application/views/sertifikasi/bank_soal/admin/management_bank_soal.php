@@ -236,7 +236,7 @@
 								<th>Pilihan 7</th>
 								<th>Pilihan 8</th>
 								<th>Jawaban</th>
-								<th>Tindakan</th>
+								<!-- <th>Tindakan</th> -->
 						</tr>
 				</thead>
 				<tbody></tbody>
@@ -332,14 +332,12 @@
 		                  "type": "POST"
 		              },
 		              //Set column definition initialisation properties.
-		              "columns": [
-		                  {"data": "0",width:10},
-		                  {"data": "1",width:100},
-		                  {"data": "2",width:100},
-											{"data": "3",width:50},
-											{"data": "4",width:150},
-		              ],
-
+									"columnDefs": [
+									{
+											"targets": [ 0 ],
+											"orderable": true,
+									},
+									],
 		          });
 	}
 	function loadDataSemuaSoal(){
@@ -354,20 +352,12 @@
 											"type": "POST"
 									},
 									//Set column definition initialisation properties.
-									"columns": [
-											{"data": "0",width:10},
-											{"data": "1",width:100},
-											{"data": "2",width:100},
-											{"data": "3",width:100},
-											{"data": "4",width:100},
-											{"data": "5",width:100},
-											{"data": "6",width:100},
-											{"data": "7",width:100},
-											{"data": "8",width:100},
-											{"data": "9",width:100},
-											{"data": "10",width:100},
-											{"data": "11",width:100},
-									],
+									"columnDefs": [
+			            {
+			                "targets": [ 0 ],
+			                "orderable": true,
+			            },
+			            ],
 
 							});
 	}
