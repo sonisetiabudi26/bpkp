@@ -76,7 +76,7 @@ class RegisUjian extends My_Model
 	}
 	public function getDatabypk($pk){
 		$condition = "registrasi_ujian.PK_REGIS_UJIAN =" . "'" . $pk . "' and flag=1";
-		$this->db->select('registrasi_ujian.NIP,provinsi.NAMA,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
+		$this->db->select('registrasi_ujian.NIP,registrasi_ujian.NAMA,provinsi.NAMA as Prov,dokumen_registrasi_ujian.DOCUMENT,dokumen_registrasi_ujian.DOC_NAMA,jadwal_ujian.START_DATE,jadwal_ujian.END_DATE,jenjang.NAMA_JENJANG,registrasi_ujian.KODE_DIKLAT');
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
@@ -92,8 +92,7 @@ class RegisUjian extends My_Model
 		$this->db->from($this->_table);
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 		$this->db->where($condition);
-		$query = $this->db->get();
-		return $query->result();
+		return $query = $this->db->get();
 	}
 	public function loaddatabyuserpk($user,$regis){
 		$condition = "CREATED_BY =" . "'" . $user . "' and registrasi_ujian.PK_REGIS_UJIAN=" . "'" . $regis . "' and flag=0";
@@ -238,9 +237,9 @@ class RegisUjian extends My_Model
 		$this->db->join('jadwal_ujian', 'registrasi_ujian.FK_JADWAL_UJIAN = jadwal_ujian.PK_JADWAL_UJIAN');
 		$this->db->join('jenjang', 'registrasi_ujian.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 		$this->db->where($condition);
-		$query = $this->db->get();
+		return $query = $this->db->get();
 
-			return $query->result();
+			// return $query->result();
 
 
 	}

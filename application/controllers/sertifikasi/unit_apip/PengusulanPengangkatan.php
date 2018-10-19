@@ -38,11 +38,14 @@ class PengusulanPengangkatan extends CI_Controller {
 
 		}
 		public function loadDataResi(){
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
 			$userAdmin=$this->session->userdata('nip');
 			$datas=$this->pengusul->loaddataResi($userAdmin);
 			$a=1;
-			if($datas!='no data'){
-			foreach ($datas as $key) {
+
+			foreach ($datas->result() as $key) {
 				$dataRow['no']=$a;
 				//$nama=$this->apiuser($key->NIP);
 				$dataRow['ekspedisi']=$key->EKSPEDISI;
@@ -50,40 +53,46 @@ class PengusulanPengangkatan extends CI_Controller {
 				$data[]=$dataRow;
 				$a++;
 			}
-		}else{
-			$data = array(
-										 "msg" => "Data tidak ada",
-						 );
-		}
+			$output = array(
+				 "draw" => $draw,
+				 "recordsTotal" => $datas->num_rows(),
+				 "recordsFiltered" => $datas->num_rows(),
+				 "data" => $data
+			);
+
 		 //output to json format
-		 echo json_encode($data);
+		 echo json_encode($output);
 		}
 		public function loadDatabelumlengkap(){
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
 			$userAdmin=$this->session->userdata('nip');
 			$datas=$this->pengusul->loadbelumlengkap($userAdmin);
 			$a=1;
-			if($datas!='no data'){
-			foreach ($datas as $key) {
-				$dataRow['no']=$a;
+
+			foreach ($datas->result() as $key) {
+				$dataRow[]=$a;
 				//$nama=$this->apiuser($key->NIP);
-				$dataRow['nama']=$key->NAMA;
-				$dataRow['nip']=$key->NIP;
-				$dataRow['desc']=$key->DESC;
-				$dataRow['desc_status']=$key->DESC_STATUS;
+				$dataRow[]=$key->NAMA;
+				$dataRow[]=$key->NIP;
+				$dataRow[]=$key->DESC;
+				$dataRow[]=$key->DESC_STATUS;
 				$disable=($key->FK_STATUS_DOC=='2'?'style="display:none"':'');
 				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc_belum_lengkap/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
-				$dataRow['action']="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
+				$dataRow[]="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
 						<span>Unggah Dokumen</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Hapus</button></td>";
 				$data[]=$dataRow;
 				$a++;
 			}
-		}else{
-			$data = array(
-										 "msg" => "Data tidak ada",
-						 );
-		}
+			$output = array(
+				 "draw" => $draw,
+				 "recordsTotal" => $datas->num_rows(),
+				 "recordsFiltered" => $datas->num_rows(),
+				 "data" => $data
+			);
 		 //output to json format
-		 echo json_encode($data);
+		 echo json_encode($output);
 			// $data['provinsi']=$this->provinsi->_get_provinsi_information();
 		}
 		public function submit(){
@@ -121,32 +130,36 @@ class PengusulanPengangkatan extends CI_Controller {
 			return $jsonResult;
 		}
 		public function loadData(){
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
 	 		$userAdmin=$this->session->userdata('nip');
 	 		$datas=$this->pengusul->load($userAdmin);
 			$a=1;
-			if($datas!='no data'){
-			foreach ($datas as $key) {
-				$dataRow['no']=$a;
+
+			foreach ($datas->result() as $key) {
+				$dataRow[]=$a;
 				//$nama=$this->apiuser($key->NIP);
-				$dataRow['nama']=$key->NAMA;
-				$dataRow['nip']=$key->NIP;
-				$dataRow['desc']=$key->DESC;
-				$dataRow['desc_status']=$key->DESC_STATUS;
+				$dataRow[]=$key->NAMA;
+				$dataRow[]=$key->NIP;
+				$dataRow[]=$key->DESC;
+				$dataRow[]=$key->DESC_STATUS;
 				$disable=($key->FK_STATUS_DOC=='2'?'style="display:none"':'');
 				$url=base_url('sertifikasi')."/unit_apip/PengusulanPengangkatan/vw_upload_doc/".$key->FK_STATUS_PENGUSUL_PENGANGKATAN."~".$key->PK_PENGUSUL_PENGANGKATAN."~".$key->NIP;
-				$dataRow['action']="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
+				$dataRow[]="<td><button onclick='getModal(this)' $disable id='btn-upload-doc' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
 						<span>Unggah Dokumen</span></button><button onclick='remove(".$key->PK_PENGUSUL_PENGANGKATAN.")' class='btn btn-danger'>Hapus</button></td>";
 				$data[]=$dataRow;
 				$a++;
 			}
-		}else{
-			$data = array(
-										 "msg" => "Data tidak ada",
-						 );
-		}
+			$output = array(
+				 "draw" => $draw,
+				 "recordsTotal" => $datas->num_rows(),
+				 "recordsFiltered" => $datas->num_rows(),
+				 "data" => $data
+			);
 	 	 //output to json format
-	 	 echo json_encode($data);
-	 		// $data['provinsi']=$this->provinsi->_get_provinsi_information();
+	 	 echo json_encode($output);
+
 	  }
 		public function vw_upload_doc($param){
 
@@ -170,13 +183,7 @@ class PengusulanPengangkatan extends CI_Controller {
 			$data['desc']=$parameter[0];
 			$data['id_pengusul']=$parameter[1];
 			$data['nip']=$parameter[2];
-			// $data_doc = array();
-			// $ignores=$this->pengusul->getFormatbynip($parameter[1]);
-			// foreach ($ignores as $key) {
-			// 	$data_doc[]=$key->DOC_PENGUSULAN_PENGANGKATAN;
-			// }
-			// $convertData = implode(",",$data_doc);
-      // $ignore = explode(",", $convertData);
+
 			$dataAll=$this->pengusul->getFormatDocument_belumlengkap($parameter[1],$parameter[0],$parameter[2]);
 			if($dataAll!='error_sql'){
 				foreach ($dataAll as $key) {
@@ -187,55 +194,7 @@ class PengusulanPengangkatan extends CI_Controller {
 			$this->load->view('sertifikasi/unit_apip/content/modal_upload_pengusulan_data_belum_lengkap',$data);
 			// echo 'asd';
 		}
-		// public function add_data(){
-		//
-		// 	$date = date('Ymd');
-		// 	$datex=date('Y-m-d');
-		// 	$nip=$this->input->post('nip');
-		// 	$dataCheckPeserta=$this->regis->loadbyNIP($nip,'1');
-		// 	if(!$dataCheckPeserta){
-		// 			$folder='doc_registrasi/'.$nip.'_'.$date;
-		// 			$docksp='doc_ksp';
-		// 			$docfoto='doc_foto';
-		// 			$uploadpdf = $this->do_upload_pdf($folder,$docksp);
-		// 			$uploadimg = $this->do_upload_img($folder,$docfoto);
-		// 			//$uploadimg = $this->do_upload_img($folder);
-		// 			// $uploadpdf='';
-		//
-		// 			// $this->session->set_userdata('group_regis', $group_regis);
-		// 			// $uploadpdf['result_upload_pdf']="success";
-		// 			if($uploadpdf['result_upload_pdf'] == "success" && $uploadimg['result_upload_img']){
-		// 				$doc_ksp=$folder.'/'.$_FILES['doc_ksp']['name'];
-		// 				$doc_foto=$folder.'/'.$_FILES['doc_foto']['name'];
-		// 				$data = array(
-		// 				 'NIP' => $this->input->post('nip'),
-		// 				 'GROUP_REGIS' => '',
-		// 				 'LOKASI_UJIAN' => $this->input->post('lokasi'),
-		// 				 'PK_JADWAL_UJIAN' => $this->input->post('jadwal'),
-		// 				 'NO_SURAT_UJIAN' => $this->input->post('no_surat'),
-		// 				 'NILAI_KSP' => $this->input->post('nilai_ksp'),
-		// 				 'DOC_NILAI_KSP' => $doc_ksp,
-		// 				 'DOC_FOTO' => $doc_foto,
-		// 				 'CREATED_BY' => $this->session->userdata('logged_in'),
-		// 				 'CREATED_DATE' => $datex,
-		// 				 'PROVINSI' => 'unknown',
-		// 				 'FLAG' => '1'
-		// 			 );
-		// 			 $insert=$this->regis->save($data);
-		// 			 if($insert=='Data Inserted Successfully'){
-		// 				 print json_encode(array("status"=>"success", "data"=>$insert));
-		// 			 }else{
-		// 				 print json_encode(array("status"=>"error", "data"=>$insert));
-		// 			 }
-		// 			}else{
-		// 				$data['upload_error1'] = $uploadpdf['error'];
-		// 				$data['upload_error2'] = $uploadimg['error'];
-		// 			}
-		// 			echo json_encode(array("status"=>$uploadpdf['result_upload_pdf']));
-		// 	}else{
-		// 		echo json_encode(array("status"=>'gagal'));
-		// 	}
-		// }
+
 		public function upload_submit(){
 				$desc = $this->input->post('desc');
 				$id_pengusul = $this->input->post('id_pengusul');

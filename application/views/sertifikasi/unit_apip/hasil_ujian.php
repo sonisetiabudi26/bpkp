@@ -21,7 +21,7 @@
 								<td>Status</td>
 							</tr>
 							</thead>
-
+								<tbody></tbody>
 							</table>
 					</div>
 
@@ -33,21 +33,22 @@
 <script>
 $(document).ready(function() {
 	var example_table = $('#dataResult').DataTable({
-		'ajax': {
-			"type"   : "POST",
+
+		"processing": false, //Feature control the processing indicator.
+		 "destroy": true,
+		"serverSide": true, //Feature control DataTables' server-side processing mode.
+		"order": [], //Initial no order.
+		// Load data for the table's content from an Ajax source
+		"ajax": {
 			"url"    : '<?php echo base_url('sertifikasi/unit_apip/KomponenNilai/loadData/')?>',
-			"dataSrc": ""
+			"type": "POST"
 		},
 		'columns': [
-			{"data" : "NIP"},
-			{"data" : "NAMA"},
-			{"data" : "NAMA_MATA_AJAR"},
-			{"data" : "STATUS"},
-
+			{"data": "0",width:50},
+			{"data": "1",width:100},
+			{"data": "2",width:100},
+			{"data": "3",width:100},
 		]
 		});
-
-
-
 });
 </script>

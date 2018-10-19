@@ -13,97 +13,65 @@
 		height:70px;
 	}
 </style>
-<div class="page-title">
+<!-- <div class="page-title">
 	<div class="title_left">
 		<h3>Dashboard UNIT APIP</h3>
 	</div>
 </div>
-<div class="clearfix"></div>
-
-<!-- <div class="row"> -->
-	<!-- <div class="row">
-
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>IKUT DIKLAT</h2>
-
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<h3>5 Orang</h3>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>IKUT UJIAN</h2>
-
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<h3>4 Orang</h3>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>DATA AUDITOR TAMPIL</h2>
-
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<h3>1 Orang</h3>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>AUDITOR INPASSING</h2>
-
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<h3>0 Orang</h3>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-</div> -->
+<div class="clearfix"></div> -->
+<br>
+<div class="row" >
+	<div class="col-sm-12" style="border-bottom:0.4px solid #ddd">
+	<span style="color:#666;font-size:14px"><b>Data Umum Unit APIP</b></span>
+</div>
+</div>
+<br>
 <div class="row">
-	<div class="col-sm-3">
+	<div class="col-sm-6">
 		<div class="card" style="background:#D7768F">
 			<div class="card-body">
+				<div class="col-lg-1">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-users"></i></label>
+				</div>
+				<div class="col-lg-11">
+					<h5 class="card-title"><b>Auditor Dokumen Belum Lengkap (Pengusulan Pengangkatan)</b></h5>
+					<h2 class="card-text"><?php echo $dokumen_belum_lengkap?> ORANG</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card" style="background:#E7B18C">
+			<div class="card-body">
+				<div class="col-lg-1">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-users"></i></label>
+				</div>
+				<div class="col-lg-11">
+				<h5 class="card-title"><b>IKUT UJIAN</b></h5>
+				<h2 class="card-text"><?php echo $ikut_ujian ?> ORANG</h2>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+<div class="row" >
+	<div class="col-sm-12" style="border-bottom:0.4px solid #ddd">
+	<span style="color:#666;font-size:14px"><b>Data Pengusulan Pengangkatan</b></span>
+</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-sm-3">
+		<div class="card" style="background:#8E87A4">
+			<div class="card-body">
 				<div class="col-lg-2">
-					<label style="font-size:45px;color:#fff"><i class="fa fa-file-o"></i></label>
+					<label style="font-size:45px;color:#fff"><i class="fa fa-users"></i></label>
 				</div>
 				<div class="col-lg-10">
-					<h5 class="card-title"><b>IKUT DIKLAT</b></h5>
-					<h2 class="card-text">6 ORANG</h2>
-				</div>
+				<h5 class="card-title"><b>AUDITOR PERTAMA</b></h5>
+				<h2 class="card-text"><?php echo $pertama?> ORANG</h2>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -111,24 +79,11 @@
 		<div class="card" style="background:#76B5D7">
 			<div class="card-body">
 				<div class="col-lg-2">
-					<label style="font-size:45px;color:#fff"><i class="fa fa-file-o"></i></label>
+					<label style="font-size:45px;color:#fff"><i class="fa fa-users"></i></label>
 				</div>
 				<div class="col-lg-10">
-				<h5 class="card-title"><b>IKUT UJIAN</b></h5>
-				<h2 class="card-text">12 ORANG</h2>
-			</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-3">
-		<div class="card" style="background:#60BF6B">
-			<div class="card-body">
-				<div class="col-lg-2">
-					<label style="font-size:45px;color:#fff"><i class="fa fa-file-o"></i></label>
-				</div>
-				<div class="col-lg-10">
-				<h5 class="card-title"><b>DATA AUDITOR TAMPIL</b></h5>
-				<h2 class="card-text">9 ORANG</h2>
+				<h5 class="card-title"><b>AUDITOR INPASSING</b></h5>
+				<h2 class="card-text"><?php echo $inpassing?> ORANG</h2>
 			</div>
 			</div>
 		</div>
@@ -137,17 +92,30 @@
 		<div class="card" style="background:#59BBAE">
 			<div class="card-body">
 				<div class="col-lg-2">
-					<label style="font-size:45px;color:#fff"><i class="fa fa-file-o"></i></label>
+					<label style="font-size:45px;color:#fff"><i class="fa fa-users"></i></label>
 				</div>
 				<div class="col-lg-10">
-				<h5 class="card-title"><b>AUDITOR INPASSING</b></h5>
-				<h2 class="card-text">6 ORANG</h2>
+				<h5 class="card-title"><b>AUDITOR PERPINDAHAN</b></h5>
+				<h2 class="card-text"><?php echo $perpindahan?>  ORANG</h2>
+			</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="card" style="background:#60BF6B">
+			<div class="card-body">
+				<div class="col-lg-2">
+					<label style="font-size:45px;color:#fff"><i class="fa fa-users"></i></label>
+				</div>
+				<div class="col-lg-10">
+				<h5 class="card-title"><b>AUDITOR KEMBALI</b></h5>
+				<h2 class="card-text"><?php echo $kembali?> ORANG</h2>
 			</div>
 			</div>
 		</div>
 	</div>
 </div>
-<br/>
+<br/><br>
 <div class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel" style="border:none">
@@ -200,7 +168,7 @@ $(document).ready(function() {
 								{"data": "2",width:100},
 								{"data": "3",width:100},
 								{"data": "4",width:100},
-									{"data": "5",width:100}
+								{"data": "5",width:100}
 						],
 
 				});

@@ -194,7 +194,7 @@
 								  <td>Tindakan</td>
   							</tr>
   							</thead>
-
+								<tbody></tbody>
   							</table>
 							</div>
 							<div class="row">
@@ -298,52 +298,31 @@ function search(){
 			swal('Terjadi Kesalahan','NIP tidak boleh kosong','error');
 	}
 }
-
-
-
-//load data
-// loadData(1);
 function loadData(data){
 		$('#dataResult').DataTable().ajax.reload();
 }
 
 $(document).ready(function() {
 	  document.getElementById("show_data").style.display = "none";
-		// document.getElementById("dataResult").innerHTML='';
 		var example_table = $('#dataResult').DataTable({
-			'ajax': {
-				"type"   : "POST",
+			"processing": false, //Feature control the processing indicator.
+			 "destroy": true,
+			"serverSide": true, //Feature control DataTables' server-side processing mode.
+			"order": [], //Initial no order.
+			// Load data for the table's content from an Ajax source
+			"ajax": {
 				"url"    : '<?php echo base_url('sertifikasi/unit_apip/registrasi/loadData/')?>',
-				"dataSrc": ""
+				"type": "POST"
 			},
 			'columns': [
-				{"data" : "NIP"},
-				{"data" : "NAMA"},
-				{"data" : "NO_SURAT_UJIAN"},
-				{"data" : "JADWAL"},
-				{"data" : "ACTION"},
+				{"data": "0",width:50},
+				{"data": "1",width:100},
+				{"data": "2",width:100},
+				{"data": "3",width:100},
+				{"data": "4",width:100},
 
 			]
 			});
-
-
-
-  // $.ajax({
-  //     type  : 'ajax',
-  //     url   :  "<?php //echo base_url('sertifikasi/unit_apip/registrasi/loadData/')?>",
-  //     async : false,
-  //     dataType : 'json',
-  //     success : function(data){
-	//
-	// 			var nip='';
-	// 			data.forEach(function(resp) {
-	// 				for (var i = 0; i < resp.length; i++) {
-	// 					$("#dataResult").append("<tr><td>" + (resp[i].NIP != nip ? resp[i].NIP : '') + "</td><td>"+resp[i].NAMA_MATA_AJAR+"</td><td>" + (resp[i].NIP != nip ? resp[i].NO_SURAT_UJIAN : '') + "</td><td>" + (resp[i].NIP != nip ? resp[i].START_DATE + " - "+ resp[i].END_DATE  : '')+"</td></tr>");
-	// 					nip=resp[i].NIP;
-	// 				}
-	// 		  });
-  //     }
-	// });
 });
 
 </script>

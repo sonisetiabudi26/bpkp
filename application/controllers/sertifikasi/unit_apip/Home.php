@@ -100,13 +100,16 @@ class Home extends CI_Controller {
       return $jsonResult;
     }
 		public function loadData(){
+			$draw = intval($this->input->get("draw"));
+      $start = intval($this->input->get("start"));
+      $length = intval($this->input->get("length"));
 			$nip = $this->session->userdata('nip');
 			$datas=$this->regisujian->loadDatabyNIP2($nip);
 			$data = array();
 			//$no = $_POST['start'];
 			$a=1;
 
-				foreach ($datas as $field) {
+				foreach ($datas->result() as $field) {
 						$row = array();
 						$row[] = $a;
 						$row[] = $field->NIP;
@@ -130,10 +133,10 @@ class Home extends CI_Controller {
 
 
 			$output = array(
-					"draw" => 'dataEvent',
-					"recordsTotal" => $a,
-					"recordsFiltered" => $a,
-					"data" => $data,
+				 "draw" => $draw,
+				 "recordsTotal" => $datas->num_rows(),
+				 "recordsFiltered" => $datas->num_rows(),
+				 "data" => $data
 			);
 			//output dalam format JSON
 			echo json_encode($output);

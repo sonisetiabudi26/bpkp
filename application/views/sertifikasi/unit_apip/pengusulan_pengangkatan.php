@@ -130,8 +130,8 @@
 													<td>Tindakan</td>
 												</tr>
 												</thead>
-												<!-- <tbody id="dataAuditor">
-												</tbody> -->
+												<tbody >
+												</tbody>
 												</table>
 
 			              </div>
@@ -198,8 +198,8 @@
 												<td>Tindakan</td>
 											</tr>
 											</thead>
-											<!-- <tbody id="dataAuditor">
-											</tbody> -->
+											<tbody>
+											</tbody>
 											</table>
 
 									</div>
@@ -225,8 +225,8 @@
 
 											</tr>
 											</thead>
-											<!-- <tbody id="dataAuditor">
-											</tbody> -->
+											<tbody>
+											</tbody>
 											</table>
 
 									</div>
@@ -298,46 +298,59 @@ function search(){
 $(document).ready(function() {
 
 		//document.getElementById("datatable-responsive").innerHTML='';
-		var example_table = $('#example_table').DataTable({
-  'ajax': {
-    "type"   : "POST",
-    "url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadData/')?>',
-    "dataSrc": ""
-  },
+var example_table = $('#example_table').DataTable({
+	"processing": false, //Feature control the processing indicator.
+	 "destroy": true,
+	"serverSide": true, //Feature control DataTables' server-side processing mode.
+	"order": [], //Initial no order.
+	// Load data for the table's content from an Ajax source
+	"ajax": {
+			"url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadData/')?>',
+			"type": "POST"
+	},
   'columns': [
-    {"data" : "no"},
-    {"data" : "nama"},
-    {"data" : "nip"},
-    {"data" : "desc"},
-		{"data" : "desc_status"},
-		{"data" : "action"}
+  	{"data": "0",width:50},
+		{"data": "1",width:100},
+		{"data": "2",width:100},
+		{"data": "3",width:100},
+		{"data": "4",width:100},
+		{"data": "5",width:100},
   ]
 });
 var databelumlengkap = $('#document_belum_lengkap').DataTable({
-	'ajax': {
-		"type"   : "POST",
+	"processing": false, //Feature control the processing indicator.
+	 "destroy": true,
+	"serverSide": true, //Feature control DataTables' server-side processing mode.
+	"order": [], //Initial no order.
+	// Load data for the table's content from an Ajax source
+	"ajax": {
 		"url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDatabelumlengkap/')?>',
-		"dataSrc": ""
+		"type": "POST"
 	},
 	'columns': [
-		{"data" : "no"},
-		{"data" : "nama"},
-		{"data" : "nip"},
-		{"data" : "desc"},
-		{"data" : "desc_status"},
-		{"data" : "action"}
+		{"data": "0",width:50},
+		{"data": "1",width:100},
+		{"data": "2",width:100},
+		{"data": "3",width:100},
+		{"data": "4",width:100},
+		{"data": "5",width:100},
 	]
 	});
 	var resi = $('#resi').DataTable({
-		'ajax': {
-			"type"   : "POST",
+		"processing": false, //Feature control the processing indicator.
+		 "destroy": true,
+		"serverSide": true, //Feature control DataTables' server-side processing mode.
+		"order": [], //Initial no order.
+		// Load data for the table's content from an Ajax source
+		"ajax": {
 			"url"    : '<?php echo base_url('sertifikasi/unit_apip/PengusulanPengangkatan/loadDataResi/')?>',
-			"dataSrc": ""
+			"type": "POST"
 		},
 		'columns': [
-			{"data" : "no"},
-			{"data" : "ekspedisi"},
-			{"data" : "no_resi"},
+			{"data": "0",width:50},
+			{"data": "1",width:100},
+			{"data": "2",width:100},
+
 		]
 		});
 

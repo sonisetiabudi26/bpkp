@@ -87,34 +87,32 @@ class Registrasi extends CI_Controller {
 		}
 
 		 public function loadData(){
+			 $draw = intval($this->input->get("draw"));
+       $start = intval($this->input->get("start"));
+       $length = intval($this->input->get("length"));
 			 $dataRows=array();
-			  $userAdmin=$this->session->userdata('nip');
-			 	$datas=$this->regis->loaddatabyuser($userAdmin);
-				// foreach ($datas as $key ) {
-				//  $dataRow=$this->regis->getdataHistory($key->PK_REGIS_UJIAN,$userAdmin);
-				//  if($dataRow=='empty'){
-				// 	 $dataRow=$this->regis->loaddatabyuseranddiklat($key->KODE_DIKLAT,$key->CREATED_BY,0);
-				//  }
-				 foreach ($datas as $key) {
-					$row['NIP']=$key->NIP;
-
-					// $apiuser=$this->apiuser($key->NIP);
-					// if($apiuser->message!='auditor_not_found' ){
-					$row['NAMA'] = $key->NAMA;
-					// }else{
-					// $row['NAMA'] ='unknown';
-					// }
-					$row['NO_SURAT_UJIAN']=$key->NO_SURAT_UJIAN;
-					$row['JADWAL']=$key->START_DATE.' - '.$key->END_DATE;
+			 $userAdmin=$this->session->userdata('nip');
+			 $datas=$this->regis->loaddatabyuser($userAdmin);
+				 foreach ($datas->result() as $key) {
+					$row[]=$key->NIP;
+					$row[] = $key->NAMA;
+					$row[]=$key->NO_SURAT_UJIAN;
+					$row[]=$key->START_DATE.' - '.$key->END_DATE;
 					$url=base_url('sertifikasi')."/unit_apip/Registrasi/vw_detail_peserta/".$key->PK_REGIS_UJIAN;
-					$row['ACTION']="<td><a onclick='getModal(this)' id='data_detail' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
+					$row[]="<td><a onclick='getModal(this)' id='data_detail' data-href='".$url."' data-toggle='modal' data-target='#modal-content' class='btn btn-primary'>
 		            <span>Lihat Data</span></a></td>";
 				  $dataRows[]=$row;
 				 }
+				 $output = array(
+						"draw" => $draw,
+						"recordsTotal" => $datas->num_rows(),
+						"recordsFiltered" => $datas->num_rows(),
+						"data" => $dataRows
+				 );
 
 			//	}
 			 //output to json format
-			 echo json_encode($dataRows);
+			 echo json_encode($output);
 		 }
 		 public function vw_detail_peserta($param){
 			  $userAdmin=$this->session->userdata('nip');
@@ -338,10 +336,6 @@ class Registrasi extends CI_Controller {
 						 // $data['upload_error2'] = $uploadimg['error'];
 						 print json_encode(array("status"=>'error','msg'=>'gagal upload'));
 					 }
-
-			 // }else{
-				//  echo json_encode(array("status"=>'gagal'));
-			 // }
 		 }
 
 }

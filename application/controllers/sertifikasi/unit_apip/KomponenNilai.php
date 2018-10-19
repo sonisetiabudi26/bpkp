@@ -28,27 +28,36 @@ class KomponenNilai extends CI_Controller {
       }
     }
 		public function loadData(){
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
+			$userAdmin=$this->session->userdata('nip');
 			$dataRows = array();
 			$nip = $this->session->userdata('nip');
 			$dataAll=$this->lookup_ujian->getDataNilaibyunitapip($nip);
-			foreach ($dataAll as $key) {
-				$data['NIP']=$key->NIP;
+			foreach ($dataAll->result() as $key) {
+				$data[]=$key->NIP;
 				$apiuser=$this->apiuser($key->NIP);
 				if($apiuser->message!='auditor_not_found' ){
-				$data['NAMA'] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
+				$data[] = $apiuser->data[0]->Auditor_GelarDepan.' '.$apiuser->data[0]->Auditor_NamaLengkap.', '.$apiuser->data[0]->Auditor_GelarBelakang;
 				// $data['kodeunitkerja']=$apiuser->data[0]->NamaUnitKerja;
 				}else{
-					$data['NAMA'] ='unknown';
+					$data[] ='unknown';
 					// $data['kodeunitkerja']='empty';
 				}
-				$data['NAMA_MATA_AJAR']=$key->NAMA_MATA_AJAR;
-				$data['STATUS']=$key->STATUS;
+				$data[]=$key->NAMA_MATA_AJAR;
+				$data[]=$key->STATUS;
 				$dataRows[]=$data;
 			}
-
+			$output = array(
+				 "draw" => $draw,
+				 "recordsTotal" => $dataAll->num_rows(),
+				 "recordsFiltered" => $dataAll->num_rows(),
+				 "data" => $dataRows
+			);
 
 		//output to json format
-		echo json_encode($dataRows);
+		echo json_encode($output);
 		}
 		public function apiuser($nip){
 			$url="http://163.53.185.91:8083/sibijak/dca/api/api/auditor/".$nip;

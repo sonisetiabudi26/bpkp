@@ -136,13 +136,13 @@ class PengusulPengangkatan extends My_Model
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
 		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');
 		$this->db->where($condition);
-		$query = $this->db->get();
+		return $query = $this->db->get();
 	//	return $query->result();
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return "no data";
-		}
+		// if ($query->num_rows() > 0) {
+		// 	return $query->result();
+		// } else {
+		// 	return "no data";
+		// }
 	}
 	public function total_pengusul($param){
 		$condition = "NO_SURAT=" . "'" . $param . "'";
@@ -200,13 +200,8 @@ class PengusulPengangkatan extends My_Model
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
 		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');
 		$this->db->where($condition);
-		$query = $this->db->get();
-	//	return $query->result();
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return "no data";
-		}
+		return $query = $this->db->get();
+
 	}
 	public function loaddataResi($userAdmin){
 		$condition = "pertek.NO_RESI!='' and pertek.NO_SURAT!='' and pengusul_pengangkatan.CREATED_BY =" . "'" . $userAdmin . "' group by pertek.NO_SURAT";
@@ -215,13 +210,9 @@ class PengusulPengangkatan extends My_Model
 		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
 		$this->db->join('pertek', 'pengusul_pengangkatan.NO_SURAT = pertek.NO_SURAT');
 		$this->db->where($condition);
-		$query = $this->db->get();
+		return $query = $this->db->get();
 	//	return $query->result();
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return "no data";
-		}
+
 	}
 	public function loadData(){
 		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' and pengusul_pengangkatan.validator='' group by pengusul_pengangkatan.CREATED_BY";
@@ -238,6 +229,18 @@ class PengusulPengangkatan extends My_Model
 		} else {
 			return "no data";
 		}
+	}
+	public function loadDataPengusulan($status,$nip){
+		$condition = "pengusul_pengangkatan.FK_STATUS_DOC=" . "'" . 2 . "' and pengusul_pengangkatan.CREATED_BY=" . "'" . $nip . "' and pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN=" . "'" . $status . "'  group by pengusul_pengangkatan.CREATED_BY";
+		$this->db->select('pengusul_pengangkatan.*,status_pengusulan_pengangkatan.DESC,status_doc.DESC_STATUS,pengusul_pengangkatan.validator');
+		$this->db->from($this->_table);
+		$this->db->join('status_pengusulan_pengangkatan', 'pengusul_pengangkatan.FK_STATUS_PENGUSUL_PENGANGKATAN = status_pengusulan_pengangkatan.PK_STATUS_PENGUSUL_PENGANGKATAN');
+		$this->db->join('status_doc', 'pengusul_pengangkatan.FK_STATUS_DOC = status_doc.PK_STATUS_DOC');
+		$this->db->join('document_pengusulan_pengangkatan', 'pengusul_pengangkatan.CREATED_BY = document_pengusulan_pengangkatan.CREATED_BY');
+		$this->db->where($condition);
+		return $query = $this->db->get();
+	//	return $query->result();
+
 	}
  public function remove($id){
 	 $this->db->where('PK_PENGUSUL_PENGANGKATAN', $id);
