@@ -36,6 +36,7 @@ class KomponenNilai extends CI_Controller {
 			$nip = $this->session->userdata('nip');
 			$dataAll=$this->lookup_ujian->getDataNilaibyunitapip($nip);
 			foreach ($dataAll->result() as $key) {
+				$data=array();
 				$data[]=$key->NIP;
 				$apiuser=$this->apiuser($key->NIP);
 				if($apiuser->message!='auditor_not_found' ){

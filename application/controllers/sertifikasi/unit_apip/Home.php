@@ -12,6 +12,7 @@ class Home extends CI_Controller {
     		$this->load->helper('url');
     		$this->load->model('sertifikasi/MenuPage','menupage');
 				$this->load->model('sertifikasi/RegisUjian','regisujian');
+				$this->load->model('sertifikasi/PengusulPengangkatan','pengusul');
 
     }
 
@@ -25,7 +26,18 @@ class Home extends CI_Controller {
         $data['title_page'] = 'BPKP Web Application';
         $data['content_page']='unit_apip/homepage.php';
         $data['username']=$username;
-
+				$datas=$this->regisujian->loadDatabyNIP2($nip);
+				$data_pengusul_pertama=$this->pengusul->loadDataPengusulan('1',$nip);
+				$data_pengusul_perpindahan=$this->pengusul->loadDataPengusulan('2',$nip);
+				$data_pengusul_inpassing=$this->pengusul->loadDataPengusulan('3',$nip);
+				$data_pengusul_kembali=$this->pengusul->loadDataPengusulan('4',$nip);
+				$data_dokumen_belum_lengkap=$this->pengusul->loadbelumlengkap($nip);
+				$data['ikut_ujian']=$datas->num_rows();
+				$data['inpassing']=$data_pengusul_inpassing->num_rows();
+				$data['kembali']=$data_pengusul_kembali->num_rows();
+				$data['perpindahan']=$data_pengusul_perpindahan->num_rows();
+				$data['pertama']=$data_pengusul_pertama->num_rows();
+				$data['dokumen_belum_lengkap']=$data_dokumen_belum_lengkap->num_rows();
 
 				getMenuAccessPage($data, $fk_lookup_menu);
       }else{
@@ -44,7 +56,7 @@ class Home extends CI_Controller {
 			$data_identitas=$this->regisujian->getDatabypk($pk);
 			foreach ($data_identitas as $key) {
 				$data['nip']=$key->NIP;
-				$data['lokasi']=$key->NAMA;
+				$data['lokasi']=$key->Prov;
 				$data['kode_diklat']=$key->KODE_DIKLAT.' - '.$key->NAMA_JENJANG;
 				$data['nama'] = $key->NAMA;
 				$jadwal_mulai = explode('/',$key->START_DATE);

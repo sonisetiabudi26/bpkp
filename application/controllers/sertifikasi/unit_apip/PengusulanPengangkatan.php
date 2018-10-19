@@ -44,12 +44,13 @@ class PengusulanPengangkatan extends CI_Controller {
 			$userAdmin=$this->session->userdata('nip');
 			$datas=$this->pengusul->loaddataResi($userAdmin);
 			$a=1;
-
+			$data = array();
 			foreach ($datas->result() as $key) {
-				$dataRow['no']=$a;
+				$dataRow = array();
+				$dataRow[]=$a;
 				//$nama=$this->apiuser($key->NIP);
-				$dataRow['ekspedisi']=$key->EKSPEDISI;
-				$dataRow['no_resi']=$key->NO_RESI;
+				$dataRow[]=$key->EKSPEDISI;
+				$dataRow[]=$key->NO_RESI;
 				$data[]=$dataRow;
 				$a++;
 			}
@@ -70,8 +71,9 @@ class PengusulanPengangkatan extends CI_Controller {
 			$userAdmin=$this->session->userdata('nip');
 			$datas=$this->pengusul->loadbelumlengkap($userAdmin);
 			$a=1;
-
+      $data = array();
 			foreach ($datas->result() as $key) {
+				$dataRow = array();
 				$dataRow[]=$a;
 				//$nama=$this->apiuser($key->NIP);
 				$dataRow[]=$key->NAMA;
@@ -136,8 +138,9 @@ class PengusulanPengangkatan extends CI_Controller {
 	 		$userAdmin=$this->session->userdata('nip');
 	 		$datas=$this->pengusul->load($userAdmin);
 			$a=1;
-
+			$data = array();
 			foreach ($datas->result() as $key) {
+				$dataRow = array();
 				$dataRow[]=$a;
 				//$nama=$this->apiuser($key->NIP);
 				$dataRow[]=$key->NAMA;

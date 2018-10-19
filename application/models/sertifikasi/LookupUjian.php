@@ -89,8 +89,7 @@ class LookupUjian extends My_Model
 		$this->db->join('registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN= lookup_ujian.FK_REGIS_UJIAN');
 		$this->db->join('mata_ajar', 'lookup_ujian.FK_MATA_AJAR = mata_ajar.PK_MATA_AJAR');
 		$this->db->where($condition);
-		$query = $this->db->get();
-		return $query->result();
+		return $query = $this->db->get();
 	}
 	public function getDataidentitasSertifikat($id){
 		$condition = "sertifikat.FK_REGIS_UJIAN ='" . $id . "'";
