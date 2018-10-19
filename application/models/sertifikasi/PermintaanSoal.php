@@ -18,6 +18,12 @@ class PermintaanSoal extends My_Model
 			 return 'Data Inserted Failed';
 		 }
 	}
+	public function getcount_permintaansoal(){
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		return $query = $this->db->get();
+		 
+	}
 	public function getdata_diklat(){
 		$this->db->select('permintaan_soal.*,bab_mata_ajar.NAMA_BAB_MATA_AJAR,mata_ajar.NAMA_MATA_AJAR,jenjang.NAMA_JENJANG');
 		$this->db->from($this->_table);

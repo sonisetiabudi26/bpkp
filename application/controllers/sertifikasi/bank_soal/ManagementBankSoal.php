@@ -316,12 +316,15 @@ class ManagementBankSoal extends CI_Controller {
 
 		}
 		public function loadKodeSoalpublish(){
-			$dataAll=$this->kodesoal->view();
+			$draw = $_REQUEST['draw'];
+			$start =$_REQUEST['start'];
+			$length =$_REQUEST['length'];
+			$dataAll=$this->kodesoal->get_datatables_kode_soal();
 			 $data = array();
 			 //$no = $_POST['start'];
 			 $a=1;
 
-				 foreach ($dataAll as $field) {
+				 foreach ($dataAll->result() as $field) {
 					 	$id_soal=$field->KODE_SOAL;
 						$numrow=$this->kodesoal->total_soal_row($id_soal);
 						if($numrow!='nodata'){
@@ -356,9 +359,9 @@ class ManagementBankSoal extends CI_Controller {
 
 
 			 $output = array(
-					 "draw" => 'dataEvent',
-					 "recordsTotal" => $a,
-					 "recordsFiltered" => $a,
+					 "draw" => $draw,
+					 "recordsTotal" => $this->kodesoal->count_all_kode_soal(),
+					 "recordsFiltered" => $dataAll->num_rows(),
 					 "data" => $data,
 			 );
 			 //output dalam format JSON

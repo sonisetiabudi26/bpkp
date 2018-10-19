@@ -35,7 +35,7 @@
 				</div>
 				<div class="col-lg-10">
 				<h5 class="card-title"><b>Total Permintaan Buat Soal</b></h5>
-        <h2 class="card-text">12 SOAL</h2>
+        <h2 class="card-text"><?php echo $permintaan ?> SOAL</h2>
 			</div>
       </div>
     </div>
@@ -48,7 +48,7 @@
 				</div>
 				<div class="col-lg-10">
 				<h5 class="card-title"><b>Total Kode Soal</b></h5>
-				<h2 class="card-text">9 SOAL</h2>
+				<h2 class="card-text"><?php echo $kode_soal ?> BUTIR</h2>
 			</div>
 			</div>
 		</div>
@@ -61,7 +61,7 @@
 				</div>
 				<div class="col-lg-10">
 				<h5 class="card-title"><b>Total Konfigurasi Ujian</b></h5>
-        <h2 class="card-text">6 SOAL</h2>
+        <h2 class="card-text"><?php echo $konfig; ?> KONFIG</h2>
 			</div>
 			</div>
 		</div>
