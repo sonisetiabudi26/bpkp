@@ -111,14 +111,22 @@
 
 							</div>
 							<div class="row">
-								<label>Kode Diklat <span class="mandatory">*</span></label>
+								<label>Jenjang Ujian <span class="mandatory">*</span></label>
 								<select class="form-control" name="diklat" id="diklat" >
-									<option value="">--Kode diklat--</option>
+									<option value="">--Jenjang Ujian--</option>
 									<?php foreach($diklat as $row) { ?>
 										 <option value="<?php echo $row->KODE_DIKLAT;?>"><?php echo $row->KODE_DIKLAT.' - '.$row->NAMA_JENJANG ;?></option>
 								 <?php } ?>
 							 </select>
 							</div><br/>
+							<div class="row">
+								<label>Cluster <span class="mandatory">*</span></label>
+								<div>
+									<input type="radio" name="cluster" value="01"> BPKP<br>
+								  <input type="radio" name="cluster" value="02"> Pusat<br>
+								  <input type="radio" name="cluster" value="03"> Daerah
+								</div>
+              </div><br/>
               <div class="row">
 								<label>Jadwal Ujian <span class="mandatory">*</span></label>
 								<select class="form-control" name="jadwal" id="jadwal" >

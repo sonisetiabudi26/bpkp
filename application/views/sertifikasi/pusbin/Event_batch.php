@@ -92,15 +92,16 @@ $(document).ready(function(){
 
   var table;
         table = $('#dataEventAll').DataTable({
-              "processing": false, //Feature control the processing indicator.
-              "destroy": true,
-             "serverSide": true, //Feature control DataTables' server-side processing mode.
-              "order": [], //Initial no order.
-                'ajax': {
-                  "type"   : "POST",
-                  "url"    : '<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/LoadDateEventbyid/')?>'+id,
-                  "dataSrc": ""
-                },
+            
+								"processing": false, //Feature control the processing indicator.
+								 "destroy": true,
+								"serverSide": true, //Feature control DataTables' server-side processing mode.
+								"order": [], //Initial no order.
+								// Load data for the table's content from an Ajax source
+								"ajax": {
+									"url"    : '<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/LoadDateEventbyid/')?>'+id,
+									"type": "POST"
+								},
                 //Set column definition initialisation properties.
                 "columns": [
 									{"data": "0",width:50},

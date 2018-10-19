@@ -227,9 +227,7 @@ public function getUnit(){
 	$this->db->join('jenjang', 'event.KODE_DIKLAT = jenjang.KODE_DIKLAT');
 	$this->db->where($condition);
 	// $this->db->group_by('KODE_UNIT');
-	$query = $this->db->get();
-
-	return $query->result();
+	return $query = $this->db->get();
 
 }
 public function getPesertabyUnit($id_unit,$id_event){
