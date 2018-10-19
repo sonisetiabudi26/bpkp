@@ -24,22 +24,24 @@ class PerhitunganNilai extends CI_Controller {
 				$this->load->model('sertifikasi/LookupUjian','lookup_ujian');
     }
 		public function loadDataJenjang(){
-			$dataAll=$this->groupmataajar->_get_all_group_mata_ajar();
+			$draw = intval($this->input->get("draw"));
+			$start = intval($this->input->get("start"));
+			$length = intval($this->input->get("length"));
+			$dataAll=$this->groupmataajar->get_data_jenjang();
 			$data = array();
 			$a=1;
 
-				foreach ($dataAll as $field) {
+				foreach ($dataAll->result() as $field) {
 						$row = array();
-
-						$row['kode'] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_event/".$field->KODE_DIKLAT.'">'.$field->KODE_DIKLAT.'</a>';
-						$row['nama'] = $field->NAMA_JENJANG;
+						// $row['kode'] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_event/".$field->KODE_DIKLAT.'">'.$field->KODE_DIKLAT.'</a>';
+						$row[] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_event/".$field->KODE_DIKLAT.'">'.$field->NAMA_JENJANG.'</a>';
 						$data[] = $row;
 						$a++;
 				}
 				$output = array(
-						"draw" => 'dataJenjang',
-						"recordsTotal" => $a,
-						"recordsFiltered" => $a,
+						"draw" => $draw,
+						"recordsTotal" => $dataAll->num_rows(),
+						"recordsFiltered" => $dataAll->num_rows(),
 						"data" => $data,
 				);
 			//output dalam format JSON

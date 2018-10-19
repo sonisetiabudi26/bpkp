@@ -1,5 +1,5 @@
 <div>
-	
+
 <div class="page-title">
 	<div class="title_left">
 		<h3>Perhitungan Nilai</h3>
@@ -27,12 +27,11 @@
 					            <table id="datajenjang" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 												<thead>
 												<tr>
-
-													<td>Kode Diklat</td>
+													<!-- <td>Kode Diklat</td> -->
 													<td>Nama Jenjang</td>
 												</tr>
 												</thead>
-
+													<tbody></tbody>
 												</table>
 										</div>
 
@@ -125,8 +124,8 @@ $(document).ready(function(){
 		              //Set column definition initialisation properties.
 		              "columns": [
 
-									 {"data": "kode",width:100},
-									 {"data": "nama",width:100}
+									 // {"data": "kode",width:100},
+									 {"data": 0,width:100}
 
 		              ],
 

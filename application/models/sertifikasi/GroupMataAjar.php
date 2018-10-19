@@ -29,6 +29,15 @@ class GroupMataAjar extends My_Model
 			$query = $this->db->get();
 	    return $query->result();
 	}
+	public function get_data_jenjang()
+	{
+			// $condition = "order by KODE_DIKLAT";
+	    $this->db->select('*');
+	    $this->db->from($this->_table);
+			$this->db->order_by('KODE_DIKLAT','asc');
+			return $query = $this->db->get();
+
+	}
 	public function getalldatakodediklat_mataajar()
 	{
 
