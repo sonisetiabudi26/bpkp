@@ -158,9 +158,16 @@
 														 </div><br/>
 														<div class="row">
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span>No Surat <span class="mandatory">*</span></span></div>
-															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='no_surat' class="form-control" id="no_surat" placeholder='Masukan No Surat'/></div>
+															<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><input name='no_surat' class="form-control" id="no_surat" placeholder='Masukan No Surat' required/></div>
 														</div>
-														<br/>
+														<br/><hr/>
+														<div class="row">
+																<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																	<input type="checkbox" name="setuju" value="1" required> Dengan ini saya telah menyetujui bahwa data diatas telah benar,
+jika belum, ubah kembali data anda pada data center <span>No Surat <span class="mandatory">*</span><br>
+																</div>
+														</div>
+														<hr/>
 														<div class="row">
 															<button class="btn btn-primary btn-block" id="btn-upload-surat" type="submit"> <i class="fa fa-paper-plane"></i> Ajukan</button>
 														</div>
