@@ -117,7 +117,7 @@
 </div>
 <br/><br>
 <div class="row">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 		<div class="x_panel" style="border:none">
 			<h4>Daftar Peserta Ujian</h4>
 			<div class="x_content">
@@ -131,6 +131,32 @@
 								<td>Nama</td>
 								<td>Kode Diklat</td>
 								<td>Unit/ Instansi</td>
+								<td>Tindakan</td>
+							</tr>
+							</thead>
+							<tbody>
+							</tbody>
+							</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+		<div class="x_panel" style="border:none">
+			<h4>Data Capaian Sertifikat</h4>
+			<div class="x_content">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+						<table id="data-sertifikat" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+							<thead>
+							<tr>
+								<td>No</td>
+								<td>Jenjang</td>
+								<td>Jumlah Peserta</td>
+								<td>Jumlah Lulus</td>
+								<td>Jumlah Sertifikat</td>
 								<td>Tindakan</td>
 							</tr>
 							</thead>
