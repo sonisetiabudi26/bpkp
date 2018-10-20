@@ -12,7 +12,12 @@ class SoalUjian extends My_Model
 	public function view(){
 		return $this->db->get($this->_table)->result();
 	}
-
+	public function getcount_soalujian(){
+		$this->db->select('*');
+		$this->db->from($this->_table);
+		// $this->db->where($condition);
+		return $query = $this->db->get();
+	}
 	/** ini fungsi untuk melakukan insert lebih dari 1 data */
 	public function insert_multiple($data){
 		$this->db->insert_batch($this->_table, $data);

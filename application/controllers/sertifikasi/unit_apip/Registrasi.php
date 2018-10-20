@@ -174,7 +174,7 @@ class Registrasi extends CI_Controller {
 								'NAMA' => $nama,
 								'GROUP_REGIS' => '',
 								'KODE_DIKLAT' => $this->input->post('diklat'),
-								'WILAYAH' => $this->input->post('cluster'),
+								'WILAYAH' => $this->input->post('wilayah'),
 					 			'LOKASI_UJIAN' => ($this->input->post('lokasi')==''?$provinsiId:$this->input->post('lokasi')),
 					 			'FK_JADWAL_UJIAN' => $this->input->post('jadwal'),
 					 			'NO_SURAT_UJIAN' => $this->input->post('no_surat'),

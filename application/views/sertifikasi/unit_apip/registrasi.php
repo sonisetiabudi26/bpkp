@@ -122,9 +122,9 @@
 							<div class="row">
 								<label>Cluster <span class="mandatory">*</span></label>
 								<div>
-									<input type="radio" name="cluster" value="01"> BPKP<br>
-								  <input type="radio" name="cluster" value="02"> Pusat<br>
-								  <input type="radio" name="cluster" value="03"> Daerah
+									<input type="radio" name="wilayah" value="01"> BPKP<br>
+								  <input type="radio" name="wilayah" value="02"> Pusat<br>
+								  <input type="radio" name="wilayah" value="03"> Daerah
 								</div>
               </div><br/>
               <div class="row">

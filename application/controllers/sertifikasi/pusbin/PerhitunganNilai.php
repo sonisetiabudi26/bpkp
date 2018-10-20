@@ -795,14 +795,11 @@ class PerhitunganNilai extends CI_Controller {
 				  print json_encode($output);
 		}
 		public function LoadDataUnit(){
-			$draw = intval($this->input->get("draw"));
-			$start = intval($this->input->get("start"));
-			$length = intval($this->input->get("length"));
 			$dataAll= $this->jawaban->getUnit();
 			$data = array();
 			$a=0;
 
-				foreach ($dataAll->result() as $field) {
+				foreach ($dataAll as $field) {
 					  $dataJumlah= $this->jawaban->getPesertabyUnit($field->KODE_UNIT,$field->FK_EVENT);
 						$dataTotal=($dataJumlah!='no data'?$dataJumlah:'0');
 						$row = array();
@@ -825,9 +822,9 @@ class PerhitunganNilai extends CI_Controller {
 
 
 			$output = array(
-					"draw" => $draaw,
-					"recordsTotal" => $dataAll->num_rows(),
-					"recordsFiltered" => $dataAll->num_rows(),
+					"draw" => 'dataPeserta',
+					"recordsTotal" => $a,
+					"recordsFiltered" => $a,
 					"data" => $data,
 			);
 			//output dalam format JSON

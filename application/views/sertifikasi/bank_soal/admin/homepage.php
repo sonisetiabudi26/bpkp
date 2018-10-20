@@ -21,8 +21,8 @@
 					<label style="font-size:45px;color:#fff"><i class="fa fa-file-o"></i></label>
 				</div>
 				<div class="col-lg-10">
-	        <h5 class="card-title"><b>Total Soal Yang Ditayangkan</b></h5>
-	        <h2 class="card-text">6 SOAL</h2>
+	        <h5 class="card-title"><b>Total Soal</b></h5>
+	        <h2 class="card-text"><?php echo $soal_ujian ?> SOAL</h2>
 				</div>
       </div>
     </div>

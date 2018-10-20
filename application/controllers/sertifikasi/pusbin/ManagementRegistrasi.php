@@ -66,7 +66,8 @@ class ManagementRegistrasi extends CI_Controller {
 			 echo json_encode($output);
 		}
 		public function vw_kebutuhan_soal($obj){
-			$data['data_soal']=$this->lookupujian->getDataDetailKebutuhan($obj);
+			$dataprovinsi=$this->lookupujian->getprovinsi($obj);
+			$data['data_soal']=$this->lookupujian->getDataDetailKebutuhan($obj,$dataprovinsi->NAMA);
 			$this->load->view('sertifikasi/pusbin/content/view_kebutuhan_soal',$data);
 		}
 		public function loadDatawidyaiswara(){

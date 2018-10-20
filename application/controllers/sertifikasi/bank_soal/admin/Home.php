@@ -14,6 +14,7 @@ class Home extends CI_Controller {
 		$this->load->model('sertifikasi/reviewsoal','reviewsoal');
 		$this->load->model('sertifikasi/KonfigUjian','konfig');
 		$this->load->model('sertifikasi/kodesoal','kodesoal');
+		$this->load->model('sertifikasi/soalujian','soalujian');
 	  $this->load->model('sertifikasi/permintaansoal','permintaansoal');
     }
 
@@ -29,9 +30,11 @@ class Home extends CI_Controller {
 			$datakonfig=$this->konfig->loadData();
 			$datakodesoal=$this->kodesoal->view();
 			$datapermintaan=$this->permintaansoal->getcount_permintaansoal();
+			$datasoalujian=$this->soalujian->getcount_soalujian();
 			$data['konfig']=$datakonfig->num_rows();
 			$data['kode_soal']=$datakodesoal->num_rows();
 			$data['permintaan']=$datapermintaan->num_rows();
+			$data['soal_ujian']=$datasoalujian->num_rows();
 			getMenuAccessPage($data, $fk_lookup_menu);
 		}else{
 			redirect('/');
