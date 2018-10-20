@@ -433,7 +433,7 @@ class PerhitunganNilai extends CI_Controller {
          foreach ($dataAll->result() as $field) {
              $row = array();
              $row[] = $a;
-             $row[] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_batch/".$field->KODE_EVENT.'">'.$field->KODE_EVENT.'</a>';
+             $row[] = '<a href="'.base_url('sertifikasi')."/pusbin/PerhitunganNilai/list_batch/".$field->PK_EVENT.'">'.$field->KODE_EVENT.'</a>';
              $row[] = $field->NAMA_JENJANG;
              $row[] = $field->URAIAN;
              $row[] = $field->Nama;

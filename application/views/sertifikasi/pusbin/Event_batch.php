@@ -92,7 +92,7 @@ $(document).ready(function(){
 
   var table;
         table = $('#dataEventAll').DataTable({
-            
+
 								"processing": false, //Feature control the processing indicator.
 								 "destroy": true,
 								"serverSide": true, //Feature control DataTables' server-side processing mode.
