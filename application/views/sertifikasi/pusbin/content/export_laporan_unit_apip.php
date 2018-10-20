@@ -15,7 +15,7 @@
     foreach ($dataAll as $key):
       echo "<tr>
       <td>".$no++."</td>
-      <td>".$key->FK_EVENT."</td>
+      <td>".$key->KODE_EVENT."</td>
       <td>".$key->KODE_PESERTA."</td>
       <td>".$key->NAMA."</td>
       <td>".$key->NAMA_MATA_AJAR."</td>

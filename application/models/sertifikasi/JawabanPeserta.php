@@ -75,7 +75,7 @@ public function getALl($kodeevent,$kelas){
 }
 public function getALlbyUnit($kodeevent,$kode_unit){
   $condition = "jawaban_peserta.FK_EVENT =" . "'" . $kodeevent . "' AND " . "jawaban_peserta.KODE_UNIT =" . "'" . $kode_unit . "' group by jawaban_peserta.KODE_PESERTA,lookup_ujian.FK_MATA_AJAR";
-  $this->db->select('jawaban_peserta.*,lookup_ujian.NILAI_TOTAL as nilai,lookup_ujian.STATUS,jenjang.NAMA_JENJANG,registrasi_ujian.NAMA,mata_ajar.NAMA_MATA_AJAR');
+  $this->db->select('jawaban_peserta.*,lookup_ujian.NILAI_TOTAL as nilai,lookup_ujian.STATUS,jenjang.NAMA_JENJANG,registrasi_ujian.NAMA,mata_ajar.NAMA_MATA_AJAR,event.KODE_EVENT');
   $this->db->from($this->_table);
 	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
 	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
