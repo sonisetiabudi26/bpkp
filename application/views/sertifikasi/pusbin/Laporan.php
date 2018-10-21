@@ -142,8 +142,8 @@ function loadDatalist(){
 }
 function loadDataNilaiPeserta(){
 	//var kodeevent=$('#kodeevent').val();
-	var table;
-				table = $('#dataNilaiPeserta').DataTable({
+	var table1;
+				table1 = $('#dataNilaiPeserta').DataTable({
 	              "processing": false, //Feature control the processing indicator.
 								 "destroy": true,
 	              "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -168,7 +168,29 @@ function loadDataNilaiPeserta(){
 }
 function loadData(obj){
 	$('#dataList').DataTable().ajax.reload();
-	loadDatabatch();
+	loadDataNilaiPeserta();
+	loadDataWidyaiswarauser();
+}
+function kirimlaporan(id){
+	$.ajax({
+			url : "<?php echo base_url('sertifikasi/pusbin/PerhitunganNilai/kirimlaporan/')?>/"+id,
+			type: "POST",
+			dataType: "JSON",
+			success: function(data)
+			{
+					//if success reload ajax table
+				//  $('#modal_form').modal('hide');
+
+					swal('Berhasil','Data berhasil dikirim ke Unit APIP','success');
+				
+
+					loadData(1);
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+					alert('Error deleting data');
+			}
+	});
 }
 function delete_event(id){
 	if(confirm('Are you sure delete this data?'))
@@ -193,8 +215,8 @@ function delete_event(id){
 	}
 }
 function loadDataWidyaiswarauser(){
-var table;
-			table = $('#datawi').DataTable({
+var table2;
+			table2 = $('#datawi').DataTable({
               "processing": false, //Feature control the processing indicator.
 							 "destroy": true,
               "serverSide": true, //Feature control DataTables' server-side processing mode.

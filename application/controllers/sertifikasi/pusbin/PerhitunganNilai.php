@@ -799,7 +799,7 @@ class PerhitunganNilai extends CI_Controller {
 			$data = array();
 			$a=0;
 
-				foreach ($dataAll as $field) {
+				foreach ($dataAll->result() as $field) {
 					  $dataJumlah= $this->jawaban->getPesertabyUnit($field->KODE_UNIT,$field->FK_EVENT);
 						$dataTotal=($dataJumlah!='no data'?$dataJumlah:'0');
 						$row = array();
@@ -811,9 +811,11 @@ class PerhitunganNilai extends CI_Controller {
 						//$row[] = $field->KODE_SOAL;
 						//$row[] = $field->KELAS;
 						$id=$field->KODE_UNIT.'~'.$field->FK_EVENT;
+						$enabled=($field->flag==2?'style="display:none;"':"");
 						$url_upload=base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_nilai_per_unitkerja/".$id;
 						$row[] = '<a class="btn btn-sm btn-primary" id="btn-view-nilai-unitapip2" onclick="getModal(this)" id="btn-view" data-href="'.$url_upload.'" data-toggle="modal" data-target="#modal-content" ><i class="glyphicon glyphicon-eye-open"></i> Lihat Data</a>
-						<a class="btn btn-sm btn-success"	href="'. base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_export_excel/".$id.'" ><i class="fa fa-file-pdf-o"></i> Export pdf</a>';
+						<a class="btn btn-sm btn-success"	href="'. base_url('sertifikasi')."/pusbin/PerhitunganNilai/vw_export_excel/".$id.'" ><i class="fa fa-file-pdf-o"></i> Export pdf</a>
+						<a class="btn btn-sm btn-info" '.$enabled.' onclick="kirimlaporan('."'".$id."'".')" id="btn-push-apip" ><i class="fa fa-paper-plane"></i> Kirim ke Unit APIP</a>';
 
 
 						$data[] = $row;
@@ -824,11 +826,26 @@ class PerhitunganNilai extends CI_Controller {
 			$output = array(
 					"draw" => 'dataPeserta',
 					"recordsTotal" => $a,
-					"recordsFiltered" => $a,
+					"recordsFiltered" => $dataAll->num_rows(),
 					"data" => $data,
 			);
 			//output dalam format JSON
 			echo json_encode($output);
+		}
+
+		public function kirimlaporan($id){
+				$parameter=explode('~',$id);
+				$kode_unit=$parameter[0];
+				$fk_event=$parameter[1];
+				$data=$this->jawaban->getPKJawabanDetail($kode_unit,$fk_event);
+				foreach ($data->result() as $key) {
+				$dataupdate = array('flag'=>2);
+				$datawhere = array('FK_JAWABAN_DETAIL' => $key->PK_JAWABAN_DETAIL, );
+				$updateNilai=$this->lookup_ujian->updateData($datawhere,'lookup_ujian',$dataupdate);
+				}
+				$output  = array('status' =>'success' ,
+													'msg'=>'Data berhasil dikirim ke Unit APIP');
+				print json_encode($output);
 		}
 		public function vw_export_excel($id){
 

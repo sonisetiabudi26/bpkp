@@ -219,8 +219,8 @@ public function updateData($where,$table,$data){
 	$this->db->update($table,$data);
 }
 public function getUnit(){
-	$condition = "lookup_ujian.flag ='1' group by jawaban_peserta.KODE_UNIT,jawaban_peserta.KODE_PESERTA";
-	$this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG');
+	$condition = "lookup_ujian.flag !='0' group by jawaban_peserta.KODE_UNIT";
+	$this->db->select('jawaban_peserta.*,jenjang.NAMA_JENJANG,lookup_ujian.flag');
 	$this->db->from($this->_table);
 	$this->db->join('lookup_ujian', 'jawaban_peserta.PK_JAWABAN_DETAIL = lookup_ujian.FK_JAWABAN_DETAIL');
 	$this->db->join('event', 'jawaban_peserta.FK_EVENT = event.PK_EVENT');
@@ -229,6 +229,14 @@ public function getUnit(){
 	// $this->db->group_by('KODE_UNIT');
 	return $query = $this->db->get();
 
+}
+public function getPKJawabanDetail($kode_unit,$fk_event){
+	$condition = "KODE_UNIT =" . "'" . $kode_unit . "' AND " . "FK_EVENT =" . "'" . $fk_event . "'";
+	$this->db->select('PK_JAWABAN_DETAIL');
+	$this->db->from($this->_table);
+	$this->db->where($condition);
+	//$this->db->group_by('KODE_UNIT');
+	return $query = $this->db->get();
 }
 public function getPesertabyUnit($id_unit,$id_event){
 	$condition = "KODE_UNIT =" . "'" . $id_unit . "' AND " . "FK_EVENT =" . "'" . $id_event . "'";

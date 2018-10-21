@@ -83,7 +83,7 @@ class LookupUjian extends My_Model
 		return $query->result();
 	}
 	public function getDataNilaibyunitapip($id){
-		$condition = "lookup_ujian.CREATED_BY ='" . $id . "'";
+		$condition = "lookup_ujian.CREATED_BY ='" . $id . "' and lookup_ujian.flag='2'";
 		$this->db->select('lookup_ujian.*,mata_ajar.NAMA_MATA_AJAR,registrasi_ujian.NIP');
 		$this->db->from('lookup_ujian');
 		$this->db->join('registrasi_ujian', 'registrasi_ujian.PK_REGIS_UJIAN= lookup_ujian.FK_REGIS_UJIAN');
